@@ -194,3 +194,64 @@ def test_empty_input_yields_empty_tables():
     frame = _curated([_measurement(measurement_class="unknown", standard_type="Ki")])
     tables = build(frame)
     assert all(tables[level].empty for level in ("strict", "document", "compound", "relaxed"))
+
+
+def test_si_quality_labels_the_censoring():
+    from vacv.build_dataset import si_quality
+
+    assert si_quality("=", "=") == "measured"
+    assert si_quality("=", ">") == "lower_bound"
+    assert si_quality("=", ">=") == "lower_bound"
+    assert si_quality(">", "=") == "upper_bound"
+    assert si_quality(">", ">") == "undetermined"
+    assert si_quality(">=", ">=") == "undetermined"
+
+
+def test_both_sides_censored_is_undetermined_not_a_measurement():
+    # IC50 > 100 with CC50 > 100 divides out to exactly 1.0 and says nothing.
+    frame = _curated(
+        [
+            _measurement(source_id="ic", value_um=100.0, relation=">"),
+            _measurement(
+                source_id="cc",
+                standard_type="CC50",
+                measurement_class="cytotox",
+                assay_description="Cytotoxicity against uninfected Vero cells",
+                value_um=100.0,
+                relation=">",
+            ),
+        ]
+    )
+    row = build(frame)["relaxed"].iloc[0]
+    assert row["si"] == pytest.approx(1.0)
+    assert row["si_quality"] == "undetermined"
+
+
+def test_si_equals_the_ratio_even_with_several_pairs():
+    # Three pairs, because with two the median is the geometric mean and the
+    # ratio of geometric means happens to equal the geometric mean of ratios.
+    frame = _curated(
+        _pairable(ASPIRIN, "DOC1", "Vero", 1.0, 100.0)
+        + _pairable(ASPIRIN, "DOC2", "HeLa", 10.0, 20.0)
+        + _pairable(ASPIRIN, "DOC3", "BSC-40", 1.0, 1.0)
+    )
+    row = build(frame)["relaxed"].iloc[0]
+    assert row["si"] == pytest.approx(row["cc50"] / row["ic50"])
+    assert row["ic50"] == pytest.approx(1.0)
+    assert row["cc50"] == pytest.approx(20.0)
+    assert row["si"] == pytest.approx(20.0)
+    # The median of the three ratios (100, 2, 1) is 2, which is not 20.
+    assert row["si_pairwise_median"] == pytest.approx(2.0)
+
+
+def test_all_pairs_keeps_every_candidate():
+    from vacv.build_dataset import all_pairs
+
+    frame = _curated(
+        _pairable(ASPIRIN, "DOC1", "Vero", 1.0, 100.0)
+        + _pairable(ASPIRIN, "DOC2", "HeLa", 10.0, 50.0)
+    )
+    pairs = all_pairs(frame)
+    assert len(pairs) > 1
+    assert set(pairs["pairing_level"]) == {"strict", "document", "compound"}
+    assert "si_quality" in pairs.columns

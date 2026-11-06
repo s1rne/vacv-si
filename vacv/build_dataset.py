@@ -43,6 +43,22 @@ log = logging.getLogger(__name__)
 
 PAIRING_LEVELS = ("strict", "document", "compound")
 
+#: What the censoring of the two halves does to the ratio.
+#:
+#: This is the most important column in the file after ``si`` itself. "IC50 >
+#: 100 and CC50 > 100" is extremely common - it is how a database records a
+#: compound that did nothing at the highest concentration anyone tried - and it
+#: divides out to ``si == 1.0`` while carrying no information whatsoever about
+#: selectivity. A third of the paired rows are of that shape. Training on them
+#: as if they were measurements teaches a model that a third of chemical space
+#: has SI exactly 1.
+SI_QUALITY = {
+    ("=", "="): "measured",
+    ("=", ">"): "lower_bound",  # true SI is at least this
+    (">", "="): "upper_bound",  # true SI is at most this
+    (">", ">"): "undetermined",  # both bounded: the ratio means nothing
+}
+
 #: Columns the organisers ask for, first and in this order.
 REQUIRED_COLUMNS = ["smiles", "ic50", "cc50", "si", "doi"]
 
@@ -50,6 +66,7 @@ PROVENANCE_COLUMNS = [
     "inchikey",
     "inchikey14",
     "pairing_level",
+    "si_quality",
     "ic50_relation",
     "cc50_relation",
     "censored",
@@ -60,6 +77,7 @@ PROVENANCE_COLUMNS = [
     "ic50_log10_spread",
     "cc50_log10_spread",
     "high_variance",
+    "si_pairwise_median",
     "cell_line",
     "strain",
     "document_id",
@@ -176,12 +194,20 @@ def _collapse_to_compound(paired: pd.DataFrame) -> pd.DataFrame:
 
     def collapse(group: pd.DataFrame) -> pd.Series:
         best = group.iloc[0]
+        ic50 = float(10 ** np.median(np.log10(group["ic50"].astype(float))))
+        cc50 = float(10 ** np.median(np.log10(group["cc50"].astype(float))))
         return pd.Series(
             {
                 "smiles": best["smiles"],
-                "ic50": float(10 ** np.median(np.log10(group["ic50"].astype(float)))),
-                "cc50": float(10 ** np.median(np.log10(group["cc50"].astype(float)))),
-                "si": float(10 ** np.median(np.log10(group["si"].astype(float)))),
+                "ic50": ic50,
+                # si is defined as the ratio of the two columns next to it, so
+                # it is computed from them. For a compound with several pairs
+                # the median of the ratios is not the ratio of the medians;
+                # that value travels as si_pairwise_median instead of
+                # quietly breaking si == cc50 / ic50.
+                "cc50": cc50,
+                "si": cc50 / ic50,
+                "si_pairwise_median": float(10 ** np.median(np.log10(group["si"].astype(float)))),
                 "inchikey": best["inchikey"],
                 "pairing_level": best["pairing_level"],
                 "ic50_relation": "=" if (group["ic50_relation"] == "=").any() else best["ic50_relation"],
@@ -205,7 +231,11 @@ def _collapse_to_compound(paired: pd.DataFrame) -> pd.DataFrame:
             }
         )
 
-    return paired.groupby("inchikey14", dropna=False).apply(collapse, include_groups=False).reset_index()
+    collapsed = paired.groupby("inchikey14", dropna=False).apply(collapse, include_groups=False).reset_index()
+    collapsed["si_quality"] = [
+        si_quality(row.ic50_relation, row.cc50_relation) for row in collapsed.itertuples()
+    ]
+    return collapsed
 
 
 def _join(series: pd.Series) -> str | None:
@@ -214,6 +244,30 @@ def _join(series: pd.Series) -> str | None:
         if isinstance(value, str):
             parts.update(value.split("|"))
     return "|".join(sorted(p for p in parts if p)) or None
+
+
+def all_pairs(curated: pd.DataFrame) -> pd.DataFrame:
+    """Every IC50/CC50 pair at every level, *without* collapsing to one row
+    per compound.
+
+    :func:`build` emits one row per compound because that is what a model
+    consumes. A lookup against another table wants the opposite: all the
+    candidate pairs, with their cell line and publication intact, so the
+    caller can pick the one that matches its own assay conditions.
+    """
+    antiviral = antiviral_side(curated)
+    cytotox = cytotox_side(curated)
+    chunks = []
+    for level in PAIRING_LEVELS:
+        paired = _pair_at_level(antiviral, cytotox, level)
+        if paired.empty:
+            continue
+        chunks.append(_finalise_pairs(paired))
+    if not chunks:
+        return pd.DataFrame(columns=REQUIRED_COLUMNS + ["inchikey14", "pairing_level", "si_quality"])
+    out = pd.concat(chunks, ignore_index=True)
+    out["si_quality"] = [si_quality(r.ic50_relation, r.cc50_relation) for r in out.itertuples()]
+    return out
 
 
 def build(curated: pd.DataFrame) -> dict[str, pd.DataFrame]:
@@ -251,6 +305,22 @@ def build(curated: pd.DataFrame) -> dict[str, pd.DataFrame]:
     tables["relaxed"] = relaxed
     log.info("relaxed table: %d compounds", len(relaxed))
     return tables
+
+
+def _normalise_relation(relation: object) -> str:
+    """Collapse >= to > and <= to < for the purpose of judging the ratio."""
+    text = str(relation)
+    if text in {">", ">="}:
+        return ">"
+    if text in {"<", "<="}:
+        return "<"
+    return "="
+
+
+def si_quality(ic50_relation: object, cc50_relation: object) -> str:
+    """Label what the censoring of the two halves does to their ratio."""
+    key = (_normalise_relation(ic50_relation), _normalise_relation(cc50_relation))
+    return SI_QUALITY.get(key, "undetermined")
 
 
 def order_columns(frame: pd.DataFrame) -> pd.DataFrame:
@@ -292,10 +362,13 @@ def load_competition_set() -> pd.DataFrame | None:
 def write(tables: dict[str, pd.DataFrame], directory: Path = PROCESSED) -> dict[str, Path]:
     directory.mkdir(parents=True, exist_ok=True)
     written: dict[str, Path] = {}
+    relaxed = tables["relaxed"]
+    measured = relaxed[relaxed["si_quality"].eq("measured")] if "si_quality" in relaxed else relaxed
     files = {
-        "vacv_si.csv": tables["relaxed"],
+        "vacv_si.csv": relaxed,
         "vacv_si_strict.csv": tables["strict"],
-        "vacv_si_relaxed.csv": tables["relaxed"],
+        "vacv_si_relaxed.csv": relaxed,
+        "vacv_si_measured.csv": measured,
     }
     for name, table in files.items():
         path = directory / name

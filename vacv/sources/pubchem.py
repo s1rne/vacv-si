@@ -261,7 +261,9 @@ def harvest(include_chembl_deposits: bool = False, max_active_sids: int = 20000)
                         "source_db": "PubChem BioAssay",
                         "source_id": f"PUBCHEM_AID{aid}_SID{row.get('PUBCHEM_SID')}_{column}",
                         "assay_id": f"AID{aid}",
-                        "document_id": f"PMID{assay_pmids[0]}" if assay_pmids else f"AID{aid}",
+                        # The deposit, not the cited PMID, is the provenance
+                        # unit for PubChem: see the doi_provenance note below.
+                        "document_id": f"AID{aid}",
                         "doi": None,
                         # A PubChem assay xref PMID is a citation the depositor
                         # attached, not necessarily the paper the numbers come

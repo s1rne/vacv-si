@@ -101,6 +101,8 @@ def cmd_build(args: argparse.Namespace) -> int:
     analysis = None
     if (KAGGLE / "test.csv").exists() or (KAGGLE / "train.csv").exists():
         analysis = match_competition.analyse(curated)
+        for path in match_competition.write_lookups(analysis, PROCESSED):
+            print(f"wrote {path}")
         _print_match(analysis)
     card = datacard.render(open_only, tables, competition, analysis)
     datacard.write(card)
@@ -115,6 +117,7 @@ def _print_match(analysis: dict) -> None:
     for item in analysis["overlaps"]:
         print(" | ".join(str(c) for c in item.as_row()))
     print("agreement with the organisers' SI on train:", analysis["agreement_summary"])
+    print("cell-line-aware lookup agreement:", analysis.get("lookup_agreement"))
     documents = analysis["documents"]
     if not documents.empty:
         print(f"{len(documents)} publications cover competition compounds; top 10:")

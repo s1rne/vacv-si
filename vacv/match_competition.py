@@ -20,7 +20,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
-from .build_dataset import antiviral_side, build, cytotox_side
+from .build_dataset import all_pairs, antiviral_side, build, cytotox_side
 from .curate import standardize
 from .paths import KAGGLE
 
@@ -139,6 +139,124 @@ def summarise_agreement(joined: pd.DataFrame) -> dict:
     }
 
 
+#: Competition `Culture` strings mapped onto the cell-line vocabulary of
+#: vacv.classify. The organisers write them freely ("cells HEL", "lung
+#: fibroblast cells", "HELA cells"), so matching needs the same normaliser the
+#: harvest uses.
+def culture_cell_line(culture: object) -> str | None:
+    from .classify import extract_cell_line
+
+    return extract_cell_line(culture)
+
+
+#: Tie-break inside one provenance rule: an exact ratio beats a bounded one.
+QUALITY_RANK = {"measured": 0, "lower_bound": 1, "upper_bound": 2, "undetermined": 3}
+
+#: Preference order when several open-data pairs exist for one compound. The
+#: first rule reproduces the authors' own ratio in the authors' own cells.
+LOOKUP_PRIORITY = [
+    ("strict, same cell line", lambda pairs, cell: pairs[pairs["pairing_level"].eq("strict") & pairs["cell_line"].eq(cell)]),
+    ("strict", lambda pairs, cell: pairs[pairs["pairing_level"].eq("strict")]),
+    ("document", lambda pairs, cell: pairs[pairs["pairing_level"].eq("document")]),
+    ("compound", lambda pairs, cell: pairs[pairs["pairing_level"].eq("compound")]),
+]
+
+
+def lookup(split: pd.DataFrame, pairs: pd.DataFrame) -> pd.DataFrame:
+    """Best open-data SI for every compound of a competition split.
+
+    Matching is by exact InChIKey first and by skeleton (first 14 characters)
+    only if that fails, because a skeleton match can be a different
+    stereoisomer, and stereochemistry changes antiviral potency. The column
+    ``match`` records which it was, so a model can weight them differently.
+    """
+    by_full = {k: g for k, g in pairs.groupby("inchikey")} if "inchikey" in pairs.columns else {}
+    by_skeleton = {k: g for k, g in pairs.groupby("inchikey14")}
+
+    rows = []
+    # itertuples is not usable here: the competition test file has a column
+    # literally named "index", which collides with the namedtuple method.
+    for record in split.to_dict("records"):
+        cell = culture_cell_line(record.get("Culture"))
+        candidates, match = None, None
+        if record["inchikey"] in by_full:
+            candidates, match = by_full[record["inchikey"]], "inchikey"
+        elif record["inchikey14"] in by_skeleton:
+            candidates, match = by_skeleton[record["inchikey14"]], "inchikey14"
+        row = {
+            "index": record.get("index"),
+            "Title": record.get("Title"),
+            "smiles": record.get("SMILES"),
+            "inchikey": record["inchikey"],
+            "inchikey14": record["inchikey14"],
+            "culture": record.get("Culture"),
+            "cell_line": cell,
+            "match": match,
+        }
+        if candidates is not None:
+            for rule, selector in LOOKUP_PRIORITY:
+                chosen = selector(candidates, cell)
+                if not chosen.empty:
+                    # Among candidates of equal provenance, an uncensored pair
+                    # beats a bounded one. Provenance still comes first: a
+                    # same-paper same-cell-line bounded pair is closer to what
+                    # the authors reported than an uncensored pair from
+                    # somewhere else.
+                    if "si_quality" in chosen.columns:
+                        chosen = chosen.sort_values(
+                            "si_quality",
+                            key=lambda s: s.map(QUALITY_RANK).fillna(len(QUALITY_RANK)),
+                            kind="stable",
+                        )
+                    best = chosen.iloc[0]
+                    row.update(
+                        {
+                            "rule": rule,
+                            "ic50": float(best["ic50"]),
+                            "cc50": float(best["cc50"]),
+                            "si": float(best["si"]),
+                            "pairing_level": best["pairing_level"],
+                            "matched_cell_line": best.get("cell_line"),
+                            "censored": bool(best["censored"]),
+                            "si_quality": best.get("si_quality"),
+                            "doi": best.get("doi"),
+                            "document_id": best.get("document_id"),
+                        }
+                    )
+                    break
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def lookup_agreement(train_lookup: pd.DataFrame, train: pd.DataFrame) -> dict:
+    joined = train_lookup.merge(
+        train[["inchikey", "inchikey14", "SI VACV", "Title"]].rename(columns={"SI VACV": "si_competition"}),
+        on=["inchikey", "inchikey14", "Title"],
+        how="left",
+    )
+    usable = joined[
+        joined["si"].notna()
+        & joined["si_competition"].notna()
+        & joined["si_competition"].gt(0)
+        & joined["si_competition"].lt(SI_SENTINEL)
+    ].copy()
+    if usable.empty:
+        return {"compared": 0}
+    usable["log10_error"] = np.log10(usable["si"]) - np.log10(usable["si_competition"])
+    errors = usable["log10_error"]
+    return {
+        "compared": len(usable),
+        "exact": float((errors.abs() < 1e-6).mean()),
+        "within_2x": float((errors.abs() <= np.log10(2)).mean()),
+        "within_5x": float((errors.abs() <= np.log10(5)).mean()),
+        "median_absolute_log10_error": float(errors.abs().median()),
+        "spearman": float(usable["si"].corr(usable["si_competition"], method="spearman")),
+        "by_rule": usable.groupby("rule")["log10_error"].agg(["size", lambda e: float(e.abs().median())]).rename(
+            columns={"<lambda_0>": "median_abs_log10_error"}
+        ).to_dict("index"),
+    }
+
+
 def covering_documents(splits: pd.DataFrame, curated_open: pd.DataFrame, key: str = "inchikey14") -> pd.DataFrame:
     """Which publications in the open data contain the competition compounds."""
     keys = set(splits[key].dropna())
@@ -156,6 +274,7 @@ def analyse(curated: pd.DataFrame) -> dict:
     curated_open = open_source_rows(curated)
     tables = build(curated_open)
     paired = tables["relaxed"]
+    pairs = all_pairs(curated_open)
 
     splits = {name: load_split(name) for name in ("train", "test") if (KAGGLE / f"{name}.csv").exists()}
     overlaps = []
@@ -163,14 +282,37 @@ def analyse(curated: pd.DataFrame) -> dict:
         for key in ("inchikey", "inchikey14"):
             overlaps.append(overlap(split, curated_open, paired, key))
 
+    lookups = {}
+    for name, split in splits.items():
+        table = lookup(split, pairs)
+        table.insert(0, "split", name)
+        lookups[name] = table
+
     joined = agreement(splits["train"], paired) if "train" in splits else pd.DataFrame()
     return {
         "overlaps": overlaps,
         "agreement": joined,
         "agreement_summary": summarise_agreement(joined) if not joined.empty else {"compared": 0},
+        "lookups": lookups,
+        "lookup_agreement": lookup_agreement(lookups["train"], splits["train"])
+        if "train" in lookups
+        else {"compared": 0},
         "documents": covering_documents(pd.concat(splits.values(), ignore_index=True), curated_open)
         if splits
         else pd.DataFrame(),
         "paired": paired,
         "splits": splits,
     }
+
+
+def write_lookups(analysis: dict, directory) -> list:
+    """Persist the per-compound lookup so the modelling side can use it."""
+    written = []
+    tables = [t for t in analysis.get("lookups", {}).values()]
+    if not tables:
+        return written
+    combined = pd.concat(tables, ignore_index=True)
+    path = directory / "competition_open_data_lookup.csv"
+    combined.to_csv(path, index=False)
+    written.append(path)
+    return written
