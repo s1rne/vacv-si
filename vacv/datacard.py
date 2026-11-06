@@ -160,10 +160,11 @@ sentinel ({summary.get('sentinel_rows_excluded', 0)} sentinel rows excluded):
 | Spearman rho | {summary['spearman']:.2f} |
 | Pearson r on log10(SI) | {summary['pearson_log']:.2f} |
 
-A median absolute log10 error of {summary['median_absolute_log10_error']:.2f} is a factor of
-{10 ** summary['median_absolute_log10_error']:.1f}. That is the realistic accuracy of a label
-reconstructed from open databases for a molecule whose paper is in ChEMBL, and
-it sets a floor on what any model trained on such labels can achieve."""
+The median error is zero because, for most of these compounds, the open
+databases return the organisers' number itself rather than an estimate of it.
+The spread that remains comes from compounds measured in several papers or
+several cell lines, where the aggregation takes the median and the organisers
+took one of them."""
     else:
         agreement = "No training compound could be paired from open data, so no agreement could be measured."
 
