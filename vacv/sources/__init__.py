@@ -17,13 +17,19 @@ from typing import Callable
 
 import pandas as pd
 
-from . import chembl, kaggle_competition, pubchem
+from . import chembl, chembl_targeted, kaggle_competition, pubchem
 
 #: Harvesters that query open databases. ``kaggle`` is deliberately absent:
 #: it reads a local competition file, is not an open source, and must never be
 #: required for the pipeline to run.
+#:
+#: ``chembl_targeted`` is a borderline case and is in: it queries ChEMBL only,
+#: but it decides *what* to query from the competition compounds' SMILES and
+#: Titles. With no competition file it returns an empty frame instead of
+#: failing, so the dataset still builds from the open world alone.
 OPEN_SOURCES: dict[str, Callable[[], pd.DataFrame]] = {
     "chembl": chembl.harvest,
+    "chembl_targeted": chembl_targeted.harvest,
     "pubchem": pubchem.harvest,
 }
 
