@@ -1,40 +1,79 @@
-"""Кросс-проверка с метрикой соревнования: MSE на исходной шкале SI."""
+"""Compare the actual submission pipeline on repeated held-out folds."""
 
 from __future__ import annotations
 
+import argparse
+import json
+from pathlib import Path
+
 import numpy as np
+import pandas as pd
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE, SelectivityModel, scaffolds_of
+from vacv.inference import PROFILES, predict_ensemble
+from vacv.literature import attach
+from vacv.pipeline import INACTIVE, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
-def run(data, folds) -> tuple[float, float]:
-    y = data.y
-    prediction = np.zeros_like(y)
+def evaluate(frame, y, folds, seeds=7, profile="baseline"):
+    probability, raw, prediction = (np.full(len(y), np.nan) for _ in range(3))
+    fold_ids = np.full(len(y), -1)
     for fold in range(len(folds)):
-        train_index, validation_index = fold_indices(folds, fold)
-        model = SelectivityModel().fit(data.train.iloc[train_index], y[train_index])
-        prediction[validation_index] = model.predict(data.train.iloc[validation_index])
-    inactive = (y >= INACTIVE).astype(int)
-    auc = roc_auc_score(inactive, (prediction - y[inactive == 0].mean()))
-    return auc, float(np.mean((prediction - y) ** 2))
-
-
-def main() -> None:
-    data = load()
-    y = data.y
-    splits = {
-        "по остовам": scaffold_folds(scaffolds_of(data.train), n_splits=5),
-        "случайное": [index for _, index in KFold(5, shuffle=True, random_state=0).split(y)],
+        train, valid = fold_indices(folds, fold)
+        if not len(train) or not len(valid):
+            raise ValueError("Empty training or validation fold")
+        probability[valid], raw[valid], prediction[valid] = predict_ensemble(
+            frame.iloc[train], y[train], frame.iloc[valid], seeds, profile)
+        fold_ids[valid] = fold
+    if not np.isfinite(prediction).all() or (fold_ids < 0).any():
+        raise ValueError("Incomplete OOF predictions")
+    labels = y == INACTIVE
+    metrics = {
+        "mse": float(np.mean((prediction - y) ** 2)),
+        "model_mse": float(np.mean((raw - y) ** 2)),
+        "auc": float(roc_auc_score(labels, probability)) if len(np.unique(labels)) == 2 else None,
+        "brier": float(np.mean((probability - labels) ** 2)),
     }
-    print(f"{'разбиение':12} {'AUC':>7} {'MSE':>13}")
-    print(f"{'константа':12} {'—':>7} {np.mean((y.mean() - y) ** 2):13,.0f}")
+    row_ids = frame["index"].to_numpy() if "index" in frame else np.arange(len(frame))
+    oof = pd.DataFrame({"index": row_ids, "fold": fold_ids,
+                        "target": y, "probability": probability,
+                        "model_prediction": raw, "prediction": prediction})
+    return metrics, oof
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--profiles", nargs="+", choices=PROFILES, default=["baseline", "hybrid"])
+    parser.add_argument("--seeds", type=int, default=7)
+    parser.add_argument("--repeats", type=int, default=3)
+    parser.add_argument("--start-seed", type=int, default=0,
+                        help="First random split seed; use fresh seeds for confirmation")
+    parser.add_argument("--split", choices=["random", "scaffold", "both"], default="both")
+    parser.add_argument("--out", type=Path, default=Path("outputs/cv"))
+    args = parser.parse_args()
+    if args.repeats < 1 or args.seeds < 1:
+        parser.error("seeds and repeats must be positive")
+    data = load()
+    frame, y = attach(data.train), data.y
+    splits = {}
+    if args.split in {"random", "both"}:
+        for repeat in range(args.start_seed, args.start_seed + args.repeats):
+            splits[f"random-{repeat}"] = [v for _, v in KFold(5, shuffle=True, random_state=repeat).split(y)]
+    if args.split in {"scaffold", "both"}:
+        splits["scaffold"] = scaffold_folds(scaffolds_of(frame), n_splits=5)
+    args.out.mkdir(parents=True, exist_ok=True)
+    results = []
     for name, folds in splits.items():
-        auc, mse = run(data, folds)
-        print(f"{name:12} {auc:7.3f} {mse:13,.0f}")
+        for profile in args.profiles:
+            metrics, oof = evaluate(frame, y, folds, args.seeds, profile)
+            results.append({"split": name, "profile": profile, "seeds": args.seeds, **metrics})
+            oof.to_csv(args.out / f"{name}-{profile}.csv", index=False)
+            (args.out / "metrics.json").write_text(json.dumps(results, indent=2, allow_nan=False) + "\n")
+            print(f"{name:12} {profile:12} MSE={metrics['mse']:,.0f} "
+                  f"model={metrics['model_mse']:,.0f} AUC={metrics['auc']}", flush=True)
 
 
 if __name__ == "__main__":
