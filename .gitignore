@@ -9,5 +9,6 @@ outputs/
 
 # data artefacts
 data/raw/
+data/interim/
 data/processed/
 .pytest_cache/
