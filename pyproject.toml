@@ -3,6 +3,7 @@ name = "vacv-si"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "catboost>=1.2.10",
     "kaggle>=2.2.5",
     "lightgbm>=4.7.0",
     "numpy>=2.5.4",
@@ -10,6 +11,7 @@ dependencies = [
     "rdkit>=2026.9.1",
     "requests>=2.34.2",
     "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
     "six>=1.17.0",
     "tqdm>=4.70.1",
     "xgboost>=3.4.1",
