@@ -15,7 +15,7 @@
    метке и переносится на заглушку.
 
 Цензурирование обрабатывается objective `survival:aft` XGBoost: метка задаётся парой границ,
-правая цензура — это [y, +inf). Альтернатива «выбросить строки со знаком» проверяется
+правая цензура задаётся как [y, +inf). Альтернатива «выбросить строки со знаком» проверяется
 в `experiments/endpoint_cv.py`; выбранный режим задаётся параметром `censored`.
 """
 
@@ -49,7 +49,7 @@ ROUNDS = 400
 _cache: dict[str, np.ndarray] = {}
 
 
-def structure_row(smiles: str) -> np.ndarray:
+def molecule_row(smiles: str) -> np.ndarray:
     """Дескрипторы RDKit, счётные отпечатки Моргана и MACCS одной молекулы."""
     cached = _cache.get(smiles)
     if cached is None:
@@ -61,19 +61,19 @@ def structure_row(smiles: str) -> np.ndarray:
     return cached
 
 
-def structure_matrix(smiles: pd.Series) -> np.ndarray:
-    return np.vstack([structure_row(value) for value in smiles])
+def molecule_matrix(smiles: pd.Series) -> np.ndarray:
+    return np.vstack([molecule_row(value) for value in smiles])
 
 
 def corpus_matrix(corpus: pd.DataFrame, context: bool = True) -> np.ndarray:
-    parts = [structure_matrix(corpus["smiles"])]
+    parts = [molecule_matrix(corpus["smiles"])]
     if context:
         parts.append(corpus[CONTEXT_COLUMNS].to_numpy(np.float32))
     return np.hstack(parts)
 
 
 def competition_matrix(frame: pd.DataFrame, context: bool = True) -> np.ndarray:
-    parts = [structure_matrix(frame["SMILES"])]
+    parts = [molecule_matrix(frame["SMILES"])]
     if context:
         parts.append(competition_context(frame).to_numpy(np.float32))
     return np.hstack(parts)

@@ -2,11 +2,11 @@
 
 Текущая модель смешивает три вероятности неактивности: по строению, по контексту записи
 (штамм, культура, обозначение) и по строению вместе с долей неактивных в группе. Головы
-корпуса дают четвёртый источник той же вероятности — и, отдельно, четыре числовых признака
+корпуса дают четвёртый источник той же вероятности и, отдельно, четыре числовых признака
 (`log_ic50`, `log_cc50`, `log_si`, `p_inactive`), которые можно просто дописать к матрице
 признаков.
 
-Проверяются оба способа. Веса смеси — обратные OOF-MSE, как рекомендует docs/research.md,
+Проверяются оба способа. Веса смеси берутся обратными OOF-MSE, как рекомендует docs/research.md,
 плюс полный перебор сетки с шагом 0.1 для верхней границы выигрыша.
 """
 
@@ -107,7 +107,7 @@ def main() -> None:
     grid = [w for w in itertools.product(np.arange(0, 1.01, 0.1), repeat=4) if abs(sum(w) - 1) < 1e-9]
 
     def combine(split: str, weights: dict[str, float], key: str = "grouped") -> np.ndarray:
-        return sum(weights[name] * probability[split][name if name != "grouped" else key]
+        return sum(weights[name] * probability[split][key if name == "grouped" else name]
                    for name in NAMES)
 
     best = min(grid, key=lambda w: mse(combine("случайное", dict(zip(NAMES, w)))))
@@ -121,7 +121,8 @@ def main() -> None:
         print(f"{label:34} {weights['structure']:4.1f} {weights['context']:4.1f} "
               f"{weights['grouped']:5.1f} {weights['heads']:4.1f} {cells}")
     cells = " ".join(f"{mse(combine(split, current, key='grouped_heads')):14,.0f}" for split in splits)
-    print(f"{'текущая, головы в признаках':34} {'—':>4} {'—':>4} {'—':>5} {'—':>4} {cells}")
+    print(f"{'текущая, головы в признаках':34} {current['structure']:4.1f} "
+          f"{current['context']:4.1f} {current['grouped']:5.1f} {'в призн.':>8} {cells}")
 
 
 if __name__ == "__main__":
