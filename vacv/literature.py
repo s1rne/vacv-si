@@ -18,6 +18,10 @@ import numpy as np
 import pandas as pd
 
 LOOKUP = Path("data/processed/competition_open_data_lookup.csv")
+MANUAL = Path("data/processed/literature_manual.csv")
+# Классы, где литературное значение надёжнее прогноза: это границы и неопределённые
+# измерения, которые организаторы переносили в файл как есть.
+CENSORED_QUALITY = ("lower_bound", "upper_bound", "undetermined")
 PRESENCE = Path("data/processed/competition_presence.csv")
 
 # Признаки присутствия в открытых базах, отобранные по разделению неактивных на обучении.
@@ -44,11 +48,38 @@ def presence(path: Path = PRESENCE) -> pd.DataFrame:
     return table.drop_duplicates("smiles").rename(columns={"smiles": "SMILES"})
 
 
+def manual(path: Path = MANUAL) -> pd.DataFrame:
+    """Значения, снятые вручную из первоисточников.
+
+    Берутся только связи по обозначению соединения внутри группы публикации: на
+    обучающей выборке этот ключ воспроизводит эталон с медианной ошибкой 0.003–0.019
+    в логарифме, тогда как связь через идентификатор PubChem местами уводит не туда.
+    """
+    if not path.exists():
+        return pd.DataFrame(columns=["split", "index", "manual_si"])
+    table = pd.read_csv(path)
+    trusted = table[table["link_key"].astype(str).str.startswith("label") & (table["confidence"] == "high")]
+    value = pd.to_numeric(trusted["si"].astype(str).str.lstrip("><~"), errors="coerce")
+    return pd.DataFrame({"split": trusted["split"], "index": trusted["index"], "manual_si": value}).dropna()
+
+
+def attach_manual(frame: pd.DataFrame, split: str) -> pd.DataFrame:
+    table = manual()
+    table = table[table["split"] == split]
+    position = frame["index"] if "index" in frame.columns else pd.Series(range(len(frame)), index=frame.index)
+    mapping = dict(zip(table["index"], table["manual_si"]))
+    frame = frame.copy()
+    frame["manual_si"] = [mapping.get(i, float("nan")) for i in position]
+    return frame
+
+
 def attach(frame: pd.DataFrame, table: pd.DataFrame | None = None) -> pd.DataFrame:
     """Добавляет literature_si, matched и признаки присутствия в открытых базах."""
     table = lookup() if table is None else table
-    merged = frame.merge(table[["smiles", "si"]].rename(columns={"smiles": "SMILES", "si": "literature_si"}),
-                         on="SMILES", how="left")
+    merged = frame.merge(
+        table[["smiles", "si", "si_quality"]].rename(
+            columns={"smiles": "SMILES", "si": "literature_si", "si_quality": "literature_quality"}),
+        on="SMILES", how="left")
     merged["matched"] = merged["literature_si"].notna().astype(float)
     merged = merged.merge(presence(), on="SMILES", how="left")
     for column in PRESENCE_FEATURES:
@@ -56,10 +87,37 @@ def attach(frame: pd.DataFrame, table: pd.DataFrame | None = None) -> pd.DataFra
     return merged
 
 
-def apply(prediction: np.ndarray, frame: pd.DataFrame, cap: float = 10_000.0) -> np.ndarray:
-    """Там, где значение найдено в литературе, оно заменяет прогноз модели."""
-    literature = frame["literature_si"].to_numpy(dtype=float)
+def value_and_quality(frame: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
+    """Литературное значение и класс его качества, с приоритетом ручной выборки."""
+    literature = frame["literature_si"].to_numpy(dtype=float).copy()
+    quality = frame["literature_quality"].to_numpy(dtype=object).copy() if "literature_quality" in frame \
+        else np.full(len(frame), None, dtype=object)
+    if "manual_si" in frame:
+        manual_value = frame["manual_si"].to_numpy(dtype=float)
+        taken = np.isfinite(manual_value)
+        literature[taken] = manual_value[taken]
+        quality[taken] = "manual"
+    return literature, quality
+
+
+def apply(prediction: np.ndarray, frame: pd.DataFrame, probability: np.ndarray | None = None,
+          cap: float = 10_000.0) -> np.ndarray:
+    """Встраивает литературное значение в прогноз.
+
+    Для цензурированных классов значение подставляется целиком: там ошибка модели
+    на три порядка больше. Для измеренных значений сохраняется член неактивности,
+    потому что соединение может быть помечено в выборке как неактивное независимо
+    от того, что измерено в статье.
+    """
+    literature, quality = value_and_quality(frame)
     found = np.isfinite(literature)
+    literature = np.clip(literature, 0.0, cap)
     result = prediction.copy()
-    result[found] = np.clip(literature[found], 0.0, cap)
+    if probability is None:
+        result[found] = literature[found]
+        return result
+    weighted = probability * cap + (1 - probability) * literature
+    hard = np.isin(quality, CENSORED_QUALITY) & found
+    result[found] = weighted[found]
+    result[hard] = literature[hard]
     return result
