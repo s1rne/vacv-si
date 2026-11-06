@@ -135,7 +135,6 @@ def descriptor_report(train: pd.DataFrame, labels: np.ndarray) -> None:
         values = Descriptors.CalcMolDescriptors(mol, missingVal=np.nan)
         rows.append({name: values.get(name) for name in wanted})
     table = pd.DataFrame(rows)
-    table.to_csv("analysis/train_descriptors.csv", index=False)
     from sklearn.metrics import roc_auc_score
     print("\nдескрипторы: медианы и разделение заглушки (AUC)")
     print(f"{'дескриптор':20} {'неактивные':>11} {'активные':>10} {'AUC':>7}")

@@ -67,7 +67,6 @@ def main() -> None:
     for row in rows:
         print(row, flush=True)
     table = pd.DataFrame(rows)
-    table.to_csv("analysis/ablation.csv", index=False)
     print("\n" + table.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
 
 

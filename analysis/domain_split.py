@@ -31,7 +31,6 @@ def main() -> None:
         row["доля заглушки без литературы"] = float((truth[sentinel] == 10_000.0).mean()) if sentinel.any() else np.nan
         rows.append(row)
     table = pd.DataFrame(rows)
-    table.to_csv("analysis/domain_split.csv", index=False)
     print(table.to_string(index=False, float_format=lambda v: f"{v:.3f}"))
 
     for name, mask in (("с литературой", matched), ("без литературы", ~matched)):

@@ -8,9 +8,7 @@
 """
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -114,8 +112,6 @@ def main() -> None:
         print(f"\n{column}: Spearman {pd.Series(x).corr(pd.Series(lb), method='spearman'):+.2f}, "
               f"Pearson {np.corrcoef(x, lb)[0, 1]:+.3f}")
         print(f"  LB ≈ {slope:.2f}·CV + {intercept:,.0f}, остаток RMS {np.sqrt((residual ** 2).mean()):,.0f}")
-
-    Path("analysis/cv_vs_lb.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

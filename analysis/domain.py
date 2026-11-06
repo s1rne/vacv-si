@@ -80,9 +80,6 @@ def main() -> None:
     print(frame.groupby(bins, observed=True).agg(
         строк=("квадрат", "size"), MSE=("квадрат", "mean")).to_string(float_format=lambda v: f"{v:,.0f}"))
 
-    np.save("analysis/cache/test_inside_structural.npy", inside)
-    np.save("analysis/cache/test_known_group.npy", known_group)
-    pd.Series({"structural_threshold": threshold}).to_csv("analysis/domain_threshold.csv")
 
 
 if __name__ == "__main__":
