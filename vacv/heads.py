@@ -108,13 +108,11 @@ class EndpointHeads:
     def fit(self, corpus: pd.DataFrame) -> "EndpointHeads":
         matrix = corpus_matrix(corpus, self.context)
         self.boosters_ = {}
-        self.scale_ = {}
         for endpoint in ENDPOINTS:
             lower = corpus[f"{endpoint}_lower"].to_numpy(float)
             upper = corpus[f"{endpoint}_upper"].to_numpy(float)
             keep = np.isfinite(upper) if not self.censored else np.ones(len(corpus), bool)
             self.boosters_[endpoint] = _aft(matrix[keep], lower[keep], upper[keep], self.seed)
-            self.scale_[endpoint] = float(np.log10(corpus.loc[keep, endpoint]).std())
         self.classifier_ = inactivity_classifier(self.seed).fit(matrix, corpus["inactive"].to_numpy(int))
         self.prior_ = float(corpus["inactive"].mean())
         return self

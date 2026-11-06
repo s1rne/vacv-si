@@ -29,10 +29,12 @@ def test_heads_predict_both_endpoints_and_the_ratio():
     assert predicted["p_inactive"].between(0, 1).all()
 
 
-def test_dropping_censored_rows_leaves_fewer_training_labels():
+def test_dropping_censored_rows_lowers_the_predicted_ic50():
+    """Без строк со знаком «>» модель не знает про соединения выше потолка концентраций."""
     corpus = load_corpus().head(300)
-    assert EndpointHeads(censored=False).fit(corpus).scale_["ic50"] != \
-        EndpointHeads(censored=True).fit(corpus).scale_["ic50"]
+    with_censored = EndpointHeads(censored=True).fit(corpus).predict(FRAME)["log_ic50"]
+    without = EndpointHeads(censored=False).fit(corpus).predict(FRAME)["log_ic50"]
+    assert without.mean() < with_censored.mean()
 
 
 def test_multitask_prediction_stays_inside_the_target_range():
