@@ -33,7 +33,7 @@ SENTINEL = 10_000.0
 INACTIVE = SENTINEL
 CONTEXT_COLUMNS = ("strain", "Culture")
 GROUP_COLUMNS = ["strain", "Culture"]
-WEIGHTS = {"structure": 0.0, "context": 0.3, "grouped": 0.7}
+WEIGHTS = {"structure": 0.0, "context": 0.5, "grouped": 0.5}
 SMOOTHING = 5.0
 
 
