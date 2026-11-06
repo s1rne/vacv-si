@@ -146,6 +146,7 @@ OUTPUT_COLUMNS = [
     "sentinel_rate_for_bucket",
     "si_blended",
     "substitute_recommended",
+    "si_recommended",
 ]
 
 

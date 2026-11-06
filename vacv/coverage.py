@@ -462,6 +462,10 @@ def advice(lookup: pd.DataFrame, labelled: pd.DataFrame) -> pd.DataFrame:
     si = np.clip(pd.to_numeric(lookup["si"], errors="coerce").to_numpy(dtype=float), 0, SI_SENTINEL)
     out["si_blended"] = (1 - out["sentinel_rate_for_bucket"]) * si + out["sentinel_rate_for_bucket"] * SI_SENTINEL
     out.loc[lookup["si"].isna(), ["si_blended", "substitute_recommended"]] = [np.nan, False]
+    # One column that is safe to substitute as it stands, so that a caller
+    # which only reads `si` cannot accidentally substitute the buckets this
+    # module measured and rejected.
+    out["si_recommended"] = np.where(out["substitute_recommended"], si, np.nan)
     return out
 
 
