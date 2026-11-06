@@ -4,6 +4,19 @@
 
 Соревнование: [Molecular Activity Prediction](https://www.kaggle.com/competitions/molecular-activity-prediction-hack), метрика MSE на исходной шкале SI.
 
+## Промежуточный лучший чекпоинт, 7 ноября 2026
+
+Собраны лучшие компоненты независимых экспериментов: 75% hybrid с графовой
+коррекцией ошибок и 25% frozen CheMeleon + TabICL, затем вероятностная подстановка
+литературы. Random CV MSE **9.766M → 8.635M (−11.59%)**, scaffold **14.255M →
+11.850M (−16.87%)**. Это локальные оценки; комбинация двух выбранных компонентов
+оценена post-hoc на прежних фолдах, а не на новом независимом holdout.
+
+[Сравнение, происхождение кода и воспроизведение](experiments/results/checkpoint-2026-11-07/report.md).
+[CSV на 597 строк](experiments/results/checkpoint-2026-11-07/submission.csv).
+Полный запуск после подготовки frozen features: `PYTHONPATH=. .venv/bin/python scripts/submit_checkpoint.py`.
+Kaggle submit не выполнялся. Ниже сохранены команды и описание более лёгкого hybrid.
+
 ## Запуск
 
 ```bash

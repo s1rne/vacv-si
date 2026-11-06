@@ -2,6 +2,7 @@ outputs/
 data/raw/
 data/processed/
 .venv/
+.venv-encoder/
 __pycache__/
 *.pyc
 .DS_Store

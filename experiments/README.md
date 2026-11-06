@@ -37,3 +37,11 @@ PYTHONPATH=. uv run python scripts/cv.py --profiles baseline crossfit descriptor
 [протокол и результаты](results/2026-11-07-novel/report.md).
 `hybrid_soft` доступен через `scripts/cv.py --profiles hybrid_soft` и
 `scripts/submit.py --profile hybrid_soft`; исходные профили сохранены.
+
+Замороженный CheMeleon (2048 признаков) с kernel/SVR и TabICL:
+[отчёт и воспроизведение](results/2026-11-07-chemeleon/report.md).
+
+Независимое исследование nested residual diffusion и confidence gate:
+[graph_correction_report.md](graph_correction_report.md). Внутренние OOF-остатки
+строятся заново внутри каждого внешнего фолда; исходные и post-hoc варианты,
+план фиксации кандидата и confirmation показаны раздельно.
