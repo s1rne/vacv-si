@@ -10,7 +10,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE, SENTINEL, structure_matrix, title_matrix, scaffolds_of
+from vacv.pipeline import SENTINEL, structure_matrix, title_matrix, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
@@ -62,7 +62,7 @@ def structure_oof(matrix, labels, folds):
 def main() -> None:
     data = load()
     y = data.y
-    labels = (y >= INACTIVE).astype(int)
+    labels = (y == SENTINEL).astype(int)
     active_mean = y[labels == 0].mean()
     matrix = structure_matrix(data.train)
     splits = {"остовы": scaffold_folds(scaffolds_of(data.train), n_splits=5),

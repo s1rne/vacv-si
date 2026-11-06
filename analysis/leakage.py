@@ -110,8 +110,7 @@ def main() -> None:
     for threshold in (0.99, 0.95, 0.9, 0.8, 0.7, 0.5):
         mask = nearest >= threshold
         print(f"  Tanimoto к ближайшему обучающему >= {threshold}: {int(mask.sum()):3d} строк "
-              f"({mask.mean():5.1%}), доля неактивных {truth[mask].mean() if mask.any() else float('nan'):.3f}"
-              if mask.any() else f"  >= {threshold}: 0")
+              f"({mask.mean():5.1%}), доля заглушки {(truth[mask] == 10_000.0).mean():5.1%}")
     print(f"\nмедианный Tanimoto к ближайшему обучающему: {np.nanmedian(nearest):.3f}")
 
     submission = pd.read_csv("outputs/submission.csv").set_index("index").loc[raw_test["index"]]["SI VACV"].to_numpy()

@@ -27,10 +27,10 @@ from sklearn.ensemble import ExtraTreesClassifier
 from .features import maccs, morgan_counts, parse, scaffold
 from .literature import PRESENCE_FEATURES
 
+# Заглушка «IC50 отсутствует». Сравнение ровно на равенство, а не по порогу: одна
+# обучающая строка имеет настоящий SI = 36066 (CC50 1082 при IC50 0.03), и порог
+# «не меньше 9999» отнёс бы измерение к неактивным.
 SENTINEL = 10_000.0
-# Метка неактивности — ровно значение-заглушка. Порог «не меньше 9999» ошибочно относил
-# к неактивным строку с настоящим SI = 36066 (CC50 1082 при IC50 0.03).
-INACTIVE = SENTINEL
 CONTEXT_COLUMNS = ("strain", "Culture")
 GROUP_COLUMNS = ["strain", "Culture"]
 WEIGHTS = {"structure": 0.0, "context": 0.3, "grouped": 0.7}
@@ -117,14 +117,17 @@ class SelectivityModel:
         self.encoder = ContextEncoder()
 
     def _forest(self) -> ExtraTreesClassifier:
-        return ExtraTreesClassifier(n_estimators=800, min_samples_leaf=2, n_jobs=-1, random_state=self.seed)
+        # n_jobs=1: при n_jobs=-1 порядок суммирования по потокам плавает, и вероятности
+        # расходятся на 2e-16, из-за чего файл ответа не воспроизводится побайтово.
+        # На матрице 320 × 74 параллельность всё равно ничего не даёт.
+        return ExtraTreesClassifier(n_estimators=800, min_samples_leaf=2, n_jobs=1, random_state=self.seed)
 
     def _booster(self) -> LGBMClassifier:
         return LGBMClassifier(n_estimators=500, learning_rate=0.03, num_leaves=7, min_child_samples=10,
                               colsample_bytree=0.3, reg_lambda=5.0, verbose=-1, random_state=self.seed)
 
     def fit(self, frame: pd.DataFrame, y: np.ndarray) -> "SelectivityModel":
-        labels = (y == INACTIVE).astype(int)
+        labels = (y == SENTINEL).astype(int)
         self.active_mean_ = float(y[labels == 0].mean())
         self.train_frame_ = frame
         self.labels_ = labels

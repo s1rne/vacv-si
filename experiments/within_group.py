@@ -15,7 +15,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE, SENTINEL, ContextEncoder, structure_matrix, scaffolds_of
+from vacv.pipeline import SENTINEL, ContextEncoder, structure_matrix, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 GROUP = ["strain", "Culture"]
@@ -38,7 +38,7 @@ def target_encode(train_frame, train_labels, frame, smoothing: float = 5.0) -> n
 def main() -> None:
     data = load()
     y = data.y
-    labels = (y >= INACTIVE).astype(int)
+    labels = (y == SENTINEL).astype(int)
     matrix = structure_matrix(data.train)
     active_mean = y[labels == 0].mean()
     splits = {"остовы": scaffold_folds(scaffolds_of(data.train), n_splits=5),

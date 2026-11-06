@@ -1,26 +1,16 @@
-outputs/
-data/raw/
-data/processed/
+.DS_Store
 .venv/
 __pycache__/
 *.pyc
-<<<<<<< HEAD
-||||||| 89cb7dd
-.DS_Store
-runs/
-outputs/
-*.ckpt
-*.pt
-=======
-.DS_Store
+.pytest_cache/
+
 runs/
 outputs/
 *.ckpt
 *.pt
 
-# data artefacts
+# Данные: сырые ответы API и промежуточные таблицы не коммитятся,
+# data/processed держит готовый набор и отслеживается намеренно.
 data/raw/
 data/interim/
-# data/processed holds the deliverable dataset and is tracked on purpose.
-.pytest_cache/
->>>>>>> exp/data
+analysis/cache/
