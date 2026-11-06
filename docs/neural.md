@@ -153,3 +153,25 @@ MLM, здесь худшие: предобучение на 200 дескрипт
 защищается перед лабораторией хемоинформатики, его место — в этом разделе, а не в пайплайне.
 Публикацию-источник рабочий ансамбль и так учитывает законным образом: доля неактивных
 в группе `strain` + `Culture` даёт AUC 0,960 без всякого разбора строк.
+
+## Что ломалось по дороге
+
+Пять часов из всей работы ушло не на модели, а на это. Выписано, чтобы не искать второй раз.
+
+- `ibm/MoLFormer-XL-both-10pct` отдаёт 404. Правильный путь `ibm-research/MoLFormer-XL-both-10pct`,
+  нужен `trust_remote_code=True`. Код в `main` написан под transformers 5 и падает
+  на `from transformers.masking_utils import create_bidirectional_mask`; на transformers 4.57
+  работает только `revision="compat-v4"`.
+- `CUDA_VISIBLE_DEVICES=1` указывает не на ту карту. По умолчанию CUDA сортирует устройства
+  по скорости (`FASTEST_FIRST`), а не по шине, поэтому индекс 1 попадает на GTX 1060, и
+  сборка под sm_86 падает с `no kernel image is available for execution on the device`.
+  Нужен ещё `CUDA_DEVICE_ORDER=PCI_BUS_ID`.
+- Chemprop нельзя поставить рядом с transformers: он тянет свои `lightning`
+  и `descriptastorus`. Отдельное окружение, фолды передаются файлом
+  `data/interim/neural/folds.npz`, чтобы индексы совпадали ровно.
+- В это окружение `uv` ставит `torch 2.15+cu132`, а драйвер на машине 12.8:
+  `The NVIDIA driver on your system is too old (found version 12080)`. Помогает
+  `torch==2.9.1` в зависимостях.
+- У `chemprop train` нет флага `--quiet`, только `-q`. И число эпох должно быть больше
+  числа эпох разогрева (по умолчанию 2), поэтому прогон «на две эпохи ради проверки»
+  отвергается аргументами.
