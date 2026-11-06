@@ -36,11 +36,11 @@ def splits(corpus: pd.DataFrame) -> dict[str, list[np.ndarray]]:
     }
 
 
-def out_of_fold(corpus: pd.DataFrame, folds: list[np.ndarray], censored: bool) -> pd.DataFrame:
+def out_of_fold(corpus: pd.DataFrame, folds: list[np.ndarray], **kwargs) -> pd.DataFrame:
     prediction = pd.DataFrame(index=corpus.index, columns=["log_ic50", "log_cc50"], dtype=float)
     for fold in range(len(folds)):
         train_index, validation_index = fold_indices(folds, fold)
-        heads = EndpointHeads(censored=censored).fit(corpus.iloc[train_index])
+        heads = EndpointHeads(**kwargs).fit(corpus.iloc[train_index])
         predicted = heads.predict_corpus(corpus.iloc[validation_index])
         prediction.iloc[validation_index] = predicted[["log_ic50", "log_cc50"]].to_numpy()
     return prediction
@@ -61,14 +61,17 @@ def main() -> None:
     corpus = load_corpus()
     print(f"корпус {len(corpus)} соединений; цензурировано IC50 "
           f"{corpus['ic50_censored'].mean():.0%}, CC50 {corpus['cc50_censored'].mean():.0%}")
-    header = f"{'разбиение':12} {'режим':14} {'эндпоинт':9} {'RMSE':>6} {'Spearman':>9} {'одностор.':>10}"
+    header = f"{'разбиение':12} {'режим':16} {'эндпоинт':9} {'RMSE':>6} {'Spearman':>9} {'одностор.':>10}"
     print(header)
     for name, folds in splits(corpus).items():
-        for censored, label in ((True, "цензура AFT"), (False, "только точные")):
-            prediction = out_of_fold(corpus, folds, censored)
+        modes = (("цензура AFT", {}),
+                 ("только точные", {"censored": False}),
+                 ("без тест-системы", {"context": False}))
+        for label, options in modes:
+            prediction = out_of_fold(corpus, folds, **options)
             for endpoint in ENDPOINTS:
                 rmse, rho, one_sided = score(corpus, prediction, endpoint)
-                print(f"{name:12} {label:14} {endpoint:9} {rmse:6.3f} {rho:9.3f} {one_sided:10.3f}")
+                print(f"{name:12} {label:16} {endpoint:9} {rmse:6.3f} {rho:9.3f} {one_sided:10.3f}")
         print()
 
 

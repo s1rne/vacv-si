@@ -65,14 +65,24 @@ def structure_matrix(smiles: pd.Series) -> np.ndarray:
     return np.vstack([structure_row(value) for value in smiles])
 
 
-def corpus_matrix(corpus: pd.DataFrame) -> np.ndarray:
-    return np.hstack([structure_matrix(corpus["smiles"]),
-                      corpus[CONTEXT_COLUMNS].to_numpy(np.float32)])
+def corpus_matrix(corpus: pd.DataFrame, context: bool = True) -> np.ndarray:
+    parts = [structure_matrix(corpus["smiles"])]
+    if context:
+        parts.append(corpus[CONTEXT_COLUMNS].to_numpy(np.float32))
+    return np.hstack(parts)
 
 
-def competition_matrix(frame: pd.DataFrame) -> np.ndarray:
-    return np.hstack([structure_matrix(frame["SMILES"]),
-                      competition_context(frame).to_numpy(np.float32)])
+def competition_matrix(frame: pd.DataFrame, context: bool = True) -> np.ndarray:
+    parts = [structure_matrix(frame["SMILES"])]
+    if context:
+        parts.append(competition_context(frame).to_numpy(np.float32))
+    return np.hstack(parts)
+
+
+def inactivity_classifier(seed: int = 0) -> LGBMClassifier:
+    """Голова «IC50 не определена»: метка корпуса `ic50_relation == '>'`."""
+    return LGBMClassifier(n_estimators=400, learning_rate=0.03, num_leaves=15, min_child_samples=20,
+                          colsample_bytree=0.3, reg_lambda=5.0, verbose=-1, random_state=seed)
 
 
 def _aft(matrix: np.ndarray, lower: np.ndarray, upper: np.ndarray, seed: int) -> xgb.Booster:
@@ -86,15 +96,17 @@ class EndpointHeads:
     """IC50, CC50 и вероятность неактивности по строению и тест-системе.
 
     `censored=False` обучает регрессии только на точных значениях: это и есть сравнение
-    с наивным выбрасыванием строк со знаком «>».
+    с наивным выбрасыванием строк со знаком «>». `context=False` убирает линию клеток
+    и штамм, то есть мерит, сколько даёт знание тест-системы.
     """
 
-    def __init__(self, censored: bool = True, seed: int = 0):
+    def __init__(self, censored: bool = True, context: bool = True, seed: int = 0):
         self.censored = censored
+        self.context = context
         self.seed = seed
 
     def fit(self, corpus: pd.DataFrame) -> "EndpointHeads":
-        matrix = corpus_matrix(corpus)
+        matrix = corpus_matrix(corpus, self.context)
         self.boosters_ = {}
         self.scale_ = {}
         for endpoint in ENDPOINTS:
@@ -103,10 +115,7 @@ class EndpointHeads:
             keep = np.isfinite(upper) if not self.censored else np.ones(len(corpus), bool)
             self.boosters_[endpoint] = _aft(matrix[keep], lower[keep], upper[keep], self.seed)
             self.scale_[endpoint] = float(np.log10(corpus.loc[keep, endpoint]).std())
-        self.classifier_ = LGBMClassifier(
-            n_estimators=400, learning_rate=0.03, num_leaves=15, min_child_samples=20,
-            colsample_bytree=0.3, reg_lambda=5.0, verbose=-1, random_state=self.seed,
-        ).fit(matrix, corpus["inactive"].to_numpy(int))
+        self.classifier_ = inactivity_classifier(self.seed).fit(matrix, corpus["inactive"].to_numpy(int))
         self.prior_ = float(corpus["inactive"].mean())
         return self
 
@@ -119,11 +128,11 @@ class EndpointHeads:
         return pd.DataFrame(out)
 
     def predict_corpus(self, corpus: pd.DataFrame) -> pd.DataFrame:
-        return self._predict_matrix(corpus_matrix(corpus))
+        return self._predict_matrix(corpus_matrix(corpus, self.context))
 
     def predict(self, frame: pd.DataFrame) -> pd.DataFrame:
         """Головы на выборке соревнования: целевая переменная соревнования не нужна."""
-        return self._predict_matrix(competition_matrix(frame))
+        return self._predict_matrix(competition_matrix(frame, self.context))
 
 
 HEAD_FEATURES = ["log_ic50", "log_cc50", "log_si", "p_inactive"]
