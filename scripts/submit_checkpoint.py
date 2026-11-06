@@ -19,6 +19,8 @@ def main():
                         default=Path("data/raw/models/tabicl-classifier-v2-20260212.ckpt"))
     parser.add_argument("--out", type=Path, default=Path("outputs/checkpoint/submission.csv"))
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--active-value", action="store_true",
+                        help="Replace the global active mean with the per-row estimate")
     args = parser.parse_args()
     component_path = args.out.with_name(args.out.stem + "-components.csv")
     metadata_path = args.out.with_suffix(".json")
@@ -27,7 +29,8 @@ def main():
     embeddings, manifest = load_embeddings(args.features)
     data = load()
     train, test = attach(data.train), attach(data.test)
-    model = BestCheckpointModel(embeddings, args.checkpoint).fit(train, data.y)
+    model = BestCheckpointModel(embeddings, args.checkpoint,
+                                active_value=args.active_value).fit(train, data.y)
     components = model.predict_components(test)
     result = submission(data.test["index"].to_numpy(), components["prediction"])
     template = pd.read_csv("data/raw/kaggle/sample_submit.csv")
@@ -40,7 +43,9 @@ def main():
     pd.DataFrame({"index": data.test["index"].to_numpy(), **components}).to_csv(component_path, index=False)
     code_files = ["vacv/checkpoint.py", "vacv/graph_correction.py", "vacv/postprocess.py",
                   "vacv/inference.py", "vacv/pipeline.py", "experiments/pretrained_embeddings.py"]
-    metadata = {"profile": "0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft",
+    metadata = {"profile": ("0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft+av"
+                            if args.active_value else
+                            "0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft"),
                 "rows": len(result), "stage": "intermediate checkpoint; not submitted to Kaggle",
                 "transductive": True, "embedding_sha256": manifest["embedding_sha256"],
                 "sha256": hashlib.sha256(args.out.read_bytes()).hexdigest(),

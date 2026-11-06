@@ -22,6 +22,8 @@ def main():
                         default=Path("data/raw/models/tabicl-classifier-v2-20260212.ckpt"))
     parser.add_argument("--splits", nargs="+", default=["3", "4", "5", "scaffold"])
     parser.add_argument("--out", type=Path, default=Path("outputs/checkpoint-cv"))
+    parser.add_argument("--active-value", action="store_true",
+                        help="Replace the global active mean with the per-row estimate")
     args = parser.parse_args()
     if args.out.exists() and any(args.out.iterdir()):
         parser.error("Use an empty output directory")
@@ -38,14 +40,16 @@ def main():
         fold_id = np.full(len(y), -1)
         for fold in range(5):
             train, valid = fold_indices(folds, fold)
-            model = BestCheckpointModel(embeddings, args.checkpoint).fit(frame.iloc[train], y[train])
+            model = BestCheckpointModel(embeddings, args.checkpoint,
+                                        active_value=args.active_value).fit(frame.iloc[train], y[train])
             components = model.predict_components(frame.iloc[valid], unlabeled=test)
             prediction[valid], probability[valid] = components["prediction"], components["probability"]
             fold_id[valid] = fold
             print(f"split={split} fold={fold} complete", flush=True)
         if not np.isfinite(prediction).all():
             raise ValueError("Incomplete OOF predictions")
-        row = {"split": split, "mse": float(np.mean((prediction - y) ** 2)), "model": "checkpoint"}
+        row = {"split": split, "mse": float(np.mean((prediction - y) ** 2)),
+               "model": "checkpoint-av" if args.active_value else "checkpoint"}
         results.append(row)
         pd.DataFrame({"index": np.arange(len(y)), "fold": fold_id, "probability": probability,
                       "prediction": prediction}).to_csv(args.out / f"oof-{split}.csv", index=False)

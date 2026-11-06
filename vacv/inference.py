@@ -26,6 +26,7 @@ PROFILES = {
     "blend": {},
     "hybrid": {},
     "hybrid_soft": {},
+    "hybrid_av": {},
 }
 
 
@@ -33,6 +34,13 @@ def predict_ensemble(train, y, test, seeds=7, profile="hybrid"):
     """Frames must already have literature/presence attached."""
     if seeds < 1:
         raise ValueError("seeds must be positive")
+    if profile == "hybrid_av":
+        from .active_value import ActiveValueModel
+        from .postprocess import conditional_lookup
+        probability, _, _ = predict_ensemble(train, y, test, seeds, "hybrid")
+        active_value = ActiveValueModel().fit(train, y)
+        raw = probability * SENTINEL + (1 - probability) * active_value.predict(test)
+        return probability, raw, conditional_lookup(raw, probability, test)
     if profile == "hybrid_soft":
         from .postprocess import conditional_lookup
         probability, raw, _ = predict_ensemble(train, y, test, seeds, "hybrid")

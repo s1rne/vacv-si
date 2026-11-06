@@ -52,9 +52,10 @@ class BestCheckpointModel:
     intentionally depends on the unlabeled pool. No target is read from it.
     """
 
-    def __init__(self, embeddings, checkpoint):
+    def __init__(self, embeddings, checkpoint, active_value: bool = False):
         self.embeddings = embeddings
         self.checkpoint = Path(checkpoint)
+        self.active_value = active_value
         if hashlib.sha256(self.checkpoint.read_bytes()).hexdigest() != TABICL_SHA256:
             raise ValueError("TabICL checkpoint checksum mismatch")
 
@@ -65,11 +66,14 @@ class BestCheckpointModel:
             raise ValueError("Missing embedding: regenerate the frozen feature cache for this dataset") from error
 
     def fit(self, train, y):
-        self.train_ = safe_features(train)
         self.y_ = np.asarray(y, dtype=float).copy()
         if (self.y_.shape != (len(train),) or not np.isfinite(self.y_).all()
                 or (self.y_ < 0).any()):
             raise ValueError("Finite aligned nonnegative training targets required")
+        if self.active_value:
+            from .active_value import ActiveValueModel
+            self.active_values_ = ActiveValueModel().fit(train, self.y_)
+        self.train_ = safe_features(train)
         self.embedding_train_ = self._embedding_matrix(self.train_)
         with threadpool_limits(limits=4):
             self.graph_ = GraphResidualCorrector(seeds=7).fit(self.train_, self.y_)
@@ -78,6 +82,7 @@ class BestCheckpointModel:
         return self
 
     def predict_components(self, query, unlabeled=None):
+        attached = query
         query = safe_features(query)
         with threadpool_limits(limits=4):
             components = self.graph_.components(query, unlabeled)
@@ -88,8 +93,13 @@ class BestCheckpointModel:
                 self.train_, self.y_, query, self.embedding_train_, self._embedding_matrix(query),
                 "che-tabicl", self.checkpoint)
             chemical_probability = np.asarray(chemical_probability, dtype=float)
-        probability, raw, prediction = combine(graph_probability, chemical_probability,
-                                               self.active_mean_, query)
+        if self.active_value:
+            probability = 0.75 * graph_probability + 0.25 * chemical_probability
+            raw = probability * SENTINEL + (1 - probability) * self.active_values_.predict(attached)
+            prediction = conditional_lookup(raw, probability, attached)
+        else:
+            probability, raw, prediction = combine(graph_probability, chemical_probability,
+                                                   self.active_mean_, attached)
         return {"hybrid_probability": components["probability"],
                 "graph_probability": graph_probability, "chemical_probability": chemical_probability,
                 "probability": probability, "model_prediction": raw, "prediction": prediction}

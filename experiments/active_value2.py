@@ -372,6 +372,8 @@ def main():
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--start-seed", type=int, default=0)
     parser.add_argument("--alpha", type=float, default=1.0)
+    parser.add_argument("--modes", nargs="+", default=["constant", "group", "ridge", "physical"])
+    parser.add_argument("--lookups", nargs="+", default=["hard", "soft"])
     parser.add_argument("--out", type=Path, default=Path("outputs/active-value2"))
     args = parser.parse_args()
     data = load()
@@ -384,8 +386,8 @@ def main():
     args.out.mkdir(parents=True, exist_ok=True)
     results = []
     for name, folds in splits.items():
-        for av_mode in ("constant", "group", "ridge", "physical"):
-            for lookup_mode in ("hard", "soft"):
+        for av_mode in args.modes:
+            for lookup_mode in args.lookups:
                 metrics = evaluate(frame, y, folds, args.seeds, av_mode, lookup_mode, args.alpha)
                 results.append({"split": name, "av": av_mode, "lookup": lookup_mode, **metrics})
                 print(f"{name:12} av={av_mode:8} lookup={lookup_mode:4} MSE={metrics['mse']:,.0f}", flush=True)
