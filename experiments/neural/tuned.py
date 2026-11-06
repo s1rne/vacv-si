@@ -26,7 +26,7 @@ from vacv.neural.finetune import Config
 from vacv.neural.runner import classify
 from vacv.protocol import HEADER, task
 
-BEST = {"chemberta-77m-mtr": (1e-4, 25), "molformer-xl": (1e-5, 10)}
+BEST = {"chemberta-77m-mtr": (1e-4, 25), "molformer-xl": (1e-5, 25)}
 SHORT = {"molformer-xl"}
 
 
