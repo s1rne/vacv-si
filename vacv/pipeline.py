@@ -21,14 +21,17 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+from lightgbm import LGBMClassifier
 from sklearn.ensemble import ExtraTreesClassifier
 
 from .features import maccs, morgan_counts, parse, scaffold
 
 INACTIVE = 9_999.0
 SENTINEL = 10_000.0
-STRUCTURE_WEIGHT = 0.2
 CONTEXT_COLUMNS = ("strain", "Culture")
+GROUP_COLUMNS = ["strain", "Culture"]
+WEIGHTS = {"structure": 0.0, "context": 0.3, "grouped": 0.7}
+SMOOTHING = 5.0
 
 
 def structure_matrix(frame: pd.DataFrame) -> np.ndarray:
@@ -72,27 +75,71 @@ class ContextEncoder:
         return np.hstack(parts + [title_matrix(frame["Title"])])
 
 
+def group_rate(train_frame: pd.DataFrame, labels: np.ndarray, frame: pd.DataFrame,
+               smoothing: float = SMOOTHING) -> np.ndarray:
+    """Доля неактивных в группе strain+Culture, сглаженная к общему среднему.
+
+    Группа отвечает публикации-источнику и покрывает 98.5% тестовых строк.
+    Сглаживание не даёт маленьким группам давать крайние оценки.
+    """
+    prior = labels.mean()
+    stats = pd.DataFrame({"group": list(map(tuple, train_frame[GROUP_COLUMNS].values)), "label": labels}) \
+        .groupby("group")["label"].agg(["size", "mean"])
+    encoded = (stats["size"] * stats["mean"] + smoothing * prior) / (stats["size"] + smoothing)
+    return np.array([encoded.get(key, prior) for key in map(tuple, frame[GROUP_COLUMNS].values)])
+
+
 class SelectivityModel:
-    def __init__(self, seed: int = 0, structure_weight: float = STRUCTURE_WEIGHT):
+    """Три источника вероятности неактивности, смешанные с фиксированными весами.
+
+    structure  строение молекулы;
+    context    штамм, культура и обозначение соединения;
+    grouped    строение плюс доля неактивных в группе одним признаком.
+
+    Веса подобраны на случайном разбиении: тестовая выборка не отделена от обучающей
+    по химии, 98.5% групп общие, девять молекул совпадают полностью.
+    """
+
+    def __init__(self, seed: int = 0, weights: dict[str, float] | None = None):
         self.seed = seed
-        self.structure_weight = structure_weight
+        self.weights = weights or WEIGHTS
         self.encoder = ContextEncoder()
 
     def _forest(self) -> ExtraTreesClassifier:
         return ExtraTreesClassifier(n_estimators=800, min_samples_leaf=2, n_jobs=-1, random_state=self.seed)
 
+    def _booster(self) -> LGBMClassifier:
+        return LGBMClassifier(n_estimators=500, learning_rate=0.03, num_leaves=7, min_child_samples=10,
+                              colsample_bytree=0.3, reg_lambda=5.0, verbose=-1, random_state=self.seed)
+
     def fit(self, frame: pd.DataFrame, y: np.ndarray) -> "SelectivityModel":
-        inactive = (y >= INACTIVE).astype(int)
-        self.active_mean_ = float(y[inactive == 0].mean())
-        self.structure_ = self._forest().fit(structure_matrix(frame), inactive)
-        self.encoder.fit(frame)
-        self.context_ = self._forest().fit(self.encoder.transform(frame), inactive)
+        labels = (y >= INACTIVE).astype(int)
+        self.active_mean_ = float(y[labels == 0].mean())
+        self.train_frame_ = frame
+        self.labels_ = labels
+        matrix = structure_matrix(frame)
+
+        if self.weights["structure"]:
+            self.structure_ = self._forest().fit(matrix, labels)
+        if self.weights["context"]:
+            self.encoder.fit(frame)
+            self.context_ = self._forest().fit(self.encoder.transform(frame), labels)
+        if self.weights["grouped"]:
+            rate = group_rate(frame, labels, frame)[:, None]
+            self.grouped_ = self._booster().fit(np.hstack([matrix, rate]), labels)
         return self
 
     def probability(self, frame: pd.DataFrame) -> np.ndarray:
-        structure = self.structure_.predict_proba(structure_matrix(frame))[:, 1]
-        context = self.context_.predict_proba(self.encoder.transform(frame))[:, 1]
-        return self.structure_weight * structure + (1 - self.structure_weight) * context
+        matrix = structure_matrix(frame)
+        total = np.zeros(len(frame))
+        if self.weights["structure"]:
+            total += self.weights["structure"] * self.structure_.predict_proba(matrix)[:, 1]
+        if self.weights["context"]:
+            total += self.weights["context"] * self.context_.predict_proba(self.encoder.transform(frame))[:, 1]
+        if self.weights["grouped"]:
+            rate = group_rate(self.train_frame_, self.labels_, frame)[:, None]
+            total += self.weights["grouped"] * self.grouped_.predict_proba(np.hstack([matrix, rate]))[:, 1]
+        return total
 
     def predict(self, frame: pd.DataFrame) -> np.ndarray:
         probability = self.probability(frame)
