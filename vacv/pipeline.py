@@ -72,7 +72,10 @@ class ContextEncoder:
         parts = [pd.get_dummies(frame[name].astype("category"), prefix=name)
                  .reindex(columns=self.columns_[name], fill_value=0).to_numpy(float)
                  for name in CONTEXT_COLUMNS]
-        return np.hstack(parts + [title_matrix(frame["Title"])])
+        extra = [title_matrix(frame["Title"])]
+        if "matched" in frame:
+            extra.append(frame["matched"].to_numpy(float)[:, None])
+        return np.hstack(parts + extra)
 
 
 def group_rate(train_frame: pd.DataFrame, labels: np.ndarray, frame: pd.DataFrame,
@@ -125,9 +128,15 @@ class SelectivityModel:
             self.encoder.fit(frame)
             self.context_ = self._forest().fit(self.encoder.transform(frame), labels)
         if self.weights["grouped"]:
-            rate = group_rate(frame, labels, frame)[:, None]
-            self.grouped_ = self._booster().fit(np.hstack([matrix, rate]), labels)
+            self.grouped_ = self._booster().fit(self._grouped_features(frame, matrix), labels)
         return self
+
+    def _grouped_features(self, frame: pd.DataFrame, matrix: np.ndarray) -> np.ndarray:
+        rate = group_rate(self.train_frame_, self.labels_, frame)[:, None]
+        parts = [matrix, rate]
+        if "matched" in frame:
+            parts.append(frame["matched"].to_numpy(float)[:, None])
+        return np.hstack(parts)
 
     def probability(self, frame: pd.DataFrame) -> np.ndarray:
         matrix = structure_matrix(frame)
@@ -137,8 +146,8 @@ class SelectivityModel:
         if self.weights["context"]:
             total += self.weights["context"] * self.context_.predict_proba(self.encoder.transform(frame))[:, 1]
         if self.weights["grouped"]:
-            rate = group_rate(self.train_frame_, self.labels_, frame)[:, None]
-            total += self.weights["grouped"] * self.grouped_.predict_proba(np.hstack([matrix, rate]))[:, 1]
+            total += self.weights["grouped"] * self.grouped_.predict_proba(
+                self._grouped_features(frame, matrix))[:, 1]
         return total
 
     def predict(self, frame: pd.DataFrame) -> np.ndarray:

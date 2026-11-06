@@ -8,6 +8,7 @@ from pathlib import Path
 import numpy as np
 
 from vacv.dataset import load, submission
+from vacv.literature import apply, attach
 from vacv.pipeline import SelectivityModel
 
 
@@ -18,8 +19,10 @@ def main() -> None:
     args = parser.parse_args()
 
     data = load()
-    predictions = [SelectivityModel(seed).fit(data.train, data.y).predict(data.test) for seed in range(args.seeds)]
-    prediction = np.mean(predictions, axis=0)
+    train, test = attach(data.train), attach(data.test)
+    predictions = [SelectivityModel(seed).fit(train, data.y).predict(test) for seed in range(args.seeds)]
+    prediction = apply(np.mean(predictions, axis=0), test)
+    print(f"значений из литературы: {int(test['matched'].sum())} из {len(test)}")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     submission(data.test["index"].to_numpy(), prediction).to_csv(args.out, index=False)
