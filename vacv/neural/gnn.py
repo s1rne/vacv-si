@@ -188,7 +188,8 @@ def out_of_fold(job: Task, split: str, config: GnnConfig) -> tuple[np.ndarray, f
         with torch.no_grad():
             for batch in DataLoader([graphs[i] for i in validation_index], batch_size=64):
                 chunk.append(model(batch.to(device)).squeeze(-1).float().cpu().numpy())
-        probability[validation_index] = 1.0 / (1.0 + np.exp(-np.concatenate(chunk)))
+        logits = np.clip(np.concatenate(chunk), -60.0, 60.0)
+        probability[validation_index] = 1.0 / (1.0 + np.exp(-logits))
     return probability, time.perf_counter() - started
 
 
