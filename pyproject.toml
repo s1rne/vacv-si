@@ -12,3 +12,12 @@ dependencies = [
     "tqdm>=4.70.1",
     "xgboost>=3.4.1",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

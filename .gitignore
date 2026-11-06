@@ -6,3 +6,8 @@ runs/
 outputs/
 *.ckpt
 *.pt
+
+# data artefacts
+data/raw/
+data/processed/
+.pytest_cache/
