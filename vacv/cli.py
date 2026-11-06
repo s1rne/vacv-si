@@ -20,7 +20,7 @@ import sys
 
 import pandas as pd
 
-from . import build_dataset, datacard, match_competition, validate as validate_module
+from . import build_dataset, datacard, match_competition, presence, validate as validate_module
 from .curate import curate
 from .paths import INTERIM, KAGGLE, PROCESSED, ensure_dirs
 from .schema import conform
@@ -104,6 +104,7 @@ def cmd_build(args: argparse.Namespace) -> int:
         for path in match_competition.write_lookups(analysis, PROCESSED):
             print(f"wrote {path}")
         _print_match(analysis)
+        print(f"wrote {_write_presence(open_only)}")
     card = datacard.render(open_only, tables, competition, analysis)
     datacard.write(card)
     print(f"wrote {datacard.OUTPUT}")
@@ -122,6 +123,24 @@ def _print_match(analysis: dict) -> None:
     if not documents.empty:
         print(f"{len(documents)} publications cover competition compounds; top 10:")
         print(documents.head(10).to_string(index=False))
+
+
+def _write_presence(curated: pd.DataFrame):
+    table = presence.presence_table(curated)
+    path = presence.write(table, PROCESSED)
+    report = presence.sentinel_report(table)
+    print("sentinel separation on train (AUC for the sentinel class):")
+    print(report.to_string(index=False))
+    return path
+
+
+def cmd_presence(args: argparse.Namespace) -> int:
+    if not CURATED.exists():
+        log.error("%s missing; run `curate` first", CURATED)
+        return 1
+    curated = match_competition.open_source_rows(pd.read_csv(CURATED, low_memory=False))
+    print(f"wrote {_write_presence(curated)}")
+    return 0
 
 
 def cmd_match(args: argparse.Namespace) -> int:
@@ -174,6 +193,11 @@ def main(argv: list[str] | None = None) -> int:
 
     match = sub.add_parser("match", help="overlap with the competition set")
     match.set_defaults(func=cmd_match)
+
+    presence_parser = sub.add_parser(
+        "presence", help="open-data evidence features for every competition compound"
+    )
+    presence_parser.set_defaults(func=cmd_presence)
 
     everything = sub.add_parser("all", help="fetch, curate, build, validate")
     everything.add_argument("--no-tautomer", action="store_true")
