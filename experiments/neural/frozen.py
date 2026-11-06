@@ -15,11 +15,11 @@ import numpy as np
 
 from vacv.baseline import baselines
 from vacv.neural import embed, store
-from vacv.neural.probe import probe, active_regression
+from vacv.neural.probe import active_regression, probe
 from vacv.pipeline import structure_matrix
 from vacv.protocol import HEADER, score, task
 
-VARIANTS = {name: "mean" for name in embed.MODELS}
+POOLING = "mean"
 
 
 def main() -> None:
@@ -41,7 +41,7 @@ def main() -> None:
 
     for split in ("random", "scaffold"):
         for name, embedding in cached.items():
-            matrix = embedding.variant(VARIANTS[name])
+            matrix = embedding.variant(POOLING)
             for head in ("linear", "mlp", "extra"):
                 result = probe(job, split, matrix, name, head, extra_seconds=embedding.seconds)
                 results.append(result)
@@ -56,7 +56,7 @@ def main() -> None:
     print(f"\n# лучший на случайном разбиении: {best.model}")
     for split in ("random", "scaffold"):
         name = best.model.split(" + ")[0]
-        matrix = cached[name].variant(VARIANTS[name])
+        matrix = cached[name].variant(POOLING)
         regression = active_regression(job, split, matrix)
         probability = next(r.probability for r in results if r.model == best.model and r.split == split)
         constant = score(job.labels, job.y, probability, job.active_mean)
@@ -65,18 +65,14 @@ def main() -> None:
               f"  регрессией на эмбеддинге {learned[1]:13,.0f}")
 
     for split in ("random", "scaffold"):
-        cls_results = []
         for name, embedding in cached.items():
             for kind in ("cls", "pooler"):
-                try:
-                    matrix = embedding.variant(kind)
-                except (ValueError, KeyError):
+                if kind == "pooler" and embedding.pooler is None:
                     continue
-                result = probe(job, split, matrix, f"{name}[{kind}]", "linear",
+                result = probe(job, split, embedding.variant(kind), f"{name}[{kind}]", "linear",
                                extra_seconds=embedding.seconds)
-                cls_results.append(result)
+                results.append(result)
                 print(result.row())
-        results += cls_results
 
     store.save("frozen", results)
 
