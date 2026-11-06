@@ -20,7 +20,15 @@ import sys
 
 import pandas as pd
 
-from . import build_dataset, datacard, match_competition, presence, validate as validate_module
+from . import (
+    build_dataset,
+    competition,
+    coverage as coverage_module,
+    datacard,
+    match_competition,
+    presence,
+    validate as validate_module,
+)
 from .curate import curate
 from .paths import INTERIM, KAGGLE, PROCESSED, ensure_dirs
 from .schema import conform
@@ -64,9 +72,25 @@ def _combine(include_competition: bool) -> int:
         log.error("nothing fetched yet")
         return 1
     combined = conform(pd.concat(frames, ignore_index=True))
+    combined = _deduplicate(combined)
     combined.to_csv(MEASUREMENTS, index=False)
     log.info("combined %d measurements -> %s", len(combined), MEASUREMENTS)
     return 0
+
+
+def _deduplicate(combined: pd.DataFrame) -> pd.DataFrame:
+    """Drop measurements two harvesters fetched.
+
+    ``chembl`` and ``chembl_targeted`` query the same database from different
+    directions and overlap heavily on purpose. ``source_id`` is one activity
+    in one source, so the same activity arriving twice is one measurement,
+    and keeping both would double its weight in every median.
+    """
+    identified = combined["source_id"].notna()
+    duplicated = identified & combined.duplicated(subset=["source_db", "source_id"])
+    if duplicated.any():
+        log.info("dropping %d measurements fetched by more than one harvester", int(duplicated.sum()))
+    return combined[~duplicated].reset_index(drop=True)
 
 
 def cmd_curate(args: argparse.Namespace) -> int:
@@ -119,6 +143,7 @@ def _print_match(analysis: dict) -> None:
         print(" | ".join(str(c) for c in item.as_row()))
     print("agreement with the organisers' SI on train:", analysis["agreement_summary"])
     print("cell-line-aware lookup agreement:", analysis.get("lookup_agreement"))
+    _print_recovery(analysis)
     documents = analysis["documents"]
     if not documents.empty:
         print(f"{len(documents)} publications cover competition compounds; top 10:")
@@ -141,6 +166,36 @@ def cmd_presence(args: argparse.Namespace) -> int:
     curated = match_competition.open_source_rows(pd.read_csv(CURATED, low_memory=False))
     print(f"wrote {_write_presence(curated)}")
     return 0
+
+
+def cmd_coverage(args: argparse.Namespace) -> int:
+    if not CURATED.exists():
+        log.error("%s missing; run `curate` first", CURATED)
+        return 1
+    curated = match_competition.open_source_rows(pd.read_csv(CURATED, low_memory=False))
+    splits = competition.splits()
+    if not splits:
+        log.error("no competition file in %s", KAGGLE)
+        return 1
+    result = match_competition.recovery(curated, splits)
+    _print_recovery(result)
+    path = coverage_module.write(result["recovered"], PROCESSED)
+    print(f"wrote {path}")
+    return 0
+
+
+def _print_recovery(result: dict) -> None:
+    table = result.get("recovery_coverage")
+    if table is not None and not table.empty:
+        print("\ncoverage of the competition set:")
+        print(table.to_string(index=False))
+    for name, report in (result.get("recovery_report") or {}).items():
+        print(f"\nreproduction of the organisers' values on train, by {name}:")
+        print(report.to_string(index=False))
+    sentinel = result.get("recovery_sentinel")
+    if sentinel is not None and not sentinel.empty:
+        print("\nsentinel (`SI VACV == 10000`) share on train, by evidence:")
+        print(sentinel.to_string(index=False))
 
 
 def cmd_match(args: argparse.Namespace) -> int:
@@ -198,6 +253,12 @@ def main(argv: list[str] | None = None) -> int:
         "presence", help="open-data evidence features for every competition compound"
     )
     presence_parser.set_defaults(func=cmd_presence)
+
+    coverage_parser = sub.add_parser(
+        "coverage",
+        help="recover the organisers' own IC50/CC50 per compound and score the rule on train",
+    )
+    coverage_parser.set_defaults(func=cmd_coverage)
 
     everything = sub.add_parser("all", help="fetch, curate, build, validate")
     everything.add_argument("--no-tautomer", action="store_true")

@@ -12,6 +12,10 @@ RAW = DATA / "raw"
 INTERIM = DATA / "interim"
 PROCESSED = DATA / "processed"
 KAGGLE = RAW / "kaggle"
+
+#: Competition compound -> ChEMBL molecule links, written by the targeted
+#: harvest and read by the matcher.
+MOLECULE_LINKS = INTERIM / "competition_molecules.csv"
 DOCS = ROOT / "docs"
 
 

@@ -20,8 +20,9 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
+from . import coverage, recover
 from .build_dataset import all_pairs, antiviral_side, build, cytotox_side
-from .curate import standardize
+from .competition import load_split
 from .paths import KAGGLE
 
 log = logging.getLogger(__name__)
@@ -66,17 +67,6 @@ HEADER = [
     "with both",
     "SI reconstructable",
 ]
-
-
-def load_split(name: str) -> pd.DataFrame:
-    path = KAGGLE / f"{name}.csv"
-    frame = pd.read_csv(path)
-    standardized = [standardize(s) for s in frame["SMILES"]]
-    frame["inchikey"] = [s.inchikey for s in standardized]
-    frame["inchikey14"] = [s.inchikey[:14] if s.inchikey else None for s in standardized]
-    frame["standardize_reject"] = [s.reject for s in standardized]
-    frame["split"] = name
-    return frame
 
 
 def open_source_rows(curated: pd.DataFrame) -> pd.DataFrame:
@@ -291,6 +281,7 @@ def analyse(curated: pd.DataFrame) -> dict:
 
     joined = agreement(splits["train"], paired) if "train" in splits else pd.DataFrame()
     return {
+        **recovery(curated_open, splits),
         "overlaps": overlaps,
         "agreement": joined,
         "agreement_summary": summarise_agreement(joined) if not joined.empty else {"compared": 0},
@@ -306,14 +297,45 @@ def analyse(curated: pd.DataFrame) -> dict:
     }
 
 
+def recovery(curated_open: pd.DataFrame, splits: dict[str, pd.DataFrame]) -> dict:
+    """The organisers' own numbers, recovered by the rule of :mod:`vacv.recover`.
+
+    Kept next to the aggregate lookup above rather than replacing it in code,
+    because the two answer different questions: the aggregate is the best
+    estimate of a compound's selectivity index from everything published about
+    it, and this is a reconstruction of the single record the organisers
+    transcribed. For predicting their column, the reconstruction wins - see
+    the accuracy tables in :mod:`vacv.coverage`.
+    """
+    if not splits:
+        return {"recovered": pd.DataFrame(), "recovery_report": {}, "recovery_coverage": pd.DataFrame()}
+    records = recover.Records(curated_open)
+    links = recover.molecule_links()
+    recovered = pd.concat(
+        [recover.recover(split, records, links) for split in splits.values()], ignore_index=True
+    )
+    labelled = coverage.join_labels(recovered, "train") if "train" in splits else pd.DataFrame()
+    if not labelled.empty:
+        recovered["confidence"] = coverage.confidence(recovered, labelled)
+    return {
+        "recovered": recovered,
+        "recovery_labelled": labelled,
+        "recovery_report": coverage.report(labelled) if not labelled.empty else {},
+        "recovery_sentinel": coverage.sentinel_report(labelled) if not labelled.empty else pd.DataFrame(),
+        "recovery_coverage": coverage.coverage(recovered),
+    }
+
+
 def write_lookups(analysis: dict, directory) -> list:
     """Persist the per-compound lookup so the modelling side can use it."""
     written = []
+    recovered = analysis.get("recovered")
+    if recovered is not None and not recovered.empty:
+        written.append(coverage.write(recovered, directory))
     tables = [t for t in analysis.get("lookups", {}).values()]
-    if not tables:
-        return written
-    combined = pd.concat(tables, ignore_index=True)
-    path = directory / "competition_open_data_lookup.csv"
-    combined.to_csv(path, index=False)
-    written.append(path)
+    if tables:
+        combined = pd.concat(tables, ignore_index=True)
+        path = directory / "competition_aggregate_lookup.csv"
+        combined.to_csv(path, index=False)
+        written.append(path)
     return written

@@ -50,7 +50,7 @@ import pandas as pd
 
 from .. import classify, competition
 from ..http import get_json
-from ..paths import raw_dir
+from ..paths import MOLECULE_LINKS, raw_dir
 from ..schema import conform
 from . import chembl, identifiers
 
@@ -105,9 +105,9 @@ def _batched(values: Iterable[str], size: int = IN_BATCH) -> Iterator[list[str]]
         yield chunk
 
 
-def molecules_by_inchikey(keys: Iterable[str], refresh: bool = False) -> dict[str, str]:
-    """``inchikey -> molecule_chembl_id`` for the keys ChEMBL holds exactly."""
-    out: dict[str, str] = {}
+def molecules_by_inchikey(keys: Iterable[str], refresh: bool = False) -> dict[str, dict]:
+    """``inchikey -> molecule record`` for the keys ChEMBL holds exactly."""
+    out: dict[str, dict] = {}
     for batch in _batched(sorted(set(keys))):
         for molecule in _paged(
             "molecule",
@@ -118,11 +118,21 @@ def molecules_by_inchikey(keys: Iterable[str], refresh: bool = False) -> dict[st
             structures = molecule.get("molecule_structures") or {}
             key = structures.get("standard_inchi_key")
             if key:
-                out[key] = molecule["molecule_chembl_id"]
+                out[key] = molecule
     return out
 
 
-def molecules_by_flexmatch(smiles: str, refresh: bool = False) -> list[str]:
+def molecules_by_id(ids: Iterable[str], refresh: bool = False) -> dict[str, dict]:
+    out: dict[str, dict] = {}
+    for batch in _batched(sorted(set(ids))):
+        for molecule in _paged(
+            "molecule", "molecules", {"molecule_chembl_id__in": ",".join(batch)}, refresh=refresh
+        ):
+            out[molecule["molecule_chembl_id"]] = molecule
+    return out
+
+
+def molecules_by_flexmatch(smiles: str, refresh: bool = False) -> list[dict]:
     """ChEMBL's own connectivity search: salts, stereoisomers, tautomers.
 
     This is the looser-than-exact structure match done on the database's side
@@ -138,19 +148,30 @@ def molecules_by_flexmatch(smiles: str, refresh: bool = False) -> list[str]:
     )
     if not payload:
         return []
-    return [m["molecule_chembl_id"] for m in payload.get("molecules") or []]
+    return list(payload.get("molecules") or [])
 
 
 def competition_molecules(refresh: bool = False) -> pd.DataFrame:
-    """Every ChEMBL molecule ID a competition compound resolves to, with how."""
+    """Every ChEMBL molecule a competition compound resolves to, and how.
+
+    The structure ChEMBL stores travels with the link, standardized by
+    :mod:`vacv.curate` so that it is comparable with the keys of the curated
+    corpus. That is what lets the identifier route find records our own
+    structure match misses: the organisers' ``sid…`` title points at a ChEMBL
+    molecule whose stored structure is a salt or a different tautomer of the
+    SMILES they printed.
+    """
     compounds = competition.all_compounds()
     if compounds.empty:
         return pd.DataFrame(columns=["Title", "inchikey", "inchikey14", "chembl_id", "route"])
 
     rows: list[dict] = []
     resolved_titles: set[str] = set()
+    molecules: dict[str, dict] = {}
 
     by_identifier = identifiers.competition_chembl_ids(refresh=refresh)
+    if not by_identifier.empty:
+        molecules.update(molecules_by_id(by_identifier["chembl_id"], refresh=refresh))
     for record in by_identifier.to_dict("records"):
         rows.append(
             {
@@ -167,12 +188,13 @@ def competition_molecules(refresh: bool = False) -> pd.DataFrame:
     for record in compounds.to_dict("records"):
         found = exact.get(record.get("inchikey"))
         if found:
+            molecules[found["molecule_chembl_id"]] = found
             rows.append(
                 {
                     "Title": record.get("Title"),
                     "inchikey": record.get("inchikey"),
                     "inchikey14": record.get("inchikey14"),
-                    "chembl_id": found,
+                    "chembl_id": found["molecule_chembl_id"],
                     "route": "inchikey",
                 }
             )
@@ -188,13 +210,14 @@ def competition_molecules(refresh: bool = False) -> pd.DataFrame:
     ]
     flex = 0
     for record in pending:
-        for chembl_id in molecules_by_flexmatch(record["smiles_std"], refresh=refresh):
+        for molecule in molecules_by_flexmatch(record["smiles_std"], refresh=refresh):
+            molecules[molecule["molecule_chembl_id"]] = molecule
             rows.append(
                 {
                     "Title": record.get("Title"),
                     "inchikey": record.get("inchikey"),
                     "inchikey14": record.get("inchikey14"),
-                    "chembl_id": chembl_id,
+                    "chembl_id": molecule["molecule_chembl_id"],
                     "route": "flexmatch",
                 }
             )
@@ -202,7 +225,27 @@ def competition_molecules(refresh: bool = False) -> pd.DataFrame:
     log.info("targeted: flexmatch searched %d compounds and found %d molecules", len(pending), flex)
 
     out = pd.DataFrame(rows).drop_duplicates()
+    out = _attach_structures(out, molecules)
     log.info("targeted: %d distinct ChEMBL molecules for the competition set", out["chembl_id"].nunique())
+    return out
+
+
+def _attach_structures(links: pd.DataFrame, molecules: dict[str, dict]) -> pd.DataFrame:
+    """Standardize each linked ChEMBL structure the way the corpus is standardized."""
+    from ..curate import standardize
+
+    smiles, keys, skeletons = [], [], []
+    for chembl_id in links["chembl_id"]:
+        structures = (molecules.get(chembl_id) or {}).get("molecule_structures") or {}
+        reported = structures.get("canonical_smiles")
+        standardized = standardize(reported) if reported else None
+        smiles.append(reported)
+        keys.append(standardized.inchikey if standardized else None)
+        skeletons.append(standardized.inchikey[:14] if standardized and standardized.inchikey else None)
+    out = links.copy()
+    out["chembl_smiles"] = smiles
+    out["chembl_inchikey"] = keys
+    out["chembl_inchikey14"] = skeletons
     return out
 
 
@@ -283,6 +326,10 @@ def harvest(refresh: bool = False) -> pd.DataFrame:
     if molecules.empty:
         log.warning("targeted: no competition file in data/raw/kaggle, nothing to look up")
         return conform(pd.DataFrame())
+
+    MOLECULE_LINKS.parent.mkdir(parents=True, exist_ok=True)
+    molecules.to_csv(MOLECULE_LINKS, index=False)
+    log.info("targeted: wrote %s", MOLECULE_LINKS)
 
     index = _enumerate_activities(molecules["chembl_id"], refresh=refresh)
     usable = _usable(index)
