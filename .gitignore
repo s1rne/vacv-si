@@ -4,3 +4,23 @@ data/processed/
 .venv/
 __pycache__/
 *.pyc
+<<<<<<< HEAD
+||||||| 89cb7dd
+.DS_Store
+runs/
+outputs/
+*.ckpt
+*.pt
+=======
+.DS_Store
+runs/
+outputs/
+*.ckpt
+*.pt
+
+# data artefacts
+data/raw/
+data/interim/
+# data/processed holds the deliverable dataset and is tracked on purpose.
+.pytest_cache/
+>>>>>>> exp/data
