@@ -44,7 +44,21 @@ def structure_oof(job: Task, split: str) -> Result:
 
 
 def blend_oof(job: Task, split: str) -> Result:
-    frame = attach(job.frame)
+    return _blend(job, split, attach(job.frame), "GBDT blend (пайплайн)")
+
+
+def plain_blend_oof(job: Task, split: str) -> Result:
+    """Тот же ансамбль без признаков присутствия в открытых базах.
+
+    Признаки присутствия включают литературные IC50 и CC50 самой молекулы. На тестовой
+    выборке это законно — справочник доступен и там, — но при перекрёстной проверке они
+    подсказывают ответ и завышают отсчёт. Нейросети таких подсказок не дают, поэтому
+    сравнение с ними честнее вести по этой строке.
+    """
+    return _blend(job, split, job.frame, "GBDT blend без открытых данных")
+
+
+def _blend(job: Task, split: str, frame, name: str) -> Result:
     probability = np.zeros(len(job.y))
     started = time.perf_counter()
     for train_index, validation_index in job.splits(split):
@@ -52,7 +66,7 @@ def blend_oof(job: Task, split: str) -> Result:
         probability[validation_index] = model.probability(frame.iloc[validation_index])
     elapsed = time.perf_counter() - started
     auc, mse = _score(job, probability)
-    return Result("GBDT blend (пайплайн)", split, auc, mse, elapsed, probability)
+    return Result(name, split, auc, mse, elapsed, probability)
 
 
 def _score(job: Task, probability: np.ndarray) -> tuple[float, float]:
@@ -76,6 +90,7 @@ def cached(job: Task, name: str, split: str, build) -> Result:
 
 def baselines(job: Task, split: str) -> list[Result]:
     return [cached(job, "gbdt-structure", split, structure_oof),
+            cached(job, "gbdt-plain", split, plain_blend_oof),
             cached(job, "gbdt-blend", split, blend_oof)]
 
 

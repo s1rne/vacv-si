@@ -75,12 +75,21 @@ def graph(smiles: str, label: float, global_features: np.ndarray):
                 g=torch.tensor(global_features, dtype=torch.float).unsqueeze(0))
 
 
-def descriptor_block(smiles: list[str]) -> np.ndarray:
-    """Дескрипторы RDKit, обрезанные по квантилям и стандартизованные."""
-    values = np.vstack([descriptors(parse(text)) for text in smiles])
-    values = np.clip(values, np.quantile(values, 0.01, axis=0), np.quantile(values, 0.99, axis=0))
-    centre, spread = values.mean(0), values.std(0)
-    return (values - centre) / np.where(spread > 0, spread, 1.0)
+def raw_descriptors(smiles: list[str]) -> np.ndarray:
+    return np.vstack([descriptors(parse(text)) for text in smiles])
+
+
+def normalize(values: np.ndarray, train_index: np.ndarray) -> np.ndarray:
+    """Обрезка по квантилям и стандартизация по обучающей части фолда.
+
+    Статистики считаются только на обучении: контрольные молекулы не должны влиять даже
+    на масштаб признаков.
+    """
+    reference = values[train_index]
+    low, high = np.quantile(reference, 0.01, axis=0), np.quantile(reference, 0.99, axis=0)
+    clipped = np.clip(values, low, high)
+    centre, spread = clipped[train_index].mean(0), clipped[train_index].std(0)
+    return (clipped - centre) / np.where(spread > 0, spread, 1.0)
 
 
 @dataclass
@@ -153,13 +162,14 @@ def out_of_fold(job: Task, split: str, config: GnnConfig) -> tuple[np.ndarray, f
     from torch_geometric.loader import DataLoader
 
     smiles = list(job.frame["SMILES"])
-    block = descriptor_block(smiles) if config.use_descriptors else np.zeros((len(smiles), 0))
-    graphs = [graph(text, float(label), block[index])
-              for index, (text, label) in enumerate(zip(smiles, job.labels))]
+    raw = raw_descriptors(smiles) if config.use_descriptors else np.zeros((len(smiles), 0))
     device = "cuda" if torch.cuda.is_available() else "cpu"
     probability = np.zeros(len(job.y))
     started = time.perf_counter()
     for train_index, validation_index in job.splits(split):
+        block = normalize(raw, train_index) if config.use_descriptors else raw
+        graphs = [graph(text, float(label), block[index])
+                  for index, (text, label) in enumerate(zip(smiles, job.labels))]
         model = build(config, block.shape[1]).to(device)
         optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate, weight_decay=1e-5)
         loader = DataLoader([graphs[i] for i in train_index], batch_size=config.batch_size, shuffle=True)

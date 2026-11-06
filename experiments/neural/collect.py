@@ -50,7 +50,7 @@ def main() -> None:
 
     print(BLEND_HEADER)
     for split in ("random", "scaffold"):
-        base = reference[split][1]
+        base = next(r for r in reference[split] if r.model.startswith("GBDT blend ("))
         for result in sorted((r for r in neural if r.split == split), key=lambda r: r.mse)[:12]:
             print(blend(job, base, result).row())
         print()

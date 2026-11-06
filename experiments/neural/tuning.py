@@ -20,15 +20,25 @@ EPOCHS = (10, 25, 50)
 
 
 def main() -> None:
+    import sys
+
+    group = "tuning"
+    rates, epochs_grid = RATES, EPOCHS
+    if len(sys.argv) > 1:
+        group, rates, epochs_grid = sys.argv[1], \
+            tuple(float(value) for value in sys.argv[2].split(",")), \
+            tuple(int(value) for value in sys.argv[3].split(","))
+
     job = task()
     results = []
     print(HEADER)
-    for model, rate, epochs in itertools.product(MODELS, RATES, EPOCHS):
+    for model, rate, epochs in itertools.product(MODELS, rates, epochs_grid):
         config = Config(model=model, learning_rate=rate, epochs=epochs)
         result = classify(job, "random", config)
         results.append(result)
         print(result.row(), flush=True)
-    store.save("tuning", results)
+        store.save(group, results)
+    store.save(group, results)
     best = max(results, key=lambda r: r.auc)
     print(f"\n# лучшая настройка по AUC: {best.model}")
     best_mse = min(results, key=lambda r: r.mse)
