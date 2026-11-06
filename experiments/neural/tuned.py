@@ -11,7 +11,10 @@
 - `[канон]` — те же SMILES, переписанные канонически. Разница с той же строкой без
   пометки показывает, сколько давала манера записи, а не молекула.
 
-MoLFormer в 14 раз больше ChemBERTa-77M, поэтому для него берётся короткий план.
+MoLFormer в 14 раз больше ChemBERTa-77M, и один его прогон идёт шесть минут против
+получаса на весь план ChemBERTa. Поэтому для него остаются две строки, отвечающие
+на главный вопрос: сколько давала запись SMILES. Аугментацию и перенос измеряем
+на ChemBERTa.
 """
 
 from __future__ import annotations
@@ -23,7 +26,7 @@ from vacv.neural.finetune import Config
 from vacv.neural.runner import classify
 from vacv.protocol import HEADER, task
 
-BEST = {"chemberta-77m-mtr": (3e-5, 25), "molformer-xl": (3e-5, 25)}
+BEST = {"chemberta-77m-mtr": (1e-4, 25), "molformer-xl": (1e-5, 10)}
 SHORT = {"molformer-xl"}
 
 
@@ -43,7 +46,7 @@ def plan(model: str, rate: float, epochs: int) -> list[tuple[Config, bool]]:
                 extra={"pretrain_epochs": 10, "pretrain_lr": 5e-5}), True),
     ]
     if model in SHORT:
-        return [full[0], full[3], full[5], full[7]]
+        return [full[0], full[5]]
     return full
 
 
