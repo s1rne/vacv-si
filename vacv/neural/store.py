@@ -34,10 +34,18 @@ def load(group: str) -> list[Result]:
     if not path.exists():
         return []
     stored = np.load(path, allow_pickle=False)
+    if "meta" not in stored.files:
+        return []
     meta = json.loads(str(stored["meta"]))
+    if not meta or "model" not in meta[0]:
+        return []
     return [Result(item["model"], item["split"], item["auc"], item["mse"], item["seconds"],
                    stored[f"p{index}"]) for index, item in enumerate(meta)]
 
 
 def groups() -> list[str]:
-    return sorted(path.stem for path in ROOT.glob("*.npz")) if ROOT.exists() else []
+    """Группы результатов. В том же каталоге лежат выгрузка фолдов и файлы Chemprop,
+    у которых другой формат, поэтому группой считается только то, что читается `load`."""
+    if not ROOT.exists():
+        return []
+    return sorted(path.stem for path in ROOT.glob("*.npz") if load(path.stem))
