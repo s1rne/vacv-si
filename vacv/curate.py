@@ -228,7 +228,9 @@ def inactive_evidence(frame: pd.DataFrame, *, canonical_tautomer: bool = True) -
     out = frame.copy()
     numeric = pd.to_numeric(out["value_um"], errors="coerce")
     columns = [c for c in ("text_value", "activity_comment", "data_validity") if c in out.columns]
-    said = out[columns].astype(str).agg(" ".join, axis=1).str.lower()
+    said = pd.Series("", index=out.index, dtype="object")
+    for column in columns:
+        said = said + " " + out[column].astype("string").fillna("").str.lower()
     says_inactive = said.apply(lambda text: any(word in text for word in INACTIVE_COMMENTS))
     candidates = out[numeric.isna() & says_inactive]
     if candidates.empty:

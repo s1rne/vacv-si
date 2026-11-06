@@ -160,14 +160,23 @@ def _recovery_blocks(analysis: dict) -> str:
 `data/processed/competition_open_data_lookup.csv` carries, for every
 competition compound, the IC50, CC50 and SI that the rule in `vacv/recover.py`
 selects: one antiviral record and one cytotoxicity record from the **same
-publication**, preferring the cell line the row's `Culture` names and then the
-censored record, with the value taken as the source printed it. That rule was
+publication**, preferring the cell line the row's `Culture` names, then the
+endpoint the organisers copied (`CC50` before `MCC`), then the censored
+record, with the value taken as the source printed it. That rule was
 fitted on the training split, where the organisers' own values are visible, and
 it reproduces them bit for bit far more often than an aggregate does - a median
 over a compound's replicates is the better estimate of its selectivity and the
 worse reconstruction of their column.
 
-`competition_aggregate_lookup.csv` keeps the aggregate for comparison.""",
+`competition_aggregate_lookup.csv` keeps the aggregate for comparison.
+
+`substitute_recommended` marks the rows whose bucket beat the current model's
+measured squared error on the training split; `si_blended` carries the
+conditional mean the metric actually wants, which is the recovered value moved
+towards 10000 by its bucket's sentinel rate. Rows outside the recommended set
+are still worth keeping as features - `match_tier`, `confidence`,
+`inactive_evidence` - but substituting their values costs more than the model
+they would replace.""",
         coverage_table,
     ]
     for name, table in report.items():
@@ -346,7 +355,8 @@ Do not edit by hand; edit `vacv/datacard.py`.
 | `data/processed/vacv_si_strict.csv` | same compound, same publication, same cell line |
 | `data/processed/vacv_si_relaxed.csv` | identical to `vacv_si.csv`, kept under the explicit name |
 | `data/processed/vacv_si_measured.csv` | the subset where neither IC50 nor CC50 is censored |
-| `data/processed/competition_open_data_lookup.csv` | per competition compound: the best open-data IC50/CC50/SI and its DOI |
+| `data/processed/competition_open_data_lookup.csv` | per competition compound: the organisers' own IC50/CC50/SI, recovered |
+| `data/processed/competition_aggregate_lookup.csv` | the same compounds, aggregated across the corpus instead of reconstructed |
 | `data/processed/competition_presence.csv` | per competition compound: how much open-data evidence exists for it, plus its nearest measured neighbours |
 
 Required columns, in order: `{"`, `".join(REQUIRED_COLUMNS)}`. `ic50` and `cc50`

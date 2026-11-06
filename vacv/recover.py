@@ -59,15 +59,48 @@ log = logging.getLogger(__name__)
 #: stereochemistry and protonation by construction; ``flexmatch`` is ChEMBL's
 #: own connectivity search, which reaches records our standardization and
 #: theirs disagree about.
-MATCH_TIERS = ("inchikey", "chembl_registry", "inchikey14", "flexmatch")
+MATCH_TIERS = ("inchikey", "chembl_registry", "inchikey14", "flexmatch", "inactive_record")
 
 #: How the two halves were paired, strongest first. ``reported ratio`` is not
 #: a pairing at all: it is the selectivity index the authors printed, used
 #: where no pair can be rebuilt.
-PAIRING_RULES = ("document, same cell line", "document", "compound", "reported ratio")
+PAIRING_RULES = (
+    "document, same cell line",
+    "document",
+    "compound",
+    "inactive, no antiviral number",
+    "reported ratio",
+)
 
-#: Preference between several records of one side inside one document.
-SIDE_RULE = ("cell", "censored")
+#: The organisers' value where their IC50 column is empty. Not a ratio.
+SI_SENTINEL = 10_000.0
+
+#: Preference between several records of one side inside one document:
+#: the cell line the row names, then the endpoint the organisers preferred,
+#: then the censored record.
+SIDE_RULE = ("cell", "endpoint", "censored")
+
+#: Endpoint preference inside one side, strongest first. It matters because
+#: the old antiviral literature files the same table under several names: a
+#: paper that prints both a CC50 and a "minimum cytotoxic concentration" for
+#: one compound in one cell line had its CC50 copied, and preferring MCC
+#: there costs 15 of the 158 training rows that have a pair.
+ANTIVIRAL_ENDPOINTS = ("EC50", "IC50", "ED50", "ID50", "MIC", "MIC50", "AC50", "I50", "Potency", "Activity")
+CYTOTOX_ENDPOINTS = (
+    "CC50",
+    "TC50",
+    "CD50",
+    "GI50",
+    "TGI",
+    "IC50",
+    "LC50",
+    "TD50",
+    "MTC",
+    "MCC",
+    "MNTD",
+    "MTD",
+    "LD50",
+)
 
 #: Columns of the per-compound lookup, in order. Fixed so the file has the
 #: same shape whether or not anything matched, and so the modelling side can
@@ -107,6 +140,12 @@ OUTPUT_COLUMNS = [
     "sentinel_evidence",
     "ic50_um",
     "cc50_um",
+    "document_verdict",
+    "document_train_rows",
+    "document_train_within_0.3_log",
+    "sentinel_rate_for_bucket",
+    "si_blended",
+    "substitute_recommended",
 ]
 
 
@@ -123,16 +162,23 @@ def _value(record: dict) -> float:
     return float(record["value_um"])
 
 
-def _side_key(record: dict, cell: str | None) -> tuple:
+def _endpoint_rank(record: dict, kind: str) -> int:
+    order = CYTOTOX_ENDPOINTS if kind == "cytotox" else ANTIVIRAL_ENDPOINTS
+    endpoint = record.get("standard_type")
+    return order.index(endpoint) if endpoint in order else len(order)
+
+
+def _side_key(record: dict, cell: str | None, kind: str) -> tuple:
     return (
         -int(cell is not None and record.get("cell_line") == cell),
+        _endpoint_rank(record, kind),
         -int(bool(record.get("censored"))),
         str(record.get("source_id")),
     )
 
 
-def _best(records: list[dict], cell: str | None) -> dict:
-    return min(records, key=lambda record: _side_key(record, cell))
+def _best(records: list[dict], cell: str | None, kind: str) -> dict:
+    return min(records, key=lambda record: _side_key(record, cell, kind))
 
 
 class Records:
@@ -207,6 +253,19 @@ def inactive_records(path=INACTIVE) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
+def _group_votes(prior: dict | None, record: dict) -> dict[str, int]:
+    """Votes for each publication from the row's own (strain, Culture) group.
+
+    The row's own vote is removed, so a training row is never selected by
+    evidence it supplied itself and the measured accuracy is not inflated.
+    """
+    if not prior:
+        return {}
+    group = prior.get((record.get("strain"), record.get("Culture")), {})
+    title = str(record.get("Title"))
+    return {document: len(titles - {title}) for document, titles in group.items()}
+
+
 def _vaccinia_selectivity(curated_open: pd.DataFrame) -> pd.DataFrame:
     """Reported selectivity indices, restricted to the ones about vaccinia.
 
@@ -244,19 +303,32 @@ def _link_keys(links: pd.DataFrame) -> dict[str, dict[str, list[str]]]:
     return out
 
 
-def _pair(antiviral: list[dict], cytotox: list[dict], cell: str | None) -> dict | None:
-    """The organisers' pairing rule: one publication, one record per side."""
+def _pair(
+    antiviral: list[dict],
+    cytotox: list[dict],
+    cell: str | None,
+    votes: dict[str, int] | None = None,
+) -> dict | None:
+    """The organisers' pairing rule: one publication, one record per side.
+
+    ``votes`` is how many *other* training rows of the same (strain, Culture)
+    group were reproduced from each publication. The organisers' groups are
+    paper-shaped - 18 of the 23 training groups come from a single publication
+    - so where a compound appears in several papers, the group says which one
+    the row was taken from. It is a tie-break, never an override: a document
+    that cannot supply the row's cell line still loses to one that can.
+    """
     documents = {r["document_id"] for r in antiviral if r.get("document_id")} & {
         r["document_id"] for r in cytotox if r.get("document_id")
     }
     if documents:
         scored = []
         for document in sorted(documents):
-            left = _best([r for r in antiviral if r.get("document_id") == document], cell)
-            right = _best([r for r in cytotox if r.get("document_id") == document], cell)
+            left = _best([r for r in antiviral if r.get("document_id") == document], cell, "antiviral")
+            right = _best([r for r in cytotox if r.get("document_id") == document], cell, "cytotox")
             matched = int(left.get("cell_line") == cell) + int(right.get("cell_line") == cell) if cell else 0
-            scored.append((-matched, document, left, right))
-        _, document, left, right = min(scored, key=lambda item: (item[0], item[1]))
+            scored.append((-(votes or {}).get(document, 0), -matched, document, left, right))
+        _, _, document, left, right = min(scored, key=lambda item: item[:3])
         matched_cells = cell is not None and left.get("cell_line") == cell and right.get("cell_line") == cell
         rule = "document, same cell line" if matched_cells else "document"
         return {
@@ -269,15 +341,20 @@ def _pair(antiviral: list[dict], cytotox: list[dict], cell: str | None) -> dict 
     if antiviral and cytotox:
         return {
             "rule": "compound",
-            "antiviral": _best(antiviral, cell),
-            "cytotox": _best(cytotox, cell),
+            "antiviral": _best(antiviral, cell, "antiviral"),
+            "cytotox": _best(cytotox, cell, "cytotox"),
             "document_id": None,
             "n_documents": 0,
         }
     return None
 
 
-def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = None) -> pd.DataFrame:
+def recover(
+    split: pd.DataFrame,
+    records: Records,
+    links: pd.DataFrame | None = None,
+    prior: dict | None = None,
+) -> pd.DataFrame:
     """One row per competition compound: the pair the organisers' rule selects.
 
     ``si`` is ``cc50 / ic50`` of two single records, so it is their arithmetic
@@ -303,6 +380,7 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
             "cell_line": cell,
         }
         key_14 = _key(record.get("inchikey14"))
+        votes = _group_votes(prior, record)
         linked = by_title.get(str(record.get("Title")), {})
         attempts: list[tuple[str, str | None, bool]] = [("inchikey", _key(record.get("inchikey")), True)]
         attempts += [("chembl_registry", key, len(key) > 14) for key in linked.get("chembl_registry", [])]
@@ -317,7 +395,7 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
             antiviral, cytotox = records.sides(key if exact else key[:14], exact)
             antiviral_seen = max(antiviral_seen, len(antiviral))
             cytotox_seen = max(cytotox_seen, len(cytotox))
-            found = _pair(antiviral, cytotox, cell)
+            found = _pair(antiviral, cytotox, cell, votes)
             if found is not None:
                 chosen = (tier, found)
                 break
@@ -329,6 +407,27 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
         # written into si - vacv.coverage measures how often it is right.
         row["inactive_evidence"] = bool(key_14 and key_14 in records.inactive)
         row["sentinel_evidence"] = bool(row["inactive_evidence"] or (cytotox_seen and not antiviral_seen))
+
+        if chosen is None and row["inactive_evidence"]:
+            # A record that names vaccinia and reports "Not active" instead of
+            # a concentration is exactly what left the organisers' IC50 column
+            # empty, and an empty IC50 column is what their pipeline turned
+            # into SI VACV = 10000. This is not a guess about the compound, it
+            # is the same statement from the same source.
+            chosen = (
+                "inactive_record",
+                {
+                    "rule": "inactive, no antiviral number",
+                    "antiviral": {},
+                    "cytotox": {},
+                    "document_id": None,
+                    "n_documents": 0,
+                    "si": SI_SENTINEL,
+                    "doi": None,
+                    "year": None,
+                    "source_db": None,
+                },
+            )
 
         if chosen is None:
             # Nothing to pair: fall back on the selectivity index the authors
@@ -360,13 +459,15 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
         if chosen is not None:
             tier, found = chosen
             left, right = found["antiviral"], found["cytotox"]
-            if found["rule"] == "reported ratio":
+            if found["rule"] in ("reported ratio", "inactive, no antiviral number"):
                 row.update(
                     {
                         "match_tier": tier,
                         "rule": found["rule"],
                         "si": found["si"],
-                        "si_quality": "reported_ratio",
+                        "si_quality": "reported_ratio"
+                        if found["rule"] == "reported ratio"
+                        else "sentinel",
                         "censored": False,
                         "document_id": found["document_id"],
                         "n_documents": found["n_documents"],

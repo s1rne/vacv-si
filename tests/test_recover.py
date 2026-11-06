@@ -68,8 +68,18 @@ def test_prefers_the_named_cell_line_then_the_censored_record():
         measurement(value_um=7.0, cell_line="Vero", censored=False, source_id="b"),
         measurement(value_um=100.0, cell_line="Vero", censored=True, relation=">", source_id="c"),
     ]
-    assert recover._best(records, "Vero")["value_um"] == 100.0
-    assert recover._best(records, "HeLa")["value_um"] == 5.0
+    assert recover._best(records, "Vero", "antiviral")["value_um"] == 100.0
+    assert recover._best(records, "HeLa", "antiviral")["value_um"] == 5.0
+
+
+def test_prefers_the_endpoint_the_organisers_copied():
+    records = [
+        measurement(measurement_class="cytotox", standard_type="MCC", value_um=16.0, source_id="a"),
+        measurement(measurement_class="cytotox", standard_type="CC50", value_um=100.0, source_id="b"),
+    ]
+    # A paper that prints both a CC50 and a minimum cytotoxic concentration
+    # had its CC50 copied into the competition file.
+    assert recover._best(records, "Vero", "cytotox")["standard_type"] == "CC50"
 
 
 def test_pairs_inside_one_publication_and_falls_back_to_the_compound():
@@ -226,3 +236,38 @@ def test_confidence_falls_back_to_the_overall_rate_for_thin_buckets():
     # One row is too few to estimate from, so the bucket inherits the overall rate.
     assert values.iloc[1] == pytest.approx(5 / 6)
     assert np.isnan(values.iloc[2])
+
+
+def test_an_inactive_record_recovers_the_sentinel_not_a_ratio():
+    curated = pd.DataFrame(
+        [measurement(measurement_class="cytotox", standard_type="CC50", value_um=45.0)]
+    )
+    inactive = pd.DataFrame(
+        [{"inchikey": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N", "inchikey14": "LFQSCWFLJHTTHZ"}]
+    )
+    table = recover.recover(
+        pd.DataFrame([split_row()]), recover.Records(curated, inactive), pd.DataFrame()
+    )
+    assert table.loc[0, "si"] == pytest.approx(recover.SI_SENTINEL)
+    assert table.loc[0, "si_quality"] == "sentinel"
+    assert table.loc[0, "rule"] == "inactive, no antiviral number"
+    assert pd.isna(table.loc[0, "ic50"])
+
+
+def test_a_rebuildable_pair_beats_the_sentinel_evidence():
+    curated = pd.DataFrame(
+        [
+            measurement(value_um=2.0),
+            measurement(
+                measurement_class="cytotox", standard_type="CC50", value_um=50.0, source_id="CHEMBL_ACT_5"
+            ),
+        ]
+    )
+    inactive = pd.DataFrame(
+        [{"inchikey": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N", "inchikey14": "LFQSCWFLJHTTHZ"}]
+    )
+    table = recover.recover(
+        pd.DataFrame([split_row()]), recover.Records(curated, inactive), pd.DataFrame()
+    )
+    assert table.loc[0, "si"] == pytest.approx(25.0)
+    assert bool(table.loc[0, "inactive_evidence"])

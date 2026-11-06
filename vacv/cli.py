@@ -192,6 +192,10 @@ def _print_recovery(result: dict) -> None:
     if table is not None and not table.empty:
         print("\ncoverage of the competition set:")
         print(table.to_string(index=False))
+    slices = result.get("recovery_slices")
+    if slices is not None and not slices.empty:
+        print("\ntest coverage by leaderboard slice:")
+        print(slices.to_string(index=False))
     for name, report in (result.get("recovery_report") or {}).items():
         print(f"\nreproduction of the organisers' values on train, by {name}:")
         print(report.to_string(index=False))
@@ -199,6 +203,11 @@ def _print_recovery(result: dict) -> None:
     if split_classes is not None and not split_classes.empty:
         print("\ntrain coverage, by what the organisers' row actually is:")
         print(split_classes.to_string(index=False))
+    documents = result.get("recovery_documents")
+    if documents is not None and not documents.empty:
+        failed = documents[documents["verdict"].eq("failed")]
+        print(f"\n{len(documents)} source publications have train rows; {len(failed)} fail validation:")
+        print(documents.head(25).to_string(index=False))
     sentinel = result.get("recovery_sentinel")
     if sentinel is not None and not sentinel.empty:
         print("\nsentinel (`SI VACV == 10000`) share on train, by evidence:")

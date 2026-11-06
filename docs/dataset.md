@@ -11,7 +11,8 @@ Do not edit by hand; edit `vacv/datacard.py`.
 | `data/processed/vacv_si_strict.csv` | same compound, same publication, same cell line |
 | `data/processed/vacv_si_relaxed.csv` | identical to `vacv_si.csv`, kept under the explicit name |
 | `data/processed/vacv_si_measured.csv` | the subset where neither IC50 nor CC50 is censored |
-| `data/processed/competition_open_data_lookup.csv` | per competition compound: the best open-data IC50/CC50/SI and its DOI |
+| `data/processed/competition_open_data_lookup.csv` | per competition compound: the organisers' own IC50/CC50/SI, recovered |
+| `data/processed/competition_aggregate_lookup.csv` | the same compounds, aggregated across the corpus instead of reconstructed |
 | `data/processed/competition_presence.csv` | per competition compound: how much open-data evidence exists for it, plus its nearest measured neighbours |
 
 Required columns, in order: `smiles`, `ic50`, `cc50`, `si`, `doi`. `ic50` and `cc50`
@@ -21,35 +22,39 @@ are micromolar; `si` is `cc50 / ic50`. Everything after `doi` is provenance.
 
 | source_db | measurements | antiviral | cytotox | compounds | with DOI |
 |---|---|---|---|---|---|
-| ChEMBL | 32880 | 22346 | 10534 | 4365 | 100% |
+| ChEMBL | 52548 | 32399 | 18290 | 4989 | 98% |
 | PubChem BioAssay | 3496 | 3496 | 0 | 2757 | 0% |
 
 ### Endpoints on the antiviral side (vaccinia potency)
 
 | endpoint | measurements | compounds | median uM |
 |---|---|---|---|
-| EC50 | 18748 | 2453 | 62 |
+| EC50 | 19530 | 2503 | 54 |
+| MIC | 6475 | 475 | 178 |
 | AC50 | 3489 | 2750 | 10 |
-| IC50 | 2970 | 1294 | 9.74 |
-| ED50 | 634 | 187 | 145 |
+| IC50 | 3356 | 1352 | 8.4 |
+| MIC50 | 1977 | 142 | 182 |
+| ED50 | 666 | 189 | 100 |
+| ID50 | 389 | 84 | 73.9 |
+| Potency | 12 | 10 | 15 |
 | Activity | 1 | 1 | 6 |
 
 ### Endpoints on the cytotoxicity side
 
 | endpoint | measurements | compounds | median uM |
 |---|---|---|---|
-| CC50 | 5979 | 2436 | 100 |
-| IC50 | 1883 | 482 | 41 |
-| GI50 | 660 | 17 | 0.33 |
-| TGI | 633 | 14 | 5.5 |
-| LC50 | 627 | 14 | 100 |
-| TC50 | 162 | 104 | 200 |
-| Activity | 148 | 81 | 281 |
-| MTC | 120 | 58 | 365 |
-| CD50 | 112 | 37 | 225 |
-| ED50 | 107 | 101 | 0.423 |
-| EC50 | 45 | 19 | 92.2 |
-| MNTD | 22 | 22 | 52.4 |
+| CC50 | 6351 | 2493 | 100 |
+| IC50 | 3966 | 567 | 24.5 |
+| MCC | 3236 | 1069 | 213 |
+| GI50 | 1641 | 32 | 2.8 |
+| LC50 | 752 | 17 | 100 |
+| TGI | 747 | 15 | 8.71 |
+| MIC | 215 | 74 | 263 |
+| ID50 | 211 | 100 | 150 |
+| Potency | 210 | 36 | 25.1 |
+| TC50 | 173 | 107 | 200 |
+| Activity | 155 | 84 | 278 |
+| ED50 | 130 | 106 | 0.427 |
 
 A measurement is one reported number. `antiviral` and `cytotox` are assigned by
 `vacv.classify` from the endpoint name plus the assay free text, not from the
@@ -60,10 +65,10 @@ about as often as under `CC50`.
 
 | pairing level | compounds | with DOI | censored | SI p5/p25/p50/p75/p95 |
 |---|---|---|---|---|
-| strict | 898 | 100% | 74% | 0.42 / 1 / 1 / 8.22 / 250 |
-| document | 1288 | 100% | 71% | 0.16 / 0.727 / 1 / 3.71 / 138 |
-| compound | 1308 | 100% | 70% | 0.157 / 0.791 / 1 / 4.18 / 231 |
-| relaxed | 1308 | 100% | 72% | 0.157 / 1 / 1 / 3.71 / 129 |
+| strict | 1419 | 100% | 79% | 0.424 / 1 / 1 / 5 / 136 |
+| document | 1838 | 100% | 72% | 0.25 / 1 / 1 / 5 / 117 |
+| compound | 1870 | 100% | 71% | 0.25 / 1 / 1 / 5 / 147 |
+| relaxed | 1870 | 100% | 75% | 0.25 / 1 / 1 / 5 / 118 |
 
 Pairing levels are defined in `vacv/build_dataset.py`:
 
@@ -79,25 +84,25 @@ Pairing levels are defined in `vacv/build_dataset.py`:
 `vacv_si.csv` emits each compound once, at the most specific level available
 for it.
 
-## SI distribution (1308 compounds)
+## SI distribution (1870 compounds)
 
 | statistic | value |
 |---|---|
-| min | 1.24e-05 |
-| p5 / p25 / p50 / p75 / p95 | 0.157 / 1 / 1 / 3.71 / 129 |
-| max | 2.18e+05 |
-| geometric mean | 2.02 |
-| fraction with SI >= 10 | 17.9% |
-| fraction with SI <= 1 | 59.6% |
+| min | 0.000169 |
+| p5 / p25 / p50 / p75 / p95 | 0.25 / 1 / 1 / 5 / 118 |
+| max | 1.53e+05 |
+| geometric mean | 2.38 |
+| fraction with SI >= 10 | 17.1% |
+| fraction with SI <= 1 | 53.3% |
 
 ### What the censoring does to SI - read this before training
 
 | si_quality | compounds | share | median SI | SI >= 10 |
 |---|---|---|---|---|
-| undetermined | 389 | 30% | 1 | 2% |
-| upper_bound | 374 | 29% | 1 | 1% |
-| measured | 367 | 28% | 3.44 | 38% |
-| lower_bound | 178 | 14% | 7.21 | 46% |
+| undetermined | 626 | 33% | 1 | 1% |
+| upper_bound | 506 | 27% | 1 | 1% |
+| measured | 460 | 25% | 5 | 41% |
+| lower_bound | 278 | 15% | 6.33 | 44% |
 
 `si_quality` says whether the ratio is a measurement or an artefact:
 
@@ -133,24 +138,24 @@ rows are excluded from the open-data side before matching.
 
 | split | rows | standardized | found in open data | with VACV IC50/EC50 | with CC50 | with both | SI reconstructable |
 |---|---|---|---|---|---|---|---|
-| train (inchikey) | 320 | 320 | 143 | 122 | 114 | 94 | 91 |
-| train (inchikey14) | 320 | 320 | 184 | 156 | 150 | 123 | 123 |
-| test (inchikey) | 597 | 596 | 285 | 231 | 246 | 192 | 188 |
-| test (inchikey14) | 597 | 596 | 360 | 287 | 316 | 243 | 243 |
+| train (inchikey) | 320 | 320 | 182 | 138 | 178 | 134 | 130 |
+| train (inchikey14) | 320 | 320 | 224 | 171 | 215 | 163 | 163 |
+| test (inchikey) | 597 | 596 | 344 | 254 | 335 | 246 | 238 |
+| test (inchikey14) | 597 | 596 | 423 | 310 | 409 | 297 | 297 |
 
-Open-data SI compared against the organisers' `SI VACV` on the **121**
+Open-data SI compared against the organisers' `SI VACV` on the **148**
 training compounds where both exist and the competition value is not the
-sentinel (2 sentinel rows excluded):
+sentinel (13 sentinel rows excluded):
 
 | statistic | value |
 |---|---|
 | median log10 error (open - competition) | +0.00 |
 | median absolute log10 error | 0.00 |
-| within a factor of 2 | 88% |
-| within a factor of 5 | 96% |
-| within a factor of 10 | 98% |
-| Spearman rho | 0.93 |
-| Pearson r on log10(SI) | 0.95 |
+| within a factor of 2 | 83% |
+| within a factor of 5 | 93% |
+| within a factor of 10 | 97% |
+| Spearman rho | 0.89 |
+| Pearson r on log10(SI) | 0.90 |
 
 The median error is zero because, for most of these compounds, the open
 databases return the organisers' number itself rather than an estimate of it.
@@ -158,40 +163,103 @@ The spread that remains comes from compounds measured in several papers or
 several cell lines, where the aggregation takes the median and the organisers
 took one of them.
 
-`SI VACV == 10000` appears on 2 of the matched training rows. It is a sentinel for 'selectivity could not be determined' (the IC50 column is empty because the compound was inactive at every tested dose), not a measured ratio, and it is excluded from the comparison above. Any model trained on the raw `SI VACV` column has to deal with it.
+`SI VACV == 10000` appears on 13 of the matched training rows. It is a sentinel for 'selectivity could not be determined' (the IC50 column is empty because the compound was inactive at every tested dose), not a measured ratio, and it is excluded from the comparison above. Any model trained on the raw `SI VACV` column has to deal with it.
 
-### Per-compound lookup
+### Per-compound lookup: the organisers' own numbers, recovered
 
 `data/processed/competition_open_data_lookup.csv` carries, for every
-competition compound, the best open-data IC50/CC50/SI found for it, the rule
-that selected it, and the DOI. Candidates are preferred in this order: a pair
-from one publication in the same cell line the organisers used, then any
-single-publication pair, then a same-publication pair with the cell line
-unstated, then a cross-publication aggregate.
+competition compound, the IC50, CC50 and SI that the rule in `vacv/recover.py`
+selects: one antiviral record and one cytotoxicity record from the **same
+publication**, preferring the cell line the row's `Culture` names, then the
+endpoint the organisers copied (`CC50` before `MCC`), then the censored
+record, with the value taken as the source printed it. That rule was
+fitted on the training split, where the organisers' own values are visible, and
+it reproduces them bit for bit far more often than an aggregate does - a median
+over a compound's replicates is the better estimate of its selectivity and the
+worse reconstruction of their column.
 
-| split | compounds | exact InChIKey | skeleton only | SI recovered | coverage | selection rule |
+`competition_aggregate_lookup.csv` keeps the aggregate for comparison.
+
+`substitute_recommended` marks the rows whose bucket beat the current model's
+measured squared error on the training split; `si_blended` carries the
+conditional mean the metric actually wants, which is the recovered value moved
+towards 10000 by its bucket's sentinel rate. Rows outside the recommended set
+are still worth keeping as features - `match_tier`, `confidence`,
+`inactive_evidence` - but substituting their values costs more than the model
+they would replace.
+
+| split | compounds | si_recovered | coverage | recommended | recommended_coverage | sentinel_evidence_only | inchikey | chembl_registry | inchikey14 | flexmatch | inactive_record | document, same cell line | document | compound | inactive, no antiviral number | reported ratio | measured | lower_bound | upper_bound | undetermined | reported_ratio | sentinel |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| test | 597 | 430 | 0.72 | 249 | 0.417 | 47 | 254 | 17 | 34 | 66 | 59 | 228 | 123 | 12 | 59 | 8 | 135 | 105 | 34 | 89 | 8 | 59 |
+| train | 320 | 228 | 0.713 | 123 | 0.384 | 28 | 136 | 3 | 26 | 38 | 25 | 111 | 82 | 8 | 25 | 2 | 68 | 50 | 22 | 61 | 2 | 25 |
+
+Reproduction of the organisers' values on train, by match tier:
+
+| match_tier | matched | sentinel | sentinel_share | called_sentinel | sentinel_precision | compared | si_exact | both_halves_exact | median_abs_log10 | within_0.3_log | within_1_log | mse_substituted | mse_constant | mse_blended |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| inchikey | 136 | 12 | 0.0882 | 0 | - | 122 | 0.844 | 0.779 | 0 | 0.91 | 0.967 | 8.92e+06 | 1.13e+07 | 8.16e+06 |
+| chembl_registry | 3 | 0 | 0 | 0 | - | 3 | 0.667 | 0.667 | 0 | 0.667 | 1 | 658 | 7.41e+06 | 658 |
+| inchikey14 | 26 | 1 | 0.0385 | 0 | - | 25 | 0.92 | 0.92 | 1.08e-15 | 0.96 | 0.96 | 3.84e+06 | 8.21e+06 | 3.68e+06 |
+| flexmatch | 38 | 16 | 0.421 | 0 | - | 22 | 0 | 0 | 0.391 | 0.409 | 0.864 | 4.18e+07 | 2.64e+07 | 2.41e+07 |
+| inactive_record | 25 | 24 | 0.96 | 25 | 0.96 | 1 | 0 | 0 | 1.7 | 0 | 0 | 3.84e+06 | 5.08e+07 | 3.84e+06 |
+| all | 228 | 53 | 0.232 | 25 | 0.96 | 173 | 0.74 | 0.694 | 2.03e-07 | 0.844 | 0.948 | 1.31e+07 | 1.78e+07 | 1.2e+07 |
+
+Reproduction of the organisers' values on train, by rule:
+
+| rule | matched | sentinel | sentinel_share | called_sentinel | sentinel_precision | compared | si_exact | both_halves_exact | median_abs_log10 | within_0.3_log | within_1_log | mse_substituted | mse_constant | mse_blended |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| document, same cell line | 111 | 8 | 0.0721 | 0 | - | 101 | 0.881 | 0.891 | 4.44e-16 | 0.941 | 0.99 | 7.16e+06 | 1.04e+07 | 6.65e+06 |
+| document | 82 | 19 | 0.232 | 0 | - | 63 | 0.587 | 0.476 | 0.000109 | 0.746 | 0.937 | 2.32e+07 | 1.79e+07 | 1.78e+07 |
+| compound | 8 | 2 | 0.25 | 0 | - | 6 | 0 | 0 | 0.785 | 0.333 | 0.5 | 2.58e+07 | 1.77e+07 | 1.94e+07 |
+| inactive, no antiviral number | 25 | 24 | 0.96 | 25 | 0.96 | 1 | 0 | 0 | 1.7 | 0 | 0 | 3.84e+06 | 5.08e+07 | 3.84e+06 |
+| reported ratio | 2 | 0 | 0 | 0 | - | 2 | 1 | 0 | 0.000196 | 1 | 1 | 0.000619 | 7.3e+06 | 0.000619 |
+| all | 228 | 53 | 0.232 | 25 | 0.96 | 173 | 0.74 | 0.694 | 2.03e-07 | 0.844 | 0.948 | 1.31e+07 | 1.78e+07 | 1.2e+07 |
+
+Reproduction of the organisers' values on train, by bucket:
+
+| match_tier | rule | matched | sentinel | sentinel_share | called_sentinel | sentinel_precision | compared | si_exact | both_halves_exact | median_abs_log10 | within_0.3_log | within_1_log | mse_substituted | mse_constant | mse_blended |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| inchikey | document, same cell line | 74 | 1 | 0.0135 | 0 | - | 71 | 0.901 | 0.915 | 0 | 0.958 | 0.986 | 1.42e+06 | 7.91e+06 | 1.41e+06 |
+| inchikey | document | 55 | 11 | 0.2 | 0 | - | 44 | 0.841 | 0.682 | 0 | 0.886 | 0.977 | 2e+07 | 1.65e+07 | 1.6e+07 |
+| flexmatch | document | 25 | 8 | 0.32 | 0 | - | 17 | 0 | 0 | 0.366 | 0.412 | 0.882 | 3.2e+07 | 2.19e+07 | 2.17e+07 |
+| inactive_record | inactive, no antiviral number | 25 | 24 | 0.96 | 25 | 0.96 | 1 | 0 | 0 | 1.7 | 0 | 0 | 3.84e+06 | 5.08e+07 | 3.84e+06 |
+| inchikey14 | document, same cell line | 24 | 1 | 0.0417 | 0 | - | 23 | 1 | 1 | 4.44e-16 | 1 | 1 | 4.16e+06 | 8.32e+06 | 3.97e+06 |
+| flexmatch | document, same cell line | 10 | 6 | 0.6 | 0 | - | 4 | 0 | 0 | 0.46 | 0.5 | 1 | 5.89e+07 | 3.46e+07 | 2.38e+07 |
+| inchikey | compound | 5 | 0 | 0 | 0 | - | 5 | 0 | 0 | 0.543 | 0.4 | 0.6 | 1.57e+06 | 6.09e+06 | 1.57e+06 |
+| chembl_registry | document, same cell line | 3 | 0 | 0 | 0 | - | 3 | 0.667 | 0.667 | 0 | 0.667 | 1 | 658 | 7.41e+06 | 658 |
+| flexmatch | compound | 3 | 2 | 0.667 | 0 | - | 1 | 0 | 0 | 1.29 | 0 | 0 | 6.63e+07 | 3.7e+07 | 2.08e+07 |
+| inchikey | reported ratio | 2 | 0 | 0 | 0 | - | 2 | 1 | 0 | 0.000196 | 1 | 1 | 0.000619 | 7.3e+06 | 0.000619 |
+| inchikey14 | document | 2 | 0 | 0 | 0 | - | 2 | 0 | 0 | 1.14 | 0.5 | 0.5 | 9.82e+03 | 6.85e+06 | 9.82e+03 |
+
+Reproduction of the organisers' values on train, by si quality:
+
+| si_quality | matched | sentinel | sentinel_share | called_sentinel | sentinel_precision | compared | si_exact | both_halves_exact | median_abs_log10 | within_0.3_log | within_1_log | mse_substituted | mse_constant | mse_blended |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| measured | 68 | 13 | 0.191 | 0 | - | 55 | 0.564 | 0.582 | 1.92e-05 | 0.745 | 0.909 | 1.9e+07 | 1.59e+07 | 1.55e+07 |
+| lower_bound | 50 | 5 | 0.1 | 0 | - | 45 | 0.689 | 0.689 | 3.47e-06 | 0.822 | 0.956 | 1.01e+07 | 1.13e+07 | 9.09e+06 |
+| upper_bound | 22 | 3 | 0.136 | 0 | - | 18 | 0.944 | 0.778 | 0 | 0.944 | 1 | 1.36e+07 | 1.37e+07 | 1.18e+07 |
+| undetermined | 61 | 8 | 0.131 | 0 | - | 52 | 0.904 | 0.827 | 0 | 0.942 | 0.981 | 1.31e+07 | 1.34e+07 | 1.14e+07 |
+| reported_ratio | 2 | 0 | 0 | 0 | - | 2 | 1 | 0 | 0.000196 | 1 | 1 | 0.000619 | 7.3e+06 | 0.000619 |
+| sentinel | 25 | 24 | 0.96 | 25 | 0.96 | 1 | 0 | 0 | 1.7 | 0 | 0 | 3.84e+06 | 5.08e+07 | 3.84e+06 |
+| all | 228 | 53 | 0.232 | 25 | 0.96 | 173 | 0.74 | 0.694 | 2.03e-07 | 0.844 | 0.948 | 1.31e+07 | 1.78e+07 | 1.2e+07 |
+
+Coverage on train split by what the organisers' row actually is. A sentinel row's target is 10000, so a recovered ratio must not be substituted there; a live row's target is the ratio itself.
+
+| class | compounds | si_recovered | coverage | si_exact | within_0.3_log | sentinel_evidence_on_the_rest |
 |---|---|---|---|---|---|---|
-| train | 320 | 91 | 32 | 123 | 38% | strict, same cell line: 98, strict: 15, document: 10 |
-| test | 597 | 189 | 54 | 243 | 41% | strict, same cell line: 198, strict: 25, document: 19, compound: 1 |
+| sentinel (SI VACV == 10000) | 81 | 53 | 0.654 | 0.453 | - | 9 |
+| live measurement | 239 | 175 | 0.732 | 0.731 | 0.844 | 19 |
 
-Accuracy of that lookup against the organisers' own `SI VACV`, on the
-121 training compounds where both exist:
+How the evidence available for a compound predicts the sentinel, on train. `inactive_evidence` is a record that names vaccinia and reports no number at all ("Not Active"), which is the shape of the organisers' empty IC50 column.
 
-| statistic | value |
-|---|---|
-| identical to the organisers' value | 58% |
-| within a factor of 2 | 89% |
-| within a factor of 5 | 94% |
-| Spearman rho | 0.92 |
-
-That 58% of recovered values are *bit-identical* is the
-finding, not the accuracy. The competition compounds were taken from the same
-papers these databases index - several of the organisers' own compound labels
-are database identifiers (`sid103460068`, `CHEMBL6102784`) - so the open
-harvest does not approximate their labels, it recovers them. The disagreements
-are nearly all cases where a compound was measured in several papers or several
-cell lines and the organisers used one of them while the aggregation uses the
-median.
+| group | compounds | sentinel_share |
+|---|---|---|
+| si recovered | 228 | 0.232 |
+| inactive-against-vaccinia record | 29 | 0.828 |
+| cytotox record, no antiviral number | 59 | 0.559 |
+| no record of either kind | 64 | 0.391 |
+| antiviral record exists | 207 | 0.14 |
+| all | 320 | 0.253 |
 
 ### How the organisers built `SI VACV`, and what that implies
 
@@ -212,22 +280,15 @@ So roughly a quarter of the target column is a constant, and in `test.csv`
 makes their hidden target 10000.
 
 Matching against open data predicts that sentinel, which is useful because it
-needs no forbidden column. On the training split:
-
-| open-data match | compounds | share with `SI VACV == 10000` |
-|---|---|---|
-| no match in open data | 197 | 41% |
-| matched, SI measured | 55 | 4% |
-| matched, SI bounded or undetermined | 68 | 0% |
-
-A compound whose paper ChEMBL indexed is almost never a sentinel row; the
-sentinels come from papers the databases did not pick up. Of the 597 test
-compounds, 243 match and 354 do not.
+needs no forbidden column: a compound whose paper ChEMBL indexed is almost
+never a sentinel row, and the sentinels come from papers the databases did not
+index or from records that say "Not Active" instead of giving a number. The
+measured separation is in the table above.
 
 ### Evidence features for every competition compound
 
-The lookup above only has values for the 243 test and 123 train compounds
-where a full pair existed. `competition_presence.csv` covers all 917, because
+The lookup above only has values for the compounds where a pair could be
+rebuilt. `competition_presence.csv` covers all 917, because
 *absence* from the public anti-VACV literature predicts the sentinel: counts of
 matching records, whether an antiviral or a cytotoxicity record exists, median
 IC50 and CC50, censoring flags, document and DOI counts, year range, and the
@@ -246,25 +307,25 @@ evidence-of-measurement column does.
 
 ### Publications behind the competition compounds
 
-148 ChEMBL publications contain at least one competition compound. The top 15 by coverage:
+796 ChEMBL publications contain at least one competition compound. The top 15 by coverage:
 
 | ChEMBL document | DOI | year | competition compounds | measurements |
 |---|---|---|---|---|
-| CHEMBL3351523 | 10.1016/j.bmc.2014.06.043 | 2014 | 48 | 748 |
+| CHEMBL3351523 | 10.1016/j.bmc.2014.06.043 | 2014 | 48 | 799 |
 | CHEMBL5346934 | 10.1021/acs.jmedchem.3c00069 | 2023 | 37 | 84 |
+| CHEMBL1122521 | 10.1021/jm00377a018 | 1984 | 32 | 159 |
 | CHEMBL1136837 | 10.1016/j.bmc.2008.11.075 | 2009 | 31 | 149 |
-| CHEMBL3864138 | 10.1016/j.bmcl.2016.09.071 | 2016 | 28 | 55 |
-| CHEMBL6092128 | 10.1039/d4md00181h | 2024 | 26 | 79 |
-| CHEMBL1140321 | 10.1021/jm050291s | 2005 | 26 | 284 |
-| CHEMBL4699424 | 10.1039/d0md00108b | 2020 | 22 | 52 |
+| CHEMBL1142978 | 10.1021/jm061445m | 2007 | 28 | 28 |
+| CHEMBL3864138 | 10.1016/j.bmcl.2016.09.071 | 2016 | 28 | 83 |
+| CHEMBL1140321 | 10.1021/jm050291s | 2005 | 26 | 310 |
+| CHEMBL6092128 | 10.1039/d4md00181h | 2024 | 26 | 132 |
 | CHEMBL3352401 | 10.1016/j.ejmech.2014.07.011 | 2014 | 22 | 262 |
-| CHEMBL1833830 | 10.1016/j.bmc.2011.08.025 | 2011 | 21 | 57 |
-| CHEMBL1811861 | 10.1016/j.bmc.2011.04.016 | 2011 | 21 | 466 |
+| CHEMBL4699424 | 10.1039/d0md00108b | 2020 | 22 | 80 |
+| CHEMBL1833830 | 10.1016/j.bmc.2011.08.025 | 2011 | 21 | 87 |
+| CHEMBL1811861 | 10.1016/j.bmc.2011.04.016 | 2011 | 21 | 516 |
+| CHEMBL4837211 | 10.1016/j.ejmech.2021.113485 | 2021 | 21 | 60 |
+| CHEMBL4043131 | 10.1016/j.bmc.2017.06.046 | 2017 | 20 | 228 |
 | CHEMBL1145896 | 10.1021/jm030932o | 2003 | 20 | 209 |
-| CHEMBL4837211 | 10.1016/j.ejmech.2021.113485 | 2021 | 20 | 20 |
-| CHEMBL4043131 | 10.1016/j.bmc.2017.06.046 | 2017 | 20 | 168 |
-| CHEMBL5625166 | 10.1016/j.ejmech.2023.115601 | 2023 | 19 | 92 |
-| CHEMBL1158343 | 10.1016/j.ejmech.2008.08.010 | 2009 | 18 | 210 |
 
 
 ## Caveats
@@ -296,13 +357,13 @@ evidence-of-measurement column does.
 
 ## Validation at generation time
 
-- [INFO   ] schema: 1308 rows, 27 columns
-- [INFO   ] smiles: all 1308 SMILES parse
-- [INFO   ] units: ic50 spans 0.00074 to 5000 uM (median 70.23)
-- [INFO   ] units: cc50 spans 8.8e-05 to 5000 uM (median 100)
-- [INFO   ] duplicates: inchikey14 is unique across 1308 rows
+- [INFO   ] schema: 1870 rows, 27 columns
+- [INFO   ] smiles: all 1870 SMILES parse
+- [INFO   ] units: ic50 spans 0.00074 to 5000 uM (median 89.16)
+- [INFO   ] units: cc50 spans 0.0005979 to 5400 uM (median 100)
+- [INFO   ] duplicates: inchikey14 is unique across 1870 rows
 - [INFO   ] si_consistency: si == cc50/ic50 for every row
-- [INFO   ] provenance: 1308 of 1308 rows carry a DOI (100.0%)
-- [INFO   ] provenance: pairing levels: {'strict': 898, 'document': 390, 'compound': 20}
-- [INFO   ] provenance: 942 rows involve a censored (> or <) measurement
-- [INFO   ] provenance: 68 rows aggregate replicate measurements spanning more than one log unit
+- [INFO   ] provenance: 1870 of 1870 rows carry a DOI (100.0%)
+- [INFO   ] provenance: pairing levels: {'strict': 1419, 'document': 419, 'compound': 32}
+- [INFO   ] provenance: 1411 rows involve a censored (> or <) measurement
+- [INFO   ] provenance: 101 rows aggregate replicate measurements spanning more than one log unit

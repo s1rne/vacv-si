@@ -311,12 +311,17 @@ def recovery(curated_open: pd.DataFrame, splits: dict[str, pd.DataFrame]) -> dic
         return {"recovered": pd.DataFrame(), "recovery_report": {}, "recovery_coverage": pd.DataFrame()}
     records = recover.Records(curated_open)
     links = recover.molecule_links()
+    prior = coverage.document_prior(records) if "train" in splits else {}
     recovered = pd.concat(
-        [recover.recover(split, records, links) for split in splits.values()], ignore_index=True
+        [recover.recover(split, records, links, prior) for split in splits.values()], ignore_index=True
     )
     labelled = coverage.join_labels(recovered, "train") if "train" in splits else pd.DataFrame()
     if not labelled.empty:
         recovered["confidence"] = coverage.confidence(recovered, labelled)
+        for column, values in coverage.document_trust(recovered, labelled).items():
+            recovered[column] = values
+        for column, values in coverage.advice(recovered, labelled).items():
+            recovered[column] = values
     return {
         "recovered": recovered,
         "recovery_labelled": labelled,
@@ -324,6 +329,8 @@ def recovery(curated_open: pd.DataFrame, splits: dict[str, pd.DataFrame]) -> dic
         "recovery_sentinel": coverage.sentinel_report(labelled) if not labelled.empty else pd.DataFrame(),
         "recovery_by_sentinel": coverage.coverage_by_sentinel(labelled) if not labelled.empty else pd.DataFrame(),
         "recovery_coverage": coverage.coverage(recovered),
+        "recovery_documents": coverage.document_report(labelled) if not labelled.empty else pd.DataFrame(),
+        "recovery_slices": coverage.public_slice(recovered),
     }
 
 

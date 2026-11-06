@@ -135,7 +135,62 @@ Query: `esearch.fcgi?db=pcassay&term=vaccinia[ANAM] OR vaccinia[TXNM]`
   distinguishes `document` (ChEMBL, the DOI of the paper the activity belongs
   to) from `assay_citation`.
 
-### 3. The organisers' training split (optional, local, not an open source)
+### 3. ChEMBL, queried from the competition compounds (targeted)
+
+| | |
+|---|---|
+| endpoint | `https://www.ebi.ac.uk/chembl/api/data` (same as source 1) |
+| licence | data **CC BY-SA 3.0**; EBI terms of use |
+| module | `vacv/sources/chembl_targeted.py` |
+| command | `uv run python -m vacv.cli fetch --source chembl_targeted` |
+
+Source 1 starts from the word "vaccinia". This one starts from the molecules
+the competition asks about and walks to their records, which reaches two
+things the word-first harvest cannot:
+
+- the **other half of a known compound**: a vaccinia EC50 in a paper ChEMBL
+  indexed and a CC50 in a different paper that never says "vaccinia";
+- the **rest of a paper's table**: a publication whose indexed assay text did
+  not match the query drops out with every compound in it.
+
+Queries:
+
+1. `GET /substance/sid/<list>/xrefs/RegistryID,SourceName/JSON` on PubChem for
+   the 378 competition rows titled with a PubChem SID
+   (`vacv/sources/identifiers.py`). **All 382 identifier-titled rows resolve to
+   a ChEMBL molecule**, because every one of those substances was deposited in
+   PubChem by ChEMBL - `sid103460068` is `CHEMBL190021`. That is a stronger
+   link than a structure match: it names the record the organisers took the
+   compound from.
+2. `GET /molecule.json?molecule_structures__standard_inchi_key__in=…` for the
+   standardized InChIKey of every competition compound → 522 of 917 resolve
+   exactly.
+3. `GET /molecule.json?molecule_structures__canonical_smiles__flexmatch=…`,
+   one request per compound nothing cheaper resolved. `flexmatch` is ChEMBL's
+   own connectivity search, so it finds the salt or tautomer ChEMBL stores
+   where our standardization and theirs disagree: 47 further molecules from
+   218 searches.
+4. `GET /activity.json?molecule_chembl_id__in=…&only=activity_id,document_chembl_id,assay_chembl_id,molecule_chembl_id,standard_type,assay_description`
+   → a light index of **54 114** activities of those 610 molecules. `only=` is
+   not an optimisation here: without it this step downloads tens of megabytes
+   of assay prose for molecules that turn out to be irrelevant.
+5. `GET /activity.json?activity_id__in=…` for the **23 242** indexed
+   activities whose endpoint can be one half of a selectivity index.
+6. `GET /activity.json?document_chembl_id__in=…` for every **poxvirus
+   publication** among the 2440 documents those activities belong to (195 of
+   them), in full - every compound, every activity. A document counts as a
+   poxvirus publication when one of our activities in it names a poxvirus or
+   when its own title or abstract does.
+
+Net contribution: **67 180** activities, of which 51 796 are rows source 1
+already had (dropped by `source_id` in `cli._deduplicate`), so about 16 000
+measurements and 195 publications the word-first harvest did not reach.
+
+The module reads only `SMILES` and `Title` from the competition file, through
+`vacv/competition.py`, and returns an empty frame when the file is absent, so
+`data/processed/` still builds from the open world alone.
+
+### 4. The organisers' training split (optional, local, not an open source)
 
 `vacv/sources/kaggle_competition.py` reads `data/raw/kaggle/*train*.csv` when
 present. It is **off by default** (`--include-competition` turns it on) and the
