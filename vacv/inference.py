@@ -25,6 +25,7 @@ PROFILES = {
                       "forest_leaf": 1},
     "blend": {},
     "hybrid": {},
+    "hybrid_soft": {},
 }
 
 
@@ -32,6 +33,10 @@ def predict_ensemble(train, y, test, seeds=7, profile="hybrid"):
     """Frames must already have literature/presence attached."""
     if seeds < 1:
         raise ValueError("seeds must be positive")
+    if profile == "hybrid_soft":
+        from .postprocess import conditional_lookup
+        probability, raw, _ = predict_ensemble(train, y, test, seeds, "hybrid")
+        return probability, raw, conditional_lookup(raw, probability, test)
     if profile in {"blend", "hybrid"}:
         names = ("context_half", "kernel") if profile == "hybrid" else ("baseline", "context", "kernel")
         components = [predict_ensemble(train, y, test, seeds, name)

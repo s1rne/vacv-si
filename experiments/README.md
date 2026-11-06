@@ -31,3 +31,9 @@ PYTHONPATH=. uv run python scripts/cv.py --profiles baseline crossfit descriptor
 Отдельные кандидаты CatBoost: `catboost`, `catboost6`, `catcontext`.
 Результаты нового исследования и команды воспроизведения:
 [results/2026-11-07/report.md](results/2026-11-07/report.md).
+
+Дополнительные методы: harmonic graph, source-kernel logistic, локальный TabICLv2
+и вероятностная литературная подстановка `hybrid_soft` —
+[протокол и результаты](results/2026-11-07-novel/report.md).
+`hybrid_soft` доступен через `scripts/cv.py --profiles hybrid_soft` и
+`scripts/submit.py --profile hybrid_soft`; исходные профили сохранены.
