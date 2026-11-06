@@ -268,7 +268,9 @@ def load_competition_set() -> pd.DataFrame | None:
     """
     if not KAGGLE.exists():
         return None
-    candidates = sorted(KAGGLE.glob("*.csv"))
+    # The training split only: the test split's labels are what the
+    # competition asks us to predict.
+    candidates = sorted(KAGGLE.glob("*train*.csv"))
     if not candidates:
         return None
     frame = pd.read_csv(candidates[0])

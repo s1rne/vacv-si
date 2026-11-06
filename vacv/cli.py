@@ -20,9 +20,9 @@ import sys
 
 import pandas as pd
 
-from . import build_dataset, datacard, validate as validate_module
+from . import build_dataset, datacard, match_competition, validate as validate_module
 from .curate import curate
-from .paths import INTERIM, PROCESSED, ensure_dirs
+from .paths import INTERIM, KAGGLE, PROCESSED, ensure_dirs
 from .schema import conform
 from .sources import ALL_SOURCES, OPEN_SOURCES, kaggle_competition
 
@@ -87,14 +87,46 @@ def cmd_build(args: argparse.Namespace) -> int:
         log.error("%s missing; run `curate` first", CURATED)
         return 1
     curated = pd.read_csv(CURATED, low_memory=False)
-    tables = build_dataset.build(curated)
+    # The deliverable is an open-source dataset. Competition rows may sit in
+    # the curated table (they are needed for the overlap analysis), but they
+    # never reach data/processed.
+    open_only = match_competition.open_source_rows(curated)
+    if len(open_only) != len(curated):
+        log.info("build: excluding %d competition rows from the dataset", len(curated) - len(open_only))
+    tables = build_dataset.build(open_only)
     written = build_dataset.write(tables)
     for name, path in written.items():
         print(f"wrote {path}")
     competition = build_dataset.load_competition_set()
-    card = datacard.render(curated, tables, competition)
+    analysis = None
+    if (KAGGLE / "test.csv").exists() or (KAGGLE / "train.csv").exists():
+        analysis = match_competition.analyse(curated)
+        _print_match(analysis)
+    card = datacard.render(open_only, tables, competition, analysis)
     datacard.write(card)
     print(f"wrote {datacard.OUTPUT}")
+    return 0
+
+
+def _print_match(analysis: dict) -> None:
+    from .match_competition import HEADER
+
+    print(" | ".join(HEADER))
+    for item in analysis["overlaps"]:
+        print(" | ".join(str(c) for c in item.as_row()))
+    print("agreement with the organisers' SI on train:", analysis["agreement_summary"])
+    documents = analysis["documents"]
+    if not documents.empty:
+        print(f"{len(documents)} publications cover competition compounds; top 10:")
+        print(documents.head(10).to_string(index=False))
+
+
+def cmd_match(args: argparse.Namespace) -> int:
+    if not CURATED.exists():
+        log.error("%s missing; run `curate` first", CURATED)
+        return 1
+    analysis = match_competition.analyse(pd.read_csv(CURATED, low_memory=False))
+    _print_match(analysis)
     return 0
 
 
@@ -136,6 +168,9 @@ def main(argv: list[str] | None = None) -> int:
     validate_parser = sub.add_parser("validate", help="check the built dataset")
     validate_parser.add_argument("--path", type=lambda p: PROCESSED / p if "/" not in p else p)
     validate_parser.set_defaults(func=cmd_validate)
+
+    match = sub.add_parser("match", help="overlap with the competition set")
+    match.set_defaults(func=cmd_match)
 
     everything = sub.add_parser("all", help="fetch, curate, build, validate")
     everything.add_argument("--no-tautomer", action="store_true")

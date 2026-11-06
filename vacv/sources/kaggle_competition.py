@@ -29,8 +29,14 @@ SOURCE = "kaggle"
 ASSUMED_UNITS = "uM"
 
 
-def available() -> bool:
-    return KAGGLE.exists() and any(KAGGLE.glob("*.csv"))
+#: Only files matching this are read. The test split carries the labels the
+#: competition asks us to predict; folding them into a training table is
+#: leakage, so reaching them takes an explicit argument, never a default.
+DEFAULT_PATTERN = "*train*.csv"
+
+
+def available(pattern: str = DEFAULT_PATTERN) -> bool:
+    return KAGGLE.exists() and any(KAGGLE.glob(pattern))
 
 
 def _column(frame: pd.DataFrame, *candidates: str) -> str | None:
@@ -45,13 +51,13 @@ def _column(frame: pd.DataFrame, *candidates: str) -> str | None:
     return None
 
 
-def harvest() -> pd.DataFrame:
-    if not available():
-        log.info("kaggle: no competition CSV under %s, skipping", KAGGLE)
+def harvest(pattern: str = DEFAULT_PATTERN) -> pd.DataFrame:
+    if not available(pattern):
+        log.info("kaggle: no competition CSV matching %s under %s, skipping", pattern, KAGGLE)
         return conform(pd.DataFrame())
 
     rows: list[dict] = []
-    for path in sorted(KAGGLE.glob("*.csv")):
+    for path in sorted(KAGGLE.glob(pattern)):
         frame = pd.read_csv(path)
         smiles_column = _column(frame, "smiles", "canonical_smiles", "structure")
         if smiles_column is None:
@@ -92,7 +98,7 @@ def harvest() -> pd.DataFrame:
                         "data_validity": None,
                     }
                 )
-        log.info("kaggle: %s -> %d measurements", path.name, len(rows))
+        log.info("kaggle: %s -> %d measurements so far", path.name, len(rows))
 
     frame = conform(pd.DataFrame(rows))
     frame["value_um"] = pd.to_numeric(frame["raw_value"], errors="coerce")

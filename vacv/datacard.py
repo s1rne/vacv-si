@@ -101,10 +101,93 @@ def _overlap(relaxed: pd.DataFrame, competition: pd.DataFrame | None) -> str:
     )
 
 
+def match_section(analysis: dict) -> str:
+    """How much of the competition set the open harvest reproduces."""
+    from .match_competition import HEADER
+
+    overlaps = _table([o.as_row() for o in analysis["overlaps"]], HEADER)
+    summary = analysis["agreement_summary"]
+    joined = analysis["agreement"]
+
+    if summary.get("compared"):
+        agreement = f"""Open-data SI compared against the organisers' `SI VACV` on the **{summary['compared']}**
+training compounds where both exist and the competition value is not the
+sentinel ({summary.get('sentinel_rows_excluded', 0)} sentinel rows excluded):
+
+| statistic | value |
+|---|---|
+| median log10 error (open - competition) | {summary['median_log10_error']:+.2f} |
+| median absolute log10 error | {summary['median_absolute_log10_error']:.2f} |
+| within a factor of 2 | {summary['within_2x']:.0%} |
+| within a factor of 5 | {summary['within_5x']:.0%} |
+| within a factor of 10 | {summary['within_10x']:.0%} |
+| Spearman rho | {summary['spearman']:.2f} |
+| Pearson r on log10(SI) | {summary['pearson_log']:.2f} |
+
+A median absolute log10 error of {summary['median_absolute_log10_error']:.2f} is a factor of
+{10 ** summary['median_absolute_log10_error']:.1f}. That is the realistic accuracy of a label
+reconstructed from open databases for a molecule whose paper is in ChEMBL, and
+it sets a floor on what any model trained on such labels can achieve."""
+    else:
+        agreement = "No training compound could be paired from open data, so no agreement could be measured."
+
+    documents = analysis["documents"]
+    if not documents.empty:
+        top = documents.head(15)
+        doc_table = _table(
+            [
+                [
+                    row.document_id,
+                    row.doi or "-",
+                    int(row.year) if pd.notna(row.year) else "-",
+                    int(row.compounds),
+                    int(row.measurements),
+                ]
+                for row in top.itertuples()
+            ],
+            ["ChEMBL document", "DOI", "year", "competition compounds", "measurements"],
+        )
+        doc_note = (
+            f"{len(documents)} ChEMBL publications contain at least one competition compound. "
+            f"The top {len(top)} by coverage:"
+        )
+    else:
+        doc_table = ""
+        doc_note = "No ChEMBL publication matched a competition compound."
+
+    sentinel_note = ""
+    if not joined.empty and "is_sentinel" in joined:
+        sentinel_note = (
+            f"\n`SI VACV == 10000` appears on {int(joined['is_sentinel'].sum())} of the matched "
+            "training rows. It is a sentinel for 'selectivity could not be determined' "
+            "(the IC50 column is empty because the compound was inactive at every tested "
+            "dose), not a measured ratio, and it is excluded from the comparison above. "
+            "Any model trained on the raw `SI VACV` column has to deal with it.\n"
+        )
+
+    return f"""## Overlap with the competition set
+
+Matching is by standardized InChIKey - full (same stereochemistry and
+protonation) and first 14 characters (skeleton only). The competition's own
+rows are excluded from the open-data side before matching.
+
+{overlaps}
+
+{agreement}
+{sentinel_note}
+### Publications behind the competition compounds
+
+{doc_note}
+
+{doc_table}
+"""
+
+
 def render(
     curated: pd.DataFrame,
     tables: dict[str, pd.DataFrame],
     competition: pd.DataFrame | None = None,
+    analysis: dict | None = None,
 ) -> str:
     relaxed = tables["relaxed"]
     findings = validate(relaxed) if not relaxed.empty else []
@@ -172,6 +255,8 @@ would bias the model towards optimism.
 ## Overlap with the competition training set
 
 {_overlap(relaxed, competition)}
+
+{match_section(analysis) if analysis else ""}
 
 ## Caveats
 

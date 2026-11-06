@@ -163,14 +163,24 @@ def curate(frame: pd.DataFrame, *, canonical_tautomer: bool = True) -> tuple[pd.
     out["curation_reject"] = [s.reject for s in standardized]
 
     # Second attempt at the mass-concentration rows, now that MW is known.
+    out["value_um"] = pd.to_numeric(out["value_um"], errors="coerce").astype("float64")
+    out["mol_weight"] = pd.to_numeric(out["mol_weight"], errors="coerce").astype("float64")
     missing = out["value_um"].isna() & out["raw_units"].notna() & out["mol_weight"].notna()
     if missing.any():
-        recovered = [
-            to_micromolar(row.raw_value, row.raw_units, mol_weight=row.mol_weight)[0]
-            for row in out.loc[missing].itertuples()
-        ]
+        recovered = pd.Series(
+            [
+                to_micromolar(row.raw_value, row.raw_units, mol_weight=row.mol_weight)[0]
+                for row in out.loc[missing].itertuples()
+            ],
+            index=out.index[missing],
+            dtype="float64",
+        )
         out.loc[missing, "value_um"] = recovered
-        log.info("curate: recovered %d of %d mass-concentration rows", sum(v is not None for v in recovered), int(missing.sum()))
+        log.info(
+            "curate: recovered %d of %d mass-concentration rows",
+            int(recovered.notna().sum()),
+            int(missing.sum()),
+        )
 
     out.loc[out["curation_reject"].isna() & out["value_um"].isna(), "curation_reject"] = "no_micromolar_value"
     implausible = out["curation_reject"].isna() & ~out["value_um"].between(MIN_UM, MAX_UM)

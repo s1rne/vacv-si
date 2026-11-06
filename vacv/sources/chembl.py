@@ -51,15 +51,27 @@ BIOCHEMICAL_FORMATS = {
 }
 
 
-def _paged(resource: str, key: str, params: dict[str, Any], *, refresh: bool = False) -> Iterator[dict]:
+class TooManyResults(RuntimeError):
+    """A filtered query matched far more rows than the filter can explain."""
+
+
+def _paged(
+    resource: str,
+    key: str,
+    params: dict[str, Any],
+    *,
+    refresh: bool = False,
+    max_total: int | None = None,
+) -> Iterator[dict]:
     offset = 0
-    total = None
     while True:
         query = dict(params, limit=PAGE, offset=offset)
         payload = get_json(f"{BASE}/{resource}.json", SOURCE, params=query, refresh=refresh)
         if not payload:
             return
         total = payload["page_meta"]["total_count"]
+        if max_total is not None and total > max_total and offset == 0:
+            raise TooManyResults(f"{resource} filter {params} matched {total} rows (cap {max_total})")
         items = payload.get(key) or []
         yield from items
         offset += PAGE
@@ -111,29 +123,6 @@ def vaccinia_assays(refresh: bool = False) -> list[dict]:
     return list(assays.values())
 
 
-def _documents_of_interest(refresh: bool = False) -> tuple[set[str], dict[str, dict]]:
-    documents: set[str] = set()
-    seed_assays = {a["assay_chembl_id"]: a for a in vaccinia_assays(refresh)}
-    for assay in seed_assays.values():
-        if assay.get("document_chembl_id"):
-            documents.add(assay["document_chembl_id"])
-
-    for target in vaccinia_targets(refresh):
-        for activity in _paged(
-            "activity",
-            "activities",
-            {
-                "target_chembl_id": target["target_chembl_id"],
-                "only": "document_chembl_id,assay_chembl_id",
-            },
-            refresh=refresh,
-        ):
-            if activity.get("document_chembl_id"):
-                documents.add(activity["document_chembl_id"])
-    log.info("chembl: %d documents of interest", len(documents))
-    return documents, seed_assays
-
-
 ID_FIELD = {"assay": "assay_chembl_id", "document": "document_chembl_id", "cell_line": "cell_chembl_id"}
 
 
@@ -146,31 +135,123 @@ def _fetch_by_id(resource: str, key: str, ids: Iterable[str], refresh: bool = Fa
     return out
 
 
+def _vaccinia_activities(refresh: bool = False) -> tuple[dict[int, dict], dict[str, dict]]:
+    """Everything ChEMBL ties to vaccinia directly. Bounded and precise."""
+    activities: dict[int, dict] = {}
+    seed_assays = {a["assay_chembl_id"]: a for a in vaccinia_assays(refresh)}
+
+    for target in vaccinia_targets(refresh):
+        for activity in _paged(
+            "activity", "activities", {"target_chembl_id": target["target_chembl_id"]}, refresh=refresh
+        ):
+            activities[activity["activity_id"]] = activity
+
+    for batch in _batched(sorted(seed_assays)):
+        for activity in _paged(
+            "activity", "activities", {"assay_chembl_id__in": ",".join(batch)}, refresh=refresh
+        ):
+            activities[activity["activity_id"]] = activity
+
+    log.info("chembl: %d activities tied to vaccinia directly", len(activities))
+    return activities, seed_assays
+
+
+def expandable_documents(documents: dict[str, dict]) -> list[str]:
+    """Documents it is safe and meaningful to pull in their entirety.
+
+    ChEMBL's notion of a document includes depositor containers, not only
+    papers: ``CHEMBL1201862`` is titled "PubChem BioAssay data set", has
+    ``doc_type == "DATASET"``, and owns 7.4 million activities from every
+    depositor PubChem ever had. Expanding it would download most of ChEMBL,
+    and - worse - treating it as "the same publication" would pair a vaccinia
+    IC50 with a cytotoxicity measurement from an unrelated deposit, which is
+    exactly the failure mode the strict pairing rule exists to prevent.
+
+    So only real publications are expanded, and only they are allowed to act
+    as a pairing key (see :func:`_row`).
+    """
+    return [
+        chembl_id
+        for chembl_id, document in documents.items()
+        if document.get("doc_type") == "PUBLICATION" and document.get("src_id") == 1
+    ]
+
+
+#: A single publication with more activities than this is a bulk deposit
+#: wearing a paper's clothes; skip it rather than download it.
+MAX_ACTIVITIES_PER_DOCUMENT = 20_000
+
+
 def harvest(refresh: bool = False) -> pd.DataFrame:
-    documents, seed_assays = _documents_of_interest(refresh)
+    activities, seed_assays = _vaccinia_activities(refresh)
 
-    activities: list[dict] = []
-    for batch in _batched(sorted(documents)):
-        activities.extend(
-            _paged("activity", "activities", {"document_chembl_id__in": ",".join(batch)}, refresh=refresh)
-        )
-    log.info("chembl: %d activities in those documents", len(activities))
+    document_ids = {a["document_chembl_id"] for a in activities.values() if a.get("document_chembl_id")}
+    docs = _fetch_by_id("document", "documents", document_ids, refresh)
+    expandable = expandable_documents(docs)
+    log.info(
+        "chembl: %d documents, %d are publications and will be expanded",
+        len(docs),
+        len(expandable),
+    )
 
-    assay_ids = {a["assay_chembl_id"] for a in activities if a.get("assay_chembl_id")}
+    skipped_documents: list[str] = []
+    for batch in _batched(sorted(expandable)):
+        try:
+            found = list(
+                _paged(
+                    "activity",
+                    "activities",
+                    {"document_chembl_id__in": ",".join(batch)},
+                    refresh=refresh,
+                    max_total=MAX_ACTIVITIES_PER_DOCUMENT * len(batch),
+                )
+            )
+        except TooManyResults as exc:
+            # Fall back to one document at a time so a single bulk deposit
+            # costs that document, not the whole batch.
+            log.warning("chembl: %s; retrying document by document", exc)
+            found = []
+            for chembl_id in batch:
+                try:
+                    found.extend(
+                        _paged(
+                            "activity",
+                            "activities",
+                            {"document_chembl_id": chembl_id},
+                            refresh=refresh,
+                            max_total=MAX_ACTIVITIES_PER_DOCUMENT,
+                        )
+                    )
+                except TooManyResults as inner:
+                    log.warning("chembl: skipping %s: %s", chembl_id, inner)
+                    skipped_documents.append(chembl_id)
+        for activity in found:
+            activities.setdefault(activity["activity_id"], activity)
+    log.info("chembl: %d activities after document widening", len(activities))
+
+    records = list(activities.values())
+    assay_ids = {a["assay_chembl_id"] for a in records if a.get("assay_chembl_id")}
     assays = dict(seed_assays)
     assays.update(_fetch_by_id("assay", "assays", assay_ids, refresh))
 
-    docs = _fetch_by_id("document", "documents", documents, refresh)
+    # Expansion brings in activities from documents not seen in the first pass.
+    missing_docs = {
+        a["document_chembl_id"]
+        for a in records
+        if a.get("document_chembl_id") and a["document_chembl_id"] not in docs
+    }
+    docs.update(_fetch_by_id("document", "documents", missing_docs, refresh))
 
     cell_ids = {a.get("cell_chembl_id") for a in assays.values() if a.get("cell_chembl_id")}
     cells = _fetch_by_id("cell_line", "cell_lines", cell_ids, refresh)
 
-    raw = raw_dir(SOURCE) / "harvest_summary.json"
-    raw.write_text(
+    (raw_dir(SOURCE) / "harvest_summary.json").write_text(
         json.dumps(
             {
-                "documents": len(documents),
-                "activities": len(activities),
+                "documents": len(docs),
+                "documents_expanded": len(expandable),
+                "documents_skipped_as_bulk_deposits": skipped_documents,
+                "activities": len(records),
                 "assays": len(assays),
                 "cell_lines": len(cells),
             },
@@ -178,7 +259,7 @@ def harvest(refresh: bool = False) -> pd.DataFrame:
         )
     )
 
-    rows = [_row(activity, assays, docs, cells) for activity in activities]
+    rows = [_row(activity, assays, docs, cells) for activity in records]
     return conform(pd.DataFrame(rows))
 
 
@@ -248,7 +329,13 @@ def _row(activity: dict, assays: dict[str, dict], docs: dict[str, dict], cells: 
         "source_db": "ChEMBL",
         "source_id": f"CHEMBL_ACT_{activity.get('activity_id')}",
         "assay_id": activity.get("assay_chembl_id"),
-        "document_id": activity.get("document_chembl_id"),
+        # Only a real publication may act as a pairing key. A depositor
+        # container shared by thousands of unrelated assays would make the
+        # strict rule meaningless, so it is left empty and such rows can only
+        # be paired at the weakest "compound" level.
+        "document_id": activity.get("document_chembl_id")
+        if document.get("doc_type") == "PUBLICATION"
+        else None,
         "doi": document.get("doi") or document.get("doi_chembl"),
         "doi_provenance": "document" if (document.get("doi") or document.get("doi_chembl")) else None,
         "reference": reference or None,
