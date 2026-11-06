@@ -80,11 +80,16 @@ def main() -> None:
         print(f"\n# запись «{writing}»: отличается от файла в {changed} строках из {len(texts)}")
         for name in LANGUAGE_MODELS:
             embedding = embed.load(name, texts)
-            for split in ("random", "scaffold"):
-                result = probe(job, split, embedding.mean, f"{name} [{writing}]", "linear",
-                               extra_seconds=embedding.seconds)
-                results.append(result)
-                report(job, split, result)
+            matrices = {f"{name} [{writing}]": embedding.mean}
+            if writing == "канонический RDKit":
+                matrices[f"{name} + morgan [{writing}]"] = np.hstack(
+                    [embedding.mean, blocks["morgan counts"]])
+            for label, matrix in matrices.items():
+                for split in ("random", "scaffold"):
+                    result = probe(job, split, matrix, label, "linear",
+                                   extra_seconds=embedding.seconds)
+                    results.append(result)
+                    report(job, split, result)
 
     store.save("controls", results)
 
