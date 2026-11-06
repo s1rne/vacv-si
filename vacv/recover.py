@@ -43,8 +43,10 @@ import logging
 
 import pandas as pd
 
+import numpy as np
+
 from .build_dataset import antiviral_side, cytotox_side, si_quality
-from .classify import extract_cell_line
+from .classify import extract_cell_line, mentions_vaccinia
 from .paths import MOLECULE_LINKS
 
 log = logging.getLogger(__name__)
@@ -58,11 +60,50 @@ log = logging.getLogger(__name__)
 #: theirs disagree about.
 MATCH_TIERS = ("inchikey", "chembl_registry", "inchikey14", "flexmatch")
 
-#: How the two halves were paired, strongest first.
-PAIRING_RULES = ("document, same cell line", "document", "compound")
+#: How the two halves were paired, strongest first. ``reported ratio`` is not
+#: a pairing at all: it is the selectivity index the authors printed, used
+#: where no pair can be rebuilt.
+PAIRING_RULES = ("document, same cell line", "document", "compound", "reported ratio")
 
 #: Preference between several records of one side inside one document.
 SIDE_RULE = ("cell", "censored")
+
+#: Columns of the per-compound lookup, in order. Fixed so the file has the
+#: same shape whether or not anything matched, and so the modelling side can
+#: rely on `si`, `si_quality`, `match_tier` and `confidence` being present.
+OUTPUT_COLUMNS = [
+    "split",
+    "index",
+    "Title",
+    "smiles",
+    "inchikey",
+    "inchikey14",
+    "culture",
+    "cell_line",
+    "match_tier",
+    "rule",
+    "ic50",
+    "cc50",
+    "si",
+    "si_quality",
+    "confidence",
+    "ic50_relation",
+    "cc50_relation",
+    "ic50_type",
+    "cc50_type",
+    "censored",
+    "matched_cell_line",
+    "cc50_cell_line",
+    "strain",
+    "document_id",
+    "n_documents",
+    "doi",
+    "year",
+    "source_db",
+    "n_antiviral_records",
+    "n_cytotox_records",
+    "sentinel_evidence",
+]
 
 
 def _key(value: object) -> str | None:
@@ -92,6 +133,7 @@ class Records:
         self.cytotox_exact = self._index(cytotox, "inchikey")
         self.antiviral = self._index(antiviral, "inchikey14")
         self.cytotox = self._index(cytotox, "inchikey14")
+        self.selectivity = self._index(_vaccinia_selectivity(curated_open), "inchikey14")
 
     @staticmethod
     def _index(frame: pd.DataFrame, key: str) -> dict[str, list[dict]]:
@@ -121,6 +163,22 @@ class Records:
         if exact:
             return self.antiviral_exact.get(key, []), self.cytotox_exact.get(key, [])
         return self.antiviral.get(key, []), self.cytotox.get(key, [])
+
+
+def _vaccinia_selectivity(curated_open: pd.DataFrame) -> pd.DataFrame:
+    """Reported selectivity indices, restricted to the ones about vaccinia.
+
+    The cytotoxicity side needs no virus filter because cytotoxicity is a
+    property of the compound and the cells. A selectivity index does need
+    one: the same paper prints one for every virus it tested.
+    """
+    rows = curated_open[curated_open["measurement_class"].eq("selectivity")]
+    if rows.empty:
+        return rows
+    keep = [
+        mentions_vaccinia(row.organism, row.assay_description, row.strain) for row in rows.itertuples()
+    ]
+    return rows[pd.Series(keep, index=rows.index)]
 
 
 def molecule_links(path=MOLECULE_LINKS) -> pd.DataFrame:
@@ -228,9 +286,53 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
         # written into si - vacv.coverage measures how often it is right.
         row["sentinel_evidence"] = bool(cytotox_seen and not antiviral_seen)
 
+        if chosen is None:
+            # Nothing to pair: fall back on the selectivity index the authors
+            # printed, where the paper printed one.
+            for tier, key, _ in attempts:
+                if not key:
+                    continue
+                reported = records.selectivity.get(key[:14], [])
+                if reported:
+                    values = np.array([float(r["value_um"]) for r in reported], dtype=float)
+                    best = reported[0]
+                    chosen = (
+                        tier,
+                        {
+                            "rule": "reported ratio",
+                            "antiviral": {},
+                            "cytotox": {},
+                            "document_id": best.get("document_id"),
+                            "n_documents": len({r.get("document_id") for r in reported}),
+                            "si": float(10 ** np.median(np.log10(values))),
+                            "n_reported": len(reported),
+                            "doi": best.get("doi"),
+                            "year": best.get("year"),
+                            "source_db": best.get("source_db"),
+                        },
+                    )
+                    break
+
         if chosen is not None:
             tier, found = chosen
             left, right = found["antiviral"], found["cytotox"]
+            if found["rule"] == "reported ratio":
+                row.update(
+                    {
+                        "match_tier": tier,
+                        "rule": found["rule"],
+                        "si": found["si"],
+                        "si_quality": "reported_ratio",
+                        "censored": False,
+                        "document_id": found["document_id"],
+                        "n_documents": found["n_documents"],
+                        "doi": found["doi"],
+                        "year": found["year"],
+                        "source_db": found["source_db"],
+                    }
+                )
+                rows.append(row)
+                continue
             row.update(
                 {
                     "match_tier": tier,
@@ -257,6 +359,10 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
         rows.append(row)
 
     out = pd.DataFrame(rows)
+    for column in OUTPUT_COLUMNS:
+        if column not in out.columns:
+            out[column] = pd.NA
+    out = out[OUTPUT_COLUMNS]
     log.info(
         "recover: %d of %d compounds get a pair (%s)",
         int(out["si"].notna().sum()) if "si" in out else 0,
