@@ -14,6 +14,9 @@
    молекулы в случайной записи.
 3. **Завышение общего AUC.** Доля неактивных по фолдам от 0.17 до 0.38, поэтому общий AUC
    по склеенным out-of-fold вероятностям печатается вместе со средним по фолдам.
+
+На канонических SMILES перебираются все три головы и конкатенация с отпечатками: если
+представление что-то добавляет к отпечаткам, это должно быть видно хотя бы в одной клетке.
 """
 
 from __future__ import annotations
@@ -84,12 +87,14 @@ def main() -> None:
             if writing == "канонический RDKit":
                 matrices[f"{name} + morgan [{writing}]"] = np.hstack(
                     [embedding.mean, blocks["morgan counts"]])
+            heads = ("linear", "mlp", "extra") if writing == "канонический RDKit" else ("linear",)
             for label, matrix in matrices.items():
-                for split in ("random", "scaffold"):
-                    result = probe(job, split, matrix, label, "linear",
-                                   extra_seconds=embedding.seconds)
-                    results.append(result)
-                    report(job, split, result)
+                for head in heads:
+                    for split in ("random", "scaffold"):
+                        result = probe(job, split, matrix, label, head,
+                                       extra_seconds=embedding.seconds)
+                        results.append(result)
+                        report(job, split, result)
 
     store.save("controls", results)
 
