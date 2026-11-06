@@ -27,7 +27,6 @@ from vacv.chemistry import RECOMMENDED
 from vacv.evaluate import competition_mse, out_of_fold
 from vacv.literature import attach
 from vacv.pipeline import GROUP_COLUMNS, group_rate, open_data_matrix, structure_matrix
-from vacv.splits import fold_indices
 from vacv.structure import StructureModel
 
 SPLITS = ("random", "scaffold")
@@ -79,12 +78,14 @@ def main() -> None:
         raise ValueError("нет колонок группы")
     chemistry_features = matrix(RECOMMENDED)
 
+    old_features = structure_matrix(frame)
     sources: dict[str, dict[str, np.ndarray]] = {}
     for split in SPLITS:
         folds = FOLDS[split]
-        sources.setdefault("structure", {})[split] = plain_oof(structure_matrix(frame), folds)
+        sources.setdefault("structure", {})[split] = plain_oof(old_features, folds)
         sources.setdefault("chemistry", {})[split] = chemistry_oof(frame, folds)
         sources.setdefault("context", {})[split] = plain_oof(context_matrix(frame, folds), folds)
+        sources.setdefault("grouped_old", {})[split] = grouped_oof(frame, old_features, folds)
         sources.setdefault("grouped", {})[split] = grouped_oof(frame, chemistry_features, folds)
 
     def report(label: str, weights: dict[str, float]) -> float:
@@ -98,7 +99,8 @@ def main() -> None:
     print(f"{'конфигурация':46} {'AUC rn':>7} {'MSE rn':>12} {'AUC sc':>7} {'MSE sc':>12}")
     for name in sources:
         report(f"{name} один", {name: 1.0})
-    report("пайплайн: 0.3 context + 0.7 grouped", {"context": 0.3, "grouped": 0.7})
+    report("пайплайн как есть: Morgan+MACCS в grouped", {"context": 0.3, "grouped_old": 0.7})
+    report("те же веса, новые блоки в grouped", {"context": 0.3, "grouped": 0.7})
 
     grid = np.round(np.arange(0.0, 1.0 + STEP / 2, STEP), 2)
     best = None

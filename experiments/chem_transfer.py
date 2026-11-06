@@ -23,7 +23,6 @@ from experiments.chem_zoo import CLASSIFIERS
 from vacv.chemistry import RECOMMENDED, block_matrix, parse
 from vacv.evaluate import competition_mse, out_of_fold
 from vacv.features import scaffold
-from vacv.splits import fold_indices
 
 EXTERNAL = "data/processed/vacv_si.csv"
 NO_ACTIVITY = (">", ">=")
