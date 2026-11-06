@@ -35,21 +35,6 @@ SOURCE_COLUMNS: list[str] = [
     "data_validity",  # source-side data quality flag
 ]
 
-#: Columns added by vacv.curate.
-CURATED_EXTRA: list[str] = [
-    "smiles_std",
-    "inchikey",
-    "inchikey14",
-    "mol_weight",
-    "censored",
-    "curation_reject",
-]
-
-
-def empty_source_frame() -> pd.DataFrame:
-    return pd.DataFrame({column: pd.Series(dtype="object") for column in SOURCE_COLUMNS})
-
-
 def conform(frame: pd.DataFrame) -> pd.DataFrame:
     """Add missing columns, drop unknown ones, fix the order."""
     out = frame.copy()

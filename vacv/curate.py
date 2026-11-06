@@ -23,7 +23,6 @@ Every rejection is counted and reported. Nothing is dropped silently.
 from __future__ import annotations
 
 import logging
-import math
 from collections import Counter
 from dataclasses import dataclass
 
@@ -259,8 +258,3 @@ def aggregate(
 
     collapsed = numeric.groupby(group_columns, dropna=False).apply(collapse_without_keys, include_groups=False)
     return collapsed.reset_index()
-
-
-def log_mean_absolute_spread(frame: pd.DataFrame) -> float:
-    values = frame.loc[frame["n_measurements"] > 1, "log10_spread"]
-    return float(values.mean()) if len(values) else math.nan

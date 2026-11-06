@@ -28,7 +28,7 @@ import csv
 import io
 import json
 import logging
-from typing import Any, Iterator
+from typing import Iterator
 
 import pandas as pd
 
@@ -36,7 +36,7 @@ from .. import classify
 from ..http import get_json, get_text
 from ..paths import raw_dir
 from ..schema import conform
-from ..units import canonical_relation, to_micromolar
+from ..units import to_micromolar
 
 log = logging.getLogger(__name__)
 

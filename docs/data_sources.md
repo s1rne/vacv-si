@@ -61,7 +61,7 @@ Queries, in the order the module issues them:
   `CHEMBL1201862` is titled *PubChem BioAssay data set*, has
   `doc_type == "DATASET"`, and owns **7 434 992** activities from every
   depositor PubChem ever had. An unguarded document widening downloads most of
-  ChEMBL — the first run of this harvester pulled 156 000 rows and 180 MB
+  ChEMBL - the first run of this harvester pulled 156 000 rows and 180 MB
   before it was stopped. Worse than the download: treating that container as
   "the same publication" would pair a vaccinia IC50 with a cytotoxicity value
   from an unrelated deposit, which is precisely what the strict pairing rule
@@ -123,7 +123,7 @@ Query: `esearch.fcgi?db=pcassay&term=vaccinia[ANAM] OR vaccinia[TXNM]`
   weakest `compound` level.
 - **Two PUG REST quirks.** The `sid=` filter is honoured by
   `/assay/aid/<aid>/CSV` and silently *ignored* by
-  `/assay/aid/<aid>/concise/JSON` — requesting two SIDs from AID 720579 via
+  `/assay/aid/<aid>/concise/JSON` - requesting two SIDs from AID 720579 via
   `concise` downloads 67 MB. And every CSV table starts with `RESULT_TYPE` and
   `RESULT_DESCR` pseudo-rows that carry column metadata, not measurements;
   both have an empty SID, which is the test the module uses.
@@ -197,7 +197,7 @@ parsing that cannot be validated inside the time this data layer had.
   (`https://api.data.niaid.nih.gov/v1/query`) is a useful second pass for PLOS
   figshare table objects that carry their own CC BY 4.0, e.g.
   `10.1371/journal.pone.0055808.t003` at
-  `https://ndownloader.figshare.com/files/487894` — VACV WR / Copenhagen /
+  `https://ndownloader.figshare.com/files/487894` - VACV WR / Copenhagen /
   Lister EC50 and SI for cidofovir, CMX001, ST-246 and (S)-HPMP-5-azaC, 5.6 kB,
   no key, verified downloadable. Validate every `contentUrl` before counting
   it: `https://ndownloader.figshare.com/files/41521060` is a dead record.
