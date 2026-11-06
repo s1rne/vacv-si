@@ -76,10 +76,10 @@ def test_labels_mark_only_the_exact_sentinel():
     assert labels_of(y).tolist() == [1, 0, 0]
 
 
-def test_structure_model_returns_probabilities_and_weights():
+def test_structure_model_predicts_the_conditional_mean():
     import pandas as pd
 
-    from vacv.structure import PARTS, StructureModel
+    from vacv.structure import StructureModel
 
     smiles = ["CCO", "CCCO", "CCCCO", "CCN", "CCCN", "CCCCN",
               "c1ccccc1", "Cc1ccccc1", "CCc1ccccc1", "c1ccncc1", "Cc1ccncc1", "CCc1ccncc1"]
@@ -87,8 +87,8 @@ def test_structure_model_returns_probabilities_and_weights():
     y = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0] + [SENTINEL] * 6)
 
     model = StructureModel().fit(frame, y)
-    assert model.weights_.shape == (len(PARTS),)
-    assert model.weights_.sum() == pytest.approx(1.0)
+    assert model.active_mean_ == pytest.approx(3.5)
     probability = model.probability(frame)
-    assert probability.shape == (len(smiles),)
     assert ((probability >= 0) & (probability <= 1)).all()
+    expected = probability * SENTINEL + (1 - probability) * 3.5
+    assert model.predict(frame) == pytest.approx(expected)

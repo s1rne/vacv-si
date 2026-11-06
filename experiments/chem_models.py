@@ -8,15 +8,30 @@
 from __future__ import annotations
 
 import numpy as np
+from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.metrics import roc_auc_score
 
 from experiments.chem_common import DATA, FOLDS, LABELS, Y, classifier_oof, matrix
 from experiments.chem_zoo import CLASSIFIERS, FINGERPRINT_ONLY, REGRESSORS
 from vacv.chemistry import RECOMMENDED
-from vacv.evaluate import competition_mse, splits
+from vacv.evaluate import competition_mse, out_of_fold, splits
 from vacv.splits import fold_indices
 
 FINGERPRINTS = ("ecfp2", "avalon", "maccs")
+
+
+def ceiling() -> None:
+    """Потолок метрики: идеальный классификатор заглушек и константа для активных.
+
+    Нужен как масштаб. Метрика квадратичная, и всё, что можно выиграть, лежит в
+    классификации заглушек, а не в прогнозе SI активных.
+    """
+    print("— потолок и пол —")
+    print(f"{'конфигурация':34} {'MSE rn':>12} {'MSE sc':>12}")
+    for label, probability in (("идеальный классификатор", LABELS.astype(float)),
+                               ("базовая доля заглушек", np.full(len(Y), LABELS.mean()))):
+        scores = [competition_mse(probability, Y, FOLDS[split]) for split in ("random", "scaffold")]
+        print(f"{label:34} {scores[0]:12,.0f} {scores[1]:12,.0f}")
 
 
 def classifiers() -> None:
@@ -80,8 +95,41 @@ def stability(seeds: int = 5) -> None:
               f"MSE {np.mean(mse):,.0f} ± {np.std(mse):,.0f}")
 
 
+def bagged() -> None:
+    """Усреднение ExtraTrees по пяти сидам и смесь с декоррелированными моделями."""
+    print("\n— как сильнее выжать одну химию —")
+    print(f"{'вариант':34} {'AUC rn':>7} {'MSE rn':>12} {'AUC sc':>7} {'MSE sc':>12}")
+    x = matrix(RECOMMENDED)
+    variants = {}
+    for split in ("random", "scaffold"):
+        folds = FOLDS[split]
+        seeds = np.mean([seed_oof(x, folds, seed) for seed in range(5)], axis=0)
+        variants.setdefault("extra, один сид", {})[split] = classifier_oof("extra", x, folds)
+        variants.setdefault("extra, пять сидов", {})[split] = seeds
+        for partner in ("logreg", "rf", "knn_tanimoto"):
+            other = classifier_oof(partner, matrix(FINGERPRINTS) if partner == "knn_tanimoto" else x, folds)
+            variants.setdefault(f"пять сидов + {partner}", {})[split] = 0.5 * seeds + 0.5 * other
+    for label, probability in variants.items():
+        scores = []
+        for split in ("random", "scaffold"):
+            scores += [roc_auc_score(LABELS, probability[split]),
+                       competition_mse(probability[split], Y, FOLDS[split])]
+        print(f"{label:34} {scores[0]:7.3f} {scores[1]:12,.0f} {scores[2]:7.3f} {scores[3]:12,.0f}")
+
+
+def seed_oof(x: np.ndarray, folds: list[np.ndarray], seed: int) -> np.ndarray:
+    def predict(train_index: np.ndarray, validation_index: np.ndarray) -> np.ndarray:
+        model = ExtraTreesClassifier(n_estimators=800, min_samples_leaf=2, n_jobs=-1, random_state=seed)
+        model.fit(x[train_index], LABELS[train_index])
+        return model.predict_proba(x[validation_index])[:, 1]
+
+    return out_of_fold(predict, LABELS, folds)
+
+
 def main() -> None:
+    ceiling()
     classifiers()
+    bagged()
     x = matrix(RECOMMENDED)
     probability = {split: classifier_oof("extra", x, FOLDS[split]) for split in FOLDS}
     regressors(probability)

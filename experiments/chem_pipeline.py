@@ -2,13 +2,15 @@
 
 Сравниваются четыре источника вероятности неактивности:
 
-- `structure` — прежний структурный блок пайплайна: счётный Morgan плюс MACCS, ExtraTrees;
-- `chemistry` — ансамбль vacv/structure.py по блокам химических признаков;
-- `context`   — штамм, культура, обозначение соединения и признаки открытых баз;
-- `grouped`   — химия плюс доля неактивных в группе strain+Culture одним признаком.
+- `structure`   — прежний структурный блок пайплайна: счётный Morgan плюс MACCS;
+- `chemistry`   — vacv/structure.py на отобранных блоках химических признаков;
+- `context`     — штамм, культура и обозначение соединения;
+- `grouped_old` — прежние отпечатки плюс доля неактивных в группе strain+Culture;
+- `grouped`     — то же с новыми блоками признаков вместо отпечатков.
 
-Веса перебираются по сетке на симплексе. Отдельно печатается текущая конфигурация
-пайплайна (0.0 / 0.3 / 0.7), чтобы выигрыш был виден прямо.
+Пара `grouped_old` и `grouped` отвечает на вопрос, стоит ли менять признаки внутри
+групповой модели. Веса перебираются по сетке на симплексе, и отдельно печатается текущая
+конфигурация пайплайна (0.3 контекста и 0.7 групповой модели).
 """
 
 from __future__ import annotations
@@ -65,6 +67,21 @@ def chemistry_oof(frame: pd.DataFrame, folds: list[np.ndarray]) -> np.ndarray:
     return out_of_fold(predict, LABELS, folds)
 
 
+def simplex(sources: dict[str, dict[str, np.ndarray]], names: tuple[str, str, str]) -> dict[str, float]:
+    """Лучшие веса трёх источников по сетке с шагом STEP, оценка на случайном разбиении."""
+    best = None
+    grid = np.round(np.arange(0.0, 1.0 + STEP / 2, STEP), 2)
+    for first, second in itertools.product(grid, grid):
+        if first + second > 1.0:
+            continue
+        weights = {names[0]: first, names[1]: second, names[2]: round(1.0 - first - second, 2)}
+        probability = sum(weight * sources[name]["random"] for name, weight in weights.items())
+        mse = competition_mse(probability, Y, FOLDS["random"])
+        if best is None or mse < best[0]:
+            best = (mse, weights)
+    return best[1]
+
+
 def plain_oof(x: np.ndarray, folds: list[np.ndarray]) -> np.ndarray:
     def predict(train_index: np.ndarray, validation_index: np.ndarray) -> np.ndarray:
         return forest().fit(x[train_index], LABELS[train_index]).predict_proba(x[validation_index])[:, 1]
@@ -99,24 +116,16 @@ def main() -> None:
     print(f"{'конфигурация':46} {'AUC rn':>7} {'MSE rn':>12} {'AUC sc':>7} {'MSE sc':>12}")
     for name in sources:
         report(f"{name} один", {name: 1.0})
-    report("пайплайн как есть: Morgan+MACCS в grouped", {"context": 0.3, "grouped_old": 0.7})
-    report("те же веса, новые блоки в grouped", {"context": 0.3, "grouped": 0.7})
-
-    grid = np.round(np.arange(0.0, 1.0 + STEP / 2, STEP), 2)
-    best = None
-    for chemistry_weight, context_weight in itertools.product(grid, grid):
-        if chemistry_weight + context_weight > 1.0:
-            continue
-        weights = {"chemistry": chemistry_weight, "context": context_weight,
-                   "grouped": round(1.0 - chemistry_weight - context_weight, 2)}
-        probability = sum(weight * sources[name]["random"] for name, weight in weights.items())
-        mse = competition_mse(probability, Y, FOLDS["random"])
-        if best is None or mse < best[0]:
-            best = (mse, weights)
 
     print()
-    report("лучшая смесь по случайному разбиению", best[1])
-    print("веса: " + ", ".join(f"{name} {weight}" for name, weight in best[1].items()))
+    report("0.3 context + 0.7 grouped_old (пайплайн)", {"context": 0.3, "grouped_old": 0.7})
+    report("0.3 context + 0.7 grouped", {"context": 0.3, "grouped": 0.7})
+
+    print()
+    for grouped in ("grouped_old", "grouped"):
+        weights = simplex(sources, ("chemistry", "context", grouped))
+        report(f"лучшая смесь с {grouped}", weights)
+        print("  веса: " + ", ".join(f"{name} {weight}" for name, weight in weights.items()))
 
 
 if __name__ == "__main__":
