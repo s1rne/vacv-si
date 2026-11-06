@@ -18,7 +18,11 @@ def scaffold_folds(scaffolds: list[str], n_splits: int = 5, seed: int = 0) -> li
     for index, key in enumerate(scaffolds):
         groups[key or f"_{index}"].append(index)
 
-    order = sorted(groups.values(), key=len, reverse=True)
+    # Группы одного размера перемешиваются: без этого разбиение не зависит от сида и разброс
+    # по повторам выходит нулевым, что выдаёт случайное совпадение за устойчивый результат.
+    generator = np.random.default_rng(seed)
+    keys = sorted(groups)
+    order = sorted((groups[key] for key in generator.permutation(keys)), key=len, reverse=True)
     folds: list[list[int]] = [[] for _ in range(n_splits)]
     for members in order:
         folds[int(np.argmin([len(f) for f in folds]))].extend(members)
