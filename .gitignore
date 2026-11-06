@@ -1,20 +1,11 @@
-outputs/
-data/raw/
-data/processed/
+.DS_Store
 .venv/
 __pycache__/
 *.pyc
-<<<<<<< HEAD
-||||||| 89cb7dd
-.DS_Store
-runs/
+.pytest_cache/
+
 outputs/
-*.ckpt
-*.pt
-=======
-.DS_Store
 runs/
-outputs/
 *.ckpt
 *.pt
 
@@ -22,5 +13,3 @@ outputs/
 data/raw/
 data/interim/
 # data/processed holds the deliverable dataset and is tracked on purpose.
-.pytest_cache/
->>>>>>> exp/data
