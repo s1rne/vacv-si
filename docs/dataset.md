@@ -12,6 +12,7 @@ Do not edit by hand; edit `vacv/datacard.py`.
 | `data/processed/vacv_si_relaxed.csv` | identical to `vacv_si.csv`, kept under the explicit name |
 | `data/processed/vacv_si_measured.csv` | the subset where neither IC50 nor CC50 is censored |
 | `data/processed/competition_open_data_lookup.csv` | per competition compound: the best open-data IC50/CC50/SI and its DOI |
+| `data/processed/competition_presence.csv` | per competition compound: how much open-data evidence exists for it, plus its nearest measured neighbours |
 
 Required columns, in order: `smiles`, `ic50`, `cc50`, `si`, `doi`. `ic50` and `cc50`
 are micromolar; `si` is `cc50 / ic50`. Everything after `doi` is provenance.
@@ -222,6 +223,26 @@ needs no forbidden column. On the training split:
 A compound whose paper ChEMBL indexed is almost never a sentinel row; the
 sentinels come from papers the databases did not pick up. Of the 597 test
 compounds, 243 match and 354 do not.
+
+### Evidence features for every competition compound
+
+The lookup above only has values for the 243 test and 123 train compounds
+where a full pair existed. `competition_presence.csv` covers all 917, because
+*absence* from the public anti-VACV literature predicts the sentinel: counts of
+matching records, whether an antiviral or a cytotoxicity record exists, median
+IC50 and CC50, censoring flags, document and DOI counts, year range, and the
+three nearest Morgan-fingerprint neighbours (radius 2, 2048 bits) in the paired
+VACV set with their measured SI.
+
+A compound is never its own neighbour - every reference entry sharing its
+skeleton is removed from its candidate pool - so the neighbour columns mean the
+same thing for matched and unmatched compounds and cannot hand a compound its
+own measurement back as a feature.
+
+Separation of the sentinel class on the training split, ranked by how far the
+AUC sits from 0.5, is printed by `uv run python -m vacv.cli presence`. Below
+0.5 means the feature is *higher* for non-sentinels, which is what every
+evidence-of-measurement column does.
 
 ### Publications behind the competition compounds
 

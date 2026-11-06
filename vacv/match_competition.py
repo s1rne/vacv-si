@@ -109,7 +109,8 @@ def agreement(train: pd.DataFrame, paired: pd.DataFrame, key: str = "inchikey14"
     )
     joined = left.merge(right, on=key, how="inner")
     joined = joined.rename(columns={"SI VACV": "si_competition"})
-    joined["is_sentinel"] = joined["si_competition"] >= SI_SENTINEL
+    # Exact equality: one training row has a genuine SI of 36066.667.
+    joined["is_sentinel"] = joined["si_competition"].eq(SI_SENTINEL)
     joined["log10_error"] = np.log10(joined["si_open"]) - np.log10(joined["si_competition"])
     return joined
 
@@ -238,7 +239,7 @@ def lookup_agreement(train_lookup: pd.DataFrame, train: pd.DataFrame) -> dict:
         joined["si"].notna()
         & joined["si_competition"].notna()
         & joined["si_competition"].gt(0)
-        & joined["si_competition"].lt(SI_SENTINEL)
+        & joined["si_competition"].ne(SI_SENTINEL)
     ].copy()
     if usable.empty:
         return {"compared": 0}
