@@ -5,7 +5,7 @@ from rdkit import Chem
 
 from vacv.neural.augment import expand, randomized
 from vacv.neural.ensemble import blend
-from vacv.neural.external import skeleton
+from vacv.neural.external import pretraining, skeleton
 from vacv.protocol import SENTINEL, Result, conditional_mean, folds_of, inactive_labels, score, task
 
 ASPIRIN = "CC(=O)Oc1ccccc1C(=O)O"
@@ -118,3 +118,43 @@ def test_blend_weight_favours_the_model_with_lower_mse():
     assert mixed.base_mse < mixed.inverse_mse
     assert mixed.best_weight == 0.0
     assert mixed.best_mse == pytest.approx(mixed.base_mse)
+
+
+def test_pretraining_drops_excluded_skeletons_and_standardizes_targets():
+    """Валидационные соединения не должны попасть в предобучение даже как другая соль."""
+    source = pd.DataFrame({
+        "smiles": [ASPIRIN, CAFFEINE, IBUPROFEN],
+        "ic50": [1.0, 10.0, 100.0],
+        "cc50": [10.0, 100.0, 1000.0],
+        "inchikey14": [skeleton(ASPIRIN), skeleton(CAFFEINE), skeleton(IBUPROFEN)],
+        "ic50_relation": ["=", ">", "="],
+        "cc50_relation": ["=", "=", "="],
+    })
+    source["log_ic50"] = np.where(source["ic50_relation"] == "=", np.log10(source["ic50"]), np.nan)
+    source["log_cc50"] = np.log10(source["cc50"])
+    source["inactive"] = (source["ic50_relation"] == ">").astype(float)
+
+    texts, targets = pretraining({skeleton(CAFFEINE)}, source)
+    assert texts == [ASPIRIN, IBUPROFEN]
+    assert targets.shape == (2, 3)
+    assert targets[:, 2].tolist() == [0.0, 0.0]
+    assert targets[:, 1].mean() == pytest.approx(0.0)
+
+
+def test_pretraining_keeps_censored_rows_but_not_their_values():
+    source = pd.DataFrame({
+        "smiles": [ASPIRIN, CAFFEINE],
+        "ic50": [1.0, 10.0],
+        "cc50": [10.0, 100.0],
+        "inchikey14": [skeleton(ASPIRIN), skeleton(CAFFEINE)],
+        "ic50_relation": ["=", ">"],
+        "cc50_relation": ["=", "="],
+    })
+    source["log_ic50"] = np.where(source["ic50_relation"] == "=", np.log10(source["ic50"]), np.nan)
+    source["log_cc50"] = np.log10(source["cc50"])
+    source["inactive"] = (source["ic50_relation"] == ">").astype(float)
+
+    texts, targets = pretraining(set(), source, standardize=False)
+    assert len(texts) == 2
+    assert np.isnan(targets[1, 0])
+    assert targets[1, 2] == 1.0
