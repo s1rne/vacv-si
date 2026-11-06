@@ -13,7 +13,6 @@ dependencies = [
     "scikit-learn>=1.9.1",
     "scipy>=1.18.1",
     "six>=1.17.0",
-    "tabpfn>=9.2.0",
     "tqdm>=4.70.1",
     "xgboost>=3.4.1",
 ]

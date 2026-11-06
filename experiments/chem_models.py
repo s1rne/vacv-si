@@ -10,10 +10,10 @@ from __future__ import annotations
 import numpy as np
 from sklearn.metrics import roc_auc_score
 
-from experiments.chem_common import FOLDS, LABELS, Y, classifier_oof, matrix
+from experiments.chem_common import DATA, FOLDS, LABELS, Y, classifier_oof, matrix
 from experiments.chem_zoo import CLASSIFIERS, FINGERPRINT_ONLY, REGRESSORS
 from vacv.chemistry import RECOMMENDED
-from vacv.evaluate import competition_mse
+from vacv.evaluate import competition_mse, splits
 from vacv.splits import fold_indices
 
 FINGERPRINTS = ("ecfp2", "avalon", "maccs")
@@ -65,11 +65,27 @@ def regressors(probability: dict[str, np.ndarray]) -> None:
         print(f"{label:22} {scores[0]:12,.0f} {scores[1]:12,.0f}")
 
 
+def stability(seeds: int = 5) -> None:
+    """Разброс от разбиения и сида: без него разница в третьем знаке AUC ничего не значит."""
+    print("\n— устойчивость отобранной конфигурации по пяти разбиениям —")
+    x = matrix(RECOMMENDED)
+    for split in ("random", "scaffold"):
+        auc, mse = [], []
+        for seed in range(seeds):
+            folds = splits(DATA.train, Y, seed=seed)[split]
+            probability = classifier_oof("extra", x, folds)
+            auc.append(roc_auc_score(LABELS, probability))
+            mse.append(competition_mse(probability, Y, folds))
+        print(f"{split:10} AUC {np.mean(auc):.3f} ± {np.std(auc):.3f}   "
+              f"MSE {np.mean(mse):,.0f} ± {np.std(mse):,.0f}")
+
+
 def main() -> None:
     classifiers()
     x = matrix(RECOMMENDED)
     probability = {split: classifier_oof("extra", x, FOLDS[split]) for split in FOLDS}
     regressors(probability)
+    stability()
 
 
 if __name__ == "__main__":

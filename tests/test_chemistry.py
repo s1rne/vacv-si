@@ -74,3 +74,21 @@ def test_competition_mse_matches_conditional_mean():
 def test_labels_mark_only_the_exact_sentinel():
     y = np.array([SENTINEL, 36066.667, 9999.0])
     assert labels_of(y).tolist() == [1, 0, 0]
+
+
+def test_structure_model_returns_probabilities_and_weights():
+    import pandas as pd
+
+    from vacv.structure import PARTS, StructureModel
+
+    smiles = ["CCO", "CCCO", "CCCCO", "CCN", "CCCN", "CCCCN",
+              "c1ccccc1", "Cc1ccccc1", "CCc1ccccc1", "c1ccncc1", "Cc1ccncc1", "CCc1ccncc1"]
+    frame = pd.DataFrame({"SMILES": smiles})
+    y = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0] + [SENTINEL] * 6)
+
+    model = StructureModel().fit(frame, y)
+    assert model.weights_.shape == (len(PARTS),)
+    assert model.weights_.sum() == pytest.approx(1.0)
+    probability = model.probability(frame)
+    assert probability.shape == (len(smiles),)
+    assert ((probability >= 0) & (probability <= 1)).all()

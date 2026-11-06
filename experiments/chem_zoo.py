@@ -12,7 +12,7 @@ from collections.abc import Callable
 import numpy as np
 from catboost import CatBoostClassifier, CatBoostRegressor
 from lightgbm import LGBMClassifier, LGBMRegressor
-from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import (ExtraTreesClassifier, ExtraTreesRegressor, RandomForestClassifier,
                               RandomForestRegressor)
 from sklearn.feature_selection import VarianceThreshold
@@ -46,22 +46,10 @@ def _scaled(estimator) -> object:
     return make_pipeline(VarianceThreshold(0.0), StandardScaler(), estimator)
 
 
-class TabPFN(BaseEstimator, ClassifierMixin):
-    """TabPFN v2 принимает не больше 500 столбцов, поэтому берутся самые изменчивые."""
-
-    def __init__(self, limit: int = 300):
-        self.limit = limit
-
-    def fit(self, x: np.ndarray, y: np.ndarray) -> "TabPFN":
-        from tabpfn import TabPFNClassifier
-
-        self.columns_ = np.argsort(x.var(axis=0))[::-1][:self.limit]
-        self.classes_ = np.unique(y)
-        self.model_ = TabPFNClassifier(random_state=SEED).fit(x[:, self.columns_], y)
-        return self
-
-    def predict_proba(self, x: np.ndarray) -> np.ndarray:
-        return self.model_.predict_proba(x[:, self.columns_])
+def _probabilistic(estimator, scale: bool) -> object:
+    """SVC(probability=True) объявлен устаревшим в sklearn 1.9, замена — калибровка Платта."""
+    calibrated = CalibratedClassifierCV(estimator, ensemble=False, cv=5)
+    return _scaled(calibrated) if scale else calibrated
 
 
 CLASSIFIERS: dict[str, Callable[[], object]] = {
@@ -73,11 +61,11 @@ CLASSIFIERS: dict[str, Callable[[], object]] = {
                                  colsample_bytree=0.3, reg_lambda=5.0, random_state=SEED, n_jobs=-1),
     "cat": lambda: CatBoostClassifier(iterations=600, learning_rate=0.03, depth=4, random_strength=2.0,
                                       verbose=0, allow_writing_files=False, random_seed=SEED),
-    "svc_rbf": lambda: _scaled(SVC(C=3.0, probability=True, random_state=SEED)),
-    "svc_tanimoto": lambda: SVC(C=3.0, kernel=tanimoto_kernel, probability=True, random_state=SEED),
+    "svc_rbf": lambda: _probabilistic(SVC(C=3.0, random_state=SEED), scale=True),
+    "svc_tanimoto": lambda: _probabilistic(SVC(C=3.0, kernel=tanimoto_kernel, random_state=SEED),
+                                           scale=False),
     "knn_tanimoto": lambda: KNeighborsClassifier(n_neighbors=7, weights="distance", metric=tanimoto_distance),
     "logreg": lambda: _scaled(LogisticRegression(C=0.05, max_iter=3000)),
-    "tabpfn": TabPFN,
 }
 
 # Ядро Танимото и KNN определены для счётных отпечатков: на смеси с дескрипторами
