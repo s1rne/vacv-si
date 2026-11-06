@@ -105,7 +105,11 @@ def main() -> None:
         for split in SPLITS:
             chemistry[split].append(probability[split])
 
-    aggregated = {"chemistry": {split: ensemble(chemistry[split], FOLDS[split]) for split in SPLITS}}
+    single = CHEMISTRY_PARTS.index(next(part for part in CHEMISTRY_PARTS if part[2] == RECOMMENDED))
+    aggregated = {
+        "chemistry": {split: ensemble(chemistry[split], FOLDS[split]) for split in SPLITS},
+        "single": {split: chemistry[split][single] for split in SPLITS},
+    }
     line("химия / ансамбль 1/MSE", aggregated["chemistry"])
 
     sources = {"metadata": {split: context_matrix(frame, FOLDS[split]) for split in SPLITS},
@@ -115,23 +119,23 @@ def main() -> None:
                               for split in SPLITS}
         line(f"{source} / extra", aggregated[source])
 
-    print()
-    grid = np.linspace(0.0, 1.0, 11)
-    best = None
-    for weight in grid:
-        probability = {split: weight * aggregated["chemistry"][split]
-                       + (1 - weight) * aggregated["metadata"][split] for split in SPLITS}
-        mse = competition_mse(probability["random"], Y, FOLDS["random"])
-        line(f"chemistry {weight:.1f} + metadata {1 - weight:.1f}", probability)
-        if best is None or mse < best[0]:
-            best = (mse, weight)
+    best = {}
+    for source, label in (("single", "отобранная химия"), ("chemistry", "ансамбль химии")):
+        print()
+        for weight in np.linspace(0.0, 1.0, 11):
+            probability = {split: weight * aggregated[source][split]
+                           + (1 - weight) * aggregated["metadata"][split] for split in SPLITS}
+            line(f"{label} {weight:.1f} + metadata {1 - weight:.1f}", probability)
+            mse = competition_mse(probability["random"], Y, FOLDS["random"])
+            if source not in best or mse < best[source][0]:
+                best[source] = (mse, weight)
 
     print()
-    weight = best[1]
-    for share in (0.0, 0.2, 0.3, 0.4):
+    weight = best["single"][1]
+    for share in (0.0, 0.1, 0.2, 0.3):
         probability = {}
         for split in SPLITS:
-            pair = weight * aggregated["chemistry"][split] + (1 - weight) * aggregated["metadata"][split]
+            pair = weight * aggregated["single"][split] + (1 - weight) * aggregated["metadata"][split]
             probability[split] = (1 - share) * pair + share * aggregated["opendata"][split]
         line(f"лучшая пара + opendata {share:.1f}", probability)
 
