@@ -10,5 +10,5 @@ outputs/
 # data artefacts
 data/raw/
 data/interim/
-data/processed/
+# data/processed holds the deliverable dataset and is tracked on purpose.
 .pytest_cache/
