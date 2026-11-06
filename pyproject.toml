@@ -11,6 +11,7 @@ dependencies = [
     "rdkit>=2026.9.1",
     "requests>=2.34.2",
     "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
     "six>=1.17.0",
     "tabpfn>=9.2.0",
     "tqdm>=4.70.1",

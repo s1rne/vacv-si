@@ -26,8 +26,23 @@ from vacv.literature import PRESENCE_FEATURES, attach
 from vacv.pipeline import ContextEncoder, group_rate
 from vacv.splits import fold_indices
 
-CHEMISTRY_MODELS = ("extra", "cat", "lgbm", "svc_rbf", "rf")
 SPLITS = ("random", "scaffold")
+
+# Разнообразие берётся по двум осям: разные блоки признаков с одной моделью и разные
+# модели на отобранной конкатенации. По docs/research.md, раздел 2.6, выигрыш даёт
+# прежде всего набор блоков, поэтому блоков в составе больше, чем моделей.
+CHEMISTRY_PARTS = (
+    ("extra / rdkit2d", "extra", ("rdkit2d",)),
+    ("extra / erg", "extra", ("erg",)),
+    ("extra / avalon", "extra", ("avalon",)),
+    ("extra / maccs", "extra", ("maccs",)),
+    ("extra / ecfp2", "extra", ("ecfp2",)),
+    ("extra / physchem", "extra", ("physchem",)),
+    ("extra / отобранные", "extra", RECOMMENDED),
+    ("lgbm / отобранные", "lgbm", RECOMMENDED),
+    ("svc_rbf / отобранные", "svc_rbf", RECOMMENDED),
+    ("svc_tanimoto / ecfp2+avalon", "svc_tanimoto", ("ecfp2", "avalon")),
+)
 
 
 def context_matrix(frame: pd.DataFrame, folds: list[np.ndarray]) -> np.ndarray:
@@ -81,24 +96,20 @@ def line(label: str, probability: dict[str, np.ndarray]) -> None:
 
 def main() -> None:
     frame = DATA.train
-    sources = {
-        "chemistry": {split: matrix(RECOMMENDED) for split in SPLITS},
-        "metadata": {split: context_matrix(frame, FOLDS[split]) for split in SPLITS},
-        "opendata": {split: opendata_matrix(frame) for split in SPLITS},
-    }
-
     print(f"{'источник / модель':38} {'AUC rn':>7} {'MSE rn':>12} {'AUC sc':>7} {'MSE sc':>12}")
+
     chemistry: dict[str, list[np.ndarray]] = {split: [] for split in SPLITS}
-    for name in CHEMISTRY_MODELS:
-        probability = {split: classifier_oof(name, sources["chemistry"][split], FOLDS[split])
-                       for split in SPLITS}
-        line(f"chemistry / {name}", probability)
+    for label, model, blocks in CHEMISTRY_PARTS:
+        probability = {split: classifier_oof(model, matrix(blocks), FOLDS[split]) for split in SPLITS}
+        line(label, probability)
         for split in SPLITS:
             chemistry[split].append(probability[split])
 
     aggregated = {"chemistry": {split: ensemble(chemistry[split], FOLDS[split]) for split in SPLITS}}
-    line("chemistry / ансамбль 1/MSE", aggregated["chemistry"])
+    line("химия / ансамбль 1/MSE", aggregated["chemistry"])
 
+    sources = {"metadata": {split: context_matrix(frame, FOLDS[split]) for split in SPLITS},
+               "opendata": {split: opendata_matrix(frame) for split in SPLITS}}
     for source in ("metadata", "opendata"):
         aggregated[source] = {split: classifier_oof("extra", sources[source][split], FOLDS[split])
                               for split in SPLITS}

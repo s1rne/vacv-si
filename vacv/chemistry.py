@@ -105,7 +105,11 @@ BLOCKS: dict[str, Callable[[Chem.Mol], np.ndarray]] = {
     "physchem": physchem,
 }
 
-RECOMMENDED = ("rdkit2d", "erg", "avalon", "ecfp2", "physchem")
+# Отобрано жадным наращиванием в experiments/chem_blocks.py. Случайное разбиение
+# выбирает maccs+rdkit2d+physchem, ErG добавлен за остовное разбиение: в одиночку он даёт
+# там лучший AUC 0.887, потому что сокращённый граф описывает фармакофор, а не конкретные
+# фрагменты, и переносится на незнакомые серии.
+RECOMMENDED = ("rdkit2d", "maccs", "physchem", "erg")
 
 
 def parse(smiles: str) -> Chem.Mol:
