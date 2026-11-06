@@ -1,15 +1,17 @@
+.DS_Store
 .venv/
 __pycache__/
 *.pyc
 .pytest_cache/
-.DS_Store
 
-outputs/
 runs/
+outputs/
 *.ckpt
 *.pt
 
-# Сырые выгрузки из открытых баз кэшируются локально и восстанавливаются скриптом.
+# Данные: сырые ответы API и промежуточные таблицы не коммитятся,
+# data/processed держит готовый набор и отслеживается намеренно.
 data/raw/
 data/interim/
-# data/processed содержит собранную базу, которую требует задание, и хранится в репозитории.
+analysis/cache/
+*.log

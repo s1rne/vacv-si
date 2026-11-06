@@ -14,7 +14,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE, SENTINEL, ContextEncoder, structure_matrix, scaffolds_of
+from vacv.pipeline import SENTINEL, ContextEncoder, structure_matrix, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
@@ -44,7 +44,7 @@ def mse(probability, y, active_value) -> float:
 def main() -> None:
     data = load()
     y = data.y
-    labels = (y >= INACTIVE).astype(int)
+    labels = (y == SENTINEL).astype(int)
     active_mean = y[labels == 0].mean()
     splits = {"остовы": scaffold_folds(scaffolds_of(data.train), n_splits=5),
               "случайное": [index for _, index in KFold(5, shuffle=True, random_state=0).split(y)]}

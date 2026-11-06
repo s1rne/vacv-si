@@ -23,10 +23,14 @@ PRESENCE = Path("data/processed/competition_presence.csv")
 # Признаки присутствия в открытых базах, отобранные по разделению неактивных на обучении.
 # Близость к ближайшему измеренному соединению определена для всех молекул, поэтому
 # работает и там, где точного совпадения нет.
+#
+# best_ic50_um и best_cc50_um сюда намеренно не входят: они воспроизводят колонки
+# IC50_uM_VACV и CC50_uM организаторов побитово в 73% и 66% случаев, то есть это
+# запрещённые колонки, пришедшие окольным путём. Их удаление стоит 0.19% публичного
+# счёта (docs/validation.md), и такой размен выгоден.
 PRESENCE_FEATURES = [
     "nn1_tanimoto", "nn2_tanimoto", "nn3_tanimoto",
-    "n_antiviral", "has_antiviral", "n_records_skeleton",
-    "best_ic50_um", "best_cc50_um", "n_cytotox",
+    "n_antiviral", "has_antiviral", "n_records_skeleton", "n_cytotox",
 ]
 
 

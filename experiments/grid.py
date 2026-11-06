@@ -8,9 +8,8 @@ from sklearn.calibration import CalibratedClassifierCV
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE, align, featurize
+from vacv.pipeline import ContextEncoder, SENTINEL, scaffolds_of, structure_matrix
 from vacv.splits import fold_indices, scaffold_folds
-from vacv.target import SENTINEL
 
 CLF = dict(n_estimators=600, learning_rate=0.03, num_leaves=15, min_child_samples=10,
            colsample_bytree=0.3, subsample=0.8, subsample_freq=1, reg_lambda=5.0, verbose=-1)
@@ -38,21 +37,20 @@ def evaluate(x, y, folds, regressor, calibrate: bool) -> float:
     for fold in range(len(folds)):
         train_index, validation_index = fold_indices(folds, fold)
         x_train, y_train = x[train_index], y[train_index]
-        inactive = y_train >= INACTIVE
+        inactive = y_train == SENTINEL
         base = LGBMClassifier(**CLF, random_state=0)
         classifier = CalibratedClassifierCV(base, method="isotonic", cv=3) if calibrate else base
         classifier.fit(x_train, inactive.astype(int))
         probability = classifier.predict_proba(x[validation_index])[:, 1]
-        active_mean = np.clip(REGRESSORS[regressor](x_train, y_train, x[validation_index], ~inactive), 0, INACTIVE)
+        active_mean = np.clip(REGRESSORS[regressor](x_train, y_train, x[validation_index], ~inactive), 0, SENTINEL)
         prediction[validation_index] = probability * SENTINEL + (1 - probability) * active_mean
     return float(np.mean((prediction - y) ** 2))
 
 
 def main() -> None:
     data = load()
-    matrix, scaffolds, context = featurize(data.train)
-    train_context, _ = align(context, context)
-    x = np.hstack([matrix, train_context])
+    scaffolds = scaffolds_of(data.train)
+    x = np.hstack([structure_matrix(data.train), ContextEncoder().fit(data.train).transform(data.train)])
     y = data.y
 
     splits = {

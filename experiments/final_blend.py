@@ -10,14 +10,13 @@ from __future__ import annotations
 import itertools
 
 import numpy as np
-import pandas as pd
 from lightgbm import LGBMClassifier
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.model_selection import KFold
 
 from experiments.within_group import target_encode
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE, SENTINEL, ContextEncoder, structure_matrix, scaffolds_of
+from vacv.pipeline import SENTINEL, ContextEncoder, structure_matrix, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
@@ -52,7 +51,7 @@ def sources(data, labels, matrix, folds) -> dict[str, np.ndarray]:
 def main() -> None:
     data = load()
     y = data.y
-    labels = (y >= INACTIVE).astype(int)
+    labels = (y == SENTINEL).astype(int)
     matrix = structure_matrix(data.train)
     active_mean = y[labels == 0].mean()
 

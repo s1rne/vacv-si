@@ -14,9 +14,8 @@ from sklearn.svm import SVC
 
 from vacv.dataset import load
 from vacv.features import descriptors, maccs, morgan_counts, parse, scaffold
-from vacv.pipeline import INACTIVE, align
+from vacv.pipeline import SENTINEL
 from vacv.splits import fold_indices, scaffold_folds
-from vacv.target import SENTINEL
 
 import pandas as pd
 
@@ -52,7 +51,7 @@ SETS = {
 
 
 def score(x, y, folds, build) -> tuple[float, float]:
-    inactive = (y >= INACTIVE).astype(int)
+    inactive = (y == SENTINEL).astype(int)
     probability = np.zeros(len(y))
     for fold in range(len(folds)):
         train_index, validation_index = fold_indices(folds, fold)

@@ -7,7 +7,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE, SelectivityModel, scaffolds_of
+from vacv.pipeline import SENTINEL, SelectivityModel, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
@@ -18,7 +18,7 @@ def run(data, folds) -> tuple[float, float]:
         train_index, validation_index = fold_indices(folds, fold)
         model = SelectivityModel().fit(data.train.iloc[train_index], y[train_index])
         prediction[validation_index] = model.predict(data.train.iloc[validation_index])
-    inactive = (y >= INACTIVE).astype(int)
+    inactive = (y == SENTINEL).astype(int)
     auc = roc_auc_score(inactive, (prediction - y[inactive == 0].mean()))
     return auc, float(np.mean((prediction - y) ** 2))
 

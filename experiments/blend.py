@@ -13,9 +13,8 @@ from sklearn.model_selection import KFold
 
 from experiments.context import build
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE
+from vacv.pipeline import SENTINEL
 from vacv.splits import fold_indices, scaffold_folds
-from vacv.target import SENTINEL
 
 
 def forest(seed: int = 0) -> ExtraTreesClassifier:
@@ -35,7 +34,7 @@ def main() -> None:
     data = load()
     structure, scaffolds, context, titles = build(data.train)
     y = data.y
-    labels = (y >= INACTIVE).astype(int)
+    labels = (y == SENTINEL).astype(int)
     context_matrix = np.hstack([context["strain"].to_numpy(float), context["Culture"].to_numpy(float), titles])
     active_mean = y[labels == 0].mean()
 

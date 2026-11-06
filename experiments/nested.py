@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
-from vacv.pipeline import INACTIVE, SENTINEL, ContextEncoder, structure_matrix, scaffolds_of
+from vacv.pipeline import SENTINEL, ContextEncoder, structure_matrix, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
@@ -32,7 +32,7 @@ def blend(train_frame, train_labels, test_frame, matrix, train_index, test_index
 def main() -> None:
     data = load()
     y = data.y
-    labels = (y >= INACTIVE).astype(int)
+    labels = (y == SENTINEL).astype(int)
     matrix = structure_matrix(data.train)
     splits = {"остовы": scaffold_folds(scaffolds_of(data.train), n_splits=5),
               "случайное": [index for _, index in KFold(5, shuffle=True, random_state=0).split(y)]}
@@ -43,7 +43,6 @@ def main() -> None:
         platt = np.zeros(len(y))
         for fold in range(len(folds)):
             train_index, validation_index = fold_indices(folds, fold)
-            inner = scaffold_folds([f"{i}" for i in range(len(train_index))], n_splits=4) if False else None
             train_probability, valid_probability = blend(
                 data.train.iloc[train_index], labels[train_index],
                 data.train.iloc[validation_index], matrix, train_index, validation_index)

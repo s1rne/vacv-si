@@ -15,9 +15,8 @@ from sklearn.model_selection import KFold
 
 from vacv.dataset import load
 from vacv.features import maccs, morgan_counts, parse, scaffold
-from vacv.pipeline import INACTIVE
+from vacv.pipeline import SENTINEL
 from vacv.splits import fold_indices, scaffold_folds
-from vacv.target import SENTINEL
 
 
 def title_features(titles: pd.Series) -> np.ndarray:
@@ -42,7 +41,7 @@ def build(frame: pd.DataFrame, categories: dict[str, pd.Index] | None = None):
 
 
 def score(x, y, folds) -> tuple[float, float]:
-    inactive = (y >= INACTIVE).astype(int)
+    inactive = (y == SENTINEL).astype(int)
     probability = np.zeros(len(y))
     for fold in range(len(folds)):
         train_index, validation_index = fold_indices(folds, fold)
