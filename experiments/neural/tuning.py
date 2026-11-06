@@ -22,17 +22,18 @@ EPOCHS = (10, 25, 50)
 def main() -> None:
     import sys
 
-    group = "tuning"
+    group, models = "tuning", MODELS
     rates, epochs_grid = RATES, EPOCHS
     if len(sys.argv) > 1:
         group, rates, epochs_grid = sys.argv[1], \
             tuple(float(value) for value in sys.argv[2].split(",")), \
             tuple(int(value) for value in sys.argv[3].split(","))
+        models = tuple(sys.argv[4].split(",")) if len(sys.argv) > 4 else MODELS
 
     job = task()
     results = []
     print(HEADER)
-    for model, rate, epochs in itertools.product(MODELS, rates, epochs_grid):
+    for model, rate, epochs in itertools.product(models, rates, epochs_grid):
         config = Config(model=model, learning_rate=rate, epochs=epochs)
         result = classify(job, "random", config)
         results.append(result)

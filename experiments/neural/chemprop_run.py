@@ -14,6 +14,7 @@ Chemprop берёт последнюю эпоху, и 50 эпох на 230 мо�
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -25,8 +26,8 @@ import pandas as pd
 
 FOLDS = Path("data/interim/neural/folds.npz")
 WORK = Path("data/interim/neural/chemprop")
-EPOCHS = 50
-PATIENCE = 15
+EPOCHS = int(os.environ.get("CHEMPROP_EPOCHS", 50))
+PATIENCE = int(os.environ.get("CHEMPROP_PATIENCE", 15))
 
 CONFIGS = {
     "dmpnn": [],
@@ -60,7 +61,7 @@ def fold_run(directory: Path, frame: pd.DataFrame, train_index: np.ndarray,
          "-s", "SMILES", "--target-columns", "inactive", "-t", "classification",
          "--epochs", str(EPOCHS), "--patience", str(PATIENCE),
          "--accelerator", "gpu", "--devices", "1", "--pytorch-seed", str(seed),
-         "-o", str(directory / "out"), "--quiet", *options])
+         "-o", str(directory / "out"), "-q", *options])
 
     checkpoints = sorted((directory / "out").rglob("best.pt"))
     if not checkpoints:
@@ -77,12 +78,14 @@ def fold_run(directory: Path, frame: pd.DataFrame, train_index: np.ndarray,
 
 
 def main() -> None:
+    wanted = os.environ.get("CHEMPROP_CONFIGS")
+    configs = {name: CONFIGS[name] for name in wanted.split(",")} if wanted else CONFIGS
     stored = np.load(FOLDS, allow_pickle=False)
     frame = pd.DataFrame({"SMILES": stored["smiles"], "inactive": stored["labels"].astype(int)})
     folds = {split: [stored[f"{split}.{i}"] for i in range(5)] for split in ("random", "scaffold")}
     WORK.mkdir(parents=True, exist_ok=True)
 
-    for name, options in CONFIGS.items():
+    for name, options in configs.items():
         meta = []
         payload = {}
         for split, parts in folds.items():
