@@ -15,6 +15,9 @@ from vacv.chemistry import BLOCKS
 from vacv.evaluate import competition_mse
 
 MODELS = ("extra", "cat")
+# Наращивание гоняется только для ExtraTrees: CatBoost проигрывает ему на всех девяти
+# блоках по отдельности, и перебор наборов для него ничего не решает.
+GREEDY = "extra"
 HEADER = f"{'блок':34} {'модель':8} {'AUC rn':>7} {'MSE rn':>12} {'AUC sc':>7} {'MSE sc':>12}"
 
 
@@ -41,16 +44,15 @@ def main() -> None:
 
     print("\n— жадное наращивание, порядок по AUC на случайном разбиении —")
     print(HEADER)
-    for model in MODELS:
-        order = sorted(BLOCKS, key=lambda name: -single[(name, model)])
-        chosen: list[str] = []
-        best = -np.inf
-        for candidate in order:
-            auc, text = row("+".join(chosen + [candidate]), chosen + [candidate], model)
-            print(text)
-            if auc > best:
-                best, chosen = auc, chosen + [candidate]
-        print(f"{model}: выбрано {'+'.join(chosen)}, AUC {best:.3f}\n")
+    order = sorted(BLOCKS, key=lambda name: -single[(name, GREEDY)])
+    chosen: list[str] = []
+    best = -np.inf
+    for candidate in order:
+        auc, text = row("+".join(chosen + [candidate]), chosen + [candidate], GREEDY)
+        print(text)
+        if auc > best:
+            best, chosen = auc, chosen + [candidate]
+    print(f"выбрано {'+'.join(chosen)}, AUC {best:.3f}")
 
 
 if __name__ == "__main__":
