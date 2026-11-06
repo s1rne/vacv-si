@@ -65,7 +65,7 @@ def pretraining(exclude: set[str], frame: pd.DataFrame | None = None,
     frame = table() if frame is None else frame
     keep = ~frame["inchikey14"].fillna("").str[:14].isin(exclude)
     kept = frame[keep].reset_index(drop=True)
-    targets = kept[list(TARGETS)].to_numpy(dtype=np.float64)
+    targets = kept[list(TARGETS)].to_numpy(dtype=np.float64, copy=True)
     if standardize:
         for column in (0, 1):
             values = targets[:, column]
