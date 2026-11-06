@@ -133,6 +133,38 @@ def sentinel_report(labelled: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def coverage_by_sentinel(labelled: pd.DataFrame) -> pd.DataFrame:
+    """Train coverage split by whether the organisers' row is a sentinel.
+
+    The two halves of the competition set behave differently and the metric
+    punishes them differently. A sentinel row's target is 10000, so a
+    recovered ratio substituted there is wrong by four orders of magnitude; a
+    live row's target is the ratio itself, so a recovered value is worth
+    almost exactly its error. Coverage therefore has to be read per class.
+    """
+    rows = []
+    for name, subset in (
+        ("sentinel (SI VACV == 10000)", labelled[labelled["is_sentinel"]]),
+        ("live measurement", labelled[~labelled["is_sentinel"]]),
+    ):
+        matched = subset[subset["si"].notna()]
+        errors = matched.loc[np.isfinite(matched["log10_error"]), "log10_error"].abs()
+        rows.append(
+            {
+                "class": name,
+                "compounds": len(subset),
+                "si_recovered": len(matched),
+                "coverage": len(matched) / len(subset) if len(subset) else np.nan,
+                "si_exact": float(matched["si_exact"].mean()) if len(matched) else np.nan,
+                "within_0.3_log": float((errors <= CLOSE_LOG10).mean()) if len(errors) else np.nan,
+                "sentinel_evidence_on_the_rest": int(
+                    (subset["si"].isna() & subset["sentinel_evidence"]).sum()
+                ),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def confidence(lookup: pd.DataFrame, labelled: pd.DataFrame) -> pd.Series:
     """Per-row probability that the recovered SI is the organisers' own number.
 

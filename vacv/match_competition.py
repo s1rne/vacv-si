@@ -322,6 +322,7 @@ def recovery(curated_open: pd.DataFrame, splits: dict[str, pd.DataFrame]) -> dic
         "recovery_labelled": labelled,
         "recovery_report": coverage.report(labelled) if not labelled.empty else {},
         "recovery_sentinel": coverage.sentinel_report(labelled) if not labelled.empty else pd.DataFrame(),
+        "recovery_by_sentinel": coverage.coverage_by_sentinel(labelled) if not labelled.empty else pd.DataFrame(),
         "recovery_coverage": coverage.coverage(recovered),
     }
 

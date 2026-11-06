@@ -47,7 +47,8 @@ import numpy as np
 
 from .build_dataset import antiviral_side, cytotox_side, si_quality
 from .classify import extract_cell_line, mentions_vaccinia
-from .paths import MOLECULE_LINKS
+from .paths import INACTIVE, MOLECULE_LINKS
+from .units import MASS_UG_PER_ML, canonical_units
 
 log = logging.getLogger(__name__)
 
@@ -102,13 +103,24 @@ OUTPUT_COLUMNS = [
     "source_db",
     "n_antiviral_records",
     "n_cytotox_records",
+    "inactive_evidence",
     "sentinel_evidence",
+    "ic50_um",
+    "cc50_um",
 ]
 
 
 def _key(value: object) -> str | None:
     """A structure key, or None where standardization failed."""
     return value if isinstance(value, str) and value else None
+
+
+def _value(record: dict) -> float:
+    """The record's value as the organisers would have transcribed it."""
+    printed = record.get("organiser_value")
+    if printed is not None and np.isfinite(printed):
+        return float(printed)
+    return float(record["value_um"])
 
 
 def _side_key(record: dict, cell: str | None) -> tuple:
@@ -126,7 +138,7 @@ def _best(records: list[dict], cell: str | None) -> dict:
 class Records:
     """The open-data records, indexed the way the matcher needs them."""
 
-    def __init__(self, curated_open: pd.DataFrame):
+    def __init__(self, curated_open: pd.DataFrame, inactive: pd.DataFrame | None = None):
         antiviral = antiviral_side(curated_open)
         cytotox = cytotox_side(curated_open)
         self.antiviral_exact = self._index(antiviral, "inchikey")
@@ -134,9 +146,12 @@ class Records:
         self.antiviral = self._index(antiviral, "inchikey14")
         self.cytotox = self._index(cytotox, "inchikey14")
         self.selectivity = self._index(_vaccinia_selectivity(curated_open), "inchikey14")
+        inactive = inactive_records() if inactive is None else inactive
+        self.inactive = set(inactive["inchikey14"].dropna()) if not inactive.empty else set()
 
     @staticmethod
     def _index(frame: pd.DataFrame, key: str) -> dict[str, list[dict]]:
+        frame = frame.assign(organiser_value=printed_values(frame)) if not frame.empty else frame
         columns = [
             "value_um",
             "relation",
@@ -150,6 +165,7 @@ class Records:
             "source_db",
             "source_id",
             "raw_units",
+            "organiser_value",
         ]
         kept = [c for c in columns if c in frame.columns]
         out: dict[str, list[dict]] = {}
@@ -163,6 +179,32 @@ class Records:
         if exact:
             return self.antiviral_exact.get(key, []), self.cytotox_exact.get(key, [])
         return self.antiviral.get(key, []), self.cytotox.get(key, [])
+
+
+def printed_values(frame: pd.DataFrame) -> "pd.Series":
+    """The number the organisers would have copied out of the record.
+
+    They did not convert units. Where a record reports ``EC50 > 100
+    ug.mL-1``, their ``IC50_uM_VACV`` column holds ``100.0`` - the printed
+    number, in a column labelled micromolar. The ratio is unaffected whenever
+    both halves are in the same units, because the molecular weight cancels,
+    but the two columns are not, and neither is a pair whose halves were
+    reported in different units.
+    """
+    value_um = pd.to_numeric(frame["value_um"], errors="coerce")
+    if "raw_value" not in frame.columns or "raw_units" not in frame.columns:
+        return value_um
+    raw = pd.to_numeric(frame["raw_value"], errors="coerce")
+    units = frame["raw_units"].map(canonical_units)
+    mass = units.isin(set(MASS_UG_PER_ML)) & raw.notna()
+    return pd.Series(np.where(mass, raw, value_um), index=frame.index, dtype="float64")
+
+
+def inactive_records(path=INACTIVE) -> pd.DataFrame:
+    """Records reporting inactivity against vaccinia, if the curate stage wrote them."""
+    if not path.exists():
+        return pd.DataFrame(columns=["inchikey", "inchikey14"])
+    return pd.read_csv(path)
 
 
 def _vaccinia_selectivity(curated_open: pd.DataFrame) -> pd.DataFrame:
@@ -260,6 +302,7 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
             "culture": record.get("Culture"),
             "cell_line": cell,
         }
+        key_14 = _key(record.get("inchikey14"))
         linked = by_title.get(str(record.get("Title")), {})
         attempts: list[tuple[str, str | None, bool]] = [("inchikey", _key(record.get("inchikey")), True)]
         attempts += [("chembl_registry", key, len(key) > 14) for key in linked.get("chembl_registry", [])]
@@ -284,7 +327,8 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
         # organisers' sentinel: their IC50 column is empty because the
         # compound was inactive, and SI VACV becomes 10000. Flagged, never
         # written into si - vacv.coverage measures how often it is right.
-        row["sentinel_evidence"] = bool(cytotox_seen and not antiviral_seen)
+        row["inactive_evidence"] = bool(key_14 and key_14 in records.inactive)
+        row["sentinel_evidence"] = bool(row["inactive_evidence"] or (cytotox_seen and not antiviral_seen))
 
         if chosen is None:
             # Nothing to pair: fall back on the selectivity index the authors
@@ -337,9 +381,11 @@ def recover(split: pd.DataFrame, records: Records, links: pd.DataFrame | None = 
                 {
                     "match_tier": tier,
                     "rule": found["rule"],
-                    "ic50": float(left["value_um"]),
-                    "cc50": float(right["value_um"]),
-                    "si": float(right["value_um"]) / float(left["value_um"]),
+                    "ic50": _value(left),
+                    "cc50": _value(right),
+                    "si": _value(right) / _value(left),
+                    "ic50_um": float(left["value_um"]),
+                    "cc50_um": float(right["value_um"]),
                     "ic50_relation": left.get("relation"),
                     "cc50_relation": right.get("relation"),
                     "ic50_type": left.get("standard_type"),

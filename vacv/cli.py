@@ -29,8 +29,8 @@ from . import (
     presence,
     validate as validate_module,
 )
-from .curate import curate
-from .paths import INTERIM, KAGGLE, PROCESSED, ensure_dirs
+from .curate import curate, inactive_evidence
+from .paths import INACTIVE, INTERIM, KAGGLE, PROCESSED, ensure_dirs
 from .schema import conform
 from .sources import ALL_SOURCES, OPEN_SOURCES, kaggle_competition
 
@@ -100,6 +100,9 @@ def cmd_curate(args: argparse.Namespace) -> int:
     raw = pd.read_csv(MEASUREMENTS, low_memory=False)
     kept, reasons = curate(raw, canonical_tautomer=not args.no_tautomer)
     kept.to_csv(CURATED, index=False)
+    inactive = inactive_evidence(raw, canonical_tautomer=not args.no_tautomer)
+    inactive.to_csv(INACTIVE, index=False)
+    print(f"{len(inactive)} inactive-against-vaccinia records -> {INACTIVE}")
     print(f"curated {len(kept)} of {len(raw)} measurements -> {CURATED}")
     for reason, count in reasons.most_common():
         print(f"  dropped {count:7d}  {reason}")
@@ -192,6 +195,10 @@ def _print_recovery(result: dict) -> None:
     for name, report in (result.get("recovery_report") or {}).items():
         print(f"\nreproduction of the organisers' values on train, by {name}:")
         print(report.to_string(index=False))
+    split_classes = result.get("recovery_by_sentinel")
+    if split_classes is not None and not split_classes.empty:
+        print("\ntrain coverage, by what the organisers' row actually is:")
+        print(split_classes.to_string(index=False))
     sentinel = result.get("recovery_sentinel")
     if sentinel is not None and not sentinel.empty:
         print("\nsentinel (`SI VACV == 10000`) share on train, by evidence:")

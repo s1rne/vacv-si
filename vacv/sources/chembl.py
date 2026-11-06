@@ -353,6 +353,7 @@ def _row(activity: dict, assays: dict[str, dict], docs: dict[str, dict], cells: 
         "reference": reference or None,
         "year": activity.get("document_year") or document.get("year"),
         "activity_comment": activity.get("activity_comment"),
+        "text_value": activity.get("standard_text_value") or activity.get("text_value"),
         "data_validity": activity.get("data_validity_comment") or (None if reason.startswith("ok") else reason),
     }
 

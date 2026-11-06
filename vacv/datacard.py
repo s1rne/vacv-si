@@ -137,6 +137,61 @@ def _overlap(relaxed: pd.DataFrame, competition: pd.DataFrame | None) -> str:
     )
 
 
+def _frame_table(frame: pd.DataFrame) -> str:
+    """A pandas frame as a markdown table, floats rounded for reading."""
+    if frame is None or frame.empty:
+        return ""
+    shown = frame.copy()
+    for column in shown.columns:
+        if pd.api.types.is_float_dtype(shown[column]):
+            shown[column] = shown[column].map(lambda v: "-" if pd.isna(v) else f"{v:.3g}")
+    return _table(shown.astype(object).values.tolist(), list(shown.columns))
+
+
+def _recovery_blocks(analysis: dict) -> str:
+    """The recovered-value lookup: what it covers and how exact it is."""
+    coverage_table = _frame_table(analysis.get("recovery_coverage"))
+    if not coverage_table:
+        return ""
+    report = analysis.get("recovery_report") or {}
+    parts = [
+        """### Per-compound lookup: the organisers' own numbers, recovered
+
+`data/processed/competition_open_data_lookup.csv` carries, for every
+competition compound, the IC50, CC50 and SI that the rule in `vacv/recover.py`
+selects: one antiviral record and one cytotoxicity record from the **same
+publication**, preferring the cell line the row's `Culture` names and then the
+censored record, with the value taken as the source printed it. That rule was
+fitted on the training split, where the organisers' own values are visible, and
+it reproduces them bit for bit far more often than an aggregate does - a median
+over a compound's replicates is the better estimate of its selectivity and the
+worse reconstruction of their column.
+
+`competition_aggregate_lookup.csv` keeps the aggregate for comparison.""",
+        coverage_table,
+    ]
+    for name, table in report.items():
+        parts.append(f"Reproduction of the organisers' values on train, by {name.replace('_', ' ')}:")
+        parts.append(_frame_table(table))
+    by_class = analysis.get("recovery_by_sentinel")
+    if by_class is not None and not by_class.empty:
+        parts.append(
+            "Coverage on train split by what the organisers' row actually is. A sentinel row's "
+            "target is 10000, so a recovered ratio must not be substituted there; a live row's "
+            "target is the ratio itself."
+        )
+        parts.append(_frame_table(by_class))
+    sentinel = analysis.get("recovery_sentinel")
+    if sentinel is not None and not sentinel.empty:
+        parts.append(
+            "How the evidence available for a compound predicts the sentinel, on train. "
+            "`inactive_evidence` is a record that names vaccinia and reports no number at all "
+            "(\"Not Active\"), which is the shape of the organisers' empty IC50 column."
+        )
+        parts.append(_frame_table(sentinel))
+    return "\n\n".join(part for part in parts if part)
+
+
 def match_section(analysis: dict) -> str:
     """How much of the competition set the open harvest reproduces."""
     from .match_competition import HEADER
@@ -168,61 +223,7 @@ took one of them."""
     else:
         agreement = "No training compound could be paired from open data, so no agreement could be measured."
 
-    lookups = analysis.get("lookups", {})
-    lookup_rows = []
-    for name, table in lookups.items():
-        with_si = table["si"].notna() if "si" in table.columns else pd.Series(dtype=bool)
-        rules = table["rule"].value_counts().to_dict() if "rule" in table.columns else {}
-        lookup_rows.append(
-            [
-                name,
-                len(table),
-                int(table["match"].eq("inchikey").sum()),
-                int(table["match"].eq("inchikey14").sum()),
-                int(with_si.sum()),
-                f"{with_si.mean():.0%}" if len(table) else "-",
-                ", ".join(f"{k}: {v}" for k, v in rules.items()) or "-",
-            ]
-        )
-    lookup_table = (
-        _table(
-            lookup_rows,
-            [
-                "split",
-                "compounds",
-                "exact InChIKey",
-                "skeleton only",
-                "SI recovered",
-                "coverage",
-                "selection rule",
-            ],
-        )
-        if lookup_rows
-        else ""
-    )
-
-    lookup_summary = analysis.get("lookup_agreement") or {}
-    if lookup_summary.get("compared"):
-        lookup_accuracy = f"""Accuracy of that lookup against the organisers' own `SI VACV`, on the
-{lookup_summary['compared']} training compounds where both exist:
-
-| statistic | value |
-|---|---|
-| identical to the organisers' value | {lookup_summary['exact']:.0%} |
-| within a factor of 2 | {lookup_summary['within_2x']:.0%} |
-| within a factor of 5 | {lookup_summary['within_5x']:.0%} |
-| Spearman rho | {lookup_summary['spearman']:.2f} |
-
-That {lookup_summary['exact']:.0%} of recovered values are *bit-identical* is the
-finding, not the accuracy. The competition compounds were taken from the same
-papers these databases index - several of the organisers' own compound labels
-are database identifiers (`sid103460068`, `CHEMBL6102784`) - so the open
-harvest does not approximate their labels, it recovers them. The disagreements
-are nearly all cases where a compound was measured in several papers or several
-cell lines and the organisers used one of them while the aggregation uses the
-median."""
-    else:
-        lookup_accuracy = ""
+    recovery = _recovery_blocks(analysis)
 
     documents = analysis["documents"]
     if not documents.empty:
@@ -268,18 +269,7 @@ rows are excluded from the open-data side before matching.
 
 {agreement}
 {sentinel_note}
-### Per-compound lookup
-
-`data/processed/competition_open_data_lookup.csv` carries, for every
-competition compound, the best open-data IC50/CC50/SI found for it, the rule
-that selected it, and the DOI. Candidates are preferred in this order: a pair
-from one publication in the same cell line the organisers used, then any
-single-publication pair, then a same-publication pair with the cell line
-unstated, then a cross-publication aggregate.
-
-{lookup_table}
-
-{lookup_accuracy}
+{recovery}
 
 ### How the organisers built `SI VACV`, and what that implies
 
@@ -300,22 +290,15 @@ So roughly a quarter of the target column is a constant, and in `test.csv`
 makes their hidden target 10000.
 
 Matching against open data predicts that sentinel, which is useful because it
-needs no forbidden column. On the training split:
-
-| open-data match | compounds | share with `SI VACV == 10000` |
-|---|---|---|
-| no match in open data | 197 | 41% |
-| matched, SI measured | 55 | 4% |
-| matched, SI bounded or undetermined | 68 | 0% |
-
-A compound whose paper ChEMBL indexed is almost never a sentinel row; the
-sentinels come from papers the databases did not pick up. Of the 597 test
-compounds, 243 match and 354 do not.
+needs no forbidden column: a compound whose paper ChEMBL indexed is almost
+never a sentinel row, and the sentinels come from papers the databases did not
+index or from records that say "Not Active" instead of giving a number. The
+measured separation is in the table above.
 
 ### Evidence features for every competition compound
 
-The lookup above only has values for the 243 test and 123 train compounds
-where a full pair existed. `competition_presence.csv` covers all 917, because
+The lookup above only has values for the compounds where a pair could be
+rebuilt. `competition_presence.csv` covers all 917, because
 *absence* from the public anti-VACV literature predicts the sentinel: counts of
 matching records, whether an antiviral or a cytotoxicity record exists, median
 IC50 and CC50, censoring flags, document and DOI counts, year range, and the

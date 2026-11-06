@@ -197,6 +197,83 @@ def curate(frame: pd.DataFrame, *, canonical_tautomer: bool = True) -> tuple[pd.
     return kept.reset_index(drop=True), reasons
 
 
+#: What a source writes instead of a number when the compound did nothing.
+INACTIVE_COMMENTS = (
+    "not active",
+    "inactive",
+    "no activity",
+    "not effective",
+    "no inhibition",
+    "not active at",
+)
+
+
+def inactive_evidence(frame: pd.DataFrame, *, canonical_tautomer: bool = True) -> pd.DataFrame:
+    """Records that say "tested against vaccinia, nothing happened".
+
+    These carry no number, so :func:`curate` drops them, and for a dataset of
+    measurements that is right. For predicting the competition's column it
+    throws away the single most valuable row in the harvest: the organisers'
+    ``SI VACV == 10000`` is what their pipeline wrote when the IC50 column was
+    empty, and the IC50 column was empty because the public record said "Not
+    Active" rather than giving a concentration. One such record is worth more
+    than any structural feature, because it is the same fact, from the same
+    source, that produced their sentinel.
+
+    Returned separately rather than kept in the curated table, so that nothing
+    downstream can mistake a missing value for a measured one.
+    """
+    from . import classify as classify_module
+
+    out = frame.copy()
+    numeric = pd.to_numeric(out["value_um"], errors="coerce")
+    columns = [c for c in ("text_value", "activity_comment", "data_validity") if c in out.columns]
+    said = out[columns].astype(str).agg(" ".join, axis=1).str.lower()
+    says_inactive = said.apply(lambda text: any(word in text for word in INACTIVE_COMMENTS))
+    candidates = out[numeric.isna() & says_inactive]
+    if candidates.empty:
+        return pd.DataFrame(columns=["inchikey", "inchikey14", "document_id", "source_id"])
+    keep = [
+        classify_module.mentions_vaccinia(row.organism, row.assay_description, row.strain)
+        and (
+            classify_module.mentions_antiviral(row.assay_description)
+            or classify_module.classify(
+                row.standard_type, description=row.assay_description, organism=row.organism
+            )
+            in {"antiviral", "selectivity"}
+        )
+        for row in candidates.itertuples()
+    ]
+    candidates = candidates[pd.Series(keep, index=candidates.index)]
+    standardized = [standardize(s, canonical_tautomer=canonical_tautomer) for s in candidates["smiles"]]
+    candidates = candidates.assign(
+        inchikey=[s.inchikey for s in standardized],
+        inchikey14=[s.inchikey[:14] if s.inchikey else None for s in standardized],
+    )
+    candidates = candidates[candidates["inchikey14"].notna()]
+    log.info(
+        "curate: %d records report inactivity against vaccinia without a number (%d compounds)",
+        len(candidates),
+        candidates["inchikey14"].nunique(),
+    )
+    columns = [
+        "inchikey",
+        "inchikey14",
+        "standard_type",
+        "text_value",
+        "activity_comment",
+        "data_validity",
+        "assay_description",
+        "document_id",
+        "doi",
+        "year",
+        "cell_line",
+        "source_db",
+        "source_id",
+    ]
+    return candidates[[c for c in columns if c in candidates.columns]].reset_index(drop=True)
+
+
 def aggregate(
     frame: pd.DataFrame,
     group_columns: list[str],

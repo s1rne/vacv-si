@@ -217,6 +217,16 @@ def classify(
     return "unknown"
 
 
+def mentions_antiviral(*texts: object) -> bool:
+    """Does this text describe an antiviral measurement at all?
+
+    Needed where the endpoint name carries no information - a record whose
+    type is "Inhibition" and whose value is the words "Not active" cannot be
+    classified from its label, and the label is not what matters about it.
+    """
+    return bool(_ANTIVIRAL_TEXT.search(_text(*texts)))
+
+
 def mentions_vaccinia(*texts: object) -> bool:
     return bool(_VACCINIA_TEXT.search(_text(*texts)))
 

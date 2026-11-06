@@ -28,6 +28,7 @@ def measurement(**overrides):
         "source_db": "ChEMBL",
         "source_id": "CHEMBL_ACT_1",
         "raw_units": "nM",
+        "raw_value": 1000.0,
     }
     row.update(overrides)
     return row
@@ -46,6 +47,19 @@ def split_row(**overrides):
     }
     row.update(overrides)
     return row
+
+
+def test_the_printed_number_is_used_for_mass_concentrations():
+    frame = pd.DataFrame(
+        [
+            measurement(value_um=404.0, raw_value=100.0, raw_units="ug.mL-1"),
+            measurement(value_um=2.0, raw_value=2000.0, raw_units="nM"),
+        ]
+    )
+    printed = recover.printed_values(frame)
+    # 100 ug/mL went into their column as 100, not as the 404 uM it is.
+    assert printed.iloc[0] == pytest.approx(100.0)
+    assert printed.iloc[1] == pytest.approx(2.0)
 
 
 def test_prefers_the_named_cell_line_then_the_censored_record():
