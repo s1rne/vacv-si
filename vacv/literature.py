@@ -18,6 +18,16 @@ import numpy as np
 import pandas as pd
 
 LOOKUP = Path("data/processed/competition_open_data_lookup.csv")
+PRESENCE = Path("data/processed/competition_presence.csv")
+
+# Признаки присутствия в открытых базах, отобранные по разделению неактивных на обучении.
+# Близость к ближайшему измеренному соединению определена для всех молекул, поэтому
+# работает и там, где точного совпадения нет.
+PRESENCE_FEATURES = [
+    "nn1_tanimoto", "nn2_tanimoto", "nn3_tanimoto",
+    "n_antiviral", "has_antiviral", "n_records_skeleton",
+    "best_ic50_um", "best_cc50_um", "n_cytotox",
+]
 
 
 def lookup(path: Path = LOOKUP) -> pd.DataFrame:
@@ -25,12 +35,20 @@ def lookup(path: Path = LOOKUP) -> pd.DataFrame:
     return table.dropna(subset=["smiles"]).drop_duplicates("smiles")
 
 
+def presence(path: Path = PRESENCE) -> pd.DataFrame:
+    table = pd.read_csv(path, usecols=["smiles", *PRESENCE_FEATURES])
+    return table.drop_duplicates("smiles").rename(columns={"smiles": "SMILES"})
+
+
 def attach(frame: pd.DataFrame, table: pd.DataFrame | None = None) -> pd.DataFrame:
-    """Добавляет колонки literature_si и matched по SMILES."""
+    """Добавляет literature_si, matched и признаки присутствия в открытых базах."""
     table = lookup() if table is None else table
     merged = frame.merge(table[["smiles", "si"]].rename(columns={"smiles": "SMILES", "si": "literature_si"}),
                          on="SMILES", how="left")
     merged["matched"] = merged["literature_si"].notna().astype(float)
+    merged = merged.merge(presence(), on="SMILES", how="left")
+    for column in PRESENCE_FEATURES:
+        merged[column] = pd.to_numeric(merged[column], errors="coerce")
     return merged
 
 

@@ -25,9 +25,12 @@ from lightgbm import LGBMClassifier
 from sklearn.ensemble import ExtraTreesClassifier
 
 from .features import maccs, morgan_counts, parse, scaffold
+from .literature import PRESENCE_FEATURES
 
-INACTIVE = 9_999.0
 SENTINEL = 10_000.0
+# Метка неактивности — ровно значение-заглушка. Порог «не меньше 9999» ошибочно относил
+# к неактивным строку с настоящим SI = 36066 (CC50 1082 при IC50 0.03).
+INACTIVE = SENTINEL
 CONTEXT_COLUMNS = ("strain", "Culture")
 GROUP_COLUMNS = ["strain", "Culture"]
 WEIGHTS = {"structure": 0.0, "context": 0.3, "grouped": 0.7}
@@ -60,6 +63,14 @@ def title_matrix(titles: pd.Series) -> np.ndarray:
     ])
 
 
+def open_data_matrix(frame: pd.DataFrame) -> np.ndarray:
+    """Признаки присутствия соединения в открытых базах. Пропуски заменяются на −1."""
+    columns = ["matched", *PRESENCE_FEATURES]
+    if not set(columns) <= set(frame.columns):
+        return np.zeros((len(frame), 0))
+    return frame[columns].to_numpy(dtype=float, na_value=-1.0)
+
+
 class ContextEncoder:
     """Категории штамма и культуры фиксируются по обучающей выборке."""
 
@@ -72,10 +83,7 @@ class ContextEncoder:
         parts = [pd.get_dummies(frame[name].astype("category"), prefix=name)
                  .reindex(columns=self.columns_[name], fill_value=0).to_numpy(float)
                  for name in CONTEXT_COLUMNS]
-        extra = [title_matrix(frame["Title"])]
-        if "matched" in frame:
-            extra.append(frame["matched"].to_numpy(float)[:, None])
-        return np.hstack(parts + extra)
+        return np.hstack(parts + [title_matrix(frame["Title"]), open_data_matrix(frame)])
 
 
 def group_rate(train_frame: pd.DataFrame, labels: np.ndarray, frame: pd.DataFrame,
@@ -116,7 +124,7 @@ class SelectivityModel:
                               colsample_bytree=0.3, reg_lambda=5.0, verbose=-1, random_state=self.seed)
 
     def fit(self, frame: pd.DataFrame, y: np.ndarray) -> "SelectivityModel":
-        labels = (y >= INACTIVE).astype(int)
+        labels = (y == INACTIVE).astype(int)
         self.active_mean_ = float(y[labels == 0].mean())
         self.train_frame_ = frame
         self.labels_ = labels
@@ -133,10 +141,7 @@ class SelectivityModel:
 
     def _grouped_features(self, frame: pd.DataFrame, matrix: np.ndarray) -> np.ndarray:
         rate = group_rate(self.train_frame_, self.labels_, frame)[:, None]
-        parts = [matrix, rate]
-        if "matched" in frame:
-            parts.append(frame["matched"].to_numpy(float)[:, None])
-        return np.hstack(parts)
+        return np.hstack([matrix, rate, open_data_matrix(frame)])
 
     def probability(self, frame: pd.DataFrame) -> np.ndarray:
         matrix = structure_matrix(frame)
