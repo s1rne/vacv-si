@@ -4,9 +4,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from vacv.literature import attach
-from vacv.dataset import load
-from oracle import oracle
+from common import frames, oracle
 
 
 def main() -> None:
@@ -14,7 +12,7 @@ def main() -> None:
     truth = oracle(test)
     sub = pd.read_csv("outputs/submission.csv").set_index("index").loc[test["index"]]["SI VACV"].to_numpy()
 
-    frame = attach(load().test)
+    _, frame, _ = frames()
     sq = (sub - truth) ** 2
     total = sq.sum()
     print(f"полная сумма квадратов {total:,.0f}, MSE {total / len(truth):,.0f}\n")
