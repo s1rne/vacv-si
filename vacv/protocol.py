@@ -88,6 +88,17 @@ def score(labels: np.ndarray, y: np.ndarray, probability: np.ndarray,
     return float(roc_auc_score(labels, probability)), float(np.mean((prediction - y) ** 2))
 
 
+def fold_auc(job: "Task", split: str, probability: np.ndarray) -> tuple[float, float]:
+    """Среднее и разброс ROC AUC по фолдам.
+
+    Общий AUC по всем out-of-fold вероятностям можно завысить разницей уровней между
+    фолдами: доля неактивных в фолдах от 0.17 до 0.38. Внутрифолдовый AUC этого не ловит.
+    """
+    values = [roc_auc_score(job.labels[fold], probability[fold])
+              for fold in job.folds[split] if 0 < job.labels[fold].sum() < len(fold)]
+    return float(np.mean(values)), float(np.std(values))
+
+
 @dataclass
 class Result:
     """Строка итоговой таблицы: одна модель на одном разбиении."""

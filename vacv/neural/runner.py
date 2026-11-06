@@ -13,15 +13,25 @@ import time
 
 import numpy as np
 
+from ..features import parse
 from ..protocol import Result, Task, score
 from . import external
 from .finetune import Config, logits_to_probability, predict, train
 
 
+def _smiles(job: Task, canonical: bool) -> list[str]:
+    from rdkit import Chem
+
+    texts = list(job.frame["SMILES"])
+    if not canonical:
+        return texts
+    return [Chem.MolToSmiles(parse(text)) for text in texts]
+
+
 def classify(job: Task, split: str, config: Config, pretrain: bool = False) -> Result:
     import torch
 
-    smiles = list(job.frame["SMILES"])
+    smiles = _smiles(job, config.canonical)
     keys = external.keys_of(job.frame)
     source = external.table() if pretrain else None
     probability = np.zeros(len(job.y))
@@ -33,7 +43,7 @@ def classify(job: Task, split: str, config: Config, pretrain: bool = False) -> R
             texts, targets = external.pretraining(held, source)
             base = Config(**{**config.__dict__, "epochs": config.extra.get("pretrain_epochs", 10),
                              "learning_rate": config.extra.get("pretrain_lr", config.learning_rate),
-                             "augment": 1, "tta": 1, "label": ""})
+                             "augment": 1, "tta": 1, "label": "", "canonical": config.canonical})
             _, warm = train(base, texts, targets, "regression")
             state = {key: value.detach().cpu().clone()
                      for key, value in warm.backbone.state_dict().items()}

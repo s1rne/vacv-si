@@ -33,6 +33,7 @@ class Config:
     tta: int = 1
     seed: int = 0
     freeze_backbone: bool = False
+    canonical: bool = False
     label: str = ""
     extra: dict = field(default_factory=dict)
 
@@ -45,6 +46,8 @@ class Config:
             parts.append(f"aug{self.augment}")
         if self.tta > 1:
             parts.append(f"tta{self.tta}")
+        if self.canonical:
+            parts.append("канон")
         return " ".join(parts)
 
 
