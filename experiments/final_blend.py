@@ -10,7 +10,6 @@ from __future__ import annotations
 import itertools
 
 import numpy as np
-import pandas as pd
 from lightgbm import LGBMClassifier
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.model_selection import KFold

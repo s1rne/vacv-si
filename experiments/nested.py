@@ -43,7 +43,6 @@ def main() -> None:
         platt = np.zeros(len(y))
         for fold in range(len(folds)):
             train_index, validation_index = fold_indices(folds, fold)
-            inner = scaffold_folds([f"{i}" for i in range(len(train_index))], n_splits=4) if False else None
             train_probability, valid_probability = blend(
                 data.train.iloc[train_index], labels[train_index],
                 data.train.iloc[validation_index], matrix, train_index, validation_index)

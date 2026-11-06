@@ -8,8 +8,12 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+from rdkit import Chem, DataStructs, RDLogger
+from rdkit.Chem import rdFingerprintGenerator
 
 from common import frames, oracle, probabilities
+
+RDLogger.DisableLog("rdApp.*")
 
 
 def main() -> None:
@@ -29,11 +33,8 @@ def main() -> None:
     sentinel = truth == 10_000.0
 
     print("определение 1: структурная близость (Tanimoto к ближайшему обучающему)")
-    print(f"  порог берётся как 5-й процентиль таких же расстояний внутри обучения")
-    # Порог по обучению: для каждой обучающей молекулы — её ближайший сосед в обучении.
-    from rdkit import Chem, DataStructs, RDLogger
-    from rdkit.Chem import rdFingerprintGenerator
-    RDLogger.DisableLog("rdApp.*")
+    print("  порог берётся как 5-й процентиль таких же расстояний внутри обучения")
+    # Порог по обучению: для каждой обучающей молекулы её ближайший сосед в обучении.
     generator = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=2048)
     train_fingerprints = [generator.GetFingerprint(Chem.MolFromSmiles(s)) for s in raw_train["SMILES"]]
     within = []
