@@ -282,6 +282,12 @@ def _row(activity: dict, assays: dict[str, dict], docs: dict[str, dict], cells: 
     )
 
     standard_type = activity.get("standard_type") or activity.get("type")
+    measurement_class = classify.classify(
+        standard_type,
+        description=description,
+        organism=organism,
+        assay_type=assay.get("assay_type") or activity.get("assay_type"),
+    )
     value_um, reason = to_micromolar(
         activity.get("standard_value"),
         activity.get("standard_units"),
@@ -293,6 +299,17 @@ def _row(activity: dict, assays: dict[str, dict], docs: dict[str, dict], cells: 
         value_um = from_pchembl(activity.get("pchembl_value"))
         if value_um is not None:
             reason = "ok_via_pchembl"
+    if value_um is None and measurement_class == "selectivity":
+        # A selectivity index is a ratio of two concentrations and carries no
+        # units, so the unit conversion has nothing to do and refuses. The
+        # number travels in the same column as the concentrations, which only
+        # works because measurement_class keeps the two apart everywhere they
+        # are read.
+        try:
+            value_um = float(activity.get("standard_value"))
+            reason = "ok_unitless_ratio"
+        except (TypeError, ValueError):
+            pass
 
     reference = " ".join(
         str(part)
@@ -311,12 +328,7 @@ def _row(activity: dict, assays: dict[str, dict], docs: dict[str, dict], cells: 
     return {
         "smiles": activity.get("canonical_smiles"),
         "standard_type": standard_type,
-        "measurement_class": classify.classify(
-            standard_type,
-            description=description,
-            organism=organism,
-            assay_type=assay.get("assay_type") or activity.get("assay_type"),
-        ),
+        "measurement_class": measurement_class,
         "value_um": value_um,
         "relation": canonical_relation(activity.get("standard_relation") or activity.get("relation")),
         "raw_value": activity.get("standard_value"),
@@ -341,6 +353,7 @@ def _row(activity: dict, assays: dict[str, dict], docs: dict[str, dict], cells: 
         "reference": reference or None,
         "year": activity.get("document_year") or document.get("year"),
         "activity_comment": activity.get("activity_comment"),
+        "text_value": activity.get("standard_text_value") or activity.get("text_value"),
         "data_validity": activity.get("data_validity_comment") or (None if reason.startswith("ok") else reason),
     }
 

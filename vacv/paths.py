@@ -12,6 +12,14 @@ RAW = DATA / "raw"
 INTERIM = DATA / "interim"
 PROCESSED = DATA / "processed"
 KAGGLE = RAW / "kaggle"
+
+#: Competition compound -> ChEMBL molecule links, written by the targeted
+#: harvest and read by the matcher.
+MOLECULE_LINKS = INTERIM / "competition_molecules.csv"
+
+#: Records that report inactivity against vaccinia without a number, written
+#: by the curate stage and read by the matcher.
+INACTIVE = INTERIM / "inactive.csv.gz"
 DOCS = ROOT / "docs"
 
 

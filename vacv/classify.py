@@ -23,6 +23,11 @@ CYTOTOX_TYPES = {
     "MNTD",
     "MTC",
     "MTD",
+    # "Minimum cytotoxic concentration": the lowest concentration that alters
+    # cell morphology. It is how the 1980s and 1990s antiviral literature -
+    # the De Clercq series in PRK, HEL and E6SM cells, which is where a large
+    # part of the competition set comes from - reports the cytotoxic side.
+    "MCC",
     "LC50",
     "LD50",
     "CT50",
@@ -38,6 +43,33 @@ AMBIGUOUS_TYPES = {
     "IC50ratio",
     "I50",
     "Activity",
+    # In the antiviral literature "minimum inhibitory concentration" is not
+    # the antibacterial MIC: the assay description spells out "required to
+    # reduce vaccinia virus induced cytopathogenicity by 50% in primary
+    # rabbit kidney cells", which is an EC50 under another name. It stays in
+    # the ambiguous set so the free text, not the label, decides - a genuine
+    # antibacterial MIC in the same paper says nothing about a virus and ends
+    # up unclassified, as it should.
+    "MIC",
+    "MIC50",
+    "ID50",
+}
+
+#: Endpoint names under which a paper reports the selectivity index it
+#: computed itself. These are not a half of a pair, they are a (rounded)
+#: answer: the authors' own CC50/EC50. Useful where no pair can be rebuilt,
+#: and no substitute for one where it can - the organisers recomputed the
+#: ratio from the two columns, so a paper's printed "71" sits next to their
+#: "71.391".
+SELECTIVITY_TYPES = {
+    "Ratio CC50/EC50",
+    "Ratio CC50/IC50",
+    "Selectivity Index",
+    "Selectivity index",
+    "SI",
+    "Therapeutic index",
+    "Therapeutic Index",
+    "TI",
 }
 
 #: Endpoint names that cannot take part in an SI pair.
@@ -50,8 +82,6 @@ IGNORED_TYPES = {
     "EC90",
     "IC95",
     "EC99",
-    "MIC",
-    "MIC50",
     "MIC90",
     "Inhibition",
     "Activity at",
@@ -61,10 +91,6 @@ IGNORED_TYPES = {
     "Solubility",
     "logP",
     "logD",
-    "Selectivity index",
-    "SI",
-    "Therapeutic index",
-    "TI",
 }
 
 _CYTOTOX_TEXT = re.compile(
@@ -143,6 +169,10 @@ def normalise_type(standard_type: str | None) -> str | None:
     return text or None
 
 
+def _normalised(names: set[str]) -> set[str]:
+    return {name.replace(" ", "").upper() for name in names}
+
+
 def classify(
     standard_type: str | None,
     *,
@@ -150,7 +180,7 @@ def classify(
     organism: str | None = None,
     assay_type: str | None = None,
 ) -> str:
-    """Return ``"antiviral"``, ``"cytotox"`` or ``"unknown"``.
+    """Return ``"antiviral"``, ``"cytotox"``, ``"selectivity"`` or ``"unknown"``.
 
     ``assay_type`` is the ChEMBL assay type letter (``T`` toxicity, ``A``
     ADMET, ``F`` functional, ``B`` binding) and is only consulted when the
@@ -160,9 +190,11 @@ def classify(
     if endpoint is None:
         return "unknown"
     key = endpoint.replace(" ", "").upper()
-    if key in {t.replace(" ", "").upper() for t in CYTOTOX_TYPES}:
+    if key in _normalised(SELECTIVITY_TYPES):
+        return "selectivity"
+    if key in _normalised(CYTOTOX_TYPES):
         return "cytotox"
-    if key not in {t.replace(" ", "").upper() for t in AMBIGUOUS_TYPES}:
+    if key not in _normalised(AMBIGUOUS_TYPES):
         return "unknown"
 
     text = _text(description, organism)
@@ -183,6 +215,16 @@ def classify(
     if (assay_type or "").upper() in {"T", "A"}:
         return "cytotox"
     return "unknown"
+
+
+def mentions_antiviral(*texts: object) -> bool:
+    """Does this text describe an antiviral measurement at all?
+
+    Needed where the endpoint name carries no information - a record whose
+    type is "Inhibition" and whose value is the words "Not active" cannot be
+    classified from its label, and the label is not what matters about it.
+    """
+    return bool(_ANTIVIRAL_TEXT.search(_text(*texts)))
 
 
 def mentions_vaccinia(*texts: object) -> bool:

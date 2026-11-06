@@ -55,7 +55,7 @@ DOCUMENT = {
 
 
 def test_every_registered_source_is_callable():
-    assert set(OPEN_SOURCES) == {"chembl", "pubchem"}
+    assert set(OPEN_SOURCES) == {"chembl", "chembl_targeted", "pubchem"}
     assert "kaggle" in ALL_SOURCES and "kaggle" not in OPEN_SOURCES
     for harvest in ALL_SOURCES.values():
         assert callable(harvest)

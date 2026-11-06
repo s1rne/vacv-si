@@ -32,6 +32,10 @@ SOURCE_COLUMNS: list[str] = [
     "reference",  # human readable citation
     "year",
     "activity_comment",  # free text caveats the source attaches
+    # What the source wrote where a number was expected: "Not active",
+    # "Inactive", "Not Determined". It is the origin of the competition's
+    # SI VACV == 10000 sentinel, so it is carried rather than discarded.
+    "text_value",
     "data_validity",  # source-side data quality flag
 ]
 
