@@ -91,6 +91,12 @@ JM2007_SI = Path("data/processed/jm2007_si.csv")
 #: бит-в-бит (sid103605xxx → PubChem substance → ChEMBL)
 #: (см. experiments/jm2008_si.py).
 JM2008_SI = Path("data/processed/jm2008_si.csv")
+#: Нуклеозидный кластер ортопоксвирусных статей Southern Research (JMC 2006
+#: 10.1021/jm060404n + AAC 2009 10.1128/aac.01257-08): TFT 250/0.138,
+#: FIAU 100/1.5, Ara-A 59.4/0.45, Ara-C 21/0.17, 4'-thio-dThd 29/0.03,
+#: '2 (mixture 1:1)' 300/4.6; 6/6 train бит-в-бит
+#: (см. experiments/nucleoside_si.py).
+NUCLEOSIDE_SI = Path("data/processed/nucleoside_si.csv")
 #: Общий майнер пар (EC50 Vaccinia + цитотокс той же клеточной линии) из
 #: ChEMBL-доков (13 проходных: CHEMBL3351523 BMC 2014 бензимидазолы,
 #: CHEMBL6092128, CHEMBL4837211, ...); 58/58 train-якорей бит-в-бит, ключи
@@ -107,7 +113,7 @@ def article_frame() -> pd.DataFrame:
     for extra in (PAPER_SI, JM2007_SI, JM2008_SI, BMCL_SI, RCB_SI,
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
-                  JMC2005_SI, LIT_SI, CHEMBL_SI_PAIRS):
+                  JMC2005_SI, NUCLEOSIDE_SI, LIT_SI, CHEMBL_SI_PAIRS):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)

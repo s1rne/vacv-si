@@ -1,0 +1,8 @@
+Title,sentinel,si,smiles,pmc,label,rule
+Trifuridine,False,1811.5942028985505,O=C1NC(=O)N([C@H]2C[C@H](O)[C@@H](CO)O2)C=C1C(F)(F)F,10.1128/aac.01257-08,Trifuridine,nucleoside_orthopox_papers
+fialuridine,False,66.66666666666667,O=C1NC(=O)N([C@@H]2O[C@H](CO)[C@@H](O)[C@@H]2F)C=C1I,10.1128/aac.01257-08,fialuridine,nucleoside_orthopox_papers
+Vidarabine,False,132.0,Nc1ncnc2c1ncn2C1OC(CO)C(O)C1O,10.1128/aac.01257-08,Vidarabine,nucleoside_orthopox_papers
+Cytarabine,False,123.52941176470587,Nc1ccn(C2OC(CO)C(O)C2O)c(=O)n1,10.1128/aac.01257-08,Cytarabine,nucleoside_orthopox_papers
+"1-(2-deoxy, 4'thio-b-D-ribofuranosyl)-thymidine",False,966.6666666666667,CC1=CN([C@H]2C[C@H](O)[C@@H](CO)S2)C(=O)NC1=O,10.1128/aac.01257-08,"1-(2-deoxy, 4'thio-b-D-ribofuranosyl)-thymidine",nucleoside_orthopox_papers
+2 (mixture 1:1),False,65.21739130434783,N#CC1=C(N)OC2=C(C(=O)CCC2)[C@H]1c1cn([C@H]2C[C@@H](O)[C@@H](CO)O2)c(=O)[nH]c1=O,10.1128/aac.01257-08,2 (mixture 1:1),nucleoside_orthopox_papers
+2 (mixture 1:1),False,65.21739130434783,N#CC1=C(N)OC2=C(C(=O)CCC2)[C@@H]1c1cn([C@H]2C[C@@H](O)[C@@H](CO)O2)c(=O)[nH]c1=O,10.1128/aac.01257-08,2 (mixture 1:1),nucleoside_orthopox_papers
