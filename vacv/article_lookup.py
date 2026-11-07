@@ -70,6 +70,10 @@ RETRO2020_SI = Path("data/processed/retro2020_si.csv")
 #: PMC10434227): скрин ReFRAME/NPC против rVACV, CC50(MTT)/EC50(FP), цензура
 #: ">50"→50.0, ">150"→150.0; 5/5 train бит-в-бит (см. experiments/reframe2023_si.py).
 REFRAME2023_SI = Path("data/processed/reframe2023_si.csv")
+#: Table 1 JMC 2005 (10.1021/jm050291s, PMID 16000005): ациклические аналоги
+#: фуро/пирроло-пиримидинонов, VV/CC50 колонки с цензурой ">"; 11/11 train
+#: бит-в-бит (см. experiments/jmc2005_si.py).
+JMC2005_SI = Path("data/processed/jmc2005_si.csv")
 
 
 @lru_cache(maxsize=1)
@@ -77,7 +81,7 @@ def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
     for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI, RSC2024_SI,
                   KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI, CBDV2018_SI,
-                  AV2021_SI, RETRO2020_SI, REFRAME2023_SI):
+                  AV2021_SI, RETRO2020_SI, REFRAME2023_SI, JMC2005_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
