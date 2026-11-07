@@ -1,0 +1,130 @@
+{
+  "target_version": "train_v2",
+  "rows": 320,
+  "target_max": 36066.667,
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "source_sha256": "91e7c5d66271e12d2558870765a209ea3a9a9942b0562aa0bfd17e00eac05a27",
+  "oof_sha256": {
+    "experiments/results/v2-analog/oof-9.csv": "9bc9199faf7a8daea915cca7327829b0c72661ba3763bc7d279bfdf212f5ff8c",
+    "experiments/results/v2-analog/oof-10.csv": "648f2733942531e6f6c25fe4d9f482d3bb0f43f75593f39f48958320b27f72f7",
+    "experiments/results/v2-analog/oof-11.csv": "a07827369f4db11822ff964afe4d8d0bed31164cd47b33554d9c28458c25adc6",
+    "experiments/results/v2-analog/oof-scaffold.csv": "e7e6a7d34d0767f39bc279951df4e42541789229801fcc49509933f72967ca29",
+    "experiments/results/v2-hurdle/oof-9.csv": "be04025dc6423066b3ce3c31a61a66d7c426d5a899d38dd84a28457727898456",
+    "experiments/results/v2-hurdle/oof-10.csv": "f0bc0ee866c0ca81d617ca199f63b476b43a05b7d3fe5148cbda5d8c7499da6c",
+    "experiments/results/v2-hurdle/oof-11.csv": "2cd59def63124664855eebade073b49d697669cf3fb26b9534efbe580e625276",
+    "experiments/results/v2-hurdle/oof-scaffold.csv": "ec779e8c2577261cc2c9b90a5fd082074bdef163ad4fa1de748db1c6b89d1688",
+    "experiments/results/v2-power/oof-9.csv": "f0f7a8736276bb67dbcc573b96bd6163a1fa8fb49cee96881c18548c81f98069",
+    "experiments/results/v2-power/oof-10.csv": "8c6ab1ea4e1895ad6ad6cc84808061cdc11a87d6f39f745146055d36cb939dbc",
+    "experiments/results/v2-power/oof-11.csv": "88daac073764e75013da69801c8699929ff533dbb3efabc11a13b9f6ac24b447",
+    "experiments/results/v2-power/oof-scaffold.csv": "ab2209a15b8af71174818ae1aaf86f7bc9f31a03eab5c204167b00f7c7af9468",
+    "experiments/results/v2-tabicl/oof-9.csv": "cca776a0b9a8fedb7e7f73fa71b41be7f4b990c5c7fb5b21dddf427565a71293",
+    "experiments/results/v2-tabicl/oof-10.csv": "3af2f12f90b661122156163db1de001ea59d8ebb44f420190537f85173a5e08e",
+    "experiments/results/v2-tabicl/oof-11.csv": "ab9eca52489d1242562d5f971fde3370e7c674f34c26dca48f83021858d053bc",
+    "experiments/results/v2-tabicl/oof-scaffold.csv": "2508680a9633ca93d26a282209f4c308eb074390ba95b8481a74551c0e8239a2",
+    "experiments/results/v2-tweedie/oof-9.csv": "ad30a1993f07e894900894a4d60dc20ee6dcd339a8c0038251fe1bd689665fd7",
+    "experiments/results/v2-tweedie/oof-10.csv": "36cddd415fad93bc69842a96c5bd94172419ff2613d00f9aa201c83cd52dcc9d",
+    "experiments/results/v2-tweedie/oof-11.csv": "0dee1d154238572668b27e6561508e6237eb9730d6f7c7cc757656229eebc44f",
+    "experiments/results/v2-tweedie/oof-scaffold.csv": "334d76902767fd81573492eea6fdf099d03c26a38e61f1acbee147990dcab350"
+  },
+  "source_manifest_sha256": {
+    "experiments/results/v2-analog/manifest.json": "99b795c09671412b85aa4c74644330e1a02848023ccb4891aa0febfe2b296575",
+    "experiments/results/v2-analog/metrics.json": "8b3f107a7f8630c124e678baafcf50cc197df81c8a4b305f39a09b76ca66158e",
+    "experiments/results/v2-hurdle/manifest.json": "e0b5333ae019c67fe398b9e9a4b7a20bb7f699521698d3eeb5cddc4dbada3302",
+    "experiments/results/v2-hurdle/metrics.json": "3f1d1d66f685e4ea0dfc26583f65770eec725cbd47a24ca8ea369f8622542e8f",
+    "experiments/results/v2-power/manifest.json": "c956a4908b66abdc2f506f21b80727da70bede277eada83a41ddd4618bf4e4b9",
+    "experiments/results/v2-power/metrics.json": "aabae02b5e8b0f0ddd6b885d204c1901dca1c63f71896f04e549239025ca6d26",
+    "experiments/results/v2-tabicl/manifest.json": "6f25af939742eef16aa04598a23b4d17c3a72cfe4db25ee91c1540bc3ab9d1fa",
+    "experiments/results/v2-tabicl/metrics.json": "0eb7603a11bc428fc7d1d234a0a257b65011427d6782dacd2cc7db49ca9e5547",
+    "experiments/results/v2-tweedie/kaggle-result.json": "dcac0dbf0395b6c31225a17c27736254e2e04603d2f5fb9e7abd69e8e98266ce",
+    "experiments/results/v2-tweedie/manifest.json": "bc1b7a346c77c039ee3c7ac841d3b35b60107b4b3c7436d936475806a6b470f4",
+    "experiments/results/v2-tweedie/metrics.json": "19693e6dae2ddf1f892b7d14cdaad71fdca7af63c0b120584c7bfc542d44f892",
+    "experiments/results/v2-tweedie/verification.json": "04b41988aca5744d39312a16e5be1e1dec8512735a7f7b06fcffd1ab2a822066"
+  },
+  "sources": {
+    "et_log": [
+      "v2-power",
+      "log"
+    ],
+    "et_power": [
+      "v2-power",
+      "sqrt50-log50"
+    ],
+    "tweedie": [
+      "v2-tweedie",
+      "tweedie-1.8"
+    ],
+    "tabicl": [
+      "v2-tabicl",
+      "tabicl-log"
+    ],
+    "analog": [
+      "v2-analog",
+      "knn8-log"
+    ],
+    "hurdle": [
+      "v2-hurdle",
+      "hurdle-0"
+    ]
+  },
+  "mapping_audit": "all source OOFs match positional row IDs, all 320 targets, and fold IDs for each split",
+  "blend_weights": {
+    "et_log_baseline": {
+      "et_log": 1.0
+    },
+    "et_power_50": {
+      "et_log": 0.5,
+      "et_power": 0.5
+    },
+    "et_tweedie_50": {
+      "et_log": 0.5,
+      "tweedie": 0.5
+    },
+    "et_tabicl_50": {
+      "et_log": 0.5,
+      "tabicl": 0.5
+    },
+    "et_analog_50": {
+      "et_log": 0.5,
+      "analog": 0.5
+    },
+    "optimized_all_sources_seed9": {
+      "et_log": 0.16666666666666669,
+      "et_power": 0.16666666666666669,
+      "tweedie": 0.16666666666666669,
+      "tabicl": 0.16666666666666669,
+      "analog": 0.16666666666666669,
+      "hurdle": 0.16666666666666669
+    }
+  },
+  "weights_optimized_on": "seed 9 only; SLSQP nonnegative simplex",
+  "selected_on_discovery9": "et_tweedie_50",
+  "confirmation10_11": [
+    {
+      "split": "10",
+      "candidate": "et_tweedie_50",
+      "mse": 4223317.826685775,
+      "mse_delta_vs_et": -32998.58960409742,
+      "max_label_prediction": 229.1484058227174,
+      "max_prediction": 1126.236632880243
+    },
+    {
+      "split": "11",
+      "candidate": "et_tweedie_50",
+      "mse": 4278211.294454696,
+      "mse_delta_vs_et": -1638.651002401486,
+      "max_label_prediction": 38.0935645500115,
+      "max_prediction": 577.7237058016366
+    }
+  ],
+  "scaffold": {
+    "split": "scaffold",
+    "candidate": "et_tweedie_50",
+    "mse": 4266479.579833573,
+    "mse_delta_vs_et": 3862.646153718233,
+    "max_label_prediction": 32.61471812507494,
+    "max_prediction": 377.6056413403157
+  },
+  "passes_both_confirmation_3m_gate": false,
+  "candidate_csv": null,
+  "kaggle_upload": false
+}
