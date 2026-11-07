@@ -97,6 +97,11 @@ JM2008_SI = Path("data/processed/jm2008_si.csv")
 #: '2 (mixture 1:1)' 300/4.6; 6/6 train бит-в-бит
 #: (см. experiments/nucleoside_si.py).
 NUCLEOSIDE_SI = Path("data/processed/nucleoside_si.csv")
+#: Перенос значений между train/test-близнецами по (InChIKey, Title):
+#: камфорная серия JMC 2007 в таутомерных SMILES ('6'/'8'/'11' сентинелы,
+#: '12' 21.686, '7' 1.62); 5/5 подтверждены хранимыми парами test
+#: (см. experiments/twin_transfer.py).
+TWIN_SI = Path("data/processed/twin_transfer.csv")
 #: Общий майнер пар (EC50 Vaccinia + цитотокс той же клеточной линии) из
 #: ChEMBL-доков (13 проходных: CHEMBL3351523 BMC 2014 бензимидазолы,
 #: CHEMBL6092128, CHEMBL4837211, ...); 58/58 train-якорей бит-в-бит, ключи
@@ -113,7 +118,7 @@ def article_frame() -> pd.DataFrame:
     for extra in (PAPER_SI, JM2007_SI, JM2008_SI, BMCL_SI, RCB_SI,
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
-                  JMC2005_SI, NUCLEOSIDE_SI, LIT_SI, CHEMBL_SI_PAIRS):
+                  JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, LIT_SI, CHEMBL_SI_PAIRS):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
