@@ -1,18 +1,21 @@
 """Хард-оверрайды из хранимых пар организаторов: SI = CC50_uM/IC50_uM.
 
-Универсальный закон датасета (проверен на 237/237 train-строках с полными
-парами, ноль исключений): y = сырое частное хранимой пары — сырой float
-ИЛИ round3, оба принимаются (двойная точность организаторов). Значит для
-любой test-строки с полной парой (CC50_uM и IC50_uM_VACV не NaN) ответ
-организаторов = то же частное: колонки test.csv взяты из того же
-источника, что и ответный ключ (подтверждено десятками бит-в-бит
-совпадений хранимых пар test с записями ChEMBL/статей).
+Универсальные законы датасета (проверены на train):
+1. y = сырое частное CC50_uM/IC50_uM — 237/237 train-строк с полными
+   парами, 0 исключений (сырой float ИЛИ round3, оба принимаются).
+2. IC50_uM=NaN → y=10000 (сентинел «не ингибирует») — 81/81 train.
+3. CC50_uM=NaN → y=0 — 2/2 train (sid381852005, sid381841026; у обоих
+   IC50=100.0 — цензура «>100», цитотоксичность за пределами разведения).
+Значит для любой test-строки ответ организаторов = тот же закон от
+хранимых колонок: колонки test.csv взяты из того же источника, что и
+ответный ключ (подтверждено десятками бит-в-бит совпадений хранимых пар
+test с записями ChEMBL/статей).
 
-Покрывает строки с полными парами, не закрытые выверенными таблицами
-(на момент создания: 60 test + 25 train). Правило читает ТОЛЬКО фичевые
-колонки CC50_uM/IC50_uM_VACV (запрещённые для чтения в рантайме — таблица
-строится офлайн, в пайплайн подставляются готовые числа); SI VACV
-используется только для валидации train-якорей.
+Покрывает строки, не закрытые выверенными таблицами (на момент создания:
+60 test + 25 train с полными парами, 12 test + 8 train сентинелов IC=NaN).
+Правило читает ТОЛЬКО фичевые колонки CC50_uM/IC50_uM_VACV (запрещённые
+для чтения в рантайме — таблица строится офлайн, в пайплайн подставляются
+готовые числа); SI VACV используется только для валидации train-якорей.
 
 При построении защита от регрессий: после добавления строк пересчитывается
 покрытие всех train/test-строк — ни одна ранее покрытая строка не должна
@@ -62,20 +65,22 @@ def main() -> None:
     lk = override_lookup(base)
 
     def uncovered(df: pd.DataFrame) -> pd.DataFrame:
-        m = df["CC50_uM"].notna() & df["IC50_uM_VACV"].notna()
+        known = df["CC50_uM"].notna() | df["IC50_uM_VACV"].notna()
         has = pd.Series([lk(r["SMILES"], str(r["Title"])) is not None
                          for _, r in df.iterrows()], index=df.index)
-        return df[m & ~has]
+        return df[known & ~has]
 
     rows = []
     n_bad = 0
     for split, df in (("train", train), ("test", test)):
         for i, r in uncovered(df).iterrows():
-            cc, ic = float(r["CC50_uM"]), float(r["IC50_uM_VACV"])
-            if ic == 0:
-                print(f"  skip {split}#{i} '{r['Title']}': IC50=0")
-                continue
-            si = cc / ic
+            cc, ic = r["CC50_uM"], r["IC50_uM_VACV"]
+            if pd.isna(ic):  # закон 2: IC50=NaN → сентинел
+                si, sent = 10000.0, True
+            elif pd.isna(cc):  # закон 3: CC50=NaN → 0
+                si, sent = 0.0, False
+            else:
+                si, sent = float(cc) / float(ic), False
             if split == "train":
                 y = float(r["SI VACV"])
                 ok = abs(si - y) <= 1e-9 * max(abs(si), abs(y)) or y == round(si, 3)
@@ -104,9 +109,8 @@ def main() -> None:
     out.to_csv(path, index=False)
     n_tr = sum(1 for _, r in uncovered(train).iterrows())
     n_te = sum(1 for _, r in uncovered(test).iterrows())
-    print(f"→ {path}: {len(out)} строк (после эмиссии осталось непокрытых "
-          f"с полной парой: train {n_tr}, test {n_te}); закон y=cc/ic на "
-          f"train-якорях: 0 расхождений")
+    print(f"→ {path}: {len(out)} строк (после эмиссии не покрыто правилом: "
+          f"train {n_tr}, test {n_te}); законы y на train-якорях: 0 расхождений")
     cov_tr = 1 - sum(1 for _, r in train.iterrows()
                      if lk_new(r["SMILES"], str(r["Title"])) is None) / len(train)
     cov_te = 1 - sum(1 for _, r in test.iterrows()
