@@ -1,12 +1,15 @@
 Title,sentinel,si,smiles,pmc,label,rule
 10,False,25.928,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=O)C1=CC=C(Br)C=C1)C2,PMC6335999,10,kovaleva2018_table1
 11,False,7.364,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=O)C1=CC=CO1)C2,PMC6335999,11,kovaleva2018_table1
+16,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/NC(=O)[C@@H]([C@H](O3)C=C4)[C@H]([C@@]345)C(=O)N(C5)CCc6ccccc6,PMC6335999,16,kovaleva2018_table1
+18,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/NC(=O)[C@@H]([C@H](O3)C=C4)[C@H]([C@@]345)C(=O)N6[C@@H]5OCCC6,PMC6335999,18,kovaleva2018_table1
 12,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/NC(=O)c3cccs3,PMC6335999,12,kovaleva2018_table1
 13,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/NC(=O)[C@@H]([C@H](O3)C=C4)[C@H]([C@@]345)C(=O)N(C5)CC,PMC6335999,13,kovaleva2018_table1
+17,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/NC(=O)[C@@H]([C@H](O3)C=C4)[C@H]([C@@]345)C(=O)N6[C@@H]5SCC6,PMC6335999,17,kovaleva2018_table1
 2a (9),False,280.412,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=O)C1=CC=CC=C1)C2,PMC6335999,2a (9),kovaleva2018_table1
-2c,False,25.928,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=O)C1=CC=C(Br)C=C1)C2,PMC6335999,2c,kovaleva2018_table1
 7,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/NC(=O)C(F)(F)F,PMC6335999,7,kovaleva2018_table1
 6,True,,CC(=O)N\N=C(\[C@]12C)C[C@@H](CC1)C2(C)C,PMC6335999,6,kovaleva2018_table1
 15,False,96.806,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=O)[C@@H]1[C@H]3C(=O)N(C4=CC=CC=C4)C[C@]34C=C[C@@]1(C)O4)C2,PMC6335999,15,kovaleva2018_table1
 8,False,12.239,CCCC(=O)N/N=C1\C[C@H]2CC[C@]1(C)C2(C)C,PMC6335999,8,kovaleva2018_table1
+19,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/NC(=O)[C@@H]([C@H](O3)C=C4)[C@H]([C@@]345)C(=O)N6[C@@H]5Sc7c6cccc7,PMC6335999,19,kovaleva2018_table1
 14,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/NC(=O)[C@@H]([C@H](O3)C=C4)[C@H]([C@@]345)C(=O)N(C5)CCOC,PMC6335999,14,kovaleva2018_table1
