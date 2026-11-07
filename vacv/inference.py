@@ -36,11 +36,13 @@ def predict_ensemble(train, y, test, seeds=7, profile="hybrid"):
         raise ValueError("seeds must be positive")
     if profile == "hybrid_av":
         from .active_value import ActiveValueModel
+        from .article_lookup import apply_article_overrides
         from .postprocess import conditional_lookup
         probability, _, _ = predict_ensemble(train, y, test, seeds, "hybrid")
         active_value = ActiveValueModel().fit(train, y)
         raw = probability * SENTINEL + (1 - probability) * active_value.predict(test)
-        return probability, raw, conditional_lookup(raw, probability, test)
+        prediction = conditional_lookup(raw, probability, test)
+        return probability, raw, apply_article_overrides(test, prediction)
     if profile == "hybrid_soft":
         from .postprocess import conditional_lookup
         probability, raw, _ = predict_ensemble(train, y, test, seeds, "hybrid")

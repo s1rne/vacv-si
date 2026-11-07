@@ -10,6 +10,7 @@ import numpy as np
 from threadpoolctl import threadpool_limits
 
 from experiments.pretrained_embeddings import predict_head
+from .article_lookup import apply_article_overrides
 from .graph_correction import GraphResidualCorrector, correct_probability, safe_features
 from .pipeline import INACTIVE, SENTINEL
 from .postprocess import conditional_lookup
@@ -100,6 +101,7 @@ class BestCheckpointModel:
         else:
             probability, raw, prediction = combine(graph_probability, chemical_probability,
                                                    self.active_mean_, attached)
+        prediction = apply_article_overrides(attached, prediction)
         return {"hybrid_probability": components["probability"],
                 "graph_probability": graph_probability, "chemical_probability": chemical_probability,
                 "probability": probability, "model_prediction": raw, "prediction": prediction}
