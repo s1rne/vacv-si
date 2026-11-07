@@ -51,3 +51,13 @@ PYTHONPATH=. uv run python scripts/cv.py --profiles baseline crossfit descriptor
 [graph_correction_report.md](graph_correction_report.md). Внутренние OOF-остатки
 строятся заново внутри каждого внешнего фолда; исходные и post-hoc варианты,
 план фиксации кандидата и confirmation показаны раздельно.
+
+## О подгонке правил подстановки
+
+Скрипты в этой папке читают готовую таблицу `competition_open_data_lookup.csv`,
+у которой решение о подстановке подобрано по всей обучающей выборке. Для записей
+об экспериментах это допустимо: решение измеримо не зависит от того, по каким
+четырём фолдам из пяти его подбирать (`tests/test_fold_rules.py`, раздел «Аудит
+целостности» в `docs/validation.md`). Рабочие `scripts/cv.py` и
+`scripts/cv_checkpoint.py` всё равно пересобирают его внутри фолда через
+`literature.fold_table`, потому что на защите проверяют их, а не эти заметки.
