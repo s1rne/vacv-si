@@ -121,6 +121,11 @@ REVIEW2023_SI = Path("data/processed/review2023_si.csv")
 #: приоритет (Azauridine/MPA → reframe, tecovirimat → jm2007, '3'b' →
 #: molecules2022).
 CHEMBL_SI_PAIRS = Path("data/processed/chembl_si_pairs.csv")
+#: Хранимые пары организаторов: y = сырое частное CC50_uM/IC50_uM —
+#: универсальный закон (237/237 train-строк с полными парами, 0 исключений);
+#: закрывает строки с полными парами, не покрытые таблицами статей
+#: (см. experiments/stored_pairs_si.py).
+STORED_PAIRS_SI = Path("data/processed/stored_pairs_si.csv")
 
 
 @lru_cache(maxsize=1)
@@ -130,7 +135,7 @@ def article_frame() -> pd.DataFrame:
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
                   JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, GRISHAK_SI,
-                  REVIEW2023_SI, LIT_SI, CHEMBL_SI_PAIRS):
+                  REVIEW2023_SI, LIT_SI, CHEMBL_SI_PAIRS, STORED_PAIRS_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
