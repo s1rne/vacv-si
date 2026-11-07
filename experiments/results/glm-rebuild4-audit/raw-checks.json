@@ -1,0 +1,1022 @@
+[
+  {
+    "inchikey14": "AYAXVFWNWZRJPR",
+    "kind": "exact",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "BAWZYPZGXYOSON",
+    "kind": "exact",
+    "document": "CHEMBL1128227",
+    "errors": []
+  },
+  {
+    "inchikey14": "BMRBLYZXZUGFFI",
+    "kind": "exact",
+    "document": "CHEMBL2321734",
+    "errors": []
+  },
+  {
+    "inchikey14": "BRSRBSMFEUUOQN",
+    "kind": "exact",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "CCMHZRFAGXVTJO",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "CHHQGPFUAWUOBR",
+    "kind": "exact",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "CMQVYFVCOKAHBS",
+    "kind": "exact",
+    "document": "CHEMBL4699424",
+    "errors": []
+  },
+  {
+    "inchikey14": "DNWHGCIPTOQAJQ",
+    "kind": "exact",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "FDBYPVYWTUOTST",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "FFEHHXYOPFWGBA",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "FFHCQVWMGVHOHP",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "FVSYZPRTVQJAGL",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "GYUKMCDOJHZTNR",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "HMMRNEAGFOALKT",
+    "kind": "exact",
+    "document": "CHEMBL1139008",
+    "errors": []
+  },
+  {
+    "inchikey14": "HNBXERAQEPUBAG",
+    "kind": "exact",
+    "document": "CHEMBL4196014",
+    "errors": []
+  },
+  {
+    "inchikey14": "HUAMHFXSFKZQGF",
+    "kind": "exact",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "IJAFVNYADTZJEB",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "JFZLCSYICUSFJO",
+    "kind": "exact",
+    "document": "CHEMBL1137668",
+    "errors": []
+  },
+  {
+    "inchikey14": "KZMAHHPDVSVRFN",
+    "kind": "exact",
+    "document": "CHEMBL2321734",
+    "errors": []
+  },
+  {
+    "inchikey14": "MNSBOGXIJFSLRQ",
+    "kind": "exact",
+    "document": "CHEMBL1139008",
+    "errors": []
+  },
+  {
+    "inchikey14": "MOBXWKVFODSIIX",
+    "kind": "exact",
+    "document": "CHEMBL1139008",
+    "errors": []
+  },
+  {
+    "inchikey14": "MQODZKXAYQFWHS",
+    "kind": "exact",
+    "document": "CHEMBL1138246",
+    "errors": []
+  },
+  {
+    "inchikey14": "NJTVGSQNOFCXOO",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "NTTMEUSYNQUZPT",
+    "kind": "exact",
+    "document": "CHEMBL2034851",
+    "errors": []
+  },
+  {
+    "inchikey14": "NWLSPSCDCQLNIZ",
+    "kind": "exact",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "OTIGIFGUOCSTAB",
+    "kind": "exact",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "OTULKMFNZITGKT",
+    "kind": "exact",
+    "document": "CHEMBL2321734",
+    "errors": []
+  },
+  {
+    "inchikey14": "PWSFZFIGZXVJBH",
+    "kind": "exact",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "QAVTUHMBMRUHKF",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "QIHOCPTVRYLGOP",
+    "kind": "exact",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "QKILEZJLQMKRBG",
+    "kind": "exact",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "QYGPSKONHWPQCQ",
+    "kind": "exact",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "SEOLESUITKIHMN",
+    "kind": "exact",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "SXKXNBODUIMEDX",
+    "kind": "exact",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "TULLGUHTNMCCBL",
+    "kind": "exact",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "TXQBDSQGZUYVIN",
+    "kind": "exact",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "VBUVCWMJUNJDEO",
+    "kind": "exact",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "VXDNQJCXIVLMQW",
+    "kind": "exact",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "WVGQCGIFRJHLIA",
+    "kind": "exact",
+    "document": "CHEMBL5223146",
+    "errors": []
+  },
+  {
+    "inchikey14": "YDHJUPUAMAWEOT",
+    "kind": "exact",
+    "document": "CHEMBL6092128",
+    "errors": []
+  },
+  {
+    "inchikey14": "ZGISBQCHKKMJQS",
+    "kind": "exact",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "ZLPWCJQFEROJQN",
+    "kind": "exact",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "ZOLVXJWGJKILLK",
+    "kind": "exact",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "AUQXOOLYTXAZOD",
+    "kind": "lower_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "BZIYQWYVIMTZMI",
+    "kind": "lower_bound",
+    "document": "CHEMBL3351456",
+    "errors": []
+  },
+  {
+    "inchikey14": "CXOXDCKVIMMEHC",
+    "kind": "lower_bound",
+    "document": "CHEMBL3351357",
+    "errors": []
+  },
+  {
+    "inchikey14": "DWMFALXWYOQFQE",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "FGWGMZKHKJTHNB",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "FORWZMHKVUGVDT",
+    "kind": "lower_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "FQYIROYAGCRRBO",
+    "kind": "lower_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "FRPXSOOHWNMLPH",
+    "kind": "lower_bound",
+    "document": "CHEMBL1139008",
+    "errors": []
+  },
+  {
+    "inchikey14": "FTOIZZBVRXSLNC",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "GDEXCDQKFCZHJD",
+    "kind": "lower_bound",
+    "document": "CHEMBL3351456",
+    "errors": []
+  },
+  {
+    "inchikey14": "IXDGDLPUEYGBBL",
+    "kind": "lower_bound",
+    "document": "CHEMBL2321819",
+    "errors": []
+  },
+  {
+    "inchikey14": "JADXSIVDIZCFTF",
+    "kind": "lower_bound",
+    "document": "CHEMBL1148520",
+    "errors": []
+  },
+  {
+    "inchikey14": "JIKMMMSHZOKJCA",
+    "kind": "lower_bound",
+    "document": "CHEMBL1157663",
+    "errors": []
+  },
+  {
+    "inchikey14": "JTLALKXNJHSLDW",
+    "kind": "lower_bound",
+    "document": "CHEMBL1138246",
+    "errors": []
+  },
+  {
+    "inchikey14": "JTMKYYIEXXANMQ",
+    "kind": "lower_bound",
+    "document": "CHEMBL2321734",
+    "errors": []
+  },
+  {
+    "inchikey14": "KOTPMDMFHKRZJS",
+    "kind": "lower_bound",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "LLJNUTJAVMTITA",
+    "kind": "lower_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "LNNHUAXCDFXQNM",
+    "kind": "lower_bound",
+    "document": "CHEMBL1147756",
+    "errors": []
+  },
+  {
+    "inchikey14": "LULPAXGGDASONW",
+    "kind": "lower_bound",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "MINJGCXRSXZISI",
+    "kind": "lower_bound",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "MTTSNNXDZQZHMI",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "MWMGVDKBGJRNSO",
+    "kind": "lower_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "MYFGLUIRDYELPC",
+    "kind": "lower_bound",
+    "document": "CHEMBL1799947",
+    "errors": []
+  },
+  {
+    "inchikey14": "NLLZONVOBYGIQR",
+    "kind": "lower_bound",
+    "document": "CHEMBL2321734",
+    "errors": []
+  },
+  {
+    "inchikey14": "NVLFLIGMWAYTNM",
+    "kind": "lower_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "NYGVMXNSBGUWGH",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "ODEGSKVLIIZEAP",
+    "kind": "lower_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "OZLWMPKTSNGXNF",
+    "kind": "lower_bound",
+    "document": "CHEMBL1142203",
+    "errors": []
+  },
+  {
+    "inchikey14": "PEYWPOFHTAMVQA",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "QXQIKOMCXXUIHY",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "RRXNXXPOEBRRMG",
+    "kind": "lower_bound",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "SAIKSEKQKPKCOU",
+    "kind": "lower_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "SHCBKHMUBAEDND",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "SMZQDZAECIILRZ",
+    "kind": "lower_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "WSASROCLCYETED",
+    "kind": "lower_bound",
+    "document": "CHEMBL3351456",
+    "errors": []
+  },
+  {
+    "inchikey14": "WWODOLZBGIYHAS",
+    "kind": "lower_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "XGTJCNSZEASLLL",
+    "kind": "lower_bound",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "XIJLGJZJOYKMCF",
+    "kind": "lower_bound",
+    "document": "CHEMBL5346934",
+    "errors": []
+  },
+  {
+    "inchikey14": "YYSSTJICDIBYLL",
+    "kind": "lower_bound",
+    "document": "CHEMBL1255569",
+    "errors": []
+  },
+  {
+    "inchikey14": "ZAFZQDSCZHSXRL",
+    "kind": "lower_bound",
+    "document": "CHEMBL1138246",
+    "errors": []
+  },
+  {
+    "inchikey14": "ZJFYWXREQWLWJB",
+    "kind": "lower_bound",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "ALMUWYRJSIOTBQ",
+    "kind": "upper_bound",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "AOMQFUJZMWQTBO",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "APOWOOUBHQIDMK",
+    "kind": "upper_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "AVNPAHISDZUTSF",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "AZBPLNRNLLASGG",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "BFDLOGIJGRMNJY",
+    "kind": "upper_bound",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "BLJLFUWOJXEKSR",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "BRQAHRACCDMDAI",
+    "kind": "upper_bound",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "BXKMBCJOXWKYJL",
+    "kind": "upper_bound",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "CWXIMTHKBVVBDI",
+    "kind": "upper_bound",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "CYANMFQQOGTUKN",
+    "kind": "upper_bound",
+    "document": "CHEMBL1806488",
+    "errors": []
+  },
+  {
+    "inchikey14": "DEOOSNIGWNBSCQ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "DFDVYXNSALTTAY",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "DGOGGARUBZDBTI",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "DOAVLSHCFDEMLD",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "FBPWBCALMOELRP",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "FIYHDQIETKXMJY",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "FJXUUGVIVZHNES",
+    "kind": "upper_bound",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "FKWSSJHRJXJIMZ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1806488",
+    "errors": []
+  },
+  {
+    "inchikey14": "FLRUOVWWLIORFG",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "FXKJUMGYYNYWFZ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "GHYYUUFQHMDLOK",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "GOJSGCRMSLQMBW",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "GZPCMQAAGOKYAA",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "HDJHXWOQMVKLAP",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "HUOBYZOIOBKIKJ",
+    "kind": "upper_bound",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "IFTJSWBIMVIQBU",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "IJFOLXVHYLGEKE",
+    "kind": "upper_bound",
+    "document": "CHEMBL4196014",
+    "errors": []
+  },
+  {
+    "inchikey14": "ILNWNRNIGIBHOZ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "ILQGNUZMHMAUIR",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "INEJWFGCUZUZNO",
+    "kind": "upper_bound",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "IUTXJQJTHNXDCJ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "JIJLIRNXRDHLHJ",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "JLIRKWNSQGIMJK",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "JPKKBQNIWJXIOP",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "JPOKKNOVYFPEAZ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "KCKJRQJJSBPZAL",
+    "kind": "upper_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "KVKLWTWNUONLSR",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "KVXIMLHYRGICCY",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "LEJNWRZOGVSOON",
+    "kind": "upper_bound",
+    "document": "CHEMBL1142203",
+    "errors": []
+  },
+  {
+    "inchikey14": "LMCSFIMMOQFXSU",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "LSNJYJGKVZJZOA",
+    "kind": "upper_bound",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "MDXXKJWXXYDLJS",
+    "kind": "upper_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "MSJKDLNDSYERTQ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "NHHWITJSYINVEJ",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "NHHWSISBINUQLS",
+    "kind": "upper_bound",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "NPCBRHWKTKGKNJ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "OFAGTXSLIYWUHE",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "OHWMORUEXGTGNM",
+    "kind": "upper_bound",
+    "document": "CHEMBL1806488",
+    "errors": []
+  },
+  {
+    "inchikey14": "OKDDWARZPQNZRT",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "PMGCFRMHNRKQMF",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "PMJZQOAUGMYWDG",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "PPOCUBSJQIXSKF",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "PPQCRAZYFLVWOD",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "PXLMVOFVVQGNTI",
+    "kind": "upper_bound",
+    "document": "CHEMBL2062419",
+    "errors": []
+  },
+  {
+    "inchikey14": "QFCGEJMHTPORKZ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1773050",
+    "errors": []
+  },
+  {
+    "inchikey14": "QHSSBHINFGXAPX",
+    "kind": "upper_bound",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "QLJQABUSZAJVBE",
+    "kind": "upper_bound",
+    "document": "CHEMBL2321819",
+    "errors": []
+  },
+  {
+    "inchikey14": "QTDWQBQAYQCHGA",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "UJIFOUKFQNXGSQ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "USBJBJDGBMVBQK",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "UURGYUOSSJTHQU",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "UZCNTMSKNCFBSX",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "VKFQNRQZTBRDOR",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "VKWYZHNGUBAUGJ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "VPTIUHQKRGYERK",
+    "kind": "upper_bound",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "VRDRZBIKQMBXAM",
+    "kind": "upper_bound",
+    "document": "CHEMBL1142203",
+    "errors": []
+  },
+  {
+    "inchikey14": "WFDGJPYEBVXQDI",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "WHTVZRBIWZFKQO",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "WKCYIIRQXNHVCJ",
+    "kind": "upper_bound",
+    "document": "CHEMBL1156237",
+    "errors": []
+  },
+  {
+    "inchikey14": "XAYFJURPGLLODB",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "XDXJDVNRCUTJSW",
+    "kind": "upper_bound",
+    "document": "CHEMBL4196014",
+    "errors": []
+  },
+  {
+    "inchikey14": "XLBBHANNLVSDIO",
+    "kind": "upper_bound",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "XOVRPVRDKGIRAB",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "XTHNWHOEXKPSKR",
+    "kind": "upper_bound",
+    "document": "CHEMBL2146385",
+    "errors": []
+  },
+  {
+    "inchikey14": "XWZDQVWRJSGQHU",
+    "kind": "upper_bound",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "XXZVDDSOMNMYDD",
+    "kind": "upper_bound",
+    "document": "CHEMBL4000146",
+    "errors": []
+  },
+  {
+    "inchikey14": "YJWAPOQYJZJMGO",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "YQQVKXOESGQGGK",
+    "kind": "upper_bound",
+    "document": "CHEMBL1138246",
+    "errors": []
+  },
+  {
+    "inchikey14": "YYRXIUPWQFLNDB",
+    "kind": "upper_bound",
+    "document": "CHEMBL3044730",
+    "errors": []
+  },
+  {
+    "inchikey14": "ZDHZAWSWTRADET",
+    "kind": "upper_bound",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "ZRUNLAWLFTUZCE",
+    "kind": "upper_bound",
+    "document": "CHEMBL1667805",
+    "errors": []
+  },
+  {
+    "inchikey14": "DPIOHFGAQQGXIS",
+    "kind": "exact",
+    "document": "CHEMBL1139008",
+    "errors": []
+  },
+  {
+    "inchikey14": "FLYFTBZHRIAXCH",
+    "kind": "exact",
+    "document": "CHEMBL3045530",
+    "errors": []
+  },
+  {
+    "inchikey14": "JEYKGEGRFZIHCQ",
+    "kind": "exact",
+    "document": "CHEMBL1138246",
+    "errors": []
+  },
+  {
+    "inchikey14": "MAOCCGZSMYLPJX",
+    "kind": "exact",
+    "document": "CHEMBL3045530",
+    "errors": []
+  }
+]

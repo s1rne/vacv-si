@@ -90,6 +90,13 @@ log-target offsets). All six fail to improve their paired confirmation mean.
 See `docs/v6-research.md` for primary references, fixed protocols and results;
 the submitted v4 remains the reference and no new uploads were made.
 
+GLM rebuild4 (03ca819) resolves the audited legacy-label and preincubation
+issues in the current export. Its43 exact structures all already occur in
+our prior47-row snapshot. A fixed data-only ablation gives3.690145M versus
+3.690391M with the previous external snapshot, still worse than v4 3.595103M
+on the same folds. See `docs/glm-rebuild4-audit.md` and
+`experiments/results/glm-rebuild4-ablation/`; no new upload or model promotion.
+
 ## Recovery checkpoint (2026-11-07)
 
 Model CV and submission commands now default to `--lookup-policy clean`: allowed
