@@ -1,0 +1,72 @@
+[
+  {
+    "split": 15,
+    "model": "ridge-raw",
+    "mse": 165203675.71100032,
+    "mse_without_max_diagnostic_only": 161753197.29177317,
+    "max_label_prediction": 487.0901131894381,
+    "prediction_max": 225864.0458480754,
+    "non_tail_mse": 164702316.36124066,
+    "tail_mse": 187621600.92168093
+  },
+  {
+    "split": 15,
+    "model": "ridge-sqrt",
+    "mse": 4254411.988677736,
+    "mse_without_max_diagnostic_only": 249079.6205838114,
+    "max_label_prediction": 262.26172061238924,
+    "prediction_max": 3746.175203197669,
+    "non_tail_mse": 104993.30880947142,
+    "tail_mse": 189792704.38850155
+  },
+  {
+    "split": 15,
+    "model": "poly2-raw",
+    "mse": 1255877167424.7856,
+    "mse_without_max_diagnostic_only": 1259810063684.7922,
+    "max_label_prediction": 244.0417094382173,
+    "prediction_max": 20046925.192431886,
+    "non_tail_mse": 1283959660245.4185,
+    "tail_mse": 188559873.62136218
+  },
+  {
+    "split": 15,
+    "model": "poly2-sqrt",
+    "mse": 6.740422282498751e+21,
+    "mse_without_max_diagnostic_only": 6.761552132914103e+21,
+    "max_label_prediction": 104.92567624639162,
+    "prediction_max": 1468650785724.52,
+    "non_tail_mse": 6.891166550797441e+21,
+    "tail_mse": 192145404.28418687
+  },
+  {
+    "split": 16,
+    "model": "ridge-sqrt",
+    "mse": 1.67318123330132e+16,
+    "mse_without_max_diagnostic_only": 1.6784263151340312e+16,
+    "max_label_prediction": 196.56769470544555,
+    "prediction_max": 2313910102.059984,
+    "non_tail_mse": 1.710600621479495e+16,
+    "tail_mse": 190486452.2739531
+  },
+  {
+    "split": 17,
+    "model": "ridge-sqrt",
+    "mse": 5011909419704.885,
+    "mse_without_max_diagnostic_only": 5027616713750.724,
+    "max_label_prediction": 252.99527370438983,
+    "prediction_max": 40047595.58753979,
+    "non_tail_mse": 5123992611684.444,
+    "tail_mse": 189549761.78936228
+  },
+  {
+    "split": "scaffold",
+    "model": "ridge-sqrt",
+    "mse": 4244657.815299545,
+    "mse_without_max_diagnostic_only": 205803.42164103757,
+    "max_label_prediction": 113.37494777808992,
+    "prediction_max": 1520.5984910910884,
+    "non_tail_mse": 74327.74682000953,
+    "tail_mse": 190717988.0201702
+  }
+]

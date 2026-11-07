@@ -1,0 +1,68 @@
+{
+  "configs": {
+    "log": [
+      [
+        0.0,
+        1.0
+      ]
+    ],
+    "quarter": [
+      [
+        0.25,
+        1.0
+      ]
+    ],
+    "sqrt": [
+      [
+        0.5,
+        1.0
+      ]
+    ],
+    "raw": [
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "log90-raw10": [
+      [
+        0.0,
+        0.9
+      ],
+      [
+        1.0,
+        0.1
+      ]
+    ],
+    "sqrt50-log50": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.0,
+        0.5
+      ]
+    ]
+  },
+  "discovery": 9,
+  "confirmation": [
+    10,
+    11
+  ],
+  "selection_metric": "mean raw squared error all training rows",
+  "train_rows": 320,
+  "target_max": 36066.667,
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "trees": 800,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "frozen_winner": "sqrt50-log50",
+  "submissions": {
+    "log": "b65b85a5abf1f88c908cef0267f0048ab853c1a29d55615387ac138439922ac7",
+    "sqrt50-log50": "cdb2bd1f8f0feaaa20befb9ef978efe8843a23ced9bc8755fa57a92c7c5fd825"
+  }
+}

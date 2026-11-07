@@ -1,0 +1,149 @@
+[
+  {
+    "split": 15,
+    "worst_prediction_row": 8,
+    "target": 966.667,
+    "prediction": 3746.175203197669,
+    "features": [
+      {
+        "feature": "context_or_pca_26",
+        "standardized_query": 11.269427669584646,
+        "train_standardized_min": -0.08873565094161139,
+        "train_standardized_max": 11.269427669584646
+      },
+      {
+        "feature": "context_or_pca_58",
+        "standardized_query": 7.760153142068501,
+        "train_standardized_min": -1.1858638330659745,
+        "train_standardized_max": 3.676101914289718
+      },
+      {
+        "feature": "fr_sulfide",
+        "standardized_query": 4.008324670815311,
+        "train_standardized_min": -0.2494807886399571,
+        "train_standardized_max": 4.008324670815311,
+        "raw_query": 1.0,
+        "raw_train_min": 0.0,
+        "raw_train_max": 1.0
+      },
+      {
+        "feature": "context_or_pca_52",
+        "standardized_query": 3.636237371545238,
+        "train_standardized_min": -0.27500954910846337,
+        "train_standardized_max": 3.636237371545238
+      },
+      {
+        "feature": "context_or_pca_61",
+        "standardized_query": 3.1091263510296048,
+        "train_standardized_min": -0.3216337604513384,
+        "train_standardized_max": 3.1091263510296048
+      }
+    ]
+  },
+  {
+    "split": 16,
+    "worst_prediction_row": 232,
+    "target": 3.28571428571429,
+    "prediction": 2313910102.059984,
+    "features": [
+      {
+        "feature": "Ipc",
+        "standardized_query": 99611.65487572613,
+        "train_standardized_min": -0.08022838319953839,
+        "train_standardized_max": 15.14854429406002,
+        "raw_query": 2.8756626453280012e+16,
+        "raw_train_min": 514.325039405107,
+        "raw_train_max": 4396350759430.0405
+      },
+      {
+        "feature": "fr_Al_OH_noTert",
+        "standardized_query": 16.33846700541986,
+        "train_standardized_min": -0.3653970256803164,
+        "train_standardized_max": 6.316148586759755,
+        "raw_query": 10.0,
+        "raw_train_min": 0.0,
+        "raw_train_max": 4.0
+      },
+      {
+        "feature": "fr_Al_OH",
+        "standardized_query": 15.777751987593673,
+        "train_standardized_min": -0.35930158341703533,
+        "train_standardized_max": 6.0955198449872485,
+        "raw_query": 10.0,
+        "raw_train_min": 0.0,
+        "raw_train_max": 4.0
+      },
+      {
+        "feature": "VSA_EState3",
+        "standardized_query": 13.77280658538533,
+        "train_standardized_min": -0.9552575264551777,
+        "train_standardized_max": 5.359530381713002,
+        "raw_query": 120.25970604776751,
+        "raw_train_min": 0.0,
+        "raw_train_max": 51.56241389387875
+      },
+      {
+        "feature": "EState_VSA1",
+        "standardized_query": 13.384479129853764,
+        "train_standardized_min": -0.6880551262468899,
+        "train_standardized_max": 8.06964132416042,
+        "raw_query": 180.64808057800514,
+        "raw_train_min": 0.0,
+        "raw_train_max": 112.42190107762872
+      }
+    ]
+  },
+  {
+    "split": 17,
+    "worst_prediction_row": 232,
+    "target": 3.28571428571429,
+    "prediction": 40047595.58753979,
+    "features": [
+      {
+        "feature": "Ipc",
+        "standardized_query": 86785.88326225014,
+        "train_standardized_min": -0.10747856943320841,
+        "train_standardized_max": 13.160477491982409,
+        "raw_query": 2.8756626453280012e+16,
+        "raw_train_min": 514.325039405107,
+        "raw_train_max": 4396350759430.0405
+      },
+      {
+        "feature": "fr_Al_OH_noTert",
+        "standardized_query": 14.87401639223124,
+        "train_standardized_min": -0.38138503569823695,
+        "train_standardized_max": 5.720775535473554,
+        "raw_query": 10.0,
+        "raw_train_min": 0.0,
+        "raw_train_max": 4.0
+      },
+      {
+        "feature": "fr_Al_OH",
+        "standardized_query": 14.171369565282152,
+        "train_standardized_min": -0.37502421463858143,
+        "train_standardized_max": 5.443533297329712,
+        "raw_query": 10.0,
+        "raw_train_min": 0.0,
+        "raw_train_max": 4.0
+      },
+      {
+        "feature": "VSA_EState3",
+        "standardized_query": 13.37849672928067,
+        "train_standardized_min": -0.9102767304531993,
+        "train_standardized_max": 5.216161420609825,
+        "raw_query": 120.25970604776751,
+        "raw_train_min": 0.0,
+        "raw_train_max": 51.56241389387875
+      },
+      {
+        "feature": "EState_VSA1",
+        "standardized_query": 13.217238310494434,
+        "train_standardized_min": -0.671606771259971,
+        "train_standardized_max": 7.971775227970714,
+        "raw_query": 180.64808057800514,
+        "raw_train_min": 0.0,
+        "raw_train_max": 112.42190107762872
+      }
+    ]
+  }
+]
