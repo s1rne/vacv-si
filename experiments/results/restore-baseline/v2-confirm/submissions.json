@@ -1,0 +1,13 @@
+{
+  "target_version": "official-train_v2",
+  "artifact_sha256": {
+    "submission-constant.csv": "0c8377d3985eed50eaf451ae20f05d019c930c719983f6a7f5295c674b6f1fa7",
+    "submission-et-blend-log.csv": "d32a9d7ab5bbf11b865b773728f894f3039e37247a8a8b83e7d49111369b9c1b"
+  },
+  "input_sha256": {
+    "train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "test.csv": "e11597ae2d00bf83cabc13539428060a77e9d645a4b2e3cbc38f29a60c50e79a",
+    "sample_submit.csv": "11e98abe154676a0bc2ed6816df4098803ba28b2237a5b2af42ebae2ba2d3250"
+  },
+  "metadata_regeneration_note": "Original running process had old train.csv metadata path; all CV and submission predictions completed, metadata regenerated with official v2 filename."
+}

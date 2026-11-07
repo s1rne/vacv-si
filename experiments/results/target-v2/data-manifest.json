@@ -1,0 +1,15 @@
+{
+  "target_version": "train_v2",
+  "source": "official Kaggle competition ZIP",
+  "archive_sha256": "fc748c1cdf13e7db6a9ea746c7e796edfe9f45f14af9d1edcc6686852f7a8f71",
+  "source_file_sha256": {
+    "train_v2.csv": "d9a876a67b5623d9cdb6592fc53d31ffaa7c535b09968c3a538138740fe246e8",
+    "test.csv": "1b0c6a014bbe556c42ef2277e867d2e1a647ad31c157a9cd81bbc7e262481abd",
+    "sample_submit.csv": "3eea4d23f5700361c09da24cd45be05c5dbbecf76cc29b022c3676835606884c"
+  },
+  "sanitized_file_sha256": {
+    "train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "test.csv": "e11597ae2d00bf83cabc13539428060a77e9d645a4b2e3cbc38f29a60c50e79a",
+    "sample_submit.csv": "11e98abe154676a0bc2ed6816df4098803ba28b2237a5b2af42ebae2ba2d3250"
+  }
+}

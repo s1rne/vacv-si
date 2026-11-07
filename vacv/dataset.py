@@ -29,9 +29,15 @@ class Data:
         return self.train[TARGET].to_numpy(dtype=np.float64)
 
 
-def load(folder: Path = RAW) -> Data:
+def load(folder: Path = RAW, *, require_v2: bool = False) -> Data:
+    folder = Path(folder)
+    train_path = folder / "train_v2.csv"
+    if not train_path.exists():
+        if require_v2:
+            raise FileNotFoundError("Official train_v2.csv required: run scripts/import_competition_v2.py")
+        train_path = folder / "train.csv"
     fields = {"index", "SMILES", "Title", "strain", "Culture"}
-    train = pd.read_csv(folder / "train.csv", usecols=lambda name: name in fields | {TARGET})
+    train = pd.read_csv(train_path, usecols=lambda name: name in fields | {TARGET})
     test = pd.read_csv(folder / "test.csv", usecols=lambda name: name in fields)
     for frame in (train, test):
         if frame[["SMILES", "strain", "Culture"]].isna().any().any():

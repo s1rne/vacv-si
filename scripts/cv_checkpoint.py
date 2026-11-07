@@ -11,6 +11,7 @@ from sklearn.model_selection import KFold
 from vacv.checkpoint import BestCheckpointModel, load_embeddings
 from vacv.clean_features import attach_clean
 from vacv.dataset import load
+from vacv.target_version import add_legacy_target_flag, check_legacy_target
 from vacv.literature import attach, fold_table
 from vacv.pipeline import scaffolds_of
 from vacv.splits import scaffold_folds, fold_indices
@@ -27,7 +28,9 @@ def main():
                         help="Replace the global active mean with the per-row estimate")
     parser.add_argument("--lookup-policy", choices=["clean", "recovered"], default="clean",
                         help="Clean uses no label-fitted lookup; recovered requires the source corpus")
+    add_legacy_target_flag(parser)
     args = parser.parse_args()
+    check_legacy_target(parser, args)
     if args.active_value:
         parser.error("Legacy --active-value requires excluded concentration features and is disabled")
     if args.out.exists() and any(args.out.iterdir()):

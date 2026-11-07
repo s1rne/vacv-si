@@ -4,6 +4,29 @@ Builds a training dataset for predicting the selectivity index
 (SI = CC50 / IC50) of small molecules against vaccinia virus, assembled from
 open databases, with a DOI on every record that has one.
 
+## Current Kaggle target: train_v2
+
+**Use the current Kaggle ZIP.** Its `train_v2.csv` changes 81 old targets from
+10000 to zero while preserving the allowed features. Historical sentinel
+classifiers optimize the wrong target; previous CV scores are not comparable.
+The old submission/CV commands now require `--allow-legacy-target` for historical
+replay. They must not be used for current competition submissions.
+
+```sh
+python scripts/import_competition_v2.py '/path/to/current-kaggle.zip' --out data/raw_v2
+PYTHONPATH=. python scripts/submit_v2.py --data-dir data/raw_v2 --out outputs/v2/submission.csv
+python -m pytest -q
+```
+
+The importer requires the officially named `train_v2.csv`, reads only permitted
+fields, records source hashes, and preserves existing datasets. The new model
+regresses SI directly (zero included); it does not predict toward a 10000
+sentinel. `experiments/restore_baseline.py`, `experiments/v2_embeddings.py`, and
+`experiments/v2_external.py` compare raw/log regression, frozen chemistry,
+external record features, and disjoint measured external SI training.
+
+See `experiments/results/target-v2/` for the target audit and current comparison.
+
 ## Recovery checkpoint (2026-11-07)
 
 Model CV and submission commands now default to `--lookup-policy clean`: allowed

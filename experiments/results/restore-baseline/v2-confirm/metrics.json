@@ -1,0 +1,32 @@
+[
+  {
+    "split": "7",
+    "model": "et-blend-log",
+    "mse": 4242483.034747153
+  },
+  {
+    "split": "7",
+    "model": "constant",
+    "mse": 4281978.25107598
+  },
+  {
+    "split": "8",
+    "model": "et-blend-log",
+    "mse": 4239707.585286954
+  },
+  {
+    "split": "8",
+    "model": "constant",
+    "mse": 4291559.509168643
+  },
+  {
+    "split": "scaffold",
+    "model": "et-blend-log",
+    "mse": 4262616.9336798545
+  },
+  {
+    "split": "scaffold",
+    "model": "constant",
+    "mse": 4299946.1474769665
+  }
+]

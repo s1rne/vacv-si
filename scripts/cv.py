@@ -12,6 +12,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
+from vacv.target_version import add_legacy_target_flag, check_legacy_target
 from vacv.clean_features import attach_clean
 from vacv.inference import PROFILES, predict_ensemble
 from vacv.literature import attach, fold_table
@@ -61,7 +62,9 @@ def main():
     parser.add_argument("--split", choices=["random", "scaffold", "both"], default="both")
     parser.add_argument("--out", type=Path, default=Path("outputs/cv"))
     parser.add_argument("--lookup-policy", choices=["clean", "recovered"], default="clean")
+    add_legacy_target_flag(parser)
     args = parser.parse_args()
+    check_legacy_target(parser, args)
     if args.repeats < 1 or args.seeds < 1:
         parser.error("seeds and repeats must be positive")
     data = load()

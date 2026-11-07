@@ -7,13 +7,16 @@ from pathlib import Path
 import pandas as pd
 
 from vacv.dataset import load, submission
+from vacv.target_version import add_legacy_target_flag, check_legacy_target
 from vacv.recovery_model import RecoveryModel
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
+    add_legacy_target_flag(parser)
     args = parser.parse_args()
+    check_legacy_target(parser, args)
     components_path = args.out.with_name(args.out.stem + "-components.csv")
     metadata_path = args.out.with_suffix(".json")
     if any(path.exists() for path in (args.out, components_path, metadata_path)):

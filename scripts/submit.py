@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from vacv.dataset import load, submission
+from vacv.target_version import add_legacy_target_flag, check_legacy_target
 from vacv.clean_features import attach_clean
 from vacv.literature import attach
 from vacv.inference import PROFILES, predict_ensemble
@@ -22,7 +23,9 @@ def main() -> None:
     parser.add_argument("--seeds", type=int, default=7)
     parser.add_argument("--profile", choices=PROFILES, default="hybrid")
     parser.add_argument("--lookup-policy", choices=["clean", "recovered"], default="clean")
+    add_legacy_target_flag(parser)
     args = parser.parse_args()
+    check_legacy_target(parser, args)
 
     data = load()
     attach_features = attach_clean if args.lookup_policy == "clean" else attach

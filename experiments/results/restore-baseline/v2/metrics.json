@@ -1,0 +1,42 @@
+[
+  {
+    "split": "6",
+    "model": "constant",
+    "mse": 4283537.889994218
+  },
+  {
+    "split": "6",
+    "model": "et-context-raw",
+    "mse": 4248044.070294837
+  },
+  {
+    "split": "6",
+    "model": "et-blend-raw",
+    "mse": 4289874.54803675
+  },
+  {
+    "split": "6",
+    "model": "kernel-raw",
+    "mse": 4541786.459152469
+  },
+  {
+    "split": "6",
+    "model": "et-context-log",
+    "mse": 4241280.814114613
+  },
+  {
+    "split": "6",
+    "model": "et-blend-log",
+    "mse": 4232994.332403653
+  },
+  {
+    "split": "6",
+    "model": "kernel-log",
+    "mse": 4266518.692853374
+  },
+  {
+    "split": "6",
+    "model": "catboost-raw",
+    "mse": 4323129.163485458
+  }
+]

@@ -10,6 +10,7 @@ import pandas as pd
 from vacv.checkpoint import BestCheckpointModel, load_embeddings
 from vacv.clean_features import attach_clean
 from vacv.dataset import load, submission
+from vacv.target_version import add_legacy_target_flag, check_legacy_target
 from vacv.literature import attach
 
 
@@ -23,7 +24,9 @@ def main():
     parser.add_argument("--active-value", action="store_true",
                         help="Replace the global active mean with the per-row estimate")
     parser.add_argument("--lookup-policy", choices=["clean", "recovered"], default="clean")
+    add_legacy_target_flag(parser)
     args = parser.parse_args()
+    check_legacy_target(parser, args)
     if args.active_value:
         parser.error("Legacy --active-value requires excluded concentration features and is disabled")
     component_path = args.out.with_name(args.out.stem + "-components.csv")
