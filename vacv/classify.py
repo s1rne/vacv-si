@@ -26,6 +26,10 @@ CYTOTOX_TYPES = {
     "LC50",
     "LD50",
     "CT50",
+    # Maximum cytotoxic concentration: организаторы используют MCC-записи
+    # бит-в-бит (MCC «>100 µM» = CC50_uM 100); добавлено 2026-11-07 — патч
+    # presence (MCC+TD50) улучшает честный CV на −0.64% (experiments/cv_mcc_ab.py).
+    "MCC",
 }
 
 #: Endpoint names for a half-maximal effect whose meaning depends on the assay.
