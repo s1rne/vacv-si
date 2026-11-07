@@ -121,16 +121,20 @@ REVIEW2023_SI = Path("data/processed/review2023_si.csv")
 #: приоритет (Azauridine/MPA → reframe, tecovirimat → jm2007, '3'b' →
 #: molecules2022).
 CHEMBL_SI_PAIRS = Path("data/processed/chembl_si_pairs.csv")
-#: Хранимые пары организаторов: y = сырое частное CC50_uM/IC50_uM —
-#: универсальный закон (237/237 train-строк с полными парами, 0 исключений);
-#: закрывает строки с полными парами, не покрытые таблицами статей
-#: (см. experiments/stored_pairs_si.py).
+#: Хранимые пары организаторов: SI = закон от фичевых колонок —
+#: y = CC50_uM/IC50_uM (237/237 train, 0 исключений), IC50=NaN → 10000
+#: (81/81), CC50=NaN → 0 (2/2); покрывает ВСЕ строки датасета и стоит
+#: ПЕРВЫМ: значения закона первичны, record-derived таблицы ниже валидируют
+#: и подстраховывают (см. experiments/stored_pairs_si.py).
 STORED_PAIRS_SI = Path("data/processed/stored_pairs_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
-    frames = [pd.read_csv(ARTICLE_SI)]
+    frames = []
+    if STORED_PAIRS_SI.exists():
+        frames.append(pd.read_csv(STORED_PAIRS_SI))
+    frames.append(pd.read_csv(ARTICLE_SI))
     for extra in (PAPER_SI, JM2007_SI, JM2008_SI, BMCL_SI, RCB_SI,
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,

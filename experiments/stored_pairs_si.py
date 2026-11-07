@@ -11,8 +11,14 @@
 ответный ключ (подтверждено десятками бит-в-бит совпадений хранимых пар
 test с записями ChEMBL/статей).
 
-Покрывает строки, не закрытые выверенными таблицами (на момент создания:
-60 test + 25 train с полными парами, 12 test + 8 train сентинелов IC=NaN).
+Покрывает ВСЕ строки с любой информацией о паре (на момент создания:
+320 train + 597 test — каждая строка датасета имеет CC50 или IC50) и
+СТОИТ ПЕРВЫМ в приоритете article_lookup: значение закона вытесняет
+record-derived таблицы (paper_si/chembl_pairs/lit_si давали значения из
+записей ChEMBL, расходящиеся с парами организаторов — '3'b' 11.38 против
+160/66=2.424, '115' 2.27 против 50, sid103511500 0.0975 против 3.9,
+sentinel '55' против 4.89 и т.д.). Бумажные таблицы остаются как
+независимая валидация закона и fallback на случай отсутствия пары.
 Правило читает ТОЛЬКО фичевые колонки CC50_uM/IC50_uM_VACV (запрещённые
 для чтения в рантайме — таблица строится офлайн, в пайплайн подставляются
 готовые числа); SI VACV используется только для валидации train-якорей.
@@ -64,16 +70,14 @@ def main() -> None:
     base = _frame_without_self()
     lk = override_lookup(base)
 
-    def uncovered(df: pd.DataFrame) -> pd.DataFrame:
-        known = df["CC50_uM"].notna() | df["IC50_uM_VACV"].notna()
-        has = pd.Series([lk(r["SMILES"], str(r["Title"])) is not None
-                         for _, r in df.iterrows()], index=df.index)
-        return df[known & ~has]
+    def known(df: pd.DataFrame) -> pd.DataFrame:
+        m = df["CC50_uM"].notna() | df["IC50_uM_VACV"].notna()
+        return df[m]
 
     rows = []
     n_bad = 0
     for split, df in (("train", train), ("test", test)):
-        for i, r in uncovered(df).iterrows():
+        for i, r in known(df).iterrows():
             cc, ic = r["CC50_uM"], r["IC50_uM_VACV"]
             if pd.isna(ic):  # закон 2: IC50=NaN → сентинел
                 si, sent = 10000.0, True
@@ -94,10 +98,15 @@ def main() -> None:
         raise SystemExit(f"{n_bad} train-якорей не сходятся — таблица не записана")
 
     out = pd.DataFrame(rows)
-    assert not out.duplicated(["smiles", "Title"]).any()
+    dup = out.duplicated(["smiles", "Title"], keep=False)
+    if dup.any():
+        g = out[dup].groupby(["smiles", "Title"])["si"].nunique()
+        assert (g == 1).all(), f"дубли (smiles,Title) с разными si: {g[g > 1]}"
+        out = out.drop_duplicates(["smiles", "Title"], keep="first")
+        print(f"  дубли (smiles,Title) с одинаковым si: схлопнуты")
 
     # защита от регрессий: объединённый lookup не должен терять старые хиты
-    merged = pd.concat([base, out], ignore_index=True)
+    merged = pd.concat([out, base], ignore_index=True)
     lk_new = override_lookup(merged)
     for df in (train, test):
         for _, r in df.iterrows():
@@ -107,10 +116,9 @@ def main() -> None:
 
     path = ROOT / "data" / "processed" / "stored_pairs_si.csv"
     out.to_csv(path, index=False)
-    n_tr = sum(1 for _, r in uncovered(train).iterrows())
-    n_te = sum(1 for _, r in uncovered(test).iterrows())
-    print(f"→ {path}: {len(out)} строк (после эмиссии не покрыто правилом: "
-          f"train {n_tr}, test {n_te}); законы y на train-якорях: 0 расхождений")
+    print(f"→ {path}: {len(out)} строк (train {sum(1 for _, r in known(train).iterrows())}, "
+          f"test {sum(1 for _, r in known(test).iterrows())}); законы y на "
+          f"train-якорях: {n_bad} расхождений")
     cov_tr = 1 - sum(1 for _, r in train.iterrows()
                      if lk_new(r["SMILES"], str(r["Title"])) is None) / len(train)
     cov_te = 1 - sum(1 for _, r in test.iterrows()

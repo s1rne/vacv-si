@@ -129,7 +129,8 @@ def main() -> None:
     paper = pd.read_csv("data/processed/paper_si.csv")
     bmcl = pd.read_csv("data/processed/bmcl_si.csv")
     rcb = pd.read_csv("data/processed/rcb_si.csv")
-    art_all = pd.concat([art_fixed, paper, bmcl, rcb,
+    art_all = pd.concat([pd.read_csv("data/processed/stored_pairs_si.csv"),
+                         art_fixed, paper, bmcl, rcb,
                          pd.read_csv("data/processed/cmdc_si.csv"),
                          pd.read_csv("data/processed/rsc2024_si.csv"),
                          pd.read_csv("data/processed/kovaleva_si.csv"),
@@ -146,8 +147,7 @@ def main() -> None:
                          pd.read_csv("data/processed/twin_transfer.csv"),
                          pd.read_csv("data/processed/grishak_si.csv"),
                          pd.read_csv("data/processed/review2023_si.csv"),
-                         pd.read_csv("data/processed/chembl_si_pairs.csv"),
-                         pd.read_csv("data/processed/stored_pairs_si.csv")],
+                         pd.read_csv("data/processed/chembl_si_pairs.csv")],
                         ignore_index=True)  # (b)
     art_all["Title"] = art_all["Title"].astype(str)
     art_all = art_all.drop_duplicates(["smiles", "Title"], keep="first")
