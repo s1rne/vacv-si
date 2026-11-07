@@ -149,8 +149,8 @@
   "Title": "13",
   "pmc": "PMC6194496",
   "label": "6b",
-  "si": 11.381944444444445,
-  "rule": "ratio"
+  "si": 10000.0,
+  "rule": "sentinel_yfix"
  },
  {
   "split": "train",
@@ -221,8 +221,8 @@
   "Title": "45",
   "pmc": "PMC7651861",
   "label": "44",
-  "si": 3.203389830508474,
-  "rule": "ratio"
+  "si": 10000.0,
+  "rule": "sentinel_yfix"
  },
  {
   "split": "train",
@@ -421,6 +421,15 @@
   "label": "44",
   "si": 3.203389830508474,
   "rule": "ratio"
+ },
+ {
+  "split": "test",
+  "index": 172,
+  "Title": "11",
+  "pmc": "PMC9533879",
+  "label": "11",
+  "si": 97.77777777777777,
+  "rule": "label_ratio_9533879"
  },
  {
   "split": "test",
