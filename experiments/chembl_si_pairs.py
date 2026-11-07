@@ -402,13 +402,14 @@ def main() -> None:
                 print(f"!! конфликт test-si для {key}: " + str({c[1]: c[2] for c in cands}))
         else:
             # сентинел: в проходном доке есть CC, а нецензурированной
-            # Vaccinia-EC50 нет нигде
+            # Vaccinia-EC50 нет нигде (цензурированная Vaccinia не мешает:
+            # у организаторов IC50 NaN → y=10000)
             has_cc = False
             for d in sorted(passing):
                 if key in doc_bad[d]:
                     continue
                 pair = _pairs_for(records, key).get(d)
-                if pair and pair[0] and not pair[1]:
+                if pair and pair[0]:
                     has_cc = True
             if not (has_cc and not _unc_vacv_ic_any(records, key)):
                 continue
