@@ -1,0 +1,5 @@
+Title,sentinel,si,smiles,pmc,label,rule
+PA104,False,800.0,O=C1CN(C(=O)c2nccs2)[C@H](c2cccc(Cl)c2)c2cc(Br)ccc2N1,PMC7190985,PA104,retro2020_table1
+PA24,False,400.0,O=C1CN(C(=O)c2nccs2)[C@H](c2cc(Cl)cc(Cl)c2)c2cc(Cl)ccc2N1,PMC7190985,PA24,retro2020_table1
+PA63,False,571.429,O=C1CN(C(=O)c2nccs2)[C@H](c2ccccc2)c2cc(Cl)ccc2N1,PMC7190985,PA63,retro2020_table1
+Retro1,False,133.333,CCC(=O)N1CC(=O)Nc2ccc(Br)cc2[C@H]1c1ccccc1,PMC7190985,Retro1,retro2020_table1

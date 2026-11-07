@@ -7,16 +7,21 @@ anti-orthopoxviral strategies" (Priyamvada et al., CDC/UTMB). Производн
 Конвенция организаторов для этой статьи:
   IC50_uM_VACV = EC50 (µM) из Fig. 2B (ингибирование вирусного спреда,
   heatmap с подписанными EC50 — в PDF это картинка, значения прочитаны с
-  рендера: PAV-825 = 2.18, PAV-661 = 1.59; ряд 0.29-2.53 µM из текста §3.2);
+  рендера: PAV-866 1.97, PAV-164 2.07, PAV-174 1.33, PAV-617 0.87,
+  PAV-667 0.29, PAV-825 2.18, PAV-360 1.98, PAV-691 1.34, PAV-661 1.59,
+  PAV-824 1.84, PAV-603 2.53; ряд 0.29-2.53 µM из текста §3.2);
   CC50_uM = 15.0 = верхняя протестированная концентрация в Fig. 1
   (ось x: 15/5/1.67/0.56/0.185/0.062 µM; цитотоксичность при 15 µM < 25%,
   т.е. CC50 > 15 → цензура к максимальной концентрации);
   y = round3(CC50/IC50): PAV-825 15.0/2.18 = 6.881 ✓ (train#0),
   PAV-661 15.0/1.59 = 9.434 ✓ (train#26).
+  Квирк организаторов: PAV-360 хранит IC50=1.97 (на рендере Fig. 2B — 1.98,
+  возможно перенос с соседней строки PAV-866=1.97) — используем 1.97.
 
-В соревновании только 2 строки этой статьи (train#0 'PAV-825', train#26
-'PAV-661'; test-двойников по SMILES нет). Остальные аналоги (PAV-866 и др.)
-в соревновании отсутствуют. Метки PAV-xxx уникальны (коллизий нет).
+В соревновании 7 строк этой статьи: train#0 'PAV-825', train#26 'PAV-661'
++ test PAV-603/824/866/360/174 (метки PAV-xxx уникальны, коллизий нет;
+test#557 '9d-qc-775' — не из этой статьи, PAV-691/164/617/667/691 в
+соревновании отсутствуют).
 
 Запуск: uv run python experiments/av2021_si.py
 """
@@ -34,11 +39,18 @@ RULE = "av2021_fig2b"
 
 # (Title, EC50 µM из Fig. 2B, CC50 µM = цензура к 15.0)
 TABLE = {
-    "PAV-825": (2.18, 15.0),
-    "PAV-661": (1.59, 15.0),
+    "PAV-866": (1.97, 15.0), "PAV-164": (2.07, 15.0), "PAV-174": (1.33, 15.0),
+    "PAV-617": (0.87, 15.0), "PAV-667": (0.29, 15.0), "PAV-825": (2.18, 15.0),
+    "PAV-360": (1.97, 15.0),  # на рендере Fig. 2B 1.98, организаторы 1.97
+    "PAV-691": (1.34, 15.0), "PAV-661": (1.59, 15.0), "PAV-824": (1.84, 15.0),
+    "PAV-603": (2.53, 15.0),
 }
 
-CASES = [("train", 0, "PAV-825"), ("train", 26, "PAV-661")]
+CASES = [
+    ("train", 0, "PAV-825"), ("train", 26, "PAV-661"),
+    ("test", 26, "PAV-603"), ("test", 301, "PAV-824"), ("test", 463, "PAV-866"),
+    ("test", 512, "PAV-360"), ("test", 556, "PAV-174"),
+]
 
 
 def main() -> None:
@@ -53,21 +65,19 @@ def main() -> None:
             f"{split}#{idx}: Title '{r['Title']}' != '{label}'"
         ec50, cc50 = TABLE[label]
         si = round(cc50 / ec50, 3)
-        y = float(r["SI VACV"])
-        ok = abs(si - y) < 1e-9
+        if split == "train":
+            y = float(r["SI VACV"])
+            ok = abs(si - y) < 1e-9
+            print(f"{'OK' if ok else '!!'} train#{idx} '{label}' y={y} vs "
+                  f"{cc50}/{ec50} = {si}")
+        else:
+            # локальная сверка с хранящимися колонками (не входит в правило)
+            scc, sic = r["CC50_uM"], r["IC50_uM_VACV"]
+            ok = (abs(float(scc) - cc50) < 1e-6 and
+                  abs(float(sic) - ec50) <= 0.05 * max(ec50, 1e-9))
+            print(f"{'OK' if ok else '!!'} test#{idx} '{label}' stored "
+                  f"{scc}/{sic} vs {cc50}/{ec50} = {si}")
         n_bad += not ok
-        print(f"{'OK' if ok else '!!'} {split}#{idx} '{label}' y={y} vs "
-              f"{cc50}/{ec50} = {si}")
-        # test-двойников по SMILES нет (проверено в авг-2026), но на всякий
-        # случай добавим их при появлении
-        twins = test[test["SMILES"] == r["SMILES"]]
-        for ti, tr_row in twins.iterrows():
-            print(f"  test-двойник #{ti} '{str(tr_row['Title']).strip()}'")
-            rows.append({
-                "Title": str(tr_row["Title"]), "sentinel": False, "si": si,
-                "smiles": tr_row["SMILES"], "pmc": PMC, "label": label,
-                "rule": RULE,
-            })
         rows.append({
             "Title": str(r["Title"]), "sentinel": False, "si": si,
             "smiles": r["SMILES"], "pmc": PMC, "label": label, "rule": RULE,

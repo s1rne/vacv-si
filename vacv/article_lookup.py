@@ -62,6 +62,10 @@ CBDV2018_SI = Path("data/processed/cbdv2018_si.csv")
 #: (цензура к макс. концентрации); 2/2 train бит-в-бит
 #: (см. experiments/av2021_si.py).
 AV2021_SI = Path("data/processed/av2021_si.csv")
+#: Table 1 Front. Microbiol. 2020 (10.3389/fmicb.2020.00603, PMC7190985):
+#: аналоги Retro-1 PA104/PA63/PA24/Retro1, IC50 из Table 1 + CC50=400.0
+#: (цензура ">400"); 2/2 train бит-в-бит (см. experiments/retro2020_si.py).
+RETRO2020_SI = Path("data/processed/retro2020_si.csv")
 
 
 @lru_cache(maxsize=1)
@@ -69,7 +73,7 @@ def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
     for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI, RSC2024_SI,
                   KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI, CBDV2018_SI,
-                  AV2021_SI):
+                  AV2021_SI, RETRO2020_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
