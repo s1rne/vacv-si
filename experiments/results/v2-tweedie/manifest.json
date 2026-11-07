@@ -1,0 +1,13 @@
+{
+  "winner": "tweedie-1.8",
+  "selection_split": 9,
+  "confirmation_splits": [
+    10,
+    11,
+    "scaffold"
+  ],
+  "target_version": "train_v2",
+  "sha256": "645e347cf22c558555069b24884dacb427f598ff01f004601d2903118f7936d3",
+  "source_sha256": "54f034314ae489a78693d4cd173debb849ae9a52f962dcc8a6c5b6e3b411e05c",
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+}

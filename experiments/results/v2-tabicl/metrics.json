@@ -1,0 +1,42 @@
+[
+  {
+    "split": 9,
+    "model": "tabicl-raw",
+    "mse": 4321277.807602743,
+    "mse_without_max_diagnostic_only": 400928.7347868971,
+    "max_label_prediction": 641.9209594726562,
+    "prediction_max": 8689.6533203125
+  },
+  {
+    "split": 9,
+    "model": "tabicl-log",
+    "mse": 4273039.947080042,
+    "mse_without_max_diagnostic_only": 216767.6198933024,
+    "max_label_prediction": 35.79256820678711,
+    "prediction_max": 391.7212829589844
+  },
+  {
+    "split": 10,
+    "model": "tabicl-log",
+    "mse": 4278480.040533816,
+    "mse_without_max_diagnostic_only": 223258.65423305446,
+    "max_label_prediction": 40.36962890625,
+    "prediction_max": 251.5035858154297
+  },
+  {
+    "split": 11,
+    "model": "tabicl-log",
+    "mse": 4285410.877811639,
+    "mse_without_max_diagnostic_only": 227281.36616354383,
+    "max_label_prediction": 27.40056610107422,
+    "prediction_max": 204.1195831298828
+  },
+  {
+    "split": "scaffold",
+    "model": "tabicl-log",
+    "mse": 4283062.397035303,
+    "mse_without_max_diagnostic_only": 224396.43785702487,
+    "max_label_prediction": 25.059053421020508,
+    "prediction_max": 168.82289123535156
+  }
+]

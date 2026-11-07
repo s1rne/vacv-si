@@ -1,0 +1,11 @@
+{
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "production_source_sha256": "8db04eb016c89bc13dff041c57d64146e2c44c5092ddb5f600d43461cd0f06e0",
+  "profile": "et-blend-log",
+  "splits": [
+    12,
+    13,
+    14,
+    "scaffold"
+  ]
+}

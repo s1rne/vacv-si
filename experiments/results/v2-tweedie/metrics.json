@@ -1,0 +1,27 @@
+[
+  {
+    "split": 9,
+    "model": "tweedie-1.5",
+    "mse": 4140322.5814683763
+  },
+  {
+    "split": 9,
+    "model": "tweedie-1.8",
+    "mse": 4132969.9793847553
+  },
+  {
+    "split": 10,
+    "model": "tweedie-1.8",
+    "mse": 4194233.8006130764
+  },
+  {
+    "split": 11,
+    "model": "tweedie-1.8",
+    "mse": 4277812.89667003
+  },
+  {
+    "split": "scaffold",
+    "model": "tweedie-1.8",
+    "mse": 4271090.370149495
+  }
+]

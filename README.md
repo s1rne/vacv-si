@@ -27,6 +27,23 @@ external record features, and disjoint measured external SI training.
 
 See `experiments/results/target-v2/` for the target audit and current comparison.
 
+### Submission budget and next-model gate
+
+Keep the accepted public best (2,038,068.29444). Further Kaggle submissions are
+paused until a frozen candidate achieves full raw-MSE at most 3,000,000 on
+each of two confirmation splits, using all 320 official v2 labels. Scaffold
+results must also be reported. Do not remove, cap or replace the maximum
+training label to pass this gate. Small CV changes do not justify uploads.
+
+The context-matched analog experiment improved paired random CV by 5.43%
+(4.258M to 4.027M), but failed the gate and worsened scaffold CV. It has not
+been submitted. See `experiments/results/v2-context-analog/` for OOF results,
+the exact production baseline, activity-cliff diagnostics, and the 3.016M
+mathematical lower bound for train-only predictors bounded by training labels.
+Other completed alternatives are recorded under `v2-analog`, `v2-tabicl`,
+`v2-hurdle`, and `v2-tweedie`. Tweedie scored 2,062,945.32569 publicly and did
+not improve the best.
+
 ## Recovery checkpoint (2026-11-07)
 
 Model CV and submission commands now default to `--lookup-policy clean`: allowed

@@ -1,0 +1,29 @@
+{
+  "context-raw70": {
+    "fired": 134,
+    "total": 320,
+    "fraction": 0.41875,
+    "tail_fired": 5,
+    "tail_total": 7,
+    "max_label_covered": true,
+    "expert_neighbor_mean": 1.9253731343283582
+  },
+  "context-raw85": {
+    "fired": 20,
+    "total": 320,
+    "fraction": 0.0625,
+    "tail_fired": 0,
+    "tail_total": 7,
+    "max_label_covered": false,
+    "expert_neighbor_mean": 1.8
+  },
+  "context-log70": {
+    "fired": 134,
+    "total": 320,
+    "fraction": 0.41875,
+    "tail_fired": 5,
+    "tail_total": 7,
+    "max_label_covered": true,
+    "expert_neighbor_mean": 1.9253731343283582
+  }
+}
