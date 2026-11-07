@@ -1,0 +1,17 @@
+Title,sentinel,si,smiles,pmc,label,rule
+PANI-44,True,,Oc1ccccc1-c2nc(-c3ccccc3)c(n2O)C(=O)Nc4ccccc4,10.1007/s11172-019-2467-6,1d,rcb2019_table
+PANI-47,True,,On1c(C(=O)C)c(C)nc1-c2cc(Cl)ccc2O,10.1007/s11172-019-2467-6,1e,rcb2019_table
+PANI-15,True,,CCOC(=O)c(n1O)c(C)nc1-c2ccc(cc2O)OCc3ccccc3,10.1007/s11172-019-2467-6,1f,rcb2019_table
+PANI-45,True,,Oc1ccc(Cl)cc1-c2nc(-c3ccccc3)c(n2O)C(=O)Nc4ccccc4,10.1007/s11172-019-2467-6,1g,rcb2019_table
+PANI-46,True,,Oc1ccc(Br)cc1-c2nc(-c3ccccc3)c(n2O)C(=O)Nc4ccccc4,10.1007/s11172-019-2467-6,1h,rcb2019_table
+PANI-19,True,,[O-][n+]1c(C(=O)C)c(C)n(C)c1-c2ccccc2O,10.1007/s11172-019-2467-6,4a,rcb2019_table
+PANI-21,True,,C1C(C)(C)CC(=O)c(c12)[n+]([O-])c(n2C)-c3ccccc3O,10.1007/s11172-019-2467-6,4c,rcb2019_table
+PANI-49,True,,COn1c(C(=O)C)c(C)nc1-c2ccccc2O,10.1007/s11172-019-2467-6,5a,rcb2019_table
+PANI-51,True,,C1C(C)(C)CC(=O)c(c12)n(OC)c(n2)-c3ccccc3O,10.1007/s11172-019-2467-6,5c,rcb2019_table
+PANI-52,True,,CC(=O)c([nH]1)c(C)nc1-c2ccccc2O,10.1007/s11172-019-2467-6,6a,rcb2019_table
+PANI-53,True,,CCOC(=O)c([nH]1)c(C)nc1-c2ccccc2O ,10.1007/s11172-019-2467-6,6b,rcb2019_table
+PANI-54,True,,C1C(C)(C)CC(=O)c(c12)[nH]c(n2)-c3ccccc3O,10.1007/s11172-019-2467-6,6c,rcb2019_table
+PANI-16,False,4.5,COC(=O)c(n1O)c(C)nc1-c2ccccc2O,10.1007/s11172-019-2467-6,1a,rcb2019_organizer_units
+PANI-18,False,186.25,C1C(C)(C)CC(=O)c(c12)n(O)c(n2)-c3ccccc3O,10.1007/s11172-019-2467-6,1c,rcb2019_organizer_units
+PANI-20,True,,CCC(=O)c([n+]1[O-])c(C)n(C)c1-c2ccccc2O,10.1007/s11172-019-2467-6,4b,rcb2019_organizer_units
+PANI-50,False,2.341463414634146,COn1c(C(=O)CC)c(C)nc1-c2ccccc2O,10.1007/s11172-019-2467-6,5b,rcb2019_organizer_units
