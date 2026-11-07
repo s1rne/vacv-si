@@ -108,6 +108,11 @@ TWIN_SI = Path("data/processed/twin_transfer.csv")
 #: (EJMC 2012 семикарбазиды, «None of the compounds were inhibitory»);
 #: якоря train 3e/3i/3k/'4' бит-в-бит (см. experiments/grishak_si.py).
 GRISHAK_SI = Path("data/processed/grishak_si.csv")
+#: Таблица перепрофилированных препаратов обзора JMC 2023
+#: (10.1021/acs.jmedchem.3c00069, док CHEMBL5346934): y = сырое частное
+#: CC50/EC50; EC50-столбец подтверждён записями дока бит-в-бит, CC50 — из
+#: хранимых пар; 17/17 train-якорей (см. experiments/review2023_si.py).
+REVIEW2023_SI = Path("data/processed/review2023_si.csv")
 #: Общий майнер пар (EC50 Vaccinia + цитотокс той же клеточной линии) из
 #: ChEMBL-доков (13 проходных: CHEMBL3351523 BMC 2014 бензимидазолы,
 #: CHEMBL6092128, CHEMBL4837211, ...); 58/58 train-якорей бит-в-бит, ключи
@@ -124,8 +129,8 @@ def article_frame() -> pd.DataFrame:
     for extra in (PAPER_SI, JM2007_SI, JM2008_SI, BMCL_SI, RCB_SI,
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
-                  JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, GRISHAK_SI, LIT_SI,
-                  CHEMBL_SI_PAIRS):
+                  JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, GRISHAK_SI,
+                  REVIEW2023_SI, LIT_SI, CHEMBL_SI_PAIRS):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
