@@ -34,12 +34,15 @@ BMCL_SI = Path("data/processed/bmcl_si.csv")
 #: 1-гидрокси-2-(2-гидроксифенил)имидазолы, 5/5 train сентинелов бит-в-бит
 #: (см. experiments/rcb_si.py).
 RCB_SI = Path("data/processed/rcb_si.csv")
+#: Table 1 ChemMedChem 2022 (Sokolova, 10.1002/cmdc.202100771): борнил/фенхил
+#: амиды серий 'as-'/'qs-', 11/11 train-строк бит-в-бит (см. experiments/cmdc_si.py).
+CMDC_SI = Path("data/processed/cmdc_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
-    for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI):
+    for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)

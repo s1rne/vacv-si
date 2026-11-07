@@ -125,7 +125,8 @@ def main() -> None:
     paper = pd.read_csv("data/processed/paper_si.csv")
     bmcl = pd.read_csv("data/processed/bmcl_si.csv")
     rcb = pd.read_csv("data/processed/rcb_si.csv")
-    art_all = pd.concat([art_fixed, paper, bmcl, rcb], ignore_index=True)  # (b)
+    art_all = pd.concat([art_fixed, paper, bmcl, rcb,
+                         pd.read_csv("data/processed/cmdc_si.csv")], ignore_index=True)  # (b)
     covered = set(art_all["smiles"])
     art_idx = art_all.set_index("smiles")
 
