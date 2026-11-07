@@ -1,0 +1,3 @@
+Title,sentinel,si,smiles,pmc,label,rule
+PAV-825,False,6.881,CCC(CC)C1=CC2=C(C=C1)N=C1C(C(C)(C)C)=CC(N(CC)CC)=CC1=[S+]2,PMC9629033,PAV-825,av2021_fig2b
+PAV-661,False,9.434,COCN(COC)C1=CC2=C(N=C3C(Cl)=CC(N4CCCC4)=CC3=[S+]2)C(Cl)=C1,PMC9629033,PAV-661,av2021_fig2b
