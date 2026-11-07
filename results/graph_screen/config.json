@@ -1,0 +1,36 @@
+{
+  "base_profile": "hybrid",
+  "model_seed_count": 1,
+  "inner_splits": 4,
+  "inner_seed": 2718,
+  "outer_splits": [
+    "0",
+    "1",
+    "2",
+    "scaffold"
+  ],
+  "unlabeled_test_rows": 597,
+  "candidates": [
+    [
+      "onehop",
+      0.25
+    ],
+    [
+      "onehop",
+      0.5
+    ],
+    [
+      "diffusion",
+      0.25
+    ],
+    [
+      "diffusion",
+      0.5
+    ]
+  ],
+  "neighbours": 6,
+  "cross_group": 0.05,
+  "regularization": 0.03,
+  "submit": null,
+  "submit_beta": null
+}

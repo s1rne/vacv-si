@@ -1,0 +1,2 @@
+# Install into an isolated environment after uv sync --frozen.
+tabicl==2.2.0

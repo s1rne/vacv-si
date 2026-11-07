@@ -1,0 +1,58 @@
+[
+  {
+    "split": "0",
+    "model": "gated_diffusion_0.25",
+    "mse": 9499572.244472455,
+    "brier": 0.054449007371295835,
+    "status": "post-hoc exploratory, not confirmation"
+  },
+  {
+    "split": "0",
+    "model": "gated_diffusion_0.5",
+    "mse": 9573809.341119312,
+    "brier": 0.055077395558305396,
+    "status": "post-hoc exploratory, not confirmation"
+  },
+  {
+    "split": "1",
+    "model": "gated_diffusion_0.25",
+    "mse": 9802172.661416376,
+    "brier": 0.05751704692845507,
+    "status": "post-hoc exploratory, not confirmation"
+  },
+  {
+    "split": "1",
+    "model": "gated_diffusion_0.5",
+    "mse": 9847371.930010494,
+    "brier": 0.057999271958225664,
+    "status": "post-hoc exploratory, not confirmation"
+  },
+  {
+    "split": "2",
+    "model": "gated_diffusion_0.25",
+    "mse": 9333624.134971179,
+    "brier": 0.0521429269373078,
+    "status": "post-hoc exploratory, not confirmation"
+  },
+  {
+    "split": "2",
+    "model": "gated_diffusion_0.5",
+    "mse": 9403881.910683317,
+    "brier": 0.05291932099448682,
+    "status": "post-hoc exploratory, not confirmation"
+  },
+  {
+    "split": "scaffold",
+    "model": "gated_diffusion_0.25",
+    "mse": 11877917.302277846,
+    "brier": 0.07955376303731587,
+    "status": "post-hoc exploratory, not confirmation"
+  },
+  {
+    "split": "scaffold",
+    "model": "gated_diffusion_0.5",
+    "mse": 11871228.82911765,
+    "brier": 0.0795294845059934,
+    "status": "post-hoc exploratory, not confirmation"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "profile": "0.75*hybrid7+0.25*CheMeleonPCA32TabICL2-soft",
+  "rows": 597,
+  "sha256": "f1db71aac37dea672060990712759fc4bfff047ca4c5a72a80b21cd95d20c2c4",
+  "components_sha256": "01aab3f745e09b92e756fca17e06a513fb7a505a3b3dda4e7609aa76279e8790",
+  "embedding_sha256": "da056b854c3551f884683f245db7230d5d37ea51eab714cea7f8fd43b1dac611",
+  "tabicl_sha256": "bdc7dbd5e4ff21f8f0456fcf90c6b7cdf72dbea960f2d05b19bec19f9b3d4ed0"
+}

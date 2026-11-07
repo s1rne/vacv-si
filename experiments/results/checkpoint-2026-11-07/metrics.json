@@ -1,0 +1,30 @@
+[
+  {
+    "split": "random-3",
+    "profile": "graph75_chemeleon25_soft",
+    "status": "post-hoc combination of two confirmed components; no independent holdout",
+    "mse": 8342878.321801022,
+    "graph_soft_mse": 8429371.17875975
+  },
+  {
+    "split": "random-4",
+    "profile": "graph75_chemeleon25_soft",
+    "status": "post-hoc combination of two confirmed components; no independent holdout",
+    "mse": 8721742.100362306,
+    "graph_soft_mse": 8765162.459937345
+  },
+  {
+    "split": "random-5",
+    "profile": "graph75_chemeleon25_soft",
+    "status": "post-hoc combination of two confirmed components; no independent holdout",
+    "mse": 8839290.976962352,
+    "graph_soft_mse": 8925181.12171551
+  },
+  {
+    "split": "scaffold",
+    "profile": "graph75_chemeleon25_soft",
+    "status": "post-hoc combination of two confirmed components; no independent holdout",
+    "mse": 11850296.499817904,
+    "graph_soft_mse": 11867767.049133206
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "base_profile": "hybrid",
+  "model_seed_count": 7,
+  "inner_splits": 4,
+  "inner_seed": 2718,
+  "outer_splits": [],
+  "unlabeled_test_rows": 597,
+  "candidates": [
+    [
+      "diffusion",
+      0.25,
+      true
+    ]
+  ],
+  "neighbours": 6,
+  "cross_group": 0.05,
+  "regularization": 0.03,
+  "submit": "diffusion",
+  "submit_beta": 0.25,
+  "with_soft": true
+}

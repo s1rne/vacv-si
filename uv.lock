@@ -1586,7 +1586,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "catboost", specifier = ">=1.2.10" },
+    { name = "catboost", specifier = ">=1.2.8,<2" },
     { name = "kaggle", specifier = ">=2.2.5" },
     { name = "lightgbm", specifier = ">=4.7.0" },
     { name = "numpy", specifier = ">=2.5.4" },

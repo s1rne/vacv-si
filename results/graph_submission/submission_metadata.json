@@ -1,0 +1,11 @@
+{
+  "rows": 597,
+  "sha256": "a6b8b72144429414af2ef2d7050a2426978c070426e98a15467b672c68f7327f",
+  "mode": "diffusion",
+  "beta": 0.25,
+  "gated": true,
+  "with_soft": true,
+  "model_seed_count": 7,
+  "inner_splits": 4,
+  "inner_seed": 2718
+}

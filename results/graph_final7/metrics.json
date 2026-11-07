@@ -1,0 +1,98 @@
+[
+  {
+    "split": "3",
+    "model": "hybrid",
+    "mse": 8803502.680445766,
+    "brier": 0.04638007259114588
+  },
+  {
+    "split": "3",
+    "model": "gated_diffusion_0.25",
+    "mse": 8591750.0742128,
+    "brier": 0.044064334597534574
+  },
+  {
+    "split": "3",
+    "model": "hybrid_soft",
+    "mse": 8656653.347790565,
+    "brier": 0.04638007259114588
+  },
+  {
+    "split": "3",
+    "model": "gated_diffusion_0.25_soft",
+    "mse": 8429371.17875975,
+    "brier": 0.044064334597534574
+  },
+  {
+    "split": "4",
+    "model": "hybrid",
+    "mse": 9049160.086895907,
+    "brier": 0.04933254320997293
+  },
+  {
+    "split": "4",
+    "model": "gated_diffusion_0.25",
+    "mse": 8924805.812076133,
+    "brier": 0.04795453398124076
+  },
+  {
+    "split": "4",
+    "model": "hybrid_soft",
+    "mse": 8897748.710504588,
+    "brier": 0.04933254320997293
+  },
+  {
+    "split": "4",
+    "model": "gated_diffusion_0.25_soft",
+    "mse": 8765162.459937345,
+    "brier": 0.04795453398124076
+  },
+  {
+    "split": "5",
+    "model": "hybrid",
+    "mse": 8977599.988417441,
+    "brier": 0.049032763108052324
+  },
+  {
+    "split": "5",
+    "model": "gated_diffusion_0.25",
+    "mse": 8986740.61116433,
+    "brier": 0.04912051790594263
+  },
+  {
+    "split": "5",
+    "model": "hybrid_soft",
+    "mse": 8922894.77108359,
+    "brier": 0.049032763108052324
+  },
+  {
+    "split": "5",
+    "model": "gated_diffusion_0.25_soft",
+    "mse": 8925181.12171551,
+    "brier": 0.04912051790594263
+  },
+  {
+    "split": "scaffold",
+    "model": "hybrid",
+    "mse": 11965574.728507886,
+    "brier": 0.08047100593460724
+  },
+  {
+    "split": "scaffold",
+    "model": "gated_diffusion_0.25",
+    "mse": 11865706.254085172,
+    "brier": 0.07945159029204132
+  },
+  {
+    "split": "scaffold",
+    "model": "hybrid_soft",
+    "mse": 11969000.28281506,
+    "brier": 0.08047100593460724
+  },
+  {
+    "split": "scaffold",
+    "model": "gated_diffusion_0.25_soft",
+    "mse": 11867767.049133206,
+    "brier": 0.07945159029204132
+  }
+]

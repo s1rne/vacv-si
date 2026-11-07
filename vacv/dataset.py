@@ -39,4 +39,11 @@ def load(folder: Path = RAW) -> Data:
 
 
 def submission(index: np.ndarray, prediction: np.ndarray) -> pd.DataFrame:
+    index, prediction = np.asarray(index), np.asarray(prediction, dtype=float)
+    if index.ndim != 1 or prediction.shape != index.shape or not len(index):
+        raise ValueError("submission needs one prediction per index")
+    if not np.isfinite(prediction).all() or (prediction < 0).any():
+        raise ValueError("submission predictions must be finite and non-negative")
+    if pd.isna(index).any() or pd.Index(index).has_duplicates:
+        raise ValueError("submission indices must be present and unique")
     return pd.DataFrame({"index": index, TARGET: prediction})
