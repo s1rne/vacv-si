@@ -43,9 +43,9 @@ def main():
     pd.DataFrame({"index": data.test["index"].to_numpy(), **components}).to_csv(component_path, index=False)
     code_files = ["vacv/checkpoint.py", "vacv/graph_correction.py", "vacv/postprocess.py",
                   "vacv/inference.py", "vacv/pipeline.py", "experiments/pretrained_embeddings.py"]
-    metadata = {"profile": ("0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft+av"
+    metadata = {"profile": ("0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft+av+article"
                             if args.active_value else
-                            "0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft"),
+                            "0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft+article"),
                 "rows": len(result), "stage": "intermediate checkpoint; not submitted to Kaggle",
                 "transductive": True, "embedding_sha256": manifest["embedding_sha256"],
                 "sha256": hashlib.sha256(args.out.read_bytes()).hexdigest(),

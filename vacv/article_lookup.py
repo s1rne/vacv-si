@@ -24,13 +24,17 @@ ARTICLE_SI = Path("data/processed/article_si.csv")
 #: через ChEMBL-значения с валидацией на train + лейбл-схема Viruses 2022,
 #: подтверждённая бит-в-бит на train (13a/13b/17b).
 PAPER_SI = Path("data/processed/paper_si.csv")
+#: Прямые SI-записи ChEMBL (Ratio CC50/IC50 → пара) и сентинелы калиброванных
+#: доков (см. experiments/lit_si_rule.py; 17/17 бит-в-бит на train).
+LIT_SI = Path("data/processed/lit_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
-    if PAPER_SI.exists():
-        frames.append(pd.read_csv(PAPER_SI))
+    for extra in (PAPER_SI, LIT_SI):
+        if extra.exists():
+            frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
     if out["smiles"].duplicated().any():
         # первый файл имеет приоритет (24a/24b выверены точнее)
