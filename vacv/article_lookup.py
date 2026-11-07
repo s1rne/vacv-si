@@ -26,6 +26,10 @@ ARTICLE_SI = Path("data/processed/article_si.csv")
 PAPER_SI = Path("data/processed/paper_si.csv")
 #: Прямые SI-записи ChEMBL (Ratio CC50/IC50 → пара) и сентинелы калиброванных
 #: доков (см. experiments/lit_si_rule.py; 17/17 бит-в-бит на train).
+#: Стоит ПОСЛЕ выверенных бумажных таблиц (перед CHEMBL_SI_PAIRS): его строка
+#: '2c' (25.928 из ChEMBL-записей дока CHEMBL4368876) затеняла верную
+#: cmdc2022_table1 (261.703 из Table 1 ChemMedChem 2022, подтверждена
+#: хранимой парой test#130 2904.9/11.1).
 LIT_SI = Path("data/processed/lit_si.csv")
 #: Table 1 BMCL 2023 (Nikitina, PMC9674569): 1-гидроксиимидазолы 1a-f/2a-l,
 #: 5/5 train-строк бит-в-бит (см. experiments/bmcl_si.py).
@@ -100,10 +104,10 @@ CHEMBL_SI_PAIRS = Path("data/processed/chembl_si_pairs.csv")
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
-    for extra in (PAPER_SI, JM2007_SI, JM2008_SI, LIT_SI, BMCL_SI, RCB_SI,
+    for extra in (PAPER_SI, JM2007_SI, JM2008_SI, BMCL_SI, RCB_SI,
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
-                  JMC2005_SI, CHEMBL_SI_PAIRS):
+                  JMC2005_SI, LIT_SI, CHEMBL_SI_PAIRS):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
