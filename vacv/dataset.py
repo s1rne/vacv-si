@@ -16,6 +16,7 @@ import pandas as pd
 
 FORBIDDEN = ("CC50_uM", "IC50_uM_VACV")
 TARGET = "SI VACV"
+INACTIVE_INTERNAL = 10_000.0
 RAW = Path("data/raw/kaggle")
 
 
@@ -32,6 +33,10 @@ class Data:
 def load(folder: Path = RAW) -> Data:
     train = pd.read_csv(folder / "train.csv").drop(columns=list(FORBIDDEN))
     test = pd.read_csv(folder / "test.csv").drop(columns=list(FORBIDDEN))
+    if not (train[TARGET] == INACTIVE_INTERNAL).any():
+        # train_v2: организаторы пометили неактивные нулём. Внутри пайплайна неактивным
+        # остаётся 10000, на выходе literature.to_zero_inactive возвращает нулевую метку.
+        train[TARGET] = train[TARGET].mask(train[TARGET] == 0, INACTIVE_INTERNAL)
     for frame in (train, test):
         if frame[["SMILES", "strain", "Culture"]].isna().any().any():
             raise ValueError("пропуски в разрешённых полях")

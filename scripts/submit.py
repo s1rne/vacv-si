@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 from vacv.dataset import load, submission
-from vacv.literature import attach
+from vacv.literature import attach, to_zero_inactive
 from vacv.inference import PROFILES, predict_ensemble
 
 
@@ -24,7 +24,8 @@ def main() -> None:
 
     data = load()
     train, test = attach(data.train), attach(data.test)
-    _, _, prediction = predict_ensemble(train, data.y, test, args.seeds, args.profile)
+    probability, _, prediction = predict_ensemble(train, data.y, test, args.seeds, args.profile)
+    prediction = to_zero_inactive(prediction, probability, test)
     print(f"значений из литературы: {int(test['matched'].sum())} из {len(test)}")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)

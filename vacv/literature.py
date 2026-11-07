@@ -174,3 +174,16 @@ def fold_fit(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.
 def fold_table(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.DataFrame:
     """То же, что :func:`fold_fit`, но в том виде, в котором таблицу читает модель."""
     return _usable(fold_fit(train_rows, path))
+
+
+def to_zero_inactive(prediction: np.ndarray, probability: np.ndarray, frame: pd.DataFrame,
+                     cap: float = 10_000.0) -> np.ndarray:
+    """Прогноз под метки train_v2, где неактивное соединение имеет SI = 0.
+
+    Внутри пайплайна неактивным соответствует cap, поэтому ожидание равно
+    p·cap + (1 − p)·x. При нулевой метке остаётся (1 − p)·x. Строки, где литературное
+    значение подставлено целиком (цензурированные классы), члена p не содержат.
+    """
+    literature, quality = value_and_quality(frame)
+    hard = np.isin(quality, CENSORED_QUALITY) & np.isfinite(literature)
+    return np.where(hard, prediction, np.clip(prediction - probability * cap, 0.0, None))

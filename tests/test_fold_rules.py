@@ -34,3 +34,22 @@ def test_fold_table_has_one_row_per_molecule():
     assert list(table.columns) == list(shipped.columns)
     assert not table["smiles"].duplicated().any()
     assert table.reset_index(drop=True).equals(shipped.reset_index(drop=True))
+
+
+def test_zero_inactive_removes_the_inactive_term_but_not_hard_literature():
+    import numpy as np
+    from vacv.literature import to_zero_inactive
+
+    frame = pd.DataFrame({"literature_si": [np.nan, np.nan], "literature_quality": [None, None]})
+    out = to_zero_inactive(np.array([3000.0, 20.0]), np.array([0.2, 0.0]), frame)
+    assert out.tolist() == [1000.0, 20.0]
+
+
+def test_loader_maps_train_v2_zeros_back_to_the_internal_sentinel(tmp_path):
+    from vacv.dataset import FORBIDDEN, load
+
+    base = pd.DataFrame({"SMILES": ["C", "CC", "CCC"], "strain": ["a"] * 3, "Culture": ["c"] * 3,
+                         "SI VACV": [0.0, 5.0, 7.0], FORBIDDEN[0]: [1, 2, 3], FORBIDDEN[1]: [0, 1, 1]})
+    base.to_csv(tmp_path / "train.csv", index=False)
+    base.to_csv(tmp_path / "test.csv", index=False)
+    assert load(tmp_path).y.tolist() == [10000.0, 5.0, 7.0]

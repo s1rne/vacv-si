@@ -13,13 +13,13 @@ from sklearn.model_selection import KFold
 
 from vacv.dataset import load
 from vacv.inference import PROFILES, predict_ensemble
-from vacv.literature import attach, fold_table
+from vacv.literature import attach, fold_table, to_zero_inactive
 from vacv.pipeline import INACTIVE, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
 def evaluate(raw_frame, y, folds, seeds=7, profile="baseline"):
-    probability, raw, prediction = (np.full(len(y), np.nan) for _ in range(3))
+    probability, raw, prediction, zero = (np.full(len(y), np.nan) for _ in range(4))
     fold_ids = np.full(len(y), -1)
     for fold in range(len(folds)):
         train, valid = fold_indices(folds, fold)
@@ -30,12 +30,15 @@ def evaluate(raw_frame, y, folds, seeds=7, profile="baseline"):
         frame = attach(raw_frame, fold_table(train))
         probability[valid], raw[valid], prediction[valid] = predict_ensemble(
             frame.iloc[train], y[train], frame.iloc[valid], seeds, profile)
+        zero[valid] = to_zero_inactive(prediction[valid], probability[valid], frame.iloc[valid])
         fold_ids[valid] = fold
     if not np.isfinite(prediction).all() or (fold_ids < 0).any():
         raise ValueError("Incomplete OOF predictions")
     labels = y == INACTIVE
     metrics = {
         "mse": float(np.mean((prediction - y) ** 2)),
+        # метки train_v2: неактивное соединение имеет SI = 0, это и считает Kaggle
+        "mse_zero_inactive": float(np.mean((zero - np.where(y == INACTIVE, 0.0, y)) ** 2)),
         "model_mse": float(np.mean((raw - y) ** 2)),
         "auc": float(roc_auc_score(labels, probability)) if len(np.unique(labels)) == 2 else None,
         "brier": float(np.mean((probability - labels) ** 2)),
