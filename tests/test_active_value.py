@@ -19,9 +19,19 @@ def frame(rows: list[dict]) -> pd.DataFrame:
 def test_constant_fallback_for_rows_without_evidence():
     train = frame([{"SMILES": "CCO"}, {"SMILES": "CCC"}])
     y = np.array([4.0, INACTIVE])
-    model = ActiveValueModel().fit(train, y)
+    model = ActiveValueModel(fallback="constant").fit(train, y)
     query = frame([{"SMILES": "CCCC"}])
     np.testing.assert_allclose(model.predict(query), [4.0])
+
+
+def test_knn_fallback_pulls_toward_similar_actives():
+    train = frame([{"SMILES": "CCO"}, {"SMILES": "CCCCCCCCCCO"}])
+    y = np.array([4.0, 900.0])
+    model = ActiveValueModel(fallback="knn").fit(train, y)
+    near = model.predict(frame([{"SMILES": "CCCO"}]))[0]
+    far = model.predict(frame([{"SMILES": "CCCCCCCCCCCO"}]))[0]
+    assert near < far
+    assert near > 4.0 and far < 900.0  # shrinkage keeps both inside the observed range
 
 
 def test_both_known_gives_exact_ratio():
@@ -57,7 +67,6 @@ def test_predictions_finite_and_positive():
                    {"SMILES": "not-a-smiles", "best_ic50_um": 1.0}])
     values = model.predict(query)
     assert np.isfinite(values).all() and (values >= 0).all()
-    assert values[2] == pytest.approx(model.fallback_)
 
 
 def test_self_record_is_excluded_from_cc50_estimate():

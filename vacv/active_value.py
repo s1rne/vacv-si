@@ -84,13 +84,18 @@ class ActiveValueModel:
     """Условное среднее SI активных, оценённое по каждой строке отдельно."""
 
     def __init__(self, min_sim: float = 0.05, power: float = 2.0,
-                 shrink: float = 2.0, train_power: float = 1.0):
+                 shrink: float = 2.0, train_power: float = 1.0,
+                 fallback: str = "constant", fallback_shrink: float = 3.0):
         if min_sim < 0 or power < 0 or shrink < 0 or train_power < 0:
             raise ValueError("weights and thresholds must be non-negative")
+        if fallback not in {"constant", "knn"}:
+            raise ValueError("fallback must be constant or knn")
         self.min_sim = min_sim
         self.power = power
         self.shrink = shrink
         self.train_power = train_power
+        self.fallback = fallback
+        self.fallback_shrink = fallback_shrink
 
     def fit(self, frame: pd.DataFrame, y: np.ndarray) -> "ActiveValueModel":
         y = np.asarray(y, dtype=float)
@@ -162,10 +167,33 @@ class ActiveValueModel:
             estimates[i] = (db_part + train_part + self.shrink * prior[i]) / total
         return estimates
 
+    def _fallback_values(self, frame: pd.DataFrame) -> np.ndarray:
+        """Оценка активного SI без внешних измерений: похожие активные строки обучения."""
+        if self.fallback == "constant":
+            return np.full(len(frame), self.fallback_)
+        active = self.train_y_ != INACTIVE
+        si = np.where(active, self.train_y_, np.nan)
+        query_fp = [_fingerprint(s) for s in frame["SMILES"]]
+        train_sim = _tanimoto_matrix(query_fp, self.train_fp_)
+        query_keys = [_inchikey14(s) for s in frame["SMILES"]]
+        result = np.empty(len(frame))
+        for i in range(len(frame)):
+            weights = np.where(np.isfinite(si) & (train_sim[i] > self.min_sim),
+                               train_sim[i] ** self.power, 0.0)
+            if query_keys[i]:
+                weights = weights * np.array([k != query_keys[i] for k in self.train_keys_])
+            total = weights.sum() + self.fallback_shrink
+            if total <= self.fallback_shrink:
+                result[i] = self.fallback_
+                continue
+            result[i] = (float(np.nansum(weights * np.nan_to_num(si, nan=0.0)))
+                         + self.fallback_shrink * self.fallback_) / total
+        return result
+
     def predict(self, frame: pd.DataFrame) -> np.ndarray:
         ic50 = pd.to_numeric(frame["best_ic50_um"], errors="coerce").to_numpy(dtype=float)
         cc50 = pd.to_numeric(frame["best_cc50_um"], errors="coerce").to_numpy(dtype=float)
-        result = np.full(len(frame), self.fallback_)
+        result = self._fallback_values(frame)
         ic_known = np.isfinite(ic50) & (ic50 > 0)
         cc_known = np.isfinite(cc50) & (cc50 > 0)
         both = ic_known & cc_known
