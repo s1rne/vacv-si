@@ -1,0 +1,54 @@
+[
+  {
+    "activity_id": 18262178,
+    "assay_chembl_id": "CHEMBL4056694",
+    "assay_description": "Cytotoxicity against African green monkey CV1 cells assessed as reduction in cell viability preincubated for 4 hrs measured after 24 hrs by MTT assay relative to control",
+    "standard_type": "CC50",
+    "standard_value": "50000.0",
+    "standard_units": "nM",
+    "standard_relation": "=",
+    "document_chembl_id": "CHEMBL4052722",
+    "molecule_chembl_id": "CHEMBL4075250",
+    "cache_path": "/Users/mike/Projects/vacv-si/data/raw/chembl/chembl_api_data_activity.json-ebd5abdff3c334c9.json",
+    "cache_sha256": "a7ffd1b873f044f95557ef58926209604c1a57e28c174d5b28eac74bac62427d"
+  },
+  {
+    "activity_id": 18262277,
+    "assay_chembl_id": "CHEMBL4056706",
+    "assay_description": "Antiviral activity against Vaccinia virus LIVP harboring GFP infected in African green monkey CV1 cells assessed as virus titer preincubated with cells for 4 hrs followed by viral infection measured after 48 hrs by gentian violet staining-based microscopic analysis",
+    "standard_type": "IC50",
+    "standard_value": "19000.0",
+    "standard_units": "nM",
+    "standard_relation": "=",
+    "document_chembl_id": "CHEMBL4052722",
+    "molecule_chembl_id": "CHEMBL4075250",
+    "cache_path": "/Users/mike/Projects/vacv-si/data/raw/chembl/chembl_api_data_activity.json-ebd5abdff3c334c9.json",
+    "cache_sha256": "a7ffd1b873f044f95557ef58926209604c1a57e28c174d5b28eac74bac62427d"
+  },
+  {
+    "activity_id": 24978308,
+    "assay_chembl_id": "CHEMBL5225278",
+    "assay_description": "Cytotoxicity against African green monkey Vero cells measured after 4 days by colorimetric assay",
+    "standard_type": "CC50",
+    "standard_value": "1193400.0",
+    "standard_units": "nM",
+    "standard_relation": "=",
+    "document_chembl_id": "CHEMBL5223146",
+    "molecule_chembl_id": "CHEMBL5269665",
+    "cache_path": "/Users/mike/Projects/vacv-si/data/raw/chembl/chembl_api_data_activity.json-011eb6eef3fc62c7.json",
+    "cache_sha256": "72c7080de33ea67f1b3c19ff79f02689220fac2376468861a3434ab6145e3fe7"
+  },
+  {
+    "activity_id": 24978328,
+    "assay_chembl_id": "CHEMBL5225279",
+    "assay_description": "Antiviral activity against Vaccinia virus Copenhagen infected in Vero cells measured after 4 days by colorimetric assay",
+    "standard_type": "IC50",
+    "standard_value": "7.6",
+    "standard_units": "nM",
+    "standard_relation": "=",
+    "document_chembl_id": "CHEMBL5223146",
+    "molecule_chembl_id": "CHEMBL5269665",
+    "cache_path": "/Users/mike/Projects/vacv-si/data/raw/chembl/chembl_api_data_activity.json-011eb6eef3fc62c7.json",
+    "cache_sha256": "72c7080de33ea67f1b3c19ff79f02689220fac2376468861a3434ab6145e3fe7"
+  }
+]
