@@ -252,6 +252,34 @@ def main() -> None:
                          "smiles": row["SMILES"], "pmc": DOI, "label": t,
                          "rule": "cmdc2022_bare10"})
 
+    # bare-9x: камфорные (экзо-борнильные) амиды с метками 9-серии — в
+    # источнике перепутаны структуры/метки (как и в bare-10x): значения —
+    # Table 1 фенхиловой 9-серии с EC50=NA (9i 288.0, 9j >387.1, 9k 217.5,
+    # 9l >379.6; test-CC50 совпадают бит-в-бит). train '9a' y=10000 и '9l'
+    # y=10000 (2/2 якоря). train#227 '9a' (хиноноксим 6092128, y=13.31)
+    # отсекается точным SMILES.
+    BARE9 = [
+        ("9a", "C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)c3ccccc3"),
+        ("9i", "C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)c3ccncc3"),
+        ("9j", "C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)c3cccnc3"),
+        ("9k", "C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)c3nccnc3"),
+        ("9l", "C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)C3CCCCC3"),
+    ]
+    for split, frame in (("train", train), ("test", test)):
+        for i, row in frame.iterrows():
+            t = str(row["Title"]).strip()
+            if not any(b[0] == t and b[1] == row["SMILES"] for b in BARE9):
+                continue
+            y = float(train.loc[i, "SI VACV"]) if split == "train" else None
+            if y is not None:
+                n_total += 1
+                ok = y == 10000.0
+                n_ok += ok
+                print(f"  {'OK' if ok else '!!'} train#{i} '{t}' y={y} vs sentinel (bare-9)")
+            rows.append({"Title": t, "sentinel": True, "si": "",
+                         "smiles": row["SMILES"], "pmc": DOI, "label": t,
+                         "rule": "cmdc2022_bare9"})
+
     print(f"train-проверок бит-в-бит: {n_ok}/{n_total}")
 
     # серии 2/3 (ацилгидразоны) и 11 (эфиры): матч по метке (точной / коду

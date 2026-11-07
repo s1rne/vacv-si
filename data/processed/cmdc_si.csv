@@ -37,6 +37,11 @@ Title,sentinel,si,smiles,pmc,label,rule
 10i,True,,C1C[C@@H](C2)C(C)(C)[C@@H]([C@]12C)NC(=O)c3ccncc3,10.1002/cmdc.202100771,10i,cmdc2022_bare10
 10d,True,,C1C[C@@H](C2)C(C)(C)[C@@H]([C@]12C)NC(=O)c3ccc(F)cc3,10.1002/cmdc.202100771,10d,cmdc2022_bare10
 10l,True,,C1C[C@@H](C2)C(C)(C)[C@@H]([C@]12C)NC(=O)C3CCCCC3,10.1002/cmdc.202100771,10l,cmdc2022_bare10
+9a,True,,C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)c3ccccc3,10.1002/cmdc.202100771,9a,cmdc2022_bare9
+9l,True,,C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)C3CCCCC3,10.1002/cmdc.202100771,9l,cmdc2022_bare9
+9k,True,,C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)c3nccnc3,10.1002/cmdc.202100771,9k,cmdc2022_bare9
+9j,True,,C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)c3cccnc3,10.1002/cmdc.202100771,9j,cmdc2022_bare9
+9i,True,,C1C[C@@H](C2)C(C)(C)[C@H]([C@]12C)NC(=O)c3ccncc3,10.1002/cmdc.202100771,9i,cmdc2022_bare9
 2a (9),False,280.412,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=O)C1=CC=CC=C1)C2,10.1002/cmdc.202100771,2a,cmdc2022_table1
 2b-ks-422,False,358.844,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=O)C1=CC=C(Cl)C=C1)C2,10.1002/cmdc.202100771,2b,cmdc2022_table1
 2c,False,261.703,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=O)C1=CC=C(Br)C=C1)C2,10.1002/cmdc.202100771,2c,cmdc2022_table1
