@@ -41,12 +41,16 @@ CMDC_SI = Path("data/processed/cmdc_si.csv")
 #: имидазолы (ряды 4-13), метки соревнования сдвинуты на ряд — матч по InChIKey,
 #: 12/12 train-строк бит-в-бит (см. experiments/rsc2024_si.py).
 RSC2024_SI = Path("data/processed/rsc2024_si.csv")
+#: Table 1 MedChemComm 2018 (Kovaleva, PMC6335999): камфорные N-ацилгидразоны,
+#: матч по InChIKey структур ChEMBL-дока (CHEMBL4368876); train#226 '10'
+#: 25.928 бит-в-бит (см. experiments/kovaleva_si.py).
+KOVALEVA_SI = Path("data/processed/kovaleva_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
-    for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI, RSC2024_SI):
+    for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI, RSC2024_SI, KOVALEVA_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
