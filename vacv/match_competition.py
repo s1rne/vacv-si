@@ -93,7 +93,7 @@ def overlap(split: pd.DataFrame, curated_open: pd.DataFrame, paired: pd.DataFram
 
 def agreement(train: pd.DataFrame, paired: pd.DataFrame, key: str = "inchikey14") -> pd.DataFrame:
     """Join the organisers' SI to the open-data SI for the same molecule."""
-    left = train[[key, "Title", "SI VACV", "CC50_uM", "IC50_uM_VACV", "Culture"]].dropna(subset=[key])
+    left = train[[key, "Title", "SI VACV", "Culture"]].dropna(subset=[key])
     right = paired[[key, "si", "ic50", "cc50", "pairing_level", "doi", "censored"]].rename(
         columns={"si": "si_open", "ic50": "ic50_open", "cc50": "cc50_open"}
     )

@@ -238,7 +238,8 @@ def sentinel_report(presence: pd.DataFrame) -> pd.DataFrame:
     # Exact equality, not a threshold: one training row has a genuine
     # SI VACV of 36066.667 (CC50 1082 / IC50 0.03), so ">= 10000" would
     # mislabel a real measurement as the sentinel.
-    sentinel = (train["SI VACV"].eq(SI_SENTINEL) & train["IC50_uM_VACV"].isna()).to_numpy()
+    # Метка берётся из целевой колонки: это ответ, а не признак.
+    sentinel = train["SI VACV"].eq(SI_SENTINEL).to_numpy()
     subset = presence[presence["split"].eq("train")].reset_index(drop=True)
     # Positional alignment, not a key join: nine training compounds share a
     # skeleton with another row, and a dict keyed on inchikey14 would hand one

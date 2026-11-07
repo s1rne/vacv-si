@@ -1,7 +1,6 @@
 """Measure the recovered rule, then say how far it reaches.
 
-This is the only module that reads the organisers' ``CC50_uM``,
-``IC50_uM_VACV`` and ``SI VACV``, and it reads them from the **training**
+This module reads only the target column ``SI VACV``, and only from the **training**
 split only, to answer two questions:
 
 * does the rule in :mod:`vacv.recover` reproduce their numbers, per match tier
@@ -66,9 +65,11 @@ CLOSE_LOG10 = 0.3
 def document_prior(records, split: str = "train") -> dict:
     """Which publication each (strain, Culture) group's rows were taken from.
 
-    Fitted on the training split: a group's row votes for a publication when
-    that publication contains a record equal to the row's ``IC50_uM_VACV``
-    *and* one equal to its ``CC50_uM``. The organisers' groups are
+    Fitted on the training split using only the target column ``SI VACV``: a
+    group's row votes for a publication when a pair of that publication's
+    records divides to the row's selectivity index. The two concentration
+    columns are never read; the rules forbid using them, and the ratio carries
+    almost the same information. The organisers' groups are
     paper-shaped, so this resolves the compounds that appear in several
     papers. Votes are stored as the set of compound titles that cast them, so
     :func:`vacv.recover._group_votes` can drop a row's own vote and keep the
@@ -80,7 +81,8 @@ def document_prior(records, split: str = "train") -> dict:
     prior: dict[tuple, dict[str, set]] = {}
     for record in frame.to_dict("records"):
         key = _key(record.get("inchikey14"))
-        if not key or pd.isna(record.get("IC50_uM_VACV")) or pd.isna(record.get("CC50_uM")):
+        target = pd.to_numeric(record.get("SI VACV"), errors="coerce")
+        if not key or pd.isna(target) or target in (0.0, SI_SENTINEL):
             continue
         antiviral = records.antiviral.get(key, [])
         cytotox = records.cytotox.get(key, [])
@@ -88,13 +90,11 @@ def document_prior(records, split: str = "train") -> dict:
             c["document_id"] for c in cytotox if c.get("document_id")
         }
         for document in shared:
-            found_ic = any(
-                np.isclose(a["organiser_value"], float(record["IC50_uM_VACV"]), rtol=VALUE_RTOL)
+            found_ic = found_cc = any(
+                a["organiser_value"] > 0
+                and np.isclose(c["organiser_value"] / a["organiser_value"], float(target), rtol=VALUE_RTOL)
                 for a in antiviral
                 if a["document_id"] == document
-            )
-            found_cc = any(
-                np.isclose(c["organiser_value"], float(record["CC50_uM"]), rtol=VALUE_RTOL)
                 for c in cytotox
                 if c["document_id"] == document
             )
@@ -118,14 +118,12 @@ def join_labels(lookup: pd.DataFrame, split: str = "train") -> pd.DataFrame:
         raise ValueError(f"recovered table does not line up with {split}.csv")
     out = subset.copy()
     out["si_competition"] = truth["SI VACV"].to_numpy()
-    out["ic50_competition"] = truth["IC50_uM_VACV"].to_numpy()
-    out["cc50_competition"] = truth["CC50_uM"].to_numpy()
-    out["is_sentinel"] = (truth["SI VACV"].eq(SI_SENTINEL) & truth["IC50_uM_VACV"].isna()).to_numpy()
-    for side in ("ic50", "cc50"):
-        ours = pd.to_numeric(out[side], errors="coerce").to_numpy(dtype=float)
-        theirs = pd.to_numeric(out[f"{side}_competition"], errors="coerce").to_numpy(dtype=float)
-        out[f"{side}_reproduced"] = np.isclose(ours, theirs, rtol=VALUE_RTOL, equal_nan=False)
-    out["reproduced"] = out["ic50_reproduced"] & out["cc50_reproduced"]
+    # Метка неактивности берётся из целевой колонки: разрешено, потому что это ответ,
+    # а не признак. Колонки CC50_uM и IC50_uM_VACV здесь не читаются.
+    out["is_sentinel"] = truth["SI VACV"].eq(SI_SENTINEL).to_numpy()
+    ratio = pd.to_numeric(out["cc50"], errors="coerce") / pd.to_numeric(out["ic50"], errors="coerce")
+    out["reproduced"] = np.isclose(ratio.to_numpy(dtype=float), out["si_competition"].to_numpy(dtype=float),
+                                   rtol=VALUE_RTOL, equal_nan=False)
     ours = pd.to_numeric(out["si"], errors="coerce").to_numpy(dtype=float)
     theirs = pd.to_numeric(out["si_competition"], errors="coerce").to_numpy(dtype=float)
     out["si_exact"] = np.isclose(ours, theirs, rtol=SI_RTOL, equal_nan=False)

@@ -150,10 +150,8 @@ def link(comp: pd.DataFrame, source: dict) -> tuple[list[dict], dict]:
         "ambiguous": 0,
         "unmatched": 0,
         "train": 0,
-        "cc50_identical": 0,
-        "cc50_compared": 0,
-        "ic50_identical": 0,
-        "ic50_compared": 0,
+        "si_identical": 0,
+        "si_compared": 0,
         "mismatch": [],
     }
 
@@ -183,22 +181,18 @@ def link(comp: pd.DataFrame, source: dict) -> tuple[list[dict], dict]:
                 report["ambiguous"] += 1
             if row["split"] == "train":
                 report["train"] += 1
-                own_cc = row.get("CC50_uM")
-                own_ic = row.get("IC50_uM_VACV")
-                if cc50 is not None:
-                    report["cc50_compared"] += 1
-                    if close(cc50, own_cc):
-                        report["cc50_identical"] += 1
-                    else:
-                        report["mismatch"].append(
-                            f"{entry['label']}: CC50 printed {entry['cc50']} vs competition {own_cc}"
-                        )
-                report["ic50_compared"] += 1
-                if close(ic50, None if pd.isna(own_ic) else float(own_ic)):
-                    report["ic50_identical"] += 1
+                # Сверка идёт по целевой колонке: отношение напечатанных значений
+                # должно давать SI организаторов. Колонки CC50_uM и IC50_uM_VACV
+                # читать нельзя, правила соревнования это запрещают.
+                own_si = row.get("SI VACV")
+                printed = si if si is not None else (
+                    cc50 / ic50 if cc50 is not None and ic50 not in (None, 0) else None)
+                report["si_compared"] += 1
+                if printed is not None and close(printed, own_si):
+                    report["si_identical"] += 1
                 else:
                     report["mismatch"].append(
-                        f"{entry['label']}: IC50 printed {entry['ic50'] or 'NA'} vs competition {own_ic}"
+                        f"{entry['label']}: SI printed {printed} vs competition {own_si}"
                     )
             linked.append(
                 {
@@ -244,8 +238,7 @@ def main() -> int:
         )
         print(
             f"   train rows hit {report['train']}: "
-            f"CC50 identical {report['cc50_identical']}/{report['cc50_compared']}, "
-            f"IC50 identical {report['ic50_identical']}/{report['ic50_compared']}"
+            f"SI identical {report['si_identical']}/{report['si_compared']}"
         )
         for line in report["mismatch"]:
             print(f"   ! {line}")
