@@ -27,12 +27,15 @@ PAPER_SI = Path("data/processed/paper_si.csv")
 #: Прямые SI-записи ChEMBL (Ratio CC50/IC50 → пара) и сентинелы калиброванных
 #: доков (см. experiments/lit_si_rule.py; 17/17 бит-в-бит на train).
 LIT_SI = Path("data/processed/lit_si.csv")
+#: Table 1 BMCL 2023 (Nikitina, PMC9674569): 1-гидроксиимидазолы 1a-f/2a-l,
+#: 5/5 train-строк бит-в-бит (см. experiments/bmcl_si.py).
+BMCL_SI = Path("data/processed/bmcl_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
-    for extra in (PAPER_SI, LIT_SI):
+    for extra in (PAPER_SI, LIT_SI, BMCL_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
