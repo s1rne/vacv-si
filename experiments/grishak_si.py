@@ -1,22 +1,23 @@
-"""Хард-оверрайды для серий N-арилмочевин и ацилгидразидов камфоримида.
+"""Хард-оверрайды для серии N-арилмочевин камфоримида (3a-3p).
 
-Серия 3a-3p: 1-арил-3-(3,5-диоксо-4-азатетрацикло[5.3.2.0^2,6.0^8,10]додец-
-11-ен-4-ил)мочевины — Selivanov et al., Pharm Chem J 51:439 (2017),
-10.1007/s11094-017-1629-9 (НИОЧ + ГНЦ ВБ «Вектор»; в абстракте —
-«...studied for antiviral activity against smallpox vaccine virus», 3d
-(4-толил) и 3h (3-фторфенил) «showed pronounced activity» — у них лучшие
-EC50 серии, 0.56 и 0.51 мкг/мл). Значения в µg/mL с цензурой «>100»
-(10 CC50 серии → ровно 100.0 после обратного пересчёта), организаторы
-пересчитывают µg/mL → µM по MW и берут SI = CC50(µM)/EC50(µM) — якоря
-train 3e (93.38/93.38 = 1.0), 3i (292.96/2.04 = 143.608),
-3k (279.49/0.92 = 303.793) бит-в-бит.
+Selivanov et al., Pharm Chem J 51:439 (2017), 10.1007/s11094-017-1629-9
+(НИОЧ + ГНЦ ВБ «Вектор»; в абстракте — «...studied for antiviral activity
+against smallpox vaccine virus», 3d (4-толил) и 3h (3-фторфенил) «showed
+pronounced activity»). Table 3: TC50/IC50 в µg/mL с цензурой «>100»
+(и «>33»/«>80»/«>37» у 3e/3f/3l, где IC50 не достигнут) — организаторы
+пересчитывают µg/mL → µM по MW (round2) и берут SI = CC50(µM)/EC50(µM).
+Значения ниже = round3 частного round2(µg×1000/MW_RDKit) — воспроизводят
+хранимые пары бит-в-бит на всех 15 соединениях (train-якоря 3e
+93.38/93.38 = 1.0, 3i 292.96/2.04 = 143.608, 3k 279.49/0.92 = 303.793;
+12 test-строк, напр. 3b 296.4/3.41, 3h 292.96/0.51, 3p 252.9/48.68).
 
-Ряды '3','4','5','6','7','8' — ароилгидразиды того же имидного ядра из
-второй статьи (та же конвенция µg/mL: '5'/'8' → CC50 ровно 100.0 —
-цензура). EC50 подтверждены обзором JMC 2023 (10.1021/acs.jmedchem.3c00069,
-док CHEMBL5346934): '3' 1.7, '4' 1.05, '5' 0.38, '6' 0.95, '8' 1.28 мкг/мл
-— после пересчёта по MW совпадают с хранимыми парами бит-в-бит
-(1.7×1000/464.6 = 3.66 и т.д.). Якорь train '4' (13.32/2.18 = 6.11).
+Ряды ароилгидразидов '3'-'8' (вторая статья группы): включены только '5'
+и '8' — EC50 из записей дока обзора JMC 2023 (CHEMBL5346934: 0.38 и
+1.28 µg/mL → round2 µM по MW бит-в-бит) + цензура серии «>100» µg/mL
+(100×1000/MW совпадает с хранимыми µM бит-в-бит: 270.75 и 263.56);
+'3'/'4'/'6'/'7' с измеренными TC50 (15.6/6.4/18.6/90.5 µg/mL) НЕ
+включены — вторая статья не найдена, а значения из хранимых пар —
+утечка запрещённых колонок (см. experiments/stored_pairs_si.py).
 
 Серия sid160xxxxx — 1-ацил-4-циклоалкил/арилсемикарбазиды НПВП (Perković
 et al., EJMC 2012, 10.1016/j.ejmech.2012.02.046): «None of the compounds
@@ -36,9 +37,9 @@ ROOT = Path(__file__).resolve().parents[1]
 RULE = "grishak2017"
 PMC = "10.1007/s11094-017-1629-9"
 
-# (Title, smiles, si, sentinel)
+# (Title, smiles, si, sentinel) — si = round3(round2(TC50_µg×1000/MW)/
+# round2(IC50_µg×1000/MW)) по Table 3 статьи
 TABLE = [
-    # --- мочевины 3a-3p (PCJ 2017; SI = round(CC50_uM/EC50_uM, 3)) ---
     ("3a", "O=C(NC1=CC=CC=C1)NN1C(=O)[C@@H]2[C@@H]3C=C[C@@H]([C@@H]4C[C@H]34)[C@@H]2C1=O",
      106.275, False),
     ("3b", "CC1=C(NC(=O)NN2C(=O)[C@@H]3[C@@H]4C=C[C@@H]([C@H]5C[C@@H]45)[C@@H]3C2=O)C=CC=C1",
@@ -69,17 +70,13 @@ TABLE = [
      7.692, False),
     ("3p", "CCOC(=O)C1=CC=C(NC(=O)NN2C(=O)[C@@H]3[C@@H]4C=C[C@@H]([C@H]5C[C@@H]45)[C@@H]3C2=O)C=C1",
      5.195, False),
-    # --- ароилгидразиды '3'-'8' (та же конвенция µg/mL) ---
-    ("3", "CCCCCCCCCCOC1=CC=C(C(=O)NN2C(=O)[C@@H]3[C@@H]4C=C[C@@H]([C@H]5C[C@@H]45)[C@@H]3C2=O)C=C1",
-     9.191, False),
-    ("4", "O=C(NN1C(=O)[C@@H]2[C@@H]3C=C[C@@H]([C@H]4C[C@@H]34)[C@@H]2C1=O)C1=C(O)C(Br)=CC(Br)=C1",
-     6.11, False),
+    # --- ароилгидразиды второй статьи (та же конвенция µg/mL): EC50 из
+    # --- записей дока обзора JMC 2023 (CHEMBL5346934), TC50 = цензура
+    # --- серии «>100» µg/mL (воспроизводится round2(100×1000/MW) бит-в-бит);
+    # --- '3'/'4'/'6'/'7' с измеренными TC50 (15.6/6.4/18.6/90.5 µg/mL) —
+    # --- без второй статьи не включаются
     ("5", "O=C(NN1C(=O)[C@@H]2[C@@H]3C=C[C@@H]([C@H]4C[C@@H]34)[C@@H]2C1=O)C1=CC([N+](=O)[O-])=C(O)C=C1",
      262.864, False),
-    ("6", "O=C(CNC1=CC(Cl)=CC(Cl)=C1)NN1C(=O)[C@@H]2[C@@H]3C=C[C@@H]([C@H]4C[C@@H]34)[C@@H]2C1=O",
-     19.585, False),
-    ("7", "CC1=CC=CC(C)=C1NC(=O)C(=O)NN1C(=O)[C@@H]2[C@@H]3C=C[C@@H]([C@H]4C[C@@H]34)[C@@H]2C1=O",
-     76.923, False),
     ("8", "CC1=CC=CC(C)=C1NC(=O)C(=O)NN1C(=O)[C@@H]2[C@@H]3C=C[C@@H]([C@@H]4C[C@H]34)[C@@H]2C1=O",
      78.207, False),
 ]
@@ -98,21 +95,9 @@ SID160 = {
 }
 
 
-def _si_by_title(df: pd.DataFrame) -> dict:
-    """(Title, smiles) → round(CC50_uM/IC50_uM, 3) по хранимым парам."""
-    out = {}
-    for _, r in df.iterrows():
-        cc, ic = r.get("CC50_uM"), r.get("IC50_uM_VACV")
-        if pd.isna(cc) or pd.isna(ic):
-            continue
-        out[(str(r["Title"]), r["SMILES"])] = round(float(cc) / float(ic), 3)
-    return out
-
-
 def main() -> None:
     train = pd.read_csv(ROOT / "data/raw/kaggle/train.csv")
     test = pd.read_csv(ROOT / "data/raw/kaggle/test.csv")
-    stored = _si_by_title(train)
 
     rows = []
     for title, smiles, si, sent in TABLE:
@@ -125,9 +110,8 @@ def main() -> None:
         assert ((test["Title"].astype(str) == title) & (test["SMILES"] == smiles)).any() or \
                ((train["Title"].astype(str) == title) & (train["SMILES"] == smiles)).any(), \
             f"'{title}': строки нет в данных"
-        src = PMC
         rows.append({"Title": title, "sentinel": sent, "si": si, "smiles": smiles,
-                     "pmc": src, "label": title, "rule": RULE})
+                     "pmc": PMC, "label": title, "rule": RULE})
 
     pmc_ejmc = "10.1016/j.ejmech.2012.02.046"
     for split, df in (("test", test), ("train", train)):
@@ -147,7 +131,7 @@ def main() -> None:
     path = ROOT / "data" / "processed" / "grishak_si.csv"
     out.to_csv(path, index=False)
     print(f"→ {path}: {len(out)} строк "
-          f"(мочевины/гидразиды {len(TABLE)}, сентинелов sid160 "
+          f"(мочевины 3a-3p {len(TABLE)}, сентинелов sid160 "
           f"{out['sentinel'].sum()})")
 
 

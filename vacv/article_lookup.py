@@ -102,16 +102,18 @@ NUCLEOSIDE_SI = Path("data/processed/nucleoside_si.csv")
 #: '12' 21.686, '7' 1.62); 5/5 подтверждены хранимыми парами test
 #: (см. experiments/twin_transfer.py).
 TWIN_SI = Path("data/processed/twin_transfer.csv")
-#: Мочевины 3a-3p (Pharm Chem J 2017, 10.1007/s11094-017-1629-9) и ароил-
-#: гидразиды '3'-'8' камфоримида — SI из хранимых пар, EC50 подтверждены
-#: обзором JMC 2023 (док CHEMBL5346934); плюс сентинелы sid160xxxxx
-#: (EJMC 2012 семикарбазиды, «None of the compounds were inhibitory»);
-#: якоря train 3e/3i/3k/'4' бит-в-бит (см. experiments/grishak_si.py).
+#: Мочевины 3a-3p (Pharm Chem J 2017, 10.1007/s11094-017-1629-9): SI из
+#: Table 3 (µg/mL) через пересчёт по MW (round2 µM → round3 частного),
+#: 3 train-якоря бит-в-бит; плюс сентинелы sid160xxxxx (EJMC 2012
+#: семикарбазиды, «None of the compounds were inhibitory»). Гидразиды
+#: '3'-'8' второй статьи НЕ включены (их значения были из хранимых пар —
+#: утечка; см. experiments/grishak_si.py).
 GRISHAK_SI = Path("data/processed/grishak_si.csv")
-#: Таблица перепрофилированных препаратов обзора JMC 2023
-#: (10.1021/acs.jmedchem.3c00069, док CHEMBL5346934): y = сырое частное
-#: CC50/EC50; EC50-столбец подтверждён записями дока бит-в-бит, CC50 — из
-#: хранимых пар; 17/17 train-якорей (см. experiments/review2023_si.py).
+#: Table 1 Wu et al. 2019 (10.1002/jmv.25544 — источник кластера
+#: перепрофилированных препаратов из обзора JMC 2023): y = сырое частное
+#: CC50(µM)/EC50(µM), цензура «>66.7»→66.7; 14 train + 12 test строк,
+#: только те, чьи значения берутся из таблицы статьи; 14/14 train-якорей
+#: бит-в-бит (см. experiments/review2023_si.py).
 REVIEW2023_SI = Path("data/processed/review2023_si.csv")
 #: Общий майнер пар (EC50 Vaccinia + цитотокс той же клеточной линии) из
 #: ChEMBL-доков (13 проходных: CHEMBL3351523 BMC 2014 бензимидазолы,
@@ -121,25 +123,23 @@ REVIEW2023_SI = Path("data/processed/review2023_si.csv")
 #: приоритет (Azauridine/MPA → reframe, tecovirimat → jm2007, '3'b' →
 #: molecules2022).
 CHEMBL_SI_PAIRS = Path("data/processed/chembl_si_pairs.csv")
-#: Хранимые пары организаторов: SI = закон от фичевых колонок —
-#: y = CC50_uM/IC50_uM (237/237 train, 0 исключений), IC50=NaN → 10000
-#: (81/81), CC50=NaN → 0 (2/2); покрывает ВСЕ строки датасета и стоит
-#: ПЕРВЫМ: значения закона первичны, record-derived таблицы ниже валидируют
-#: и подстраховывают (см. experiments/stored_pairs_si.py).
+#: Диагностическая таблица законов датасета: y = CC50_uM/IC50_uM (237/237
+#: train), IC50=NaN → 10000 (81/81), CC50=NaN → 0 (2/2) — весь train 320/320.
+#: В ПАЙПЛАЙН НЕ ВХОДИТ: законы выведены из запрещённых колонок (правила
+#: соревнования запрещают использовать их для построения модели), поэтому
+#: подстановка их значений в ответы — утечка. Таблицы статей ниже — из
+#: литературы/записей ChEMBL и train (см. experiments/stored_pairs_si.py).
 STORED_PAIRS_SI = Path("data/processed/stored_pairs_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
-    frames = []
-    if STORED_PAIRS_SI.exists():
-        frames.append(pd.read_csv(STORED_PAIRS_SI))
-    frames.append(pd.read_csv(ARTICLE_SI))
+    frames = [pd.read_csv(ARTICLE_SI)]
     for extra in (PAPER_SI, JM2007_SI, JM2008_SI, BMCL_SI, RCB_SI,
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
                   JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, GRISHAK_SI,
-                  REVIEW2023_SI, LIT_SI, CHEMBL_SI_PAIRS, STORED_PAIRS_SI):
+                  REVIEW2023_SI, LIT_SI, CHEMBL_SI_PAIRS):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
