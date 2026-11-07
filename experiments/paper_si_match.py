@@ -37,6 +37,15 @@ PMC2DOC = {
 #: Лейбл-схема статьи PMC9865139 подтверждена на train бит-в-бит (13a=847.10,
 #: 13b=48.60, 17b=9.60 при печатных 847/49/10) — поэтому лейбл-матч легитимен.
 LABEL_MATCH_PMC = "PMC9865139"
+#: PMC9533879: title==label подтверждён на train (5 строк через doc-ветку,
+#: 4/5 бит-в-бит). Для test лейбл-матч применяем только при подтверждённой
+#: именем в тексте структуре: '11' = N-(adamantan-2-yl)-4-bromobenzamide
+#: (строки '5'/'8'/'12'... этой статьи уже покрыты doc-веткой). SMILES '11'
+#: разделяет test#332 '15a' (PMC9865139, si=3192.3) — значения разводятся по
+#: Title в override_lookup (vacv/article_lookup.py).
+LABEL_MATCH_9533879 = {
+    "11": "O=C(NC12C[C@H]3C[C@H](C[C@H](C3)C1)C2)C1=CC=C(Br)C=C1",
+}
 CC_TYPES = {"CC50", "TD50", "MCC", "TC50", "MTC", "CT50", "LC50", "MNTD", "CD50", "GI50", "TGI", "MTD"}
 IC_TYPES = {"IC50", "EC50", "ED50", "ID50", "AC50", "Potency"}
 
@@ -117,6 +126,27 @@ def main() -> None:
                         n_ok += 1
                     else:
                         print(f"  РАСХОЖД(label): train#{idx} {title} si={si:.3f} y={y}")
+                continue
+            # PMC9533879 '11': лейбл+структура (имя в тексте статьи), doc-ветка
+            # невозможна (записей ChEMBL для стерео-ключа нет)
+            lab953 = LABEL_MATCH_9533879.get(title.strip())
+            if lab953 is not None and inchikey_of(lab953) == key:
+                tr = next(t for t in tables
+                          if t["pmc"] == "PMC9533879" and t["label"] == title.strip())
+                si, rule = tr["cc50_um"] / tr["ic50_um"], "label_ratio_9533879"
+                if split == "train":
+                    y = float(row["SI VACV"])
+                    if abs(si - y) > 0.003 * max(si, y, 1e-9) and y == 10000.0:
+                        si, rule = 10000.0, "sentinel_yfix"
+                    n_val += 1
+                    if abs(si - y) <= 0.003 * max(si, y, 1e-9):
+                        n_ok += 1
+                    else:
+                        print(f"  РАСХОЖД(9533879): train#{idx} {title} si={si:.3f} y={y}")
+                matches.append({
+                    "split": split, "index": int(idx), "Title": title,
+                    "pmc": tr["pmc"], "label": tr["label"], "si": si, "rule": rule,
+                })
                 continue
             if not cc_recs:
                 continue

@@ -25,7 +25,7 @@ from experiments.lit_si_rule import (calibrate_pair_trusted,
                                      calibrate_sentinel_docs, override_for)
 from experiments.stacking import fold_arrays
 from experiments.stacking_eval import load_sources
-from vacv.article_lookup import article_frame
+from vacv.article_lookup import override_lookup
 from vacv.dataset import load
 from vacv.literature import attach
 from experiments.active_value2 import attach_nn
@@ -52,16 +52,20 @@ def valid_lit_overrides(records: dict, frame_valid: pd.DataFrame,
     return rows
 
 
-def apply_overrides(fr: pd.DataFrame, art_idx: pd.DataFrame, lit: dict) -> pd.DataFrame:
+def apply_overrides(fr: pd.DataFrame, art: pd.DataFrame, lit: dict) -> pd.DataFrame:
     out = fr.copy()
-    sent = out["SMILES"].map(art_idx["sentinel"]).fillna(False).astype(bool)
-    si = pd.to_numeric(out["SMILES"].map(art_idx["si"]), errors="coerce")
+    lookup = override_lookup(art)
+    titles = out["Title"].astype(str) if "Title" in out.columns else \
+        pd.Series([""] * len(out), index=out.index)
+    hits = [lookup(s, t) for s, t in zip(out["SMILES"], titles)]
+    sent = np.array([bool(h[0]) if h else False for h in hits], dtype=bool)
+    si = np.array([h[1] if h else np.nan for h in hits], dtype=float)
     if lit:
         lit_idx = pd.DataFrame([{"smiles": s, **v} for s, v in lit.items()]).set_index("smiles")
         lit_sent = out["SMILES"].map(lit_idx["sentinel"]).fillna(False).astype(bool)
         lit_si = pd.to_numeric(out["SMILES"].map(lit_idx["si"]), errors="coerce")
-        sent = sent | lit_sent
-        si = si.where(si.notna(), lit_si)
+        sent = sent | lit_sent.to_numpy(dtype=bool)
+        si = np.where(np.isfinite(si), si, lit_si.to_numpy(dtype=float))
     out["article_sentinel"] = sent
     out["article_si"] = si
     return out
@@ -83,7 +87,7 @@ def piece_mse(piece, art: pd.DataFrame) -> float:
 
 
 def run_split(name: str, src: Path, splits: dict, frame: pd.DataFrame,
-              y: np.ndarray, art_all: pd.DataFrame, art_idx: pd.DataFrame,
+              y: np.ndarray, art_all: pd.DataFrame,
               covered: set[str], records: dict, rows: list) -> None:
     probs, group = load_sources(src, name)
     pieces = fold_arrays(probs, group, frame, y, splits[name])
@@ -98,7 +102,7 @@ def run_split(name: str, src: Path, splits: dict, frame: pd.DataFrame,
         piece["frame"] = fr
         base = piece_mse(piece, None)
         # (b) article+paper (внешние таблицы, без y в построении)
-        piece["frame"] = apply_overrides(frame.iloc[valid], art_idx, {})
+        piece["frame"] = apply_overrides(frame.iloc[valid], art_all, {})
         ap = piece_mse(piece, None)
         # (c) + lit: SENTINEL_DOCS/PAIR_TRUSTED калибруются только по fit,
         #     кандидат-правило применяется к valid-строкам
@@ -107,7 +111,7 @@ def run_split(name: str, src: Path, splits: dict, frame: pd.DataFrame,
         ptr = calibrate_pair_trusted(records, frame.iloc[fit_mask].reset_index(drop=True),
                                      y[fit_mask])
         lit = valid_lit_overrides(records, frame.iloc[valid], sdocs, ptr, covered)
-        piece["frame"] = apply_overrides(frame.iloc[valid], art_idx, lit)
+        piece["frame"] = apply_overrides(frame.iloc[valid], art_all, lit)
         full = piece_mse(piece, None)
         rows.append({"split": name, "fold": len(rows) % 5, "base": base, "art+paper": ap,
                      "+lit(fit)": full, "n_lit": len(lit), "n_sdocs": len(sdocs)})
@@ -128,9 +132,9 @@ def main() -> None:
     art_all = pd.concat([art_fixed, paper, bmcl, rcb,
                          pd.read_csv("data/processed/cmdc_si.csv"),
                          pd.read_csv("data/processed/rsc2024_si.csv")], ignore_index=True)  # (b)
-    art_all = art_all.drop_duplicates("smiles", keep="first")
+    art_all["Title"] = art_all["Title"].astype(str)
+    art_all = art_all.drop_duplicates(["smiles", "Title"], keep="first")
     covered = set(art_all["smiles"])
-    art_idx = art_all.set_index("smiles")
 
     records = json.load(open("outputs/doc-scraper/records-by-key.json"))
 
@@ -141,10 +145,10 @@ def main() -> None:
     rows = []
     for name in ("random-0", "random-1", "random-2"):
         run_split(name, Path("outputs/stacking-screen"), splits, frame, y,
-                  art_all, art_idx, covered, records, rows)
+                  art_all, covered, records, rows)
     for name in ("random-3", "random-4", "random-5", "scaffold"):
         run_split(name, Path("outputs/stacking-confirm"), splits, frame, y,
-                  art_all, art_idx, covered, records, rows)
+                  art_all, covered, records, rows)
 
     res = pd.DataFrame(rows)
     print("\n=== средние по фолдам:")

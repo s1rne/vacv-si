@@ -2,8 +2,9 @@
 
 Формат как у article_si.csv (Title, sentinel, si, cc50_um, smiles) — файл
 подхватывается vacv.article_lookup.article_frame() вместе с 24a/24b.
-Матч по SMILES безопасен: коллизии проверены (одинаковые SMILES несут
-одинаковый SI, конфликтов с train нет).
+Ключ (smiles, Title): один SMILES может быть покрыт из разных строк
+соревнования (test '11'/'15a'), значения разводятся по Title в
+vacv.article_lookup.override_lookup.
 """
 
 from __future__ import annotations
@@ -29,11 +30,14 @@ def main() -> None:
         title = str(frame.loc[idx, "Title"])
         sentinel = m["rule"] in ("sentinel", "label_sentinel", "sentinel_yfix")
         si = None if sentinel else float(m["si"])
-        prev = rows.get(smiles)
+        # ключ (smiles, Title): один SMILES может нести разные значения из
+        # разных строк соревнования (test '11' PMC9533879 vs '15a' PMC9865139)
+        k = (smiles, title)
+        prev = rows.get(k)
         if prev is not None and (prev["sentinel"] != sentinel or
                                  (not sentinel and abs(prev["si"] - si) > 1e-6)):
-            raise ValueError(f"конфликт оверрайдов для {smiles}: {prev} vs {title}/{si}")
-        rows[smiles] = {
+            raise ValueError(f"конфликт оверрайдов для {smiles}/{title}: {prev} vs {si}")
+        rows[k] = {
             "Title": title, "sentinel": sentinel, "si": si, "smiles": smiles,
             "pmc": m["pmc"], "label": m["label"], "rule": m["rule"],
         }
