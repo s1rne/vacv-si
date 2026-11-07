@@ -47,7 +47,8 @@ def main() -> None:
                          pd.read_csv("data/processed/molecules2022_si.csv"),
                          pd.read_csv("data/processed/cbdv2018_si.csv"),
                          pd.read_csv("data/processed/av2021_si.csv"),
-                         pd.read_csv("data/processed/retro2020_si.csv")],
+                         pd.read_csv("data/processed/retro2020_si.csv"),
+                         pd.read_csv("data/processed/reframe2023_si.csv")],
                         ignore_index=True)
     art_all["Title"] = art_all["Title"].astype(str)
     art_all = art_all.drop_duplicates(["smiles", "Title"], keep="first")
