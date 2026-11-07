@@ -1,0 +1,9 @@
+{
+  "winner": "bag-raw",
+  "discovery": 41,
+  "profiles": [
+    "bag-raw",
+    "bag-log",
+    "bag-raw-half-v4"
+  ]
+}

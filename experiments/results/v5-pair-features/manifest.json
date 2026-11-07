@@ -1,0 +1,35 @@
+{
+  "winner": "morgan-r2-r3-bit",
+  "profiles": [
+    "morgan-r3-bit",
+    "morgan-r2-logcount",
+    "morgan-r2-r3-bit"
+  ],
+  "discovery": 41,
+  "confirmations": [
+    42,
+    43,
+    44,
+    45
+  ],
+  "confirmation_mean_mse": 4135646.686381685,
+  "paired_v4_mean_mse": 3681220.665029743,
+  "improves_all_confirmations": false,
+  "each_confirmation_below_3m": false,
+  "rows": 320,
+  "max_target": 36066.667,
+  "rdkit_version": "2026.09.1",
+  "similarity_representation": "unchanged original Morgan radius2 binary2048",
+  "external_data": false,
+  "forbidden_features": false,
+  "submission_created": false,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v5_pair_features.py": "9da0fccf2a961999408dc2b0556f6bfc2d920aae76b0331ae4b6076b442ae1bc",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "vacv/pipeline.py": "a930950947ccc8b5a90eefda57117f2c9dcb0062f6529001d933d76d5896dae4",
+    "vacv/features.py": "7398838dd00f93f9c75c36751fa6c93257b44645f93af6a43bf41faef7945655",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+  }
+}

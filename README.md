@@ -77,6 +77,13 @@ Ridge-log profile on all 320 rows and builds the 597-row CSV. Kaggle returned
 at observation. This exception does not authorize further uploads. Exact file,
 hashes and outcome: `experiments/results/v4-pair-delta-submission/`.
 
+The next local batch (v5) tested regularization, molecule-weighted bagging,
+new delta fingerprints, a fixed ensemble, training-tail weights and softer
+anchor gates. None improved the paired confirmation mean; the submitted v4
+remains the reference. Identity-group CV also evaluated v4 without replicate
+structures crossing folds (fullMSE3.280M). See `docs/v5-results.md` for all
+negative results and paired controls. No additional Kaggle uploads were made.
+
 ## Recovery checkpoint (2026-11-07)
 
 Model CV and submission commands now default to `--lookup-policy clean`: allowed

@@ -1,0 +1,35 @@
+{
+  "members": [
+    "v4-ridge-log",
+    "alpha100",
+    "bag-raw",
+    "morgan-r2-r3-bit"
+  ],
+  "weights": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+  ],
+  "predeclared_protocol": "docs/v5-protocol.md",
+  "no_upload": true,
+  "sha256": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v5_equal_ensemble.py": "c13c368a842232427679977bf04c01e19a6139877efcabb6f2896e9f1b19e7bb",
+    "docs/v5-protocol.md": "6e6e1d1e9d388cbb598be6cdd9a3ddc2f33bc85d1335b02c50d426ac1d5b8adc",
+    "experiments/results/v5-pair-regularization/oof-42.csv": "0ff9a5f64c91a568a2f9b279e4c9671c0bb26c0c4eb41723d939d71c6c24c8b4",
+    "experiments/results/v5-pair-bagging/oof-42.csv": "6591a23984a8ec65afeafe2b97c0dd5dd6ba7e8952b7fe643ff10e2b6cda65a5",
+    "experiments/results/v5-pair-features/oof-42.csv": "8bcf9e2e1bfa926d14bde41370dd258904af6373387335507ab3a541850ed676",
+    "experiments/results/v5-pair-regularization/oof-43.csv": "6662720bdf32094eeeafe5eee2c8c5d07c074dcffe980bd630c833623c5b394b",
+    "experiments/results/v5-pair-bagging/oof-43.csv": "8e1384caa19d3c63c8fd66a1063032910a478509678af60c01ba7a4c240e12d8",
+    "experiments/results/v5-pair-features/oof-43.csv": "dad6dbdc6e2b6c00e8df1de0cccb6879034eefc500e617074ff7b86735be24dc",
+    "experiments/results/v5-pair-regularization/oof-44.csv": "2ea06699d8ba117837d8a6bf20ac3d569b9d847bbbe87b1137401ec8c9d3cbd4",
+    "experiments/results/v5-pair-bagging/oof-44.csv": "fa6ebd6a5043b3b00d48ea74df76c5dfb6999e2a3e62270eb357a26bd1f45119",
+    "experiments/results/v5-pair-features/oof-44.csv": "c4bfd9f9eaa4424543f2fe67d1e14583108d7cfa1c2be59f2fbb08364f73b05d",
+    "experiments/results/v5-pair-regularization/oof-45.csv": "70bded80098706962bbd893480c0278a2d8a7edcd5d99d97ceafb8c8d2588a1c",
+    "experiments/results/v5-pair-bagging/oof-45.csv": "e189922e0e7d4cdc9a9d561240a42749b1c9a73647c896ad46294c2e8b4bba4e",
+    "experiments/results/v5-pair-features/oof-45.csv": "d23b80da7f3ce07f33f6f991fa411c60418ce9520c47818db6266c85fbc84b9c",
+    "experiments/results/v5-pair-regularization/oof-scaffold.csv": "4a22b94b6afe60b9c6ac3aaaf5f76bdc69575b4bf4fac3974ab3a6befced0984",
+    "experiments/results/v5-pair-bagging/oof-scaffold.csv": "f5a3d2cf3c6a6d249963cb7d7f50047293b6718223abbed01bb763fe7735a795",
+    "experiments/results/v5-pair-features/oof-scaffold.csv": "e15d6bac5b326ae5c325eedddf4730ce1cd66de0d78d52ff94457104d651236e"
+  }
+}
