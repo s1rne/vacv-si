@@ -49,12 +49,17 @@ KOVALEVA_SI = Path("data/processed/kovaleva_si.csv")
 #: CC50 = toxic_level×1000/MW = 14.65, IC50 = VR(vaccinia) = 1.55 → 9.452,
 #: бит-в-бит на train#97 (см. experiments/sid3dg_rule.py).
 SID3DG_SI = Path("data/processed/sid3dg_si.csv")
+#: Table 2 Molecules 2022 (PMC9331314): камфорные тиосемикарбазоны 2/2′,
+#: тиазолидин-4-оны 3/3′/4, дигидротиазолы 5-8; 10/10 train бит-в-бит
+#: (см. experiments/molecules2022_si.py).
+MOLECULES2022_SI = Path("data/processed/molecules2022_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
-    for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI):
+    for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI, RSC2024_SI,
+                  KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
