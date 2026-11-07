@@ -65,7 +65,7 @@ paper.
 ### Tables linked by `scripts/link_literature_tables.py`
 
 Each table is transcribed verbatim into
-`data/raw/literature_tables/sources.json` and linked by the paper's own
+`data/literature_tables/sources.json` and linked by the paper's own
 compound label, restricted to the `strain` + `Culture` groups the table can
 belong to and to the structural series it is about (a SMARTS filter per
 series). Labels collide across papers in this bucket - `4a`, `6b` and `8b`

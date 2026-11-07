@@ -1,6 +1,6 @@
 """Link digitised literature/patent activity tables to competition rows.
 
-Reads `data/raw/literature_tables/sources.json`, where each entry is one
+Reads `data/literature_tables/sources.json`, where each entry is one
 published activity table transcribed verbatim, and links its rows to the
 competition compounds by the paper's own compound label, inside the
 `strain` + `Culture` groups the table can belong to and inside the structural
@@ -26,7 +26,7 @@ from rdkit import Chem, RDLogger
 RDLogger.DisableLog("rdApp.*")
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = ROOT / "data/raw/literature_tables/sources.json"
+SOURCES = ROOT / "data/literature_tables/sources.json"
 OUT = ROOT / "data/processed/literature_manual.csv"
 
 GROUPS = {
