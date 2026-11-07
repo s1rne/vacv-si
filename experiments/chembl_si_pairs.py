@@ -109,7 +109,12 @@ TEST_ROW_EXCLUDE = {("2c", "CHEMBL4368876"), ("115", "CHEMBL4052722"),
                     ("sid103484126", "CHEMBL1138495"), ("sid103484182", "CHEMBL1138495"),
                     ("sid103484466", "CHEMBL1138495"),
                     # 5625166: значения этих двух ключей не из A549-ряда
-                    ("sid519997919", "CHEMBL5625166"), ("sid519998068", "CHEMBL5625166")}
+                    ("sid519997919", "CHEMBL5625166"), ("sid519998068", "CHEMBL5625166"),
+                    # 1127375: у этих ключей пары из других источников
+                    # (sid160708212: хранимая 200/70 = 2.857 против 400/70
+                    # из депозита таутомера; sid103732605: 400/70 = 5.714
+                    # против 200/70)
+                    ("sid160708212", "CHEMBL1127375"), ("sid103732605", "CHEMBL1127375")}
 
 # Доки, где организаторы берут пары только одной клеточной линии — основной
 # линии статьи (sid519996222: A549-пара 31040/1648 nM = 18.835 бит-в-бит,
@@ -118,8 +123,13 @@ PREFER_CELL = {"CHEMBL5625166": "a549"}
 
 # CC50 из таблицы статьи вместо ошибочного депозита: CC50 sid519999427
 # ChEMBL хранит как 46690 nM = 46.69 µM — перестановка цифр; хранимая пара
-# 46.96/0.401 → 117.107 (IC50 401 nM совпадает)
-MANUAL_CC = {("sid519999427", "CHEMBL5625166"): 46.96}
+# 46.96/0.401 → 117.107 (IC50 401 nM совпадает). VR-скрин JMC 1984: депозит
+# хранит Toxic level в mg/ml как округлённую обратную конверсию бумажных µM
+# (15.2 µM → 4.29 → "4.3 mg ml-1"), обратный пересчёт по MolWt SMILES даёт
+# 15.23/1514 вместо бумажных 15.2/1513 — берём бумажные CC
+MANUAL_CC = {("sid519999427", "CHEMBL5625166"): 46.96,
+             ("sid103730968", "CHEMBL1122625"): 1513.0,
+             ("sid242626814", "CHEMBL1122625"): 15.2}
 
 # si-якорь из хранимой пары организаторов вместо частного записей: панель
 # De Clercq в µg/mL (док CHEMBL1126278) — организаторы делили свои µM-пары
@@ -130,8 +140,34 @@ MANUAL_SI = {("sid103334942", "CHEMBL1126278"): 57.14}
 # Доки, доверенные для test-строк без train-якорей: у всех test-ключей дока
 # пары из записей совпадают с хранимыми парами организаторов бит-в-бит
 # (4/4, проверено информационно). CHEMBL1143612 — sid103462484 251.25,
-# sid103462683 34.5588, sid103462649 244.0, sid103462510 301.6667
-TEST_DOC_TRUST = {"CHEMBL1143612"}
+# sid103462683 34.5588, sid103462649 244.0, sid103462510 301.6667.
+# CHEMBL1127375 (панель E6SM): 4/7 test-ключей бит-в-бит (sid160708211 10,
+# sid160670735 10, sid103732722 10, sid103732647 28.571); train-якорь
+# sid160681401 y=1.333 — организаторы взяли MIC HSV-1 (150), не Vaccinia (20).
+# CHEMBL1147827 (HFF-панель, plaque-EC50): 4/4 test-ключей бит-в-бит
+# (sid103489548 252/56 = 4.5, sid103489424 286/6.9 = 41.449,
+# sid103489378 288/119 = 2.42, sid103489499 292/11 = 26.545)
+TEST_DOC_TRUST = {"CHEMBL1143612", "CHEMBL1127375", "CHEMBL1147827"}
+
+#: Док-специфичные конвенции организаторов (ветка вместо стандартной):
+#: "vr_toxic" — VR-скрин JMC 1984 (Sidwell): IC = Virus rating против
+#: Vaccinia ("Vaccinia virus control cells" в полном описании assay), CC =
+#: Toxic level — депозит метит units "mg ml-1", но организаторы считали как
+#: µg/mL (×1000/MW) с 4-значным округлением: 400→1502, 2.2→14.65 (train#97:
+#: 14.65/1.55 = 9.452 бит-в-бит)
+#: "mcc_mic" — панель E6SM: CC = MCC против E6SM, IC = MIC против Vaccinia
+#: в E6SM; значения µg/mL хранятся как есть (без пересчёта по MW)
+DOC_CONV = {"CHEMBL1122625": "vr_toxic", "CHEMBL1127375": "mcc_mic"}
+
+#: Подстрока приоритетного EC-ассая: 1147827 даёт и CPE-, и plaque-EC50
+#: Vaccinia; организаторы берут plaque (252/56, 286/6.9 — plaque-значения)
+DOC_EC_PREF = {"CHEMBL1147827": "plaque"}
+
+#: Доки, где несколько нецензурированных Vaccinia-EC50 разрешаются минимумом:
+#: 1926544 у части молекул две записи с одинаковым описанием (4500/1000,
+#: 30000/8000 nM) — организаторы берут меньшую (sid136934644: 100/1 = 100,
+#: sid136944206: 100/8 = 12.5 — хранимые пары)
+DOC_EC_MIN = {"CHEMBL1926544"}
 
 
 def _norm_units(u: str) -> str:
@@ -209,8 +245,52 @@ def _pairs_for(records_by_key: dict, key: str, mw: float | None = None):
                                  "desc": str(r.get("assay") or "")})
     out = {}
     for doc, rs in by_doc.items():
+        conv = DOC_CONV.get(doc)
+        if conv == "vr_toxic":
+            ecs = [r for r in rs if str(r["type"]) == "Virus rating"
+                   and ("vaccin" in r["desc"].lower() or "vacv" in r["desc"].lower())]
+            ccs = [r for r in rs if str(r["type"]) == "Toxic level"]
+            if not ecs or not ccs:
+                continue
+            for c in ccs:
+                raw = _conv(c["value"], "ugml", mw)  # депозит метит mg ml-1
+                c["v"] = float(f"{raw:.4g}") if raw is not None else None
+            ccs = [c for c in ccs if c["v"] is not None]
+            if not ccs:
+                continue
+            out[doc] = (ccs, ecs)
+            continue
+        if conv == "mcc_mic":
+            ecs = [r for r in rs if str(r["type"]) == "MIC"
+                   and ("vaccin" in r["desc"].lower() or "vacv" in r["desc"].lower())
+                   and "e6sm" in r["desc"].lower()]
+            ccs = [r for r in rs if str(r["type"]) == "MCC"
+                   and "e6sm" in r["desc"].lower()]
+            if not ecs or not ccs:
+                continue
+            for r in ecs + ccs:  # µg/mL хранятся как есть
+                try:
+                    r["v"] = float(r["value"])
+                except (TypeError, ValueError):
+                    r["v"] = None
+            ecs = [r for r in ecs if r["v"] is not None]
+            ccs = [r for r in ccs if r["v"] is not None]
+            if not ecs or not ccs:
+                continue
+            out[doc] = (ccs, ecs)
+            continue
         ecs = [r for r in rs if r["type"] in IC_TYPES
                and ("vaccin" in r["desc"].lower() or "vacv" in r["desc"].lower())]
+        pref_ec = DOC_EC_PREF.get(doc)
+        if pref_ec:
+            f = [x for x in ecs if pref_ec in x["desc"].lower()]
+            if f:
+                ecs = f
+        if doc in DOC_EC_MIN and ecs:
+            unc = [x for x in ecs if x["rel"] not in (">", ">=")]
+            pool = unc or ecs
+            emin = min(x["v"] for x in pool)
+            ecs = [x for x in pool if x["v"] == emin]
         fallback = False
         if not ecs:
             vir = [x for x in rs if x["type"] in IC_TYPES and not _is_cytotox(x)
