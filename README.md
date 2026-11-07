@@ -84,6 +84,12 @@ remains the reference. Identity-group CV also evaluated v4 without replicate
 structures crossing folds (fullMSE3.280M). See `docs/v5-results.md` for all
 negative results and paired controls. No additional Kaggle uploads were made.
 
+V6 tests different pair learners (nonlinear kernels, query-local fitting,
+audited external pair transfer, Title morphology, background-aware trees and
+log-target offsets). All six fail to improve their paired confirmation mean.
+See `docs/v6-research.md` for primary references, fixed protocols and results;
+the submitted v4 remains the reference and no new uploads were made.
+
 ## Recovery checkpoint (2026-11-07)
 
 Model CV and submission commands now default to `--lookup-policy clean`: allowed

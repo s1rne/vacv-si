@@ -1,0 +1,145 @@
+[
+  {
+    "split": 56,
+    "model": "leaf2",
+    "mse": 4321953.750018378,
+    "mse_without_max_diagnostic_only": 306487.38217180443,
+    "tail_mse": 192603193.9364465,
+    "non_tail_mse": 111191.1899385155,
+    "max_label_prediction": 216.2036125753527,
+    "prediction_max": 3942.336598849833,
+    "prediction_mean": 66.331722304198
+  },
+  {
+    "split": 56,
+    "model": "leaf5",
+    "mse": 3951090.711774595,
+    "mse_without_max_diagnostic_only": 258292.05731624897,
+    "tail_mse": 177818850.73533487,
+    "non_tail_mse": 62674.35342021277,
+    "max_label_prediction": 1687.1111348642903,
+    "prediction_max": 2824.7585980865774,
+    "prediction_mean": 61.74943544276475
+  },
+  {
+    "split": 56,
+    "model": "v4-ridge-log",
+    "mse": 4048951.270596764,
+    "mse_without_max_diagnostic_only": 365687.7179895455,
+    "tail_mse": 176451751.3422828,
+    "non_tail_mse": 193297.5948721566,
+    "max_label_prediction": 1729.9515986646575,
+    "prediction_max": 7086.626512035883,
+    "prediction_mean": 79.4673087860285
+  },
+  {
+    "split": 57,
+    "model": "leaf5",
+    "mse": 3980766.6736144274,
+    "mse_without_max_diagnostic_only": 301782.68178854923,
+    "tail_mse": 177442494.7797599,
+    "non_tail_mse": 101430.90127251465,
+    "max_label_prediction": 1750.83013032612,
+    "prediction_max": 3960.22924835601,
+    "prediction_mean": 63.82790385091555
+  },
+  {
+    "split": 57,
+    "model": "v4-ridge-log",
+    "mse": 3670751.9855940947,
+    "mse_without_max_diagnostic_only": 216883.43106376362,
+    "tail_mse": 166667006.83545655,
+    "non_tail_mse": 25468.330804838755,
+    "max_label_prediction": 2818.286274304957,
+    "prediction_max": 2818.286274304957,
+    "prediction_mean": 53.31425622500028
+  },
+  {
+    "split": 58,
+    "model": "leaf5",
+    "mse": 4145523.970116268,
+    "mse_without_max_diagnostic_only": 256676.96644706393,
+    "tail_mse": 186190324.01115885,
+    "non_tail_mse": 74234.51232937306,
+    "max_label_prediction": 786.5349404315106,
+    "prediction_max": 2997.17716324526,
+    "prediction_mean": 65.56081962208606
+  },
+  {
+    "split": 58,
+    "model": "v4-ridge-log",
+    "mse": 4085042.3863687455,
+    "mse_without_max_diagnostic_only": 353439.8359710906,
+    "tail_mse": 178962038.334014,
+    "non_tail_mse": 174055.2565492036,
+    "max_label_prediction": 1505.6158591099,
+    "prediction_max": 5636.915294483439,
+    "prediction_mean": 77.84730023532956
+  },
+  {
+    "split": 59,
+    "model": "leaf5",
+    "mse": 3795776.025249326,
+    "mse_without_max_diagnostic_only": 204789.12083684883,
+    "tail_mse": 172061390.25083783,
+    "non_tail_mse": 32647.27260038036,
+    "max_label_prediction": 2165.0357924485093,
+    "prediction_max": 2165.0357924485093,
+    "prediction_mean": 51.894346887119774
+  },
+  {
+    "split": 59,
+    "model": "v4-ridge-log",
+    "mse": 2573888.892342822,
+    "mse_without_max_diagnostic_only": 195157.72299616152,
+    "tail_mse": 116305135.61214127,
+    "non_tail_mse": 30378.582315381213,
+    "max_label_prediction": 8473.386442698962,
+    "prediction_max": 8473.386442698962,
+    "prediction_mean": 70.70000778112883
+  },
+  {
+    "split": 60,
+    "model": "leaf5",
+    "mse": 3761887.7590777003,
+    "mse_without_max_diagnostic_only": 257023.68184146902,
+    "tail_mse": 168976168.43785766,
+    "non_tail_mse": 66999.69277910831,
+    "max_label_prediction": 2573.1821350679,
+    "prediction_max": 2811.9812972078566,
+    "prediction_mean": 64.47862012332862
+  },
+  {
+    "split": 60,
+    "model": "v4-ridge-log",
+    "mse": 3312471.6237050304,
+    "mse_without_max_diagnostic_only": 218378.98440400622,
+    "tail_mse": 149779682.1262698,
+    "non_tail_mse": 36847.107673231156,
+    "max_label_prediction": 4597.189350049534,
+    "prediction_max": 4597.189350049534,
+    "prediction_mean": 65.17986104424281
+  },
+  {
+    "split": "scaffold",
+    "model": "leaf5",
+    "mse": 4254461.89947185,
+    "mse_without_max_diagnostic_only": 194661.02358675105,
+    "tail_mse": 191818615.7349798,
+    "non_tail_mse": 59736.414332693654,
+    "max_label_prediction": 20.43361415483751,
+    "prediction_max": 3515.8601909437057,
+    "prediction_mean": 44.75599296650449
+  },
+  {
+    "split": "scaffold",
+    "model": "v4-ridge-log",
+    "mse": 4253853.161983246,
+    "mse_without_max_diagnostic_only": 194050.37783015863,
+    "tail_mse": 193409166.10762286,
+    "non_tail_mse": 23542.648821976905,
+    "max_label_prediction": 20.43361415483751,
+    "prediction_max": 1329.1110733931305,
+    "prediction_mean": 31.408238059468925
+  }
+]

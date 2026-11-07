@@ -1,0 +1,41 @@
+{
+  "winner": "offset-10",
+  "profiles": {
+    "offset-0.01": 0.01,
+    "offset-0.1": 0.1,
+    "offset-10": 10.0
+  },
+  "discovery": 56,
+  "confirmation": [
+    57,
+    58,
+    59,
+    60
+  ],
+  "transform": "log(y+c), inverse exp(z)-c; structural fallback unchanged log1p",
+  "selection": "minimum full raw MSE on discovery only",
+  "external_data": false,
+  "all_labels_retained": true,
+  "rows": 320,
+  "target_max": 36066.667,
+  "confirmation_mean_mse": 3936196.6074323226,
+  "control_mean_mse": 3410538.722002673,
+  "improves_each_confirmation": false,
+  "upload_3m_each_gate": false,
+  "submitted": false,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v6_pair_offset.py": "a1bbb0f83a27485554ffbc0f768007bbd33c57351d0797ddc1d92b082a47a1fe",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77"
+  },
+  "oof_hashes": {
+    "oof-56.csv": "7f43da6a7bb36548710e92b0507c3ac3ceea3e5d2b281c135bc8bbb69e907b29",
+    "oof-57.csv": "4c45cb6abdca1d4596c7072aa1f2ebd5d16200ed8325b50aa5bc54071dfe80c7",
+    "oof-58.csv": "d03adacd40fb1f6d3e5c97fa70a4e45e0385748ea05a6438aa7be56e586e9699",
+    "oof-59.csv": "e9017b5528a9bf71e598055020bd4e57ac1cb399053a0c5305652ce2e505ee5e",
+    "oof-60.csv": "1b3e7efaf9f8da058b5d709306e8b388fe5d304f29908fe4bb084869599850ae",
+    "oof-scaffold.csv": "9b54d7dfc9b3078ea6a74a9b81b18fa06d9e83d28db523717f581ab64d5d4511"
+  }
+}

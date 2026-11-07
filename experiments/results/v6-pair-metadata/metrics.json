@@ -1,0 +1,145 @@
+[
+  {
+    "split": 51,
+    "model": "title1",
+    "mse": 4186574.629253684,
+    "mse_without_max_diagnostic_only": 215396.40146282237,
+    "tail_mse": 190012036.91798463,
+    "non_tail_mse": 30733.619601554223,
+    "max_label_prediction": 415.68623797132614,
+    "prediction_max": 1777.082183713297,
+    "prediction_mean": 42.54842983695003
+  },
+  {
+    "split": 51,
+    "model": "title3",
+    "mse": 4262172.8675578255,
+    "mse_without_max_diagnostic_only": 227806.82398512634,
+    "tail_mse": 193215267.3354787,
+    "non_tail_mse": 36384.81236470833,
+    "max_label_prediction": 133.04846850154863,
+    "prediction_max": 2246.718708495157,
+    "prediction_mean": 43.637938194380276
+  },
+  {
+    "split": 51,
+    "model": "v4",
+    "mse": 4089231.368306921,
+    "mse_without_max_diagnostic_only": 211208.42819380955,
+    "tail_mse": 185647426.09804374,
+    "non_tail_mse": 28824.45741823694,
+    "max_label_prediction": 836.3029759881395,
+    "prediction_max": 1356.14743805122,
+    "prediction_mean": 46.133306344609025
+  },
+  {
+    "split": 52,
+    "model": "title1",
+    "mse": 4037863.437680728,
+    "mse_without_max_diagnostic_only": 203418.04179500975,
+    "tail_mse": 182948862.99036583,
+    "non_tail_mse": 36658.97484112553,
+    "max_label_prediction": 1034.8822220983086,
+    "prediction_max": 1949.609346339267,
+    "prediction_mean": 51.36305402702146
+  },
+  {
+    "split": 52,
+    "model": "v4",
+    "mse": 3886034.770614166,
+    "mse_without_max_diagnostic_only": 218233.44177146634,
+    "tail_mse": 175354732.69550422,
+    "non_tail_mse": 51271.55823643277,
+    "max_label_prediction": 1804.228985879711,
+    "prediction_max": 2386.8444812786743,
+    "prediction_mean": 63.20820240426841
+  },
+  {
+    "split": 53,
+    "model": "title1",
+    "mse": 4027623.3071621046,
+    "mse_without_max_diagnostic_only": 227417.47672352626,
+    "tail_mse": 181392894.24179396,
+    "non_tail_mse": 60987.85494989083,
+    "max_label_prediction": 1191.2704686762527,
+    "prediction_max": 3490.038496963696,
+    "prediction_mean": 47.94760852496331
+  },
+  {
+    "split": 53,
+    "model": "v4",
+    "mse": 3560667.9620021703,
+    "mse_without_max_diagnostic_only": 261188.82085156417,
+    "tail_mse": 158430311.21404585,
+    "non_tail_mse": 97129.61451237387,
+    "max_label_prediction": 3569.0591805151175,
+    "prediction_max": 3859.814675285723,
+    "prediction_mean": 70.54129593511054
+  },
+  {
+    "split": 54,
+    "model": "title1",
+    "mse": 3819972.298541846,
+    "mse_without_max_diagnostic_only": 202280.6208795495,
+    "tail_mse": 173188951.81938496,
+    "non_tail_mse": 32167.644721074757,
+    "max_label_prediction": 2039.2718973358096,
+    "prediction_max": 2039.2718973358096,
+    "prediction_mean": 47.973789003984436
+  },
+  {
+    "split": 54,
+    "model": "v4",
+    "mse": 2746470.846355528,
+    "mse_without_max_diagnostic_only": 214973.24921052204,
+    "tail_mse": 123102267.74352454,
+    "non_tail_mse": 54807.65696197248,
+    "max_label_prediction": 7600.999884409466,
+    "prediction_max": 7600.999884409466,
+    "prediction_mean": 78.05848773579666
+  },
+  {
+    "split": 55,
+    "model": "title1",
+    "mse": 4178074.9182778248,
+    "mse_without_max_diagnostic_only": 206487.2794726151,
+    "tail_mse": 189834812.21367154,
+    "non_tail_mse": 26007.311032597376,
+    "max_label_prediction": 413.9738100439338,
+    "prediction_max": 1025.3164751685174,
+    "prediction_mean": 37.97438629671032
+  },
+  {
+    "split": 55,
+    "model": "v4",
+    "mse": 4187238.6607477055,
+    "mse_without_max_diagnostic_only": 207505.17065932305,
+    "tail_mse": 190044881.4446619,
+    "non_tail_mse": 30677.95951000719,
+    "max_label_prediction": 377.4218132642412,
+    "prediction_max": 1292.210353416271,
+    "prediction_mean": 44.50327083294862
+  },
+  {
+    "split": "scaffold",
+    "model": "title1",
+    "mse": 4248909.813025335,
+    "mse_without_max_diagnostic_only": 189091.53248052837,
+    "tail_mse": 193166365.2271627,
+    "non_tail_mse": 23918.797373698962,
+    "max_label_prediction": 20.43361415483751,
+    "prediction_max": 1569.2546028108775,
+    "prediction_mean": 31.909822134357928
+  },
+  {
+    "split": "scaffold",
+    "model": "v4",
+    "mse": 4253853.161983246,
+    "mse_without_max_diagnostic_only": 194050.37783015863,
+    "tail_mse": 193409166.10762286,
+    "non_tail_mse": 23542.648821976905,
+    "max_label_prediction": 20.43361415483751,
+    "prediction_max": 1329.1110733931305,
+    "prediction_mean": 31.408238059468925
+  }
+]
