@@ -8,6 +8,13 @@
 g = 4-OMe из 7g, h = 4-Me из 9h). Валидация: 10 train-строк бит-в-бит
 (y = CC50/IC50 таблицы: напр. 8e 1082.0/0.03 = 36066.67 = y train#14).
 Значения NaN/NA в таблице → сентинел 10000.
+
+bare-метки '10x' фенхилового источника: структуры ЭКЗО (9-серия), значения —
+10-серия (эндо; в источнике перепутаны структуры/метки рядов): train '10a'/
+'10k'/'10m' y=10000 ↔ статья 10a/10k/10m NA (3/3 бит-в-бит); остальные
+10-ряды NA → сентинелы (test 10d/10h/10i/10j/10l). bare '10g' — эндо-структура,
+чистый матч к статье (224.8/20.9 = 10.756). Чужие семьи (RSC O-бензилы
+'10a'-'10e') отсекаются проверкой скелета.
 """
 
 from __future__ import annotations
@@ -27,9 +34,15 @@ DOI = "10.1002/cmdc.202100771"
 #: измеряет те же структуры с другими значениями (7b: y=2324.915 vs 2286.17)
 OURS = ("-as-", "-qs-")
 #: bare-метки из смешанного источника: '8l' бит-в-бит (держим в таблице),
-#: '10e'→RSC 2024 (y=78.276), '10m'→сентинел, '10g'/'10h' test непроверяемы —
-#: вне таблицы
-HOLD_TITLES = {"10m", "10g", "10h"}
+#: '10e'→RSC 2024 (y=78.276); '10m'/'10h' — экзо-структуры, в 9-серии получили
+#: бы чужие значения (9m=43.77, 9h=79.93), сентинелы им назначает BARE10
+HOLD_TITLES = {"10m", "10h"}
+#: bare-метки '10x' фенхилового источника: структуры ЭКЗО (9-серия), значения —
+#: 10-серия (NA → сентинел). train '10a'/'10k'/'10m' y=10000 ↔ статья 10a/10k/10m
+#: NA — 3/3 бит-в-бит; test 10d/10h/10i/10j/10l → сентинелы. bare '10g' (эндо)
+#: идёт через TABLE (224.8/20.9). RSC O-бензилы ('10a'-'10e' другой семьи)
+#: отсекаются проверкой экзо-скелета.
+BARE10 = ("10a", "10d", "10h", "10i", "10j", "10k", "10l", "10m")
 
 # (label, CC50 µM raw, IC50 µM raw; IC50 'NA' → сентинел)
 TABLE = {
@@ -108,6 +121,29 @@ def main() -> None:
             rows.append({"Title": title, "sentinel": sentinel,
                          "si": "" if sentinel else f"{si:.6g}", "smiles": smiles,
                          "pmc": DOI, "label": lab, "rule": "cmdc2022_table1"})
+
+    # bare-10x: экзо-структуры, значения 10-серии (NA → сентинел); 3/3 train
+    for split, frame in (("train", train), ("test", test)):
+        for i, row in frame.iterrows():
+            t = str(row["Title"]).strip()
+            if t not in BARE10:
+                continue
+            mol = Chem.MolFromSmiles(row["SMILES"])
+            if mol is None:
+                continue
+            ref_mol = Chem.MolFromSmiles(build_smiles("9" + t[2:]))
+            ref = InchiToInchiKey(MolToInchi(ref_mol)) if ref_mol else ""
+            if Chem.MolToInchiKey(mol) != ref:
+                continue  # чужая семья (RSC O-бензилы '10a'-'10e')
+            y = float(train.loc[i, "SI VACV"]) if split == "train" else None
+            if y is not None:
+                n_total += 1
+                ok = y == 10000.0
+                n_ok += ok
+                print(f"  {'OK' if ok else '!!'} train#{i} '{t}' y={y} vs sentinel (bare-10x)")
+            rows.append({"Title": row["Title"], "sentinel": True, "si": "",
+                         "smiles": row["SMILES"], "pmc": DOI, "label": t,
+                         "rule": "cmdc2022_bare10"})
 
     print(f"train-проверок бит-в-бит: {n_ok}/{n_total}")
     out = pd.DataFrame(rows)

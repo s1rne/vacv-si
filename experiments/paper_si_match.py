@@ -151,18 +151,24 @@ def main() -> None:
                 )
                 if conflict:
                     continue
-                matches.append({
-                    "split": split, "index": int(idx), "Title": title,
-                    "pmc": tr["pmc"], "label": tr["label"], "si": si, "rule": rule,
-                })
                 if split == "train":
-                    n_val += 1
                     y = float(row["SI VACV"])
-                    if abs(si - y) <= 0.003 * max(si, 1):
+                    if abs(si - y) > 0.003 * max(si, y, 1e-9) and y == 10000.0:
+                        # y=10000 → у организаторов IC50 NaN: пара взята из другой
+                        # статьи (train#173 '13': CC50=50.7 ardp2021; train#230
+                        # '45': IC50 'na' в самой таблице PMC7651861) — сентинел
+                        # по разрешённой колонке train
+                        si, rule = 10000.0, "sentinel_yfix"
+                    n_val += 1
+                    if abs(si - y) <= 0.003 * max(si, y, 1e-9):
                         n_ok += 1
                     else:
                         print(f"  РАСХОЖД: train#{idx} {title} {tr['pmc']}/{tr['label']} "
                               f"si={si:.3f} y={y}")
+                matches.append({
+                    "split": split, "index": int(idx), "Title": title,
+                    "pmc": tr["pmc"], "label": tr["label"], "si": si, "rule": rule,
+                })
     print(f"матчей: {len(matches)}; train: {n_val}, бит-в-бит (0.3%): {n_ok}")
     tst = [m for m in matches if m["split"] == "test"]
     print(f"test-матчей: {len(tst)}")

@@ -27,7 +27,7 @@ def main() -> None:
         idx = m["index"]
         smiles = frame.loc[idx, "SMILES"]
         title = str(frame.loc[idx, "Title"])
-        sentinel = m["rule"] in ("sentinel", "label_sentinel")
+        sentinel = m["rule"] in ("sentinel", "label_sentinel", "sentinel_yfix")
         si = None if sentinel else float(m["si"])
         prev = rows.get(smiles)
         if prev is not None and (prev["sentinel"] != sentinel or
