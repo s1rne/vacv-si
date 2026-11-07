@@ -8,7 +8,8 @@ CC50 с цензурой ">50"→50.0 и ">150"→150.0 (знак ">" отбро
   train#59 'Rotenone' 0.10/0.015 = 6.667 ✓      train#71 'Monensin' >50/0.07 = 714.286 ✓
   train#147 'OSU-03012' 22.23/2.32 = 9.582 ✓    train#170 'Buparvaquone' 121.4/1.76 = 68.977 ✓
   train#209 'Mubritinib' 0.07/0.093 = 0.753 ✓
-20 test-строк сверены с хранящимися CC50/IC50 (все точные).
+test-строки покрываются по Title==метке; хранимые CC50/IC50 не
+читаются вовсе (запрещённые колонки убраны из скрипта).
 
 НЕ покрыты из этой статьи:
   - train#55 'Mycophenolate mofetil' (66.7/0.2 → 333.5) — из другой статьи
@@ -89,14 +90,8 @@ def main() -> None:
             n_bad += not ok
             print(f"{'OK' if ok else '!!'} train#{idx} '{label}' y={y} vs "
                   f"{cc}/{ec} = {si}")
-        else:
-            # информационная сверка с хранящимися колонками test (запрещены
-            # для построения): расхождение не гейтит создание таблицы
-            scc, sic = r["CC50_uM"], r["IC50_uM_VACV"]
-            ok = (abs(float(scc) - cc) < 1e-6 and
-                  abs(float(sic) - ec) <= 0.05 * max(ec, 1e-9))
-            print(f"{'OK' if ok else '!!'} (инфо) test#{idx} '{label}' stored "
-                  f"{scc}/{sic} vs {cc}/{ec} = {si}")
+        # test-строки: запрещённые CC50_uM/IC50_uM_VACV не читаются вовсе
+        # (сверка с ними убрана по договорённости)
         rows.append({
             "Title": str(r["Title"]), "sentinel": sentinel, "si": si,
             "smiles": r["SMILES"], "pmc": PMC, "label": label, "rule": RULE,

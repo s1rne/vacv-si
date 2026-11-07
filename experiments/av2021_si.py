@@ -72,14 +72,8 @@ def main() -> None:
             n_bad += not ok
             print(f"{'OK' if ok else '!!'} train#{idx} '{label}' y={y} vs "
                   f"{cc50}/{ec50} = {si}")
-        else:
-            # информационная сверка с хранящимися колонками test (запрещены
-            # для построения): расхождение не гейтит создание таблицы
-            scc, sic = r["CC50_uM"], r["IC50_uM_VACV"]
-            ok = (abs(float(scc) - cc50) < 1e-6 and
-                  abs(float(sic) - ec50) <= 0.05 * max(ec50, 1e-9))
-            print(f"{'OK' if ok else '!!'} (инфо) test#{idx} '{label}' stored "
-                  f"{scc}/{sic} vs {cc50}/{ec50} = {si}")
+        # test-строки: запрещённые CC50_uM/IC50_uM_VACV не читаются вовсе
+        # (сверка с ними убрана по договорённости)
         rows.append({
             "Title": str(r["Title"]), "sentinel": False, "si": si,
             "smiles": r["SMILES"], "pmc": PMC, "label": label, "rule": RULE,

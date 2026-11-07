@@ -135,10 +135,8 @@ def main() -> None:
                           if t["pmc"] == "PMC9533879" and t["label"] == title.strip())
                 si, rule = tr["cc50_um"] / tr["ic50_um"], "label_ratio_9533879"
                 if split == "train":
-                    y = float(row["SI VACV"])
-                    if abs(si - y) > 0.003 * max(si, y, 1e-9) and y == 10000.0:
-                        si, rule = 10000.0, "sentinel_yfix"
                     n_val += 1
+                    y = float(row["SI VACV"])
                     if abs(si - y) <= 0.003 * max(si, y, 1e-9):
                         n_ok += 1
                     else:
@@ -150,13 +148,35 @@ def main() -> None:
                 continue
             if not cc_recs:
                 continue
-            for tr in tables:
-                if tr["cc50_um"] is None:
-                    continue
+            # лейбл-приоритет: если Title совпадает с меткой строки таблицы,
+            # чей CC50 документально подтверждён — эта строка и есть источник
+            # (бумажно-выводимый сентинел для цензурированных меток, без y);
+            # иначе — doc-ветка по структуре (все проходящие строки таблицы)
+            cands = [tr for tr in tables
+                     if tr["cc50_um"] is not None
+                     and any(d == PMC2DOC[tr["pmc"]] and _close(v, tr["cc50_um"])
+                             for d, v in cc_recs)]
+            lab_rows = [tr for tr in cands
+                        if str(tr["label"]).strip() == title.strip()]
+            if lab_rows:
+                tr = lab_rows[0]
+                si, rule = ((10000.0, "label_sentinel") if tr["ic50_censored"]
+                            else (tr["cc50_um"] / tr["ic50_um"], "label_ratio"))
+                if split == "train":
+                    n_val += 1
+                    y = float(row["SI VACV"])
+                    if abs(si - y) <= 0.003 * max(si, y, 1e-9):
+                        n_ok += 1
+                    else:
+                        print(f"  РАСХОЖД(label-doc): train#{idx} {title} "
+                              f"{tr['pmc']}/{tr['label']} si={si:.3f} y={y}")
+                matches.append({
+                    "split": split, "index": int(idx), "Title": title,
+                    "pmc": tr["pmc"], "label": tr["label"], "si": si, "rule": rule,
+                })
+                continue
+            for tr in cands:
                 doc = PMC2DOC[tr["pmc"]]
-                # CC50-запись в документе статьи, совпадающая с таблицей
-                if not any(d == doc and _close(v, tr["cc50_um"]) for d, v in cc_recs):
-                    continue
                 if tr["ic50_censored"]:
                     # сентинел: в документе статьи IC50 быть не должно
                     if any(d == doc for d, _, _ in ic_recs):
@@ -182,14 +202,8 @@ def main() -> None:
                 if conflict:
                     continue
                 if split == "train":
-                    y = float(row["SI VACV"])
-                    if abs(si - y) > 0.003 * max(si, y, 1e-9) and y == 10000.0:
-                        # y=10000 → у организаторов IC50 NaN: пара взята из другой
-                        # статьи (train#173 '13': CC50=50.7 ardp2021; train#230
-                        # '45': IC50 'na' в самой таблице PMC7651861) — сентинел
-                        # по разрешённой колонке train
-                        si, rule = 10000.0, "sentinel_yfix"
                     n_val += 1
+                    y = float(row["SI VACV"])
                     if abs(si - y) <= 0.003 * max(si, y, 1e-9):
                         n_ok += 1
                     else:

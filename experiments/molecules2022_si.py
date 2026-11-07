@@ -24,8 +24,8 @@ Camphor-Derived Iminothiazolidine-4-Ones and 2,3-Dihydrothiazoles", VACV (VV)
 Структуры организаторов для части строк искажены (5c/5d — тиазолидин вместо
 дигидротиазола; 6d — пропил-тиазолидинон; 6a/6b/6c — другие N-заместители;
 8a — бензилиден), значения всё равно по метке — якоря train#67/#120 это
-подтверждают. test-строки сверены с хранящимися CC50/IC50 информационно
-(колонки test запрещены для построения — расхождение не гейтит таблицу).
+подтверждают. Запрещённые колонки test (CC50_uM, IC50_uM_VACV) скриптом
+не читаются вовсе (сверка с ними убрана по договорённости).
 
 Запуск: uv run python experiments/molecules2022_si.py
 """
@@ -100,19 +100,8 @@ def main() -> None:
             n_bad += not ok
             print(f"{'OK' if ok else '!!'} train#{idx} '{label}' y={y} vs "
                   f"{si if not sentinel else 'sentinel'}")
-        else:
-            # информационная сверка с хранящимися колонками test (запрещены
-            # для построения): расхождение не гейтит создание таблицы;
-            # для сентинелов исход определяется IC50=NaN при CC50≠NaN
-            scc, sic = r["CC50_uM"], r["IC50_uM_VACV"]
-            if sentinel:
-                ok = pd.isna(sic) and pd.notna(scc)
-            else:
-                ok = (abs(float(scc) - cc) < 1e-6 and
-                      abs(float(sic) - ic) <= 0.05 * max(ic, 1e-9))
-            src = f" (значения {vlab})" if vlab != label else ""
-            print(f"{'OK' if ok else '!!'} (инфо) test#{idx} '{label}' stored "
-                  f"{scc}/{sic} vs {cc}/{ic or 'NA'}{src}")
+        # test-строки: запрещённые CC50_uM/IC50_uM_VACV не читаются вовсе
+        # (сверка с ними убрана по договорённости)
         rows.append({
             "Title": str(r["Title"]), "sentinel": bool(sentinel),
             "si": None if sentinel else si, "smiles": r["SMILES"],

@@ -16,7 +16,8 @@ antiviral activity") — для test гард свободнее: бицикли
 CC50/IC50 с печатными).
 
 Все 15 train-строк бит-в-бит (в т.ч. 7 сентинелов: 5/10/40/20/12/24/21 →
-печатные TC50 совпали, IC50=NA ✓). 16 test-строк сверены с хранящимися
+печатные TC50 совпали, IC50=NA ✓). 16 test-строк покрываются по
+Title==метке; хранимые CC50/IC50 не читаются вовсе (запрещённые колонки).
 CC50/IC50 (фингерпринт Qwen, outputs/qwen-sentinel/bornyl-esters.md; скрипт
 experiments/qwen_bornyl_cbdv.py). train#217 '7' (тот же SMILES, что train#33
 '36') — ДРУГАЯ статья (камфорные амины, задача 12c): fallback lookup по
@@ -118,17 +119,8 @@ def main() -> None:
             n_bad += not ok
             print(f"{'OK' if ok else '!!'} train#{idx} '{label}' y={y} vs "
                   f"{si if not sentinel else 'sentinel'}")
-        else:
-            # информационная сверка с хранящимися колонками test (запрещены
-            # для построения): расхождение не гейтит создание таблицы
-            scc, sic = r["CC50_uM"], r["IC50_uM_VACV"]
-            if sentinel:
-                ok = pd.isna(sic) and pd.notna(scc)
-            else:
-                ok = (abs(float(scc) - cc) < 1e-6 and
-                      abs(float(sic) - ic) <= 0.05 * max(ic, 1e-9))
-            print(f"{'OK' if ok else '!!'} (инфо) test#{idx} '{label}' stored "
-                  f"{scc}/{sic} vs {cc}/{ic or 'NA'}")
+        # test-строки: запрещённые CC50_uM/IC50_uM_VACV не читаются вовсе
+        # (сверка с ними убрана по договорённости)
         rows.append({
             "Title": str(r["Title"]), "sentinel": bool(sentinel),
             "si": None if sentinel else si, "smiles": r["SMILES"],
