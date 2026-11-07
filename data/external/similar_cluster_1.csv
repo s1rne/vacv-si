@@ -1,0 +1,52 @@
+smiles,ic50_um,ic50_relation,cc50_um,cc50_relation,virus_strain,cell_line,doi,source,source_id,nearest_problem_row_index,tanimoto
+CCCCCCCCCCCc1cc2cn(COCCO)c(=O)nc2o1,40,>,132,=,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1493091 (EC50); activity 1492989 (CC50),7,1.000
+CCCCCCCCCCc1cc2cn(COCCO)c(=O)nc2o1,16,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492985 (EC50); activity 1492977 (CC50),7,1.000
+CCCCCCCCCc1cc2cn(COCCO)c(=O)nc2o1,200,>,100,>=,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492973 (EC50); activity 1492965 (CC50),7,1.000
+CCCCCCCCc1cc2cn(COCCO)c(=O)nc2o1,16,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492870 (EC50); activity 1492862 (CC50),7,1.000
+CCCCCCCc1cc2cn(COCCO)c(=O)nc2o1,200,>,140,=,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492858 (EC50); activity 1492850 (CC50),7,1.000
+CCCCCCc1cc2cn(COCCO)c(=O)nc2o1,16,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492846 (EC50); activity 1492744 (CC50),7,1.000
+CCCCCCCCCCCc1cc2cn(COCCO)c(=O)nc2[nH]1,40,>,41,=,Vaccinia (strain not stated),HEL,10.1021/jm050291s,PubChem AID 246314 + AID 245943,SID 103459937 (AID 246314 EC50; AID 245943 CC50),7,0.625
+CCCCCCCCCCc1cc2cn(COCCO)c(=O)nc2[nH]1,16,>,32,=,Vaccinia (strain not stated),HEL,10.1021/jm050291s,PubChem AID 246314 + AID 245943,SID 103459679 (AID 246314 EC50; AID 245943 CC50),7,0.625
+CCCCCCCCc1cc2cn(COCCO)c(=O)nc2[nH]1,80,>,65,=,Vaccinia (strain not stated),HEL,10.1021/jm050291s,PubChem AID 246314 + AID 245943,SID 103459650 (AID 246314 EC50; AID 245943 CC50),7,0.625
+CCCCCCCc1cc2cn(COCCO)c(=O)nc2[nH]1,200,>,119,=,Vaccinia (strain not stated),HEL,10.1021/jm050291s,PubChem AID 246314 + AID 245943,SID 103459877 (AID 246314 EC50; AID 245943 CC50),7,0.625
+CCCCCCc1cc2cn(COCCO)c(=O)nc2[nH]1,80,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,PubChem AID 246314 + AID 245943,SID 103459876 (AID 246314 EC50; AID 245943 CC50),7,0.625
+CCCCCCOCCCCCCCCCc1cc2cn([C@@H]3CC[C@H](CO)O3)c(=O)nc2o1,0.19,=,74.1,=,Vaccinia WR,BSC1,10.1021/jm301778x,ChEMBL CHEMBL2321734,activity 12661675 (IC50); activity 12661666 (CC50),7,0.562
+CCCCCOCCCCCCCCCc1cc2cn([C@@H]3CC[C@H](CO)O3)c(=O)nc2o1,0.19,=,100,>,Vaccinia WR,BSC1,10.1021/jm301778x,ChEMBL CHEMBL2321734,activity 12661676 (IC50); activity 12661667 (CC50),7,0.562
+CCCCCOCCCCCCCCCc1cc2cn([C@@H]3CC[C@H](CO)O3)c(=O)nc2o1,0.19,=,100,>,Vaccinia (strain not stated),not stated,10.1016/j.bmcl.2025.130110,ChEMBL CHEMBL6114962,activity 29191228 (EC50); activity 29191230 (CC50),7,0.562
+CCCCOCCCCCCCCCc1cc2cn([C@@H]3CC[C@H](CO)O3)c(=O)nc2o1,1.8,=,100,>,Vaccinia WR,BSC1,10.1021/jm301778x,ChEMBL CHEMBL2321734,activity 12661677 (IC50); activity 12661668 (CC50),7,0.538
+CCCOCCCCCCCCCc1cc2cn([C@@H]3CC[C@H](CO)O3)c(=O)nc2o1,1.9,=,89.1,=,Vaccinia WR,BSC1,10.1021/jm301778x,ChEMBL CHEMBL2321734,activity 12661678 (IC50); activity 12661669 (CC50),7,0.515
+CCOCCCCCCCCCc1cc2cn([C@@H]3CC[C@H](CO)O3)c(=O)nc2o1,12.9,=,79.4,=,Vaccinia WR,BSC1,10.1021/jm301778x,ChEMBL CHEMBL2321734,activity 12661679 (IC50); activity 12661670 (CC50),7,0.500
+CC1(C)[C@@H]2CC[C@@]1(C)[C@H](NC(=O)C13CC4CC(CC(C4)C1)C3)C2,10.6,=,316.7,=,Vaccinia Copenhagen,African green monkey Vero,10.1039/d0md00108b,ChEMBL CHEMBL4699424,activity 22753384 (IC50); activity 22753406 (CC50),178,0.522
+CCCCc1cc2cn(COCCO)c(=O)nc2o1,400,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492728 (EC50); activity 1492720 (CC50),181,1.000
+CCCCc1cc2cn(COCCO)c(=O)nc2[nH]1,400,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,PubChem AID 246314 + AID 245943,SID 103460022 (AID 246314 EC50; AID 245943 CC50),181,0.611
+CC(C)(C)C(=O)OCOP(=O)(C/C=C/Cn1cc(Br)c(=O)[nH]c1=O)OCOC(=O)C(C)(C)C,33,=,34,=,Vaccinia (strain not stated),HEL,10.1021/jm1011462,ChEMBL CHEMBL1649078,activity 5145511 (EC50); activity 5145476 (CC50),183,0.368
+CC(C)(C)C(=O)OCOP(=O)(C/C=C\Cn1cc(Br)c(=O)[nH]c1=O)OCOC(=O)C(C)(C)C,90,=,70,=,Vaccinia (strain not stated),HEL,10.1021/jm1011462,ChEMBL CHEMBL1649078,activity 5145512 (EC50); activity 5145477 (CC50),183,0.368
+CCCCCC#Cc1cc2cn(COCCO)c(=O)nc2o1,200,>,50,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1493497 (EC50); activity 1493489 (CC50),207,1.000
+CCCCCCC#Cc1cc2cn(COCCO)c(=O)nc2o1,200,>,50,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1493510 (EC50); activity 1493502 (CC50),207,0.980
+CCCCCCCC#Cc1cc2cn(COCCO)c(=O)nc2o1,40,>,50,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1493622 (EC50); activity 1493614 (CC50),207,0.980
+CCCCCCCCC#Cc1cc2cn(COCCO)c(=O)nc2o1,40,>,42,=,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1493634 (EC50); activity 1493626 (CC50),207,0.980
+CCCCCCCCCC#Cc1cc2cn(COCCO)c(=O)nc2o1,40,>,50,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1491725 (EC50); activity 1493638 (CC50),207,0.980
+C#Cc1cn(COCCO)c(=O)[nH]c1=O,400,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492618 (EC50); activity 1492610 (CC50),238,1.000
+Cc1cn(CCOC(C)CP(=O)(O)O)c(=O)[nH]c1=O,342,>,342,>,Vaccinia Lederle,not stated,10.1016/j.bmc.2011.06.045,ChEMBL CHEMBL1806434,activity 6287089 (EC50); activity 6287115 (CC50),279,0.458
+Cc1cn(C/C=C\CCP(=O)(O)O)c(=O)[nH]c1=O,100,>,100,>,Vaccinia Copenhagen,HFF,10.1128/aac.00444-06,ChEMBL CHEMBL1142203,activity 1836777 (EC50); activity 1836807 (CC50),279,0.447
+Cc1cn(C/C=C\CCP(=O)(O)O)c(=O)[nH]c1=O,100,>,100,>,Cowpox Brighton,HFF,10.1128/aac.00444-06,ChEMBL CHEMBL1142203,activity 1836786 (EC50); activity 1836807 (CC50),279,0.447
+CCCCCCCCCCCCCCCOCCCOP(=O)(O)C/C=C/Cn1cc(C)c(=O)[nH]c1=O,37,>,76,=,Vaccinia (strain not stated),HEL,10.1016/j.ejmech.2018.01.086,ChEMBL CHEMBL4196014,activity 18537981 (EC50); activity 18537912 (CC50),279,0.397
+CCCCCCCCCCCCCCCCOCCCOP(=O)(O)CC/C=C\Cn1cc(C)c(=O)[nH]c1=O,20,>,100,>,Vaccinia Copenhagen,HFF,10.1128/aac.00444-06,ChEMBL CHEMBL1142203,activity 1836772 (EC50); activity 1836802 (CC50),279,0.383
+CCCCCCCCCCCCCCCCOCCCOP(=O)(O)CC/C=C\Cn1cc(C)c(=O)[nH]c1=O,20,>,100,>,Cowpox Brighton,HFF,10.1128/aac.00444-06,ChEMBL CHEMBL1142203,activity 1836781 (EC50); activity 1836802 (CC50),279,0.383
+Cc1cn(C/C=C/CP(=O)(OCOC(=O)C(C)C)OCOC(=O)C(C)C)c(=O)[nH]c1=O,200,>,36,=,Vaccinia (strain not stated),HEL,10.1016/j.ejmech.2018.01.086,ChEMBL CHEMBL4196014,activity 18537979 (EC50); activity 18537910 (CC50),279,0.375
+Cc1cn(C/C=C/CP(=O)(OCOC(=O)C(C)(C)C)OCOC(=O)C(C)(C)C)c(=O)[nH]c1=O,30,=,35,=,Vaccinia (strain not stated),HEL,10.1021/jm1011462,ChEMBL CHEMBL1649078,activity 5145509 (EC50); activity 5145474 (CC50),279,0.368
+Cc1cn(C/C=C/CP(=O)(OCOC(=O)C(C)(C)C)OCOC(=O)C(C)(C)C)c(=O)[nH]c1=O,30.7,=,36.4,=,Vaccinia (strain not stated),HEL,10.1016/j.ejmech.2018.01.086,ChEMBL CHEMBL4196014,activity 18537978 (EC50); activity 18537909 (CC50),279,0.368
+Cc1cn(C/C=C\CP(=O)(OCOC(=O)C(C)(C)C)OCOC(=O)C(C)(C)C)c(=O)[nH]c1=O,40,>,35,=,Vaccinia (strain not stated),HEL,10.1021/jm1011462,ChEMBL CHEMBL1649078,activity 5145510 (EC50); activity 5145475 (CC50),279,0.368
+CCCCCc1cc2cn(COCCO)c(=O)nc2o1,400,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492740 (EC50); activity 1492732 (CC50),303,1.000
+CCCCCc1cc2cn(COCCO)c(=O)nc2[nH]1,400,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,PubChem AID 246314 + AID 245943,SID 103460023 (AID 246314 EC50; AID 245943 CC50),303,0.618
+O=c1nc2occc2cn1COCCO,400,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1492716 (EC50); activity 1492622 (CC50),339,1.000
+O=c1nc2[nH]ccc2cn1COCCO,400,>,200,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,PubChem AID 246314 + AID 245943,SID 103459705 (AID 246314 EC50; AID 245943 CC50),339,0.565
+CCCCN1C(=O)CS/C1=N\N=C1/C[C@H]2CC[C@]1(C)C2(C)C,3.2,=,25.2,=,Vaccinia Copenhagen,African green monkey Vero,10.1039/C8MD00347E,ChEMBL CHEMBL4257560,activity 18731429 (IC50); activity 18731452 (TC50),340,0.875
+CC(CP(=O)(O)O)OCCn1ccc(=O)[nH]c1=O,360,>,291,=,Vaccinia Lederle,not stated,10.1016/j.bmc.2011.06.045,ChEMBL CHEMBL1806434,activity 6287090 (EC50); activity 6287109 (CC50),456,0.435
+CCCCCCCCCCCCCCCCOCCCOP(=O)(O)CC/C=C\Cn1ccc(=O)[nH]c1=O,100,>,100,>,Vaccinia Copenhagen,HFF,10.1128/aac.00444-06,ChEMBL CHEMBL1142203,activity 1836774 (EC50); activity 1836804 (CC50),456,0.362
+CCCCCCCCCCCCCCCCOCCCOP(=O)(O)CC/C=C\Cn1ccc(=O)[nH]c1=O,100,>,100,>,Cowpox Brighton,HFF,10.1128/aac.00444-06,ChEMBL CHEMBL1142203,activity 1836783 (EC50); activity 1836804 (CC50),456,0.362
+CCCCC#Cc1cc2cn(COCCO)c(=O)nc2o1,200,>,50,>,Vaccinia (strain not stated),HEL,10.1021/jm050291s,ChEMBL CHEMBL1140321,activity 1493485 (EC50); activity 1493377 (CC50),462,1.000
+C=CCN1C(=O)CS/C1=N\N=C1/C[C@H]2CC[C@]1(C)C2(C)C,14.4,=,163.9,=,Vaccinia Copenhagen,African green monkey Vero,10.1039/C8MD00347E,ChEMBL CHEMBL4257560,activity 18731431 (IC50); activity 18731450 (TC50),491,0.760
+CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/N=C1/NC(=S)CS1)C2,3.3,=,17.5,=,Vaccinia Copenhagen,African green monkey Vero,10.1039/C8MD00347E,ChEMBL CHEMBL4257560,activity 18731428 (IC50); activity 18731453 (TC50),534,0.721
+CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/N=C1/NC(=O)/C(=C/c3ccccc3)S1)C2,5.2,=,14.5,=,Vaccinia Copenhagen,African green monkey Vero,10.1039/C8MD00347E,ChEMBL CHEMBL4257560,activity 18731427 (IC50); activity 18731454 (TC50),534,0.527
+Cc1ccc(/C=C2\S/C(=N\N=C3/C[C@H]4CC[C@]3(C)C4(C)C)NC2=O)cc1,9.5,=,120.5,=,Vaccinia Copenhagen,African green monkey Vero,10.1039/C8MD00347E,ChEMBL CHEMBL4257560,activity 18731426 (IC50); activity 18731455 (TC50),534,0.518
