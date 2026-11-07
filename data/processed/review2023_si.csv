@@ -1,0 +1,27 @@
+Title,sentinel,si,smiles,pmc,label,rule
+Oxiconazole nitrate,False,4.043795620437956,Clc1ccc(CO/N=C(\Cn2ccnc2)c2ccc(Cl)cc2Cl)c(Cl)c1.O=[N+]([O-])O,10.1002/jmv.25544,Oxiconazole nitrate,review2023_drugs
+Mitoxantron HCl,False,67.2,CCNc1ccc(NCCNCCO)c2c1C(=O)c1c(O)ccc(O)c1C2=O,10.1002/jmv.25544,Mitoxantrone HCl,review2023_drugs
+CICLOPIROX OLAMINE,False,11.5,Cc1cc(C2CCCCC2)n(O)c(=O)c1.NCCO,10.1002/jmv.25544,Ciclopirox olamine,review2023_drugs
+Mebendazole,False,11.910714285714286,COC(=O)Nc1nc2ccc(C(=O)c3ccccc3)cc2[nH]1,10.1002/jmv.25544,Mebendazole,review2023_drugs
+Miconazole nitrate,False,5.6525423728813555,Clc1ccc(CO[C@@H](Cn2ccnc2)c2ccc(Cl)cc2Cl)c(Cl)c1.O=[N+]([O-])O,10.1002/jmv.25544,Miconazole nitrate,review2023_drugs
+Methotrexate,False,20.86363636363636,CN(Cc1cnc2nc(N)nc(N)c2n1)c1ccc(C(=O)N[C@@H](CCC(=O)O)C(=O)O)cc1,10.1002/jmv.25544,Methotrexate,review2023_drugs
+Raubasine,False,7.250000000000001,COC(=O)C1=CO[C@@H](C)[C@H]2CN3CCc4c([nH]c5ccccc45)[C@@H]3C[C@H]12,10.1002/jmv.25544,Raubasine,review2023_drugs
+Vitamin D3,False,4.0920245398773005,C=C1CC[C@H](O)C/C1=C/C=C1\CCC[C@]2(C)[C@@H]([C@H](C)CCCC(C)C)CC[C@@H]12,10.1002/jmv.25544,Vitamin D3,review2023_drugs
+Hydroxyprogesteronecaproate,False,4.4015748031496065,CCCCCC(=O)O[C@]1(C(C)=O)CC[C@H]2[C@@H]3CCC4=CC(=O)CC[C@]4(C)[C@H]3CC[C@@]21C,10.1002/jmv.25544,Hydroxyprogesterone caproate,review2023_drugs
+Tranilast,False,74.11111111111111,COc1ccc(/C=C/C(=O)Nc2ccccc2C(=O)O)cc1OC,10.1002/jmv.25544,Tranilast,review2023_drugs
+Methylcobalamin,False,44.46666666666667,C/C1=C2/N=C(/C=C3\N=C(/C(C)=C4\[N-][C@H]([C@H](CC(N)=O)[C@@]4(C)CCC(=O)NC[C@@H](C)O[P@](=O)([O-])O[C@@H]4[C@@H](O)[C@H](n5cnc6cc(C)c(C)cc65)O[C@@H]4CO)[C@]4(C)N=C1[C@H](CCC(N)=O)[C@@]4(C)CC(N)=O)[C@H](CCC(N)=O)C3(C)C)[C@H](CCC(N)=O)[C@@]2(C)CC(N)=O.[CH3-].[Co+3],10.1002/jmv.25544,Methylcobalamin,review2023_drugs
+Loratadine,False,3.881944444444444,CCOC(=O)N1CCC(=C2c3ccc(Cl)cc3CCc3cccnc32)CC1,10.1002/jmv.25544,Loratadine,review2023_drugs
+Econazole nitrate,False,3.6272189349112427,Clc1ccc(CO[C@H](Cn2ccnc2)c2ccc(Cl)cc2Cl)cc1.O=[N+]([O-])O,10.1002/jmv.25544,Econazole nitrate,review2023_drugs
+Mycophenolate mofetil,False,333.5,COc1c(C)c(C/C=C(\C)CCC(=O)OCCN2CCOCC2)c(O)c2c1COC2=O,10.1002/jmv.25544,MMF,review2023_drugs
+Albendazole,False,6.413461538461538,[2H]C([2H])([2H])C([2H])([2H])C([2H])([2H])Sc1ccc2nc(NC(=O)OC)[nH]c2c1,10.1002/jmv.25544,Albendazole,review2023_drugs
+Benidipine hydrochloride,False,3.664835164835165,COC(=O)C1=C(C)NC(C)=C(C(=O)O[C@@H]2CCCN(Cc3ccccc3)C2)[C@@H]1c1cccc([N+](=O)[O-])c1.Cl,10.1002/jmv.25544,Benidipine HCl,review2023_drugs
+Rilutek,False,5.336,Nc1nc2ccc(OC(F)(F)F)cc2s1,10.1002/jmv.25544,Rilutek,review2023_drugs
+Rupatadine fumarate,False,3.5291005291005297,Cc1cncc(CN2CCC(=C3c4ccc(Cl)cc4CCc4cccnc43)CC2)c1.O=C(O)/C=C/C(=O)O,10.1002/jmv.25544,Rupatadine fumarate,review2023_drugs
+Leflunomide,False,5.6525423728813555,[2H]c1c([2H])c(C(F)(F)F)c([2H])c([2H])c1NC(=O)c1cnoc1C,10.1002/jmv.25544,Leflunomide,review2023_drugs
+Norethisterone enanthate,False,14.076923076923077,C#C[C@]1(OC(=O)CCCCCC)CC[C@H]2[C@@H]3CCC4=CC(=O)CC[C@@H]4[C@H]3CC[C@@]21C,10.1002/jmv.25544,Norethisterone enanthate,review2023_drugs
+Fupentixol dihydrochloride,False,3.3714285714285714,Cl.Cl.OCCN1CCN(CC/C=C2/c3ccccc3Sc3ccc(C(F)(F)F)cc32)CC1,10.1002/jmv.25544,Fupentixol dihydrochloride,review2023_drugs
+Sodium aescinate,False,3.2857142857142856,CC(=O)O[C@H](C)[C@@H](C)C(=O)OC[C@@]12[C@@H]3CC(C)(C)[C@@H](O[C@@H]1C[C@@]1(C)C3=CC[C@@H]3[C@@]4(C)CC[C@@H](O[C@@H]5O[C@@H](C(=O)O)[C@H](O[C@H]6O[C@@H](CO)[C@@H](O)[C@@H](O)[C@H]6O)[C@@H](O)[C@H]5O[C@@H]5OC[C@@H](O)[C@@H](O)[C@H]5O)[C@@](C)(CO)[C@@H]4CC[C@]31C)[C@@H]2O,10.1002/jmv.25544,Sodium aescinate,review2023_drugs
+arbidol hydrochloride,False,10.106060606060607,CCOC(=O)c1c(CSc2ccccc2)n(C)c2cc(Br)c(O)c(CN(C)C)c12.Cl.O,10.1002/jmv.25544,Arbidol HCl,review2023_drugs
+Docetaxel,False,3.5105263157894737,CC(=O)O[C@@]12CO[C@@H]1C[C@H](O)[C@@]1(C)C(=O)[C@H](O)C3=C(C)[C@@H](OC(=O)[C@H](O)[C@@H](NC(=O)OC(C)(C)C)c4ccccc4)C[C@@](O)([C@@H](OC(=O)c4ccccc4)[C@H]21)C3(C)C,10.1002/jmv.25544,Docetaxel,review2023_drugs
+Apatini mesylate,False,26.68,CS(=O)(=O)O.N#CC1(c2ccc(NC(=O)c3cccnc3NCc3ccncc3)cc2)CCCC1,10.1002/jmv.25544,Apatini mesylate,review2023_drugs
+Auranofin,False,3.4166666666666665,CC(=O)OC[C@H]1O[C@@H]([S-])[C@H](OC(C)=O)[C@@H](OC(C)=O)[C@@H]1OC(C)=O.CCP(CC)CC.[Au+],10.1002/jmv.25544,Auranofin,review2023_drugs

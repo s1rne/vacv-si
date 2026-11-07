@@ -1,0 +1,11 @@
+Title,sentinel,si,smiles,pmc,label,rule
+6,True,10000.0,C1[C@@H](C2)C[C@@H](C3)C[C@H]1CC23[C@@H](C)/N=C/c4noc(c4)-c5ccc(C)cc5,10.1021/jm061484y,6,label_twin_transfer
+6,True,10000.0,C1[C@H](C2)C[C@H](C3)C[C@@H]1CC23[C@@H](C)/N=C/c4cc(on4)-c5ccc(C)cc5,10.1021/jm061484y,6,label_twin_transfer
+8,True,10000.0,C1[C@H](C2)C[C@H](C3)C[C@@H]1CC23[C@@H](C)/N=C/c4cc(OC)c(cc4)OCc5c(Cl)c(Cl)sn5,10.1021/jm061484y,8,label_twin_transfer
+8,True,10000.0,C1[C@H](C2)C[C@H](C3)C[C@@H]1CC23[C@@H](C)/N=C/c4ccc(c(c4)OC)OCc5c(Cl)c(Cl)sn5,10.1021/jm061484y,8,label_twin_transfer
+11,True,10000.0,C1[C@@H](C2)C[C@@H](C3)C[C@H]1CC23[C@@H](C)NCc4noc(c4)-c5ccc(C)cc5,10.1021/jm061484y,11,label_twin_transfer
+11,True,10000.0,C1[C@@H](C2)C[C@@H](C3)C[C@H]1CC23[C@@H](C)NCc4cc(on4)-c5ccc(C)cc5,10.1021/jm061484y,11,label_twin_transfer
+12,False,21.686,C1[C@@H](C2)C[C@@H](C3)C[C@H]1CC23[C@@H](C)NCc4cc(on4)-c5ccc([N+](=O)[O-])cc5,10.1021/jm061484y,12,label_twin_transfer
+12,False,21.686,C1[C@H](C2)C[C@H](C3)C[C@@H]1CC23[C@@H](C)NCc4noc(c4)-c5ccc([N+]([O-])=O)cc5,10.1021/jm061484y,12,label_twin_transfer
+7,False,1.62,C1[C@H](C2)C[C@H](C3)C[C@@H]1CC23[C@@H](C)/N=C/c4ccc(cc4)OCc5noc(c5)-c6ccc(C)cc6,10.1021/jm061484y,7,label_twin_transfer
+7,False,1.62,C1[C@H](C2)C[C@H](C3)C[C@@H]1CC23[C@@H](C)/N=C/c4ccc(cc4)OCc5cc(on5)-c6ccc(C)cc6,10.1021/jm061484y,7,label_twin_transfer

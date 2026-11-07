@@ -1,0 +1,15 @@
+Title,sentinel,si,smiles,pmc,label,rule
+Trifuridine,False,1811.5942028985505,O=C1NC(=O)N([C@H]2C[C@H](O)[C@@H](CO)O2)C=C1C(F)(F)F,10.1016/j.antiviral.2023.105651,Trifuridine,nucleoside_orthopox_papers
+fialuridine,False,66.66666666666667,O=C1NC(=O)N([C@@H]2O[C@H](CO)[C@@H](O)[C@@H]2F)C=C1I,10.3390/v2091968,fialuridine,nucleoside_orthopox_papers
+Vidarabine,False,132.0,Nc1ncnc2c1ncn2C1OC(CO)C(O)C1O,10.1128/aac.01257-08,Vidarabine,nucleoside_orthopox_papers
+Cytarabine,False,123.52941176470587,Nc1ccn(C2OC(CO)C(O)C2O)c(=O)n1,10.1128/aac.01257-08,Cytarabine,nucleoside_orthopox_papers
+"1-(2-deoxy, 4'thio-b-D-ribofuranosyl)-thymidine",False,966.6666666666667,CC1=CN([C@H]2C[C@H](O)[C@@H](CO)S2)C(=O)NC1=O,10.3390/v2091968,"1-(2-deoxy, 4'thio-b-D-ribofuranosyl)-thymidine",nucleoside_orthopox_papers
+2 (mixture 1:1),False,65.21739130434783,N#CC1=C(N)OC2=C(C(=O)CCC2)[C@H]1c1cn([C@H]2C[C@@H](O)[C@@H](CO)O2)c(=O)[nH]c1=O,10.1021/jm060404n,2 (mixture 1:1),nucleoside_orthopox_papers
+idoxuridine (IDU),False,11.904761904761905,O=C1NC(=O)N([C@H]2C[C@H](O)[C@@H](CO)O2)C=C1I,10.3390/v2091968,idoxuridine (IDU),nucleoside_orthopox_papers
+2 (mixture 1:1),False,65.21739130434783,N#CC1=C(N)OC2=C(C(=O)CCC2)[C@@H]1c1cn([C@H]2C[C@@H](O)[C@@H](CO)O2)c(=O)[nH]c1=O,10.1021/jm060404n,2 (mixture 1:1),nucleoside_orthopox_papers
+AraC,False,2032.520325203252,NC1=NC(=O)N([C@@H]2O[C@H](CO)[C@@H](O)[C@@H]2O)C=C1,10.1016/j.antiviral.2023.105651,AraC,nucleoside_orthopox_papers
+Adefovir dipivoxil,False,6578.9473684210525,CC(C)(C)C(=O)OCOP(=O)(OCCN1C=NC2=C(N)N=CN=C21)OCOC(=O)C(C)(C)C,10.1016/j.antiviral.2023.105651,Adefovir dipivoxil,nucleoside_orthopox_papers
+4-thio-b-D-arabinofuranosyl)-cytidine,False,176.66666666666669,NC1=NC(=O)N([C@@H]2S[C@H](CO)[C@@H](O)[C@@H]2O)C=C1,10.3390/v2091968,4-thio-b-D-arabinofuranosyl)-cytidine,nucleoside_orthopox_papers
+1-(4-thio-b-D-arabinofuranosyl)-5-fluoro cytidine,False,45.99999999999999,NC1=NC(=O)N([C@@H]2S[C@H](CO)[C@@H](O)[C@@H]2O)C=C1F,10.3390/v2091968,1-(4-thio-b-D-arabinofuranosyl)-5-fluoro cytidine,nucleoside_orthopox_papers
+"5-iodo-4-thio-3â€™,5â€™-di-O-acetyl-2â€™-deoxyuridine",False,88.88888888888889,CC(=O)OC[C@H]1O[C@@H](N2C=C(I)C(=S)NC2=O)C[C@@H]1OC(C)=O,10.3390/v2091968,"5-iodo-4-thio-3â€™,5â€™-di-O-acetyl-2â€™-deoxyuridine",nucleoside_orthopox_papers
+kay-2-41,False,29.166666666666668,CC1=CN([C@@]2(C)C[C@H](O)[C@@H](CO)S2)C(=O)NC1=O,10.1128/AAC.01601-13,kay-2-41,nucleoside_orthopox_papers

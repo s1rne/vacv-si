@@ -1,0 +1,21 @@
+Title,sentinel,si,smiles,pmc,label,rule
+Rotenone,False,6.667,C=C(C)[C@H]1CC2=C(C=CC3=C2O[C@@H]2COC4=CC(OC)=C(OC)C=C4[C@@H]2C3=O)O1,PMC10434227,Rotenone,reframe2023_tables12
+Monensin,False,714.286,CC[C@@]1([C@@H]2O[C@@H]([C@H]3O[C@@](O)(CO)[C@H](C)C[C@@H]3C)C[C@@H]2C)CC[C@H]([C@]2(C)CC[C@]3(C[C@H](O)[C@@H](C)[C@@H]([C@@H](C)[C@@H](OC)[C@H](C)C(=O)O)O3)O2)O1,PMC10434227,Monensin,reframe2023_tables12
+OSU-03012,False,9.582,NCC(=O)NC1=CC=C(N2N=C(C(F)(F)F)C=C2C2=CC=C3C(=C2)C=CC2=CC=CC=C23)C=C1,PMC10434227,OSU-03012,reframe2023_tables12
+Buparvaquone,False,68.977,CC(C)(C)C1CCC(CC2=C(O)c3ccccc3C(=O)C2=O)CC1,PMC10434227,Buparvaquone,reframe2023_tables12
+Mubritinib,False,0.753,FC(F)(F)C1=CC=C(/C=C/C2=NC(COC3=CC=C(CCCCN4C=CN=N4)C=C3)=CO2)C=C1,PMC10434227,Mubritinib,reframe2023_tables12
+Pyrazofurin,False,185.185,NC(=O)C1=C(O)C([C@@H]2O[C@H](CO)[C@@H](O)[C@H]2O)=NN1,PMC10434227,Pyrazofurin,reframe2023_tables12
+AVN-944,False,384.615,CC[C@H](CC#N)OC(=O)N[C@@H](C)C1=CC=CC(NC(=O)NC2=CC(OC)=C(C3=CN=CO3)C=C2)=C1,PMC10434227,AVN-944,reframe2023_tables12
+Narasin,False,65.0,CC[C@@H](C(=O)O)[C@@H]1O[C@@H]([C@@H](C)[C@H](O)[C@H](C)C(=O)[C@H](CC)[C@H]2O[C@]3(C=C[C@@H](O)[C@]4(CC[C@@](C)([C@H]5CC[C@](O)(CC)[C@H](C)O5)O4)O3)[C@H](C)C[C@@H]2C)[C@@H](C)C[C@@H]1C,PMC10434227,Narasin,reframe2023_tables12
+Antimycin A,False,124.714,CCCCCC[C@H]1C(=O)O[C@H](C)[C@H](NC(=O)C2=CC=CC(NC=O)=C2O)C(=O)O[C@@H](C)[C@@H]1OC(=O)CC(C)C,PMC10434227,Antimycin A,reframe2023_tables12
+Azauridine,False,78.125,O=C1C=NN([C@@H]2O[C@H](CO)[C@@H](O)[C@H]2O)C(=O)N1,PMC10434227,Azauridine,reframe2023_tables12
+Tryptanthrin,False,4.572,O=C1C2=NC3=CC=CC=C3C(=O)N2C2=C1C=CC=C2,PMC10434227,Tryptanthrin,reframe2023_tables12
+Amuvatinib,False,3.889,S=C(NCC1=CC2=C(C=C1)OCO2)N1CCN(C2=NC=NC3=C2OC2=CC=CC=C23)CC1,PMC10434227,Amuvatinib,reframe2023_tables12
+Azaribine,False,113.636,CC(=O)OC[C@H]1O[C@@H](N2N=CC(=O)NC2=O)[C@H](OC(C)=O)[C@@H]1OC(C)=O,PMC10434227,Azaribine,reframe2023_tables12
+Azoxystrobin,False,3.525,CO/C=C(/C(=O)OC)C1=C(OC2=NC=NC(OC3=CC=CC=C3C#N)=C2)C=CC=C1,PMC10434227,Azoxystrobin,reframe2023_tables12
+Brequinar,False,416.667,CC1=C(C(=O)O)C2=C(C=CC(F)=C2)N=C1C1=CC=C(C2=CC=CC=C2F)C=C1,PMC10434227,Brequinar,reframe2023_tables12
+Buparvaquone,False,68.977,C=C1C(C)=C(C[C@@H]2CC[C@@H](C(C)(C)C)CC2)C(=C)C2=C1C=CC=C2,PMC10434227,Buparvaquone,reframe2023_tables12
+Spautin-1,False,1.18,FC1=CC=C(CNC2=C3C=C(F)C=CC3=NC=N2)C=C1,PMC10434227,Spautin-1,reframe2023_tables12
+Mycophenolate mofetil,False,125.0,COC1=C(C/C=C(\C)CCC(=O)OCCN2CCOCC2)C(O)=C2C(=O)OCC2=C1C,PMC10434227,Mycophenolate mofetil,reframe2023_tables12
+Valinomycin,False,96.667,CC(C)[C@@H]1NC(=O)[C@H](C(C)C)OC(=O)[C@@H](C(C)C)NC(=O)[C@@H](C)OC(=O)[C@@H](C(C)C)NC(=O)[C@H](C(C)C)OC(=O)[C@@H](C(C)C)NC(=O)[C@@H](C)OC(=O)[C@H](C(C)C)NC(=O)[C@H](C(C)C)OC(=O)[C@H](C(C)C)NC(=O)[C@H](C)OC1=O,PMC10434227,Valinomycin,reframe2023_tables12
+Mycophenolic acid,False,326.087,COC1=C(C/C=C(\C)CCC(=O)O)C(O)=C2C(=O)OCC2=C1C,PMC10434227,Mycophenolic acid,reframe2023_tables12

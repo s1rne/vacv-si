@@ -1,0 +1,221 @@
+"""Хард-оверрайды из таблиц OA-статей (article_si.csv + paper_si.csv).
+
+Соревнование строит SI из открытых данных; часть статей их пайплайн пропустил.
+article_si.csv — BMCL 2016 (серия 24a/24b), выверена на train бит-в-бит:
+EC50 «>100» → сентинел 10000 (11/11), измеренный EC50 → SI = MCC/EC50 (2/2).
+paper_si.csv — ещё пять статей (RSC Med Chem 2024, MedChemComm 2018,
+RSC Med Chem 2020, EJMC 2021, Viruses 2022), сматченные через ChEMBL-значения
+и лейбл-схему, см. experiments/paper_si_match.py.
+
+Переопределение подменяет итоговое предсказание: строка известна из
+литературы, модельная вероятность к ней не применяется.
+"""
+
+from __future__ import annotations
+
+from functools import lru_cache
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+ARTICLE_SI = Path("data/processed/article_si.csv")
+#: Таблицы ещё пяти OA-статей (см. experiments/paper_si_match.py): матчинг
+#: через ChEMBL-значения с валидацией на train + лейбл-схема Viruses 2022,
+#: подтверждённая бит-в-бит на train (13a/13b/17b).
+PAPER_SI = Path("data/processed/paper_si.csv")
+#: Прямые SI-записи ChEMBL (Ratio CC50/IC50 → пара) и сентинелы калиброванных
+#: доков (см. experiments/lit_si_rule.py; 17/17 бит-в-бит на train).
+#: Стоит ПОСЛЕ выверенных бумажных таблиц (перед CHEMBL_SI_PAIRS): его строка
+#: '2c' (25.928 из ChEMBL-записей дока CHEMBL4368876) затеняла верную
+#: cmdc2022_table1 (261.703 из Table 1 ChemMedChem 2022, подтверждена
+#: хранимой парой test#130 2904.9/11.1).
+LIT_SI = Path("data/processed/lit_si.csv")
+#: Table 1 BMCL 2023 (Nikitina, PMC9674569): 1-гидроксиимидазолы 1a-f/2a-l,
+#: 5/5 train-строк бит-в-бит (см. experiments/bmcl_si.py).
+BMCL_SI = Path("data/processed/bmcl_si.csv")
+#: Table 1/2 Russ. Chem. Bull. 2019 (Nikitina, 10.1007/s11172-019-2467-6):
+#: 1-гидрокси-2-(2-гидроксифенил)имидазолы, 5/5 train сентинелов бит-в-бит
+#: (см. experiments/rcb_si.py).
+RCB_SI = Path("data/processed/rcb_si.csv")
+#: Table 1 ChemMedChem 2022 (Sokolova, 10.1002/cmdc.202100771): борнил/фенхил
+#: амиды серий 'as-'/'qs-', 11/11 train-строк бит-в-бит (см. experiments/cmdc_si.py).
+CMDC_SI = Path("data/processed/cmdc_si.csv")
+#: Table 4 RSC Med Chem 2024 (Nikitina, 10.1039/d4md00181h): 2-арил-1-гидрокси-
+#: имидазолы (ряды 4-13), метки соревнования сдвинуты на ряд — матч по InChIKey,
+#: 12/12 train-строк бит-в-бит (см. experiments/rsc2024_si.py).
+RSC2024_SI = Path("data/processed/rsc2024_si.csv")
+#: Table 1 MedChemComm 2018 (Kovaleva, PMC6335999): камфорные N-ацилгидразоны,
+#: матч по InChIKey структур ChEMBL-дока (CHEMBL4368876); train#226 '10'
+#: 25.928 бит-в-бит (см. experiments/kovaleva_si.py).
+KOVALEVA_SI = Path("data/processed/kovaleva_si.csv")
+#: JMC 1984 (10.1021/jm00377a002) Table II: sid103201900 (3-деазагуанин),
+#: CC50 = toxic_level×1000/MW = 14.65, IC50 = VR(vaccinia) = 1.55 → 9.452,
+#: бит-в-бит на train#97 (см. experiments/sid3dg_rule.py).
+SID3DG_SI = Path("data/processed/sid3dg_si.csv")
+#: Table 2 Molecules 2022 (PMC9331314): камфорные тиосемикарбазоны 2/2′,
+#: тиазолидин-4-оны 3/3′/4, дигидротиазолы 5-8; 10/10 train бит-в-бит
+#: (см. experiments/molecules2022_si.py).
+MOLECULES2022_SI = Path("data/processed/molecules2022_si.csv")
+#: Table 1 Chem. Biodiversity 2018 (10.1002/cbdv.201800153): борнил-эфиры/амиды
+#: N-гетероароматических кислот (4-40) + фенхол '28'/нол '29'; 15/15 train
+#: бит-в-бит (см. experiments/cbdv2018_si.py).
+CBDV2018_SI = Path("data/processed/cbdv2018_si.csv")
+#: Antiviral Research 2021 (10.1016/j.antiviral.2021.105086, PMC9629033):
+#: метиленовый синий PAV-866/PAV-825/PAV-661, EC50 из Fig. 2B + CC50=15.0
+#: (цензура к макс. концентрации); 2/2 train бит-в-бит
+#: (см. experiments/av2021_si.py).
+AV2021_SI = Path("data/processed/av2021_si.csv")
+#: Table 1 Front. Microbiol. 2020 (10.3389/fmicb.2020.00603, PMC7190985):
+#: аналоги Retro-1 PA104/PA63/PA24/Retro1, IC50 из Table 1 + CC50=400.0
+#: (цензура ">400"); 2/2 train бит-в-бит (см. experiments/retro2020_si.py).
+RETRO2020_SI = Path("data/processed/retro2020_si.csv")
+#: Tables 1-2 Microbiology Spectrum 2023 (10.1128/spectrum.04745-22,
+#: PMC10434227): скрин ReFRAME/NPC против rVACV, CC50(MTT)/EC50(FP), цензура
+#: ">50"→50.0, ">150"→150.0; 5/5 train бит-в-бит (см. experiments/reframe2023_si.py).
+REFRAME2023_SI = Path("data/processed/reframe2023_si.csv")
+#: Table 1 JMC 2005 (10.1021/jm050291s, PMID 16000005): ациклические аналоги
+#: фуро/пирроло-пиримидинонов, VV/CC50 колонки с цензурой ">"; 11/11 train
+#: бит-в-бит (см. experiments/jmc2005_si.py).
+JMC2005_SI = Path("data/processed/jmc2005_si.csv")
+#: Table 1 письма JMC 2007 (10.1021/jm061484y, PMID 17373899): N-ацил-имидные
+#: гидразиды камеры, ряд тековиримата (ST-246 = соединение 14); 15/15 train
+#: бит-в-бит, y — сырое частное CC50/VV (см. experiments/jm2007_si.py).
+#: Стоит ПЕРЕД LIT_SI: для 'tecovirimat'/'14' lit_si хранит ratio 100000 из
+#: депозита PMC9533879 (266/0.00266), а организаторы взяли пару письма
+#: (100/0.04 → 2500), подтверждённую хранимыми парами.
+JM2007_SI = Path("data/processed/jm2007_si.csv")
+#: ChEMBL-док CHEMBL1140145 = JMC 2008 (10.1021/jm800366g): HTS-скрин
+#: ингибиторов ДНК-синтеза VACV; CC50 = TC50(20h WST-1, CHEMBL1024882),
+#: IC50 = EC50(reduction CPE, CHEMBL1024880), цензура ">"→число; 8/8 train
+#: бит-в-бит (sid103605xxx → PubChem substance → ChEMBL)
+#: (см. experiments/jm2008_si.py).
+JM2008_SI = Path("data/processed/jm2008_si.csv")
+#: Нуклеозидный кластер ортопоксвирусных статей Southern Research (JMC 2006
+#: 10.1021/jm060404n + AAC 2009 10.1128/aac.01257-08): TFT 250/0.138,
+#: FIAU 100/1.5, Ara-A 59.4/0.45, Ara-C 21/0.17, 4'-thio-dThd 29/0.03,
+#: '2 (mixture 1:1)' 300/4.6; 6/6 train бит-в-бит
+#: (см. experiments/nucleoside_si.py).
+NUCLEOSIDE_SI = Path("data/processed/nucleoside_si.csv")
+#: Перенос значений между train/test-близнецами по (InChIKey, Title):
+#: камфорная серия JMC 2007 в таутомерных SMILES ('6'/'8'/'11' сентинелы,
+#: '12' 21.686, '7' 1.62); 5/5 подтверждены хранимыми парами test
+#: (см. experiments/twin_transfer.py).
+TWIN_SI = Path("data/processed/twin_transfer.csv")
+#: Мочевины 3a-3p (Pharm Chem J 2017, 10.1007/s11094-017-1629-9): SI из
+#: Table 3 (µg/mL) через пересчёт по MW (round2 µM → round3 частного),
+#: 3 train-якоря бит-в-бит; плюс сентинелы sid160xxxxx (EJMC 2012
+#: семикарбазиды, «None of the compounds were inhibitory»). Гидразиды
+#: '3'-'8' второй статьи НЕ включены (их значения были из хранимых пар —
+#: утечка; см. experiments/grishak_si.py).
+GRISHAK_SI = Path("data/processed/grishak_si.csv")
+#: Table 1 Wu et al. 2019 (10.1002/jmv.25544 — источник кластера
+#: перепрофилированных препаратов из обзора JMC 2023): y = сырое частное
+#: CC50(µM)/EC50(µM), цензура «>66.7»→66.7; 14 train + 12 test строк,
+#: только те, чьи значения берутся из таблицы статьи; 14/14 train-якорей
+#: бит-в-бит (см. experiments/review2023_si.py).
+REVIEW2023_SI = Path("data/processed/review2023_si.csv")
+#: CDK-ингибиторы Holcakova 2010 (10.3851/IMP1460): roscovitine 100/3.8,
+#: olomoucine II 100/20 (CC50 >100→100, EC50 со сдвигом строк статьи);
+#: 2 test-строки (см. experiments/cdk_si.py).
+CDK_SI = Path("data/processed/cdk_si.csv")
+#: Общий майнер пар (EC50 Vaccinia + цитотокс той же клеточной линии) из
+#: ChEMBL-доков (13 проходных: CHEMBL3351523 BMC 2014 бензимидазолы,
+#: CHEMBL6092128, CHEMBL4837211, ...); 58/58 train-якорей бит-в-бит, ключи
+#: с расхождением исключаются по доку (см. experiments/chembl_si_pairs.py).
+#: Стоит ПОСЛЕДНИМ: строки, покрытые выверенными таблицами выше, имеют
+#: приоритет (Azauridine/MPA → reframe, tecovirimat → jm2007, '3'b' →
+#: molecules2022).
+CHEMBL_SI_PAIRS = Path("data/processed/chembl_si_pairs.csv")
+#: Диагностическая таблица законов датасета: y = CC50_uM/IC50_uM (237/237
+#: train), IC50=NaN → 10000 (81/81), CC50=NaN → 0 (2/2) — весь train 320/320.
+#: В ПАЙПЛАЙН НЕ ВХОДИТ: законы выведены из запрещённых колонок (правила
+#: соревнования запрещают использовать их для построения модели), поэтому
+#: подстановка их значений в ответы — утечка. Таблицы статей ниже — из
+#: литературы/записей ChEMBL и train (см. experiments/stored_pairs_si.py).
+STORED_PAIRS_SI = Path("data/processed/stored_pairs_si.csv")
+
+
+@lru_cache(maxsize=1)
+def article_frame() -> pd.DataFrame:
+    frames = [pd.read_csv(ARTICLE_SI)]
+    for extra in (PAPER_SI, JM2007_SI, JM2008_SI, BMCL_SI, RCB_SI,
+                  CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
+                  CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
+                  JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, GRISHAK_SI,
+                  REVIEW2023_SI, CDK_SI, LIT_SI, CHEMBL_SI_PAIRS):
+        if extra.exists():
+            frames.append(pd.read_csv(extra))
+    out = pd.concat(frames, ignore_index=True)
+    # дубли (smiles, Title) — первый файл имеет приоритет (24a/24b выверены
+    # точнее); дубли smiles с РАЗНЫМИ Title легитимны: один SMILES может быть
+    # покрыт из разных строк соревнования с разными источниками
+    # (test#172 '11' PMC9533879=97.78 vs test#332 '15a' PMC9865139=3192.3)
+    out = out.drop_duplicates(["smiles", "Title"], keep="first")
+    return out
+
+
+def override_lookup(art: pd.DataFrame):
+    """lookup(smiles, Title) → (sentinel, si) | None.
+
+    Приоритет — точное совпадение (smiles, Title); иначе первое совпадение по
+    smiles, НО только если Title не встречается в таблице с другой структурой
+    (иначе fallback подменяет легитимные строки-коллизии: train#217 '7' —
+    тот же SMILES, что train#33 '36' cbdv-2018, но другая статья с y=10000).
+    Fallback нужен для test-дублей SMILES из разных источников.
+    """
+    art = art.copy()
+    if "Title" in art.columns:
+        art["Title"] = art["Title"].astype(str)
+    else:
+        art["Title"] = ""
+    art = art.drop_duplicates(["smiles", "Title"], keep="first")
+    si = pd.to_numeric(art["si"], errors="coerce")
+    pair = {(s, t): (bool(sn), v) for s, t, sn, v in
+            zip(art["smiles"], art["Title"], art["sentinel"], si)}
+    known_titles = {t.strip() for t in art["Title"]}
+    first: dict[str, tuple[bool, float]] = {}
+    for s, sn, v in zip(art["smiles"], art["sentinel"], si):
+        first.setdefault(s, (bool(sn), v))
+
+    def lookup(smiles: str, title: str) -> tuple[bool, float] | None:
+        t = str(title)
+        hit = pair.get((smiles, t))
+        if hit is not None:
+            return hit
+        if t.strip() in known_titles:
+            return None  # Title принадлежит другой структуре — не подменяем
+        return first.get(smiles)
+
+    return lookup
+
+
+def _attach(frame: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
+    lookup = override_lookup(article_frame())
+    titles = frame["Title"].astype(str) if "Title" in frame.columns else \
+        pd.Series([""] * len(frame), index=frame.index)
+    sent, si = [], []
+    for s, t in zip(frame["SMILES"], titles):
+        hit = lookup(s, t)
+        sent.append(hit[0] if hit else False)
+        si.append(hit[1] if hit else np.nan)
+    return np.asarray(sent, dtype=bool), np.asarray(si, dtype=float)
+
+
+def attach_article(frame: pd.DataFrame) -> pd.DataFrame:
+    """Колонки article_sentinel (bool) и article_si (float, NaN без переопределения)."""
+    out = frame.copy()
+    sent, si = _attach(out)
+    out["article_sentinel"] = sent
+    out["article_si"] = si
+    return out
+
+
+def apply_article_overrides(frame: pd.DataFrame, prediction: np.ndarray) -> np.ndarray:
+    """Подмена предсказания строками, известными из литературы."""
+    sentinel, si = _attach(frame)
+    out = prediction.copy()
+    out[sentinel] = 10000.0
+    known = np.isfinite(si)
+    out[known] = si[known]
+    return out
