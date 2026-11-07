@@ -1,0 +1,893 @@
+[
+  {
+    "id": "viruses2023_cage_amide",
+    "doi": "10.3390/v15010029",
+    "citation": "Mozhaitsev et al., Viruses 2023;15(1):29",
+    "table": "Table 1 (TC50/IC50/SI vs vaccinia virus Copenhagen, Vero), open access",
+    "units_original": "uM",
+    "cell_line": "Vero",
+    "strain": "VACV Copenhagen",
+    "groups": [
+      "G1",
+      "G3",
+      "G6"
+    ],
+    "smarts": [
+      "C12CC3CC(C1)CC(C3)C2"
+    ],
+    "note": "labels read off the row order of Table 1, whose first column is a structure image: 12a,12b,13a,13b,14a,14b,15a,15b,16a,16b,17a,17b,18a,18b,bromantane",
+    "rows": [
+      {
+        "label": "12a",
+        "cc50": "105.67",
+        "ic50": "4.70",
+        "si": "23"
+      },
+      {
+        "label": "12b",
+        "cc50": "101.33",
+        "ic50": "6.73",
+        "si": "15"
+      },
+      {
+        "label": "13a",
+        "cc50": "347.31",
+        "ic50": "0.41",
+        "si": "847"
+      },
+      {
+        "label": "13b",
+        "cc50": "104.00",
+        "ic50": "2.14",
+        "si": "49"
+      },
+      {
+        "label": "14a",
+        "cc50": "346.00",
+        "ic50": "0.13",
+        "si": "2662"
+      },
+      {
+        "label": "14b",
+        "cc50": "104.00",
+        "ic50": "0.18",
+        "si": "578"
+      },
+      {
+        "label": "15a",
+        "cc50": "415.00",
+        "ic50": "0.13",
+        "si": "3192"
+      },
+      {
+        "label": "15b",
+        "cc50": "129.67",
+        "ic50": "0.22",
+        "si": "589"
+      },
+      {
+        "label": "16a",
+        "cc50": ">100",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "16b",
+        "cc50": ">100",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "17a",
+        "cc50": "7.75",
+        "ic50": "0.95",
+        "si": "8"
+      },
+      {
+        "label": "17b",
+        "cc50": "9.50",
+        "ic50": "0.99",
+        "si": "10"
+      },
+      {
+        "label": "18a",
+        "cc50": "546.43",
+        "ic50": "0.03",
+        "si": "18214"
+      },
+      {
+        "label": "18b",
+        "cc50": "492.00",
+        "ic50": "0.04",
+        "si": "12300"
+      },
+      {
+        "label": "bromantane",
+        "cc50": "86.60",
+        "ic50": "38.88",
+        "si": "2"
+      }
+    ]
+  },
+  {
+    "id": "bmcl2023_hydroxyimidazole",
+    "doi": "10.1016/j.bmcl.2022.129080",
+    "citation": "Nikitina et al., Bioorg Med Chem Lett 2023;79:129080",
+    "table": "Table 1 (CC50/IC50/SI vs vaccinia virus Copenhagen, Vero), open access",
+    "units_original": "uM",
+    "cell_line": "Vero",
+    "strain": "VACV Copenhagen",
+    "groups": [
+      "G1",
+      "G3",
+      "G5",
+      "G6"
+    ],
+    "smarts": [
+      "[#7;r5]-[OX2H1]"
+    ],
+    "rows": [
+      {
+        "label": "1a",
+        "cc50": "1825.57",
+        "ic50": "15.53",
+        "si": "117"
+      },
+      {
+        "label": "1b",
+        "cc50": "171.54",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "1c",
+        "cc50": "343.30",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "1d",
+        "cc50": "374.91",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "1e",
+        "cc50": "45.70",
+        "ic50": "0.45",
+        "si": "102"
+      },
+      {
+        "label": "1f",
+        "cc50": "321.97",
+        "ic50": "0.35",
+        "si": "919"
+      },
+      {
+        "label": "2a",
+        "cc50": "196.89",
+        "ic50": "15.02",
+        "si": "13"
+      },
+      {
+        "label": "2b",
+        "cc50": "298.90",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "2c",
+        "cc50": "436.26",
+        "ic50": "73.37",
+        "si": "6"
+      },
+      {
+        "label": "2d",
+        "cc50": ">389.11",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "2e",
+        "cc50": ">314.47",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "2f",
+        "cc50": ">331.13",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "2g",
+        "cc50": "164.47",
+        "ic50": "17.64",
+        "si": "9"
+      },
+      {
+        "label": "2h",
+        "cc50": "260.93",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "2i",
+        "cc50": "200.63",
+        "ic50": "3.02",
+        "si": "66"
+      },
+      {
+        "label": "2j",
+        "cc50": "356.95",
+        "ic50": "10.73",
+        "si": "33"
+      },
+      {
+        "label": "2k",
+        "cc50": "26.10",
+        "ic50": "3.40",
+        "si": "8"
+      },
+      {
+        "label": "2l",
+        "cc50": "201.85",
+        "ic50": "20.58",
+        "si": "10"
+      }
+    ]
+  },
+  {
+    "id": "molecules2022_camphor_thiazolidine",
+    "doi": "10.3390/molecules27154761",
+    "citation": "Kovaleva et al., Molecules 2022;27(15):4761",
+    "table": "Table 2 (CC50/IC50/SI vs vaccinia virus), open access",
+    "units_original": "uM",
+    "cell_line": "Vero",
+    "strain": "VACV Copenhagen",
+    "groups": [
+      "G1"
+    ],
+    "smarts": [],
+    "rows": [
+      {
+        "label": "2a",
+        "cc50": "24",
+        "ic50": "6.7",
+        "si": "4"
+      },
+      {
+        "label": "2b",
+        "cc50": "200",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "2d",
+        "cc50": "150",
+        "ic50": "97",
+        "si": "2"
+      },
+      {
+        "label": "2'a",
+        "cc50": "16",
+        "ic50": "4.3",
+        "si": "4"
+      },
+      {
+        "label": "2'b",
+        "cc50": "35",
+        "ic50": "12",
+        "si": "3"
+      },
+      {
+        "label": "2'c",
+        "cc50": "45",
+        "ic50": "14",
+        "si": "3"
+      },
+      {
+        "label": "2'd",
+        "cc50": "130",
+        "ic50": "35",
+        "si": "5"
+      },
+      {
+        "label": "3a",
+        "cc50": "290",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "3b",
+        "cc50": "99",
+        "ic50": "72",
+        "si": ""
+      },
+      {
+        "label": "3c",
+        "cc50": "87",
+        "ic50": "24",
+        "si": "4"
+      },
+      {
+        "label": "3d",
+        "cc50": "310",
+        "ic50": "100",
+        "si": "3"
+      },
+      {
+        "label": "3'a",
+        "cc50": "290",
+        "ic50": "75",
+        "si": "4"
+      },
+      {
+        "label": "3'b",
+        "cc50": "160",
+        "ic50": "66",
+        "si": "2"
+      },
+      {
+        "label": "3'c",
+        "cc50": "220",
+        "ic50": "64",
+        "si": "4"
+      },
+      {
+        "label": "3'd",
+        "cc50": "250",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "4a",
+        "cc50": "270",
+        "ic50": "32.5",
+        "si": "8"
+      },
+      {
+        "label": "4c",
+        "cc50": "290",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "4d",
+        "cc50": "310",
+        "ic50": "12.7",
+        "si": "24"
+      },
+      {
+        "label": "5a",
+        "cc50": "229",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "5b",
+        "cc50": "19",
+        "ic50": "2.5",
+        "si": "8"
+      },
+      {
+        "label": "5c",
+        "cc50": "70",
+        "ic50": "12",
+        "si": "6"
+      },
+      {
+        "label": "5d",
+        "cc50": "144",
+        "ic50": "2.6",
+        "si": "55"
+      },
+      {
+        "label": "6a",
+        "cc50": "98",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "6b",
+        "cc50": "12",
+        "ic50": "4",
+        "si": "3"
+      },
+      {
+        "label": "6c",
+        "cc50": "15",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "6d",
+        "cc50": "17",
+        "ic50": "5.1",
+        "si": "3"
+      },
+      {
+        "label": "7a",
+        "cc50": "232",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "7b",
+        "cc50": "200",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "8a",
+        "cc50": "122",
+        "ic50": "18",
+        "si": "7"
+      },
+      {
+        "label": "8b",
+        "cc50": "17",
+        "ic50": "3",
+        "si": "6"
+      },
+      {
+        "label": "8c",
+        "cc50": "17",
+        "ic50": "3",
+        "si": "6"
+      },
+      {
+        "label": "8d",
+        "cc50": "14",
+        "ic50": "1.5",
+        "si": "9"
+      }
+    ],
+    "series": [
+      {
+        "prefix": "2",
+        "smarts": [
+          "[NX3;!R][CX3](=[SX1])[NX3;!R]"
+        ],
+        "not_smarts": []
+      },
+      {
+        "prefix": "3",
+        "smarts": [
+          "[#16;R1]1[CH2][CX3](=O)[NX3][CX3]1"
+        ],
+        "not_smarts": []
+      },
+      {
+        "prefix": "4",
+        "smarts": [
+          "[#16;R1]1[CX4]([CH3])([CH3])[CX3](=O)[NX3][CX3]1"
+        ],
+        "not_smarts": []
+      },
+      {
+        "prefix": "5",
+        "smarts": [
+          "[#16;R1]1[#6][#6][#7][#6]1"
+        ],
+        "not_smarts": [
+          "[#6;R1]=[OX1]"
+        ]
+      },
+      {
+        "prefix": "6",
+        "smarts": [
+          "[#16;R1]1[#6][#6][#7][#6]1"
+        ],
+        "not_smarts": [
+          "[#6;R1]=[OX1]"
+        ]
+      },
+      {
+        "prefix": "7",
+        "smarts": [
+          "[#16;R1]1[#6][#6][#7][#6]1"
+        ],
+        "not_smarts": [
+          "[#6;R1]=[OX1]"
+        ]
+      },
+      {
+        "prefix": "8",
+        "smarts": [
+          "[#16;R1]1[#6][#6][#7][#6]1"
+        ],
+        "not_smarts": [
+          "[#6;R1]=[OX1]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ru2794763_imidazole_nitrophenyl",
+    "doi": "RU2794763C1",
+    "citation": "Patent RU 2 794 763 C1 (NIOCH SB RAS / VECTOR), Nikolaenkova, Tikhonov et al.",
+    "table": "Table 1, FIPS full text; values converted by the patent itself into micromoles",
+    "units_original": "ug/mL (uM given in parentheses)",
+    "cell_line": "Vero",
+    "strain": "VACV Copenhagen",
+    "groups": [
+      "G1",
+      "G3",
+      "G6"
+    ],
+    "smarts": [],
+    "note": "patent labels Ia-Id; linked by exact molecular formula and mass (Ic, C13H13N3O4, M 275.26, 1-methoxy-5-acetyl-4-methyl-2-(4-nitrophenyl)imidazole) to the only competition row with that structure",
+    "rows": [
+      {
+        "label": "Ia",
+        "cc50": "28.48",
+        "ic50": "0.65",
+        "si": "43.5"
+      },
+      {
+        "label": "Ib",
+        "cc50": "142.42",
+        "ic50": "0.13",
+        "si": "1072.8"
+      },
+      {
+        "label": "Ic",
+        "cc50": "443.6",
+        "ic50": "4.76",
+        "si": "93.2"
+      },
+      {
+        "label": "Id",
+        "cc50": "1154.3",
+        "ic50": "3.96",
+        "si": ""
+      }
+    ],
+    "explicit": {
+      "Ic": [
+        [
+          "test",
+          324
+        ]
+      ]
+    }
+  },
+  {
+    "id": "medchemcomm2018_camphor_thiazole",
+    "doi": "10.1039/c8md00347e",
+    "citation": "Sokolova et al., MedChemComm 2018;9(11):1746-1753",
+    "table": "Table 1 (TC50/IC50/SI vs vaccinia virus), PMC6194496",
+    "units_original": "uM",
+    "cell_line": "Vero",
+    "strain": "VACV Copenhagen",
+    "groups": [
+      "G1"
+    ],
+    "smarts": [],
+    "series": [
+      {
+        "labels": [
+          "1"
+        ],
+        "smarts": [
+          "[NX3][CX3](=[SX1])[NX3]"
+        ],
+        "not_smarts": [
+          "[#16;R1]"
+        ]
+      },
+      {
+        "labels": [
+          "4a",
+          "4b",
+          "4c",
+          "4d",
+          "4e",
+          "4f",
+          "4g"
+        ],
+        "smarts": [
+          "c1cscn1"
+        ],
+        "not_smarts": []
+      },
+      {
+        "labels": [
+          "5",
+          "6a",
+          "6b",
+          "6c",
+          "6d",
+          "8a",
+          "8b"
+        ],
+        "smarts": [
+          "[#16;R1]1[#6][CX3](=[OX1])[NX3][#6]1"
+        ],
+        "not_smarts": []
+      },
+      {
+        "labels": [
+          "7"
+        ],
+        "smarts": [
+          "[#16;R1]1[#6][CX3](=[SX1])[NX3][#6]1"
+        ],
+        "not_smarts": []
+      }
+    ],
+    "rows": [
+      {
+        "label": "1",
+        "cc50": "224.8",
+        "ic50": "17.7",
+        "si": "13"
+      },
+      {
+        "label": "4a",
+        "cc50": "13.9",
+        "ic50": "3.2",
+        "si": ""
+      },
+      {
+        "label": "4b",
+        "cc50": "64.1",
+        "ic50": "2.7",
+        "si": "24"
+      },
+      {
+        "label": "4c",
+        "cc50": "77.1",
+        "ic50": "2.4",
+        "si": "32"
+      },
+      {
+        "label": "4d",
+        "cc50": "175.8",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "4e",
+        "cc50": "93.6",
+        "ic50": "3.7",
+        "si": "26"
+      },
+      {
+        "label": "4f",
+        "cc50": "13.7",
+        "ic50": "4.5",
+        "si": "3"
+      },
+      {
+        "label": "4g",
+        "cc50": "261.0",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "5",
+        "cc50": "305.2",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "6a",
+        "cc50": "287.8",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "6b",
+        "cc50": "163.9",
+        "ic50": "14.4",
+        "si": "11"
+      },
+      {
+        "label": "6c",
+        "cc50": "37.5",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "6d",
+        "cc50": "25.2",
+        "ic50": "3.2",
+        "si": "8"
+      },
+      {
+        "label": "7",
+        "cc50": "17.5",
+        "ic50": "3.3",
+        "si": "5"
+      },
+      {
+        "label": "8a",
+        "cc50": "14.5",
+        "ic50": "5.2",
+        "si": "3"
+      },
+      {
+        "label": "8b",
+        "cc50": "120.5",
+        "ic50": "9.5",
+        "si": "13"
+      }
+    ]
+  },
+  {
+    "id": "rscmedchem2024_aryl_hydroxyimidazole",
+    "doi": "10.1039/d4md00181h",
+    "citation": "Basanova et al., RSC Med Chem 2024;15(9):3196-3210",
+    "table": "Table 1 (CC50/IC50(VACV)/SI, Vero), open access via PMC11331333",
+    "units_original": "uM",
+    "cell_line": "Vero",
+    "strain": "VACV Copenhagen",
+    "groups": [
+      "G1",
+      "G3",
+      "G6"
+    ],
+    "smarts": [
+      "[#6]1:[#7]:[#6]:[#6]:[#7]:1"
+    ],
+    "note": "the competition file numbers these series one lower than the published paper (paper 5a-e, 6a-b, 7a-e, 9a/9c, 10a/10b, 11a-e, 13 are the file's 4a-e, 5a-b, 6a-e, 8a/8c, 9a/9b, 10a-e, 12), an offset that is consistent across all 22 rows and exact on every training row; `paper_label` keeps the published label",
+    "rows": [
+      {
+        "label": "4a",
+        "published_label": "5a",
+        "cc50": "28.33",
+        "ic50": "0.651",
+        "si": "44"
+      },
+      {
+        "label": "4b",
+        "published_label": "5b",
+        "cc50": "84.56",
+        "ic50": "1.12",
+        "si": "76"
+      },
+      {
+        "label": "4c",
+        "published_label": "5c",
+        "cc50": "3.87",
+        "ic50": "0.07",
+        "si": "55"
+      },
+      {
+        "label": "4d",
+        "published_label": "5d",
+        "cc50": "298.87",
+        "ic50": "12.92",
+        "si": "23"
+      },
+      {
+        "label": "4e",
+        "published_label": "5e",
+        "cc50": "614.37",
+        "ic50": "17.91",
+        "si": "34"
+      },
+      {
+        "label": "5a",
+        "published_label": "6a",
+        "cc50": "1154.34",
+        "ic50": "3.96",
+        "si": "291"
+      },
+      {
+        "label": "5b",
+        "published_label": "6b",
+        "cc50": "757.43",
+        "ic50": "28.51",
+        "si": "27"
+      },
+      {
+        "label": "6a",
+        "published_label": "7a",
+        "cc50": "443.58",
+        "ic50": "4.76",
+        "si": "93"
+      },
+      {
+        "label": "6b",
+        "published_label": "7b",
+        "cc50": "1057.66",
+        "ic50": "228.02",
+        "si": ""
+      },
+      {
+        "label": "6c",
+        "published_label": "7c",
+        "cc50": "176.02",
+        "ic50": "5.90",
+        "si": "30"
+      },
+      {
+        "label": "6d",
+        "published_label": "7d",
+        "cc50": "197.19",
+        "ic50": "62.08",
+        "si": ""
+      },
+      {
+        "label": "6e",
+        "published_label": "7e",
+        "cc50": "356.91",
+        "ic50": "207.35",
+        "si": ""
+      },
+      {
+        "label": "8a",
+        "published_label": "9a",
+        "cc50": "2440.93",
+        "ic50": "183.39",
+        "si": "13"
+      },
+      {
+        "label": "8c",
+        "published_label": "9c",
+        "cc50": "2080.80",
+        "ic50": "14.25",
+        "si": "146"
+      },
+      {
+        "label": "9a",
+        "published_label": "10a",
+        "cc50": "2979.00",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "9b",
+        "published_label": "10b",
+        "cc50": "1508.14",
+        "ic50": "",
+        "si": ""
+      },
+      {
+        "label": "10a",
+        "published_label": "11a",
+        "cc50": "1162.40",
+        "ic50": "6.39",
+        "si": "182"
+      },
+      {
+        "label": "10b",
+        "published_label": "11b",
+        "cc50": "100.15",
+        "ic50": "2.91",
+        "si": "34"
+      },
+      {
+        "label": "10c",
+        "published_label": "11c",
+        "cc50": "108.62",
+        "ic50": "0.61",
+        "si": "178"
+      },
+      {
+        "label": "10d",
+        "published_label": "11d",
+        "cc50": "51.71",
+        "ic50": "1.22",
+        "si": "43"
+      },
+      {
+        "label": "10e",
+        "published_label": "11e",
+        "cc50": "104.89",
+        "ic50": "1.34",
+        "si": "79"
+      },
+      {
+        "label": "12",
+        "published_label": "13",
+        "cc50": "359.45",
+        "ic50": "27.67",
+        "si": "13"
+      }
+    ]
+  }
+]

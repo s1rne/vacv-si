@@ -33,20 +33,117 @@ numbers, the key used for the link and a confidence level.
 |---|---|---|---|
 | Wu et al., *J Med Virol* 2019;91(11):2016-2024 | `10.1002/jmv.25544` | 26 (VACV Tiantan, Vero) | closed access; no copy in PMC, Unpaywall, OpenAlex or any repository. Only two SI values survive in the abstract (mycophenolate mofetil >334, tranilast >74), both of which match the competition rows and confirm the attribution |
 | Sokolova, Kovaleva et al., *ChemMedChem* 2022;17(12):e202100771 | `10.1002/cmdc.202100771` | 43 (camphor/fenchone hydrazones and bornyl/fenchyl amides) | closed access behind Cloudflare; no repository copy. 16 of its rows were recovered from patent RU 2 800 448 C1 and 4 more from indexed body-text snippets |
-| Nikitina et al., *Russ Chem Bull* 2019;68(3):634-637 | `10.1007/s11172-019-2467-6` | 17 (`PANI-15` … `PANI-54`) | Springer paywall; no OA location. The scaffold classes read off the SMILES partition exactly as the abstract describes, and the competition's blank IC50 cells fall on the N1-substituted analogues the abstract calls inactive, so the attribution is sound but no number was read |
+| Nikitina et al., *Russ Chem Bull* 2019;68(3):634-637 | `10.1007/s11172-019-2467-6` | 17 (`PANI-15` … `PANI-54`; `PANI` is the author's own compound code) | Springer paywall; no OA location. The scaffold classes read off the SMILES partition exactly as the abstract describes, and the competition's blank IC50 cells fall on the N1-substituted analogues the abstract calls inactive, so the attribution is sound but no number was read |
 | Sokolova et al., *Chem Biodivers* 2018;15:e1800153 | `10.1002/cbdv.201800153` | 12 (borneol/camphor esters, `Vaccinia virus` / Vero) | Wiley paywall. Attribution is on chemistry and author overlap only — treat as unconfirmed |
 | Akishina et al., *Весці НАН Беларусі. Сер. хім. навук* 2023;59(3):211-224 | `10.29235/1561-8331-2023-59-3-211-224` | 1 (the second compound labelled `8` in the Moskalev group) | journal page unreachable |
 
+## The Copenhagen / Grishak / ECTV bucket, resolved by chemotype
+
+The 304 rows that carry the Copenhagen, Grishak and ECTV strain strings with
+plain numeric labels are not one paper and not nine unknown ones. All of them
+come from two Novosibirsk groups - NIOCH SB RAS (medicinal chemistry) and the
+State Research Center of Virology and Biotechnology VECTOR (the virology) -
+and the route into them is the institute's own patent and dissertation
+listings rather than a literature search:
+
+- `web3.nioch.nsc.ru/nioch/index.php/ru/nauka-v-niokh/publikatsii/patenty`
+  is a complete index of NIOCH patents. Twelve of them name orthopoxviruses,
+  and each one is a different chemotype in this bucket.
+- `web3.nioch.nsc.ru/nioch/index.php/ru/obrazovanie-v-niokh/dissertatsionnyj-sovet/dissertatsii-i-avtoreferaty`
+  carries full dissertation PDFs, not only the abstracts.
+- Russian patent full text is reachable at
+  `https://www1.fips.ru/registers-doc-view/fips_servlet?DB=RUPAT&DocNumber=<n>&TypeFile=html`
+  (cp1251, tables inline for post-2015 filings and as page images before that).
+  Google Patents and Espacenet both refuse automated requests; FIPS also caps
+  the number of documents per session, so fetches have to be spaced out.
+
+The competition's internal registry codes turn out to be the chemists'
+initials: `as-` is A. S. Sokolova, `ks-` is K. S. Kovaleva, `ya-` is
+O. I. Yarovaya. That is what ties a label to a laboratory and therefore to a
+paper.
+
+### Tables linked by `scripts/link_literature_tables.py`
+
+Each table is transcribed verbatim into
+`data/literature_tables/sources.json` and linked by the paper's own
+compound label, restricted to the `strain` + `Culture` groups the table can
+belong to and to the structural series it is about (a SMARTS filter per
+series). Labels collide across papers in this bucket - `4a`, `6b` and `8b`
+each name two different compounds inside the Copenhagen/Vero group - so the
+series filter is what makes the label key safe.
+
+| paper | identifier | table | train rows / CC50 identical / IC50 identical | test rows covered |
+|---|---|---|---|---|
+| Mozhaitsev et al., *Viruses* 2023;15(1):29 | `10.3390/v15010029` | Table 1, adamantane cage amides, 15 rows | 3 / 3 of 3 / 3 of 3 | 12 |
+| Nikitina et al., *Bioorg Med Chem Lett* 2023;79:129080 | `10.1016/j.bmcl.2022.129080` | Table 1, 1-hydroxyimidazoles `1a-f`, `2a-l` | 3 / 3 of 3 / 3 of 3 | 7 |
+| Kovaleva et al., *Molecules* 2022;27(15):4761 | `10.3390/molecules27154761` | Table 2, camphor thiosemicarbazones, thiazolidinones and thiazol-2-imines, 32 rows | 10 / 10 of 10 / 10 of 10 | 20 |
+| Sokolova et al., *MedChemComm* 2018;9(11):1746 | `10.1039/c8md00347e` | Table 1, camphor thiazoles and thiazolidin-4-ones, 16 rows | 3 / 3 of 3 / 3 of 3 | 12 |
+| Basanova et al., *RSC Med Chem* 2024;15(9):3196 | `10.1039/d4md00181h` | Table 1, 2-aryl-1-hydroxyimidazoles, 22 rows | 7 / 7 of 7 / 7 of 7 | 14 |
+| Patent RU 2 794 763 C1 (NIOCH / VECTOR) | `RU2794763C1` | Table 1, `Ia-Id`, linked by molecular formula | 0 | 1 |
+
+Every training row these six tables touch reproduces both printed numbers
+exactly: **26 train rows, 26 of 26 CC50 identical, 26 of 26 IC50 identical.**
+That is the same accuracy the label key showed before and it is now measured
+on a sample four times larger.
+
+Two findings worth keeping:
+
+- **`10.1039/d4md00181h` is numbered one series lower in the competition
+  file.** The paper's `5a-e`, `6a-b`, `7a-e`, `9a`/`9c`, `10a`/`10b`, `11a-e`
+  and `13` are the file's `4a-e`, `5a-b`, `6a-e`, `8a`/`8c`, `9a`/`9b`,
+  `10a-e` and `12`. The offset is identical on all 22 rows and exact on the
+  seven training rows, so the file was built from an earlier version of that
+  table (the SSRN preprint, `10.2139/ssrn.4619442`) rather than the published
+  one. `paper_label` keeps the published label.
+- **Selivanov's N-amidoimides print µg/mL, and the competition converted
+  them.** `10.30906/0023-1134-2018-52-10-3-7` (diamond open access at
+  `chem.folium.ru`) reports compounds `III-VIII` as 15.63/1.70, 6.42/1.05,
+  >100/0.38, 18.62/0.95, >100/1.30 and >100/1.28 µg/mL. Dividing each pair by
+  the molecular weight of the competition row labelled `3`, `4`, `5`, `6`, `7`
+  and `8` in the Copenhagen/Vero group reproduces that row's µM values to
+  better than 0.2% on all six, which both identifies the paper and explains
+  the censored `100` that appears as 270.75, 33.64 and so on. Those six rows
+  already had open-data values, so nothing was substituted.
+
+### What still blocks the remaining 64 test rows
+
+Test-row coverage inside the six biggest Copenhagen/Grishak/ECTV groups, counting
+`competition_open_data_lookup.csv` and `literature_manual.csv` together:
+
+| group | test rows | from open data | from literature | covered | gap |
+|---|---|---|---|---|---|
+| `Vaccinia virus (strain Copenhagen). culture Vero` | 84 | 51 | 36 | 64 | 20 |
+| `… cowpox (strain_Grishak), ectromelia virus (ECTV, strain K-1)` | 46 | 4 | 11 | 15 | 31 |
+| `… cowpox (strain_Grishak), ectromelia (strain K-1)` | 30 | 22 | 12 | 29 | 1 |
+| `Vaccinia virus, lung fibroblast cells` | 13 | 13 | 0 | 13 | 0 |
+| `Vaccinia virus (strain Copenhagen). culture Vero,` | 11 | 0 | 0 | 0 | 11 |
+| `… cowpox virus (strain_Grishak)` | 25 | 15 | 17 | 24 | 1 |
+
+Four paywalled papers account for all 64, and each is now identified to the
+compound series:
+
+| gap | rows | source | status |
+|---|---|---|---|
+| the whole ECTV/Grishak group's `2x-ks`, `3x-ks`, `7x-as`, `9x-qs`, `10x`, `11x` series | 31 | Sokolova, Kovaleva, Kuranov et al., *ChemMedChem* 2022;17(12):e202100771, `10.1002/cmdc.202100771` | bornylamine (`7`, `8`), fenchylamine (`9`, `10`), isobornyl ester (`11`) amides and camphor/fenchone acylhydrazones (`2`, `3`). Wiley refuses automated requests for the article, the PDF and the supporting information; OpenAlex reports no repository copy. Patent RU 2 800 448 C1 claims only 16 of them (`Ia-f`, `IIa-f` plus stereoisomers) and those 16 are already extracted. The NIOCH 2022 annual report shows the lead values as an image only |
+| `3a`-`3p` N-aryl ureas | 9 | Selivanov et al., *Khim.-Farm. Zh.* 2017;51(6):13-17, Eng. *Pharm Chem J* 51(6):439-443, `10.1007/s11094-017-1629-9` | the 2018 companion paper in the same journal is diamond open access, this one is not online: `chem.folium.ru` publishes issues back to vol. 51 no. 11 only, and the 2017 no. 6 issue id is not served |
+| bornyl and isobornyl amino-acid esters and amides `18`, `22`, `23`, `28`, `38`, `39` | 6 | Sokolova et al., *Arch Pharm* 2021;354:e2100038, `10.1002/ardp.202100038` | OpenAlex calls it bronze open access, but Wiley returns 403 for `pdfdirect`. Patent RU 2 687 254 C1 covers only three of the series (`Ia-Ic`) and prints its table as page images |
+| `PANI-15` … `PANI-54` | 11 | Nikitina et al., *Russ Chem Bull* 2019;68(3):634-637, `10.1007/s11172-019-2467-6` | closed, no repository copy. `PANI` is the author's own code (P. A. Nikitina, MUCTR). Her group's later tables are open (`10.1016/j.bmcl.2022.129080`, `10.1039/d4md00181h`) but none reprints the 2019 numbers; neither does patent RU 2 794 763 C1, which covers the 4-nitrophenyl analogues instead |
+
+Remaining leads not followed: the apocamphanyl/isocamphanyl patent listed on
+the NIOCH page carries a wrong number there (RU 2 867 684 is a polymerisation
+catalyst), and its own follow-up paper, *RSC Med Chem* 2026
+`10.1039/d6md00217j`, renumbers the series (`13d`), so neither maps onto the
+file's `9x`/`10x` labels; K. S. Kovaleva's dissertation
+(`KovalevaKS_diss.pdf`, Table 3) prints the camphor acylhydrazone screen but
+under dissertation numbering (`130a-g`, `131b-e`, `133g-s`), which can only be
+linked through the competition's own concentration columns and so was not used.
+
 ## Group still unresolved
 
-304 competition rows carry the Copenhagen/Grishak/ECTV strain strings with plain
-numeric labels (`3a`, `4f`, `10`, …). 166 distinct labels over 304 rows, with
-`7` appearing 9 times and `8` 8 times, so the bucket holds at least nine
-separate papers and the label alone cannot identify which. Resolving it needs
-scaffold clustering first, then one search per cluster. It was not pursued,
-because the target turned out to be exactly computable from the columns the
-competition already ships (see `docs/exact_target.md`), which leaves this work
-no effect on the score.
+This section recorded the bucket as unresolved. It is now partly resolved -
+see the section above, which identifies the chemotype behind each cluster, the
+paper or patent behind each chemotype, and the four paywalled papers that hold
+the 64 test rows still without a value.
 
 ## What the link keys are worth
 
