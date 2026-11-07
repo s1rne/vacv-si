@@ -20,7 +20,7 @@ Title,sentinel,si,smiles,pmc,label,rule
 7b,True,,C1C[C@@H](C2(C)C)CC(\[C@]12C)=N/N=c3\scc(n3CC=C)-c4ccc(cc4)OC,PMC9331314,7b,molecules2022_table2
 3'a,False,3.867,CC1(C)[C@H]2CC[C@]1(C)/C(=N/N=C1\SCC(=O)N1C1=CC=CC=C1)C2,PMC9331314,3′a,molecules2022_table2
 2a,False,3.582,CC1(C)[C@@H]2CC[C@@]1(C)/C(=N/NC(=S)NC1=CC=CC=C1)C2,PMC9331314,2a,molecules2022_table2
-8c,False,5.667,CCN1/C(=N/N=C2\C[C@H]3CC[C@]2(C)C3(C)C)SC[C@H]1C1=CC=CC=C1,PMC9331314,8c,molecules2022_table2
+8c,False,5.152,CCN1/C(=N/N=C2\C[C@H]3CC[C@]2(C)C3(C)C)SC[C@H]1C1=CC=CC=C1,PMC9331314,8c,molecules2022_table2
 8b,False,5.667,C=CCN1/C(=N/N=C2\C[C@H]3CC[C@]2(C)C3(C)C)SC[C@H]1C1=CC=CC=C1,PMC9331314,8b,molecules2022_table2
 4d,False,24.409,CN1C(=O)C(C)(C)S/C1=N\N=C1/C[C@H]2CC[C@]1(C)C2(C)C,PMC9331314,4d,molecules2022_table2
 2'c,False,3.214,CCNC(=S)N/N=C1\C[C@@H]2CC[C@@]1(C)C2(C)C,PMC9331314,2′c,molecules2022_table2
