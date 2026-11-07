@@ -1,0 +1,22 @@
+[
+  {
+    "split": "3",
+    "mse": 6733708.663792705,
+    "model": "checkpoint-av"
+  },
+  {
+    "split": "4",
+    "mse": 7283579.136621082,
+    "model": "checkpoint-av"
+  },
+  {
+    "split": "5",
+    "mse": 7227309.97661497,
+    "model": "checkpoint-av"
+  },
+  {
+    "split": "scaffold",
+    "mse": 7841670.668904712,
+    "model": "checkpoint-av"
+  }
+]

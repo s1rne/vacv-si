@@ -1,0 +1,1416 @@
+[
+ {
+  "pmc": "PMC11331333",
+  "label": "4a",
+  "cc50_um": 142.38,
+  "ic50_um": 0.133,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 1072.0,
+  "raw": {
+   "cc50": "142.38 \u00b1 48.45",
+   "ic50": "0.133 \u00b1 0.03",
+   "si": "1072"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "4b",
+  "cc50_um": 174.89,
+  "ic50_um": 0.498,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 351.0,
+  "raw": {
+   "cc50": "174.89 \u00b1 41.94",
+   "ic50": "0.498 \u00b1 0.14",
+   "si": "351"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "4c",
+  "cc50_um": 46.25,
+  "ic50_um": 0.154,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 300.0,
+  "raw": {
+   "cc50": "46.25 \u00b1 8.63",
+   "ic50": "0.154 \u00b1 0.03",
+   "si": "300"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "5a",
+  "cc50_um": 28.33,
+  "ic50_um": 0.651,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 44.0,
+  "raw": {
+   "cc50": "28.33 \u00b1 6.89",
+   "ic50": "0.651 \u00b1 0.19",
+   "si": "44"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "5b",
+  "cc50_um": 84.56,
+  "ic50_um": 1.12,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 76.0,
+  "raw": {
+   "cc50": "84.56 \u00b1 20.45",
+   "ic50": "1.12 \u00b1 0.34",
+   "si": "76"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "5c",
+  "cc50_um": 3.87,
+  "ic50_um": 0.07,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 55.0,
+  "raw": {
+   "cc50": "3.87 \u00b1 1.76",
+   "ic50": "0.07 \u00b1 0.03",
+   "si": "55"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "5d",
+  "cc50_um": 298.87,
+  "ic50_um": 12.92,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 23.0,
+  "raw": {
+   "cc50": "298.87 \u00b1 67.75",
+   "ic50": "12.92 \u00b1 2.84",
+   "si": "23"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "5e",
+  "cc50_um": 614.37,
+  "ic50_um": 17.91,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 34.0,
+  "raw": {
+   "cc50": "614.37 \u00b1 146.44",
+   "ic50": "17.91 \u00b1 2.72",
+   "si": "34"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "6a",
+  "cc50_um": 1154.34,
+  "ic50_um": 3.96,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 291.0,
+  "raw": {
+   "cc50": "1154.34 \u00b1 272.41",
+   "ic50": "3.96 \u00b1 0.22",
+   "si": "291"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "6b",
+  "cc50_um": 757.43,
+  "ic50_um": 28.51,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 27.0,
+  "raw": {
+   "cc50": "757.43 \u00b1 97.85",
+   "ic50": "28.51 \u00b1 7.12",
+   "si": "27"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "7a",
+  "cc50_um": 443.58,
+  "ic50_um": 4.76,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 93.0,
+  "raw": {
+   "cc50": "443.58 \u00b1 102.02",
+   "ic50": "4.76 \u00b1 0.11",
+   "si": "93"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "7b",
+  "cc50_um": 1057.66,
+  "ic50_um": 228.02,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 8.0,
+  "raw": {
+   "cc50": "1057.66 \u00b1 281.26",
+   "ic50": "228.02 \u00b1 47.88",
+   "si": "&lt;8"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "7c",
+  "cc50_um": 176.02,
+  "ic50_um": 5.9,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 30.0,
+  "raw": {
+   "cc50": "176.02 \u00b1 35.20",
+   "ic50": "5.90 \u00b1 1.77",
+   "si": "30"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "7d",
+  "cc50_um": 197.19,
+  "ic50_um": 62.08,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 8.0,
+  "raw": {
+   "cc50": "197.19 \u00b1 49.32",
+   "ic50": "62.08 \u00b1 14.65",
+   "si": "&lt;8"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "7e",
+  "cc50_um": 356.91,
+  "ic50_um": 207.35,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 8.0,
+  "raw": {
+   "cc50": "356.91 \u00b1 90.28",
+   "ic50": "207.35 \u00b1 30.50",
+   "si": "&lt;8"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "9a",
+  "cc50_um": 2440.93,
+  "ic50_um": 183.39,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 13.0,
+  "raw": {
+   "cc50": "2440.93 \u00b1 610.23",
+   "ic50": "183.39 \u00b1 42.17",
+   "si": "13"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "9c",
+  "cc50_um": 2080.8,
+  "ic50_um": 14.25,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 146.0,
+  "raw": {
+   "cc50": "2080.80 \u00b1 520.22",
+   "ic50": "14.25 \u00b1 4.13",
+   "si": "146"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "10a",
+  "cc50_um": 2979.0,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "2979.00 \u00b1 655.38",
+   "ic50": "N/A",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "10b",
+  "cc50_um": 1508.14,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "1508.14 \u00b1 346.87",
+   "ic50": "N/A",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "11a",
+  "cc50_um": 1162.4,
+  "ic50_um": 6.39,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 182.0,
+  "raw": {
+   "cc50": "1162.40 \u00b1 180.11",
+   "ic50": "6.39 \u00b1 1.59",
+   "si": "182"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "11b",
+  "cc50_um": 100.15,
+  "ic50_um": 2.91,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 34.0,
+  "raw": {
+   "cc50": "100.15 \u00b1 18.71",
+   "ic50": "2.91 \u00b1 0.79",
+   "si": "34"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "11c",
+  "cc50_um": 108.62,
+  "ic50_um": 0.61,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 178.0,
+  "raw": {
+   "cc50": "108.62 \u00b1 37.15",
+   "ic50": "0.61 \u00b1 0.30",
+   "si": "178"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "11d",
+  "cc50_um": 51.71,
+  "ic50_um": 1.22,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 43.0,
+  "raw": {
+   "cc50": "51.71 \u00b1 10.34",
+   "ic50": "1.22 \u00b1 0.75",
+   "si": "43"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "11e",
+  "cc50_um": 104.89,
+  "ic50_um": 1.34,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 79.0,
+  "raw": {
+   "cc50": "104.89 \u00b1 22.17",
+   "ic50": "1.34 \u00b1 0.43",
+   "si": "79"
+  }
+ },
+ {
+  "pmc": "PMC11331333",
+  "label": "13",
+  "cc50_um": 359.45,
+  "ic50_um": 27.67,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 13.0,
+  "raw": {
+   "cc50": "359.45 \u00b1 97.08",
+   "ic50": "27.67 \u00b1 3.09",
+   "si": "13"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "1",
+  "cc50_um": 224.8,
+  "ic50_um": 17.7,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 13.0,
+  "raw": {
+   "cc50": "224.8 \u00b1 25.4",
+   "ic50": "17.7 \u00b1 0.4",
+   "si": "13"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "4a",
+  "cc50_um": 13.9,
+  "ic50_um": 3.2,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "13.9 \u00b1 4.6",
+   "ic50": "3.2 \u00b1 1.1",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "4b",
+  "cc50_um": 64.1,
+  "ic50_um": 2.7,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 24.0,
+  "raw": {
+   "cc50": "64.1 \u00b1 5.8",
+   "ic50": "2.7 \u00b1 0.5",
+   "si": "24"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "4c",
+  "cc50_um": 77.1,
+  "ic50_um": 2.4,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 32.0,
+  "raw": {
+   "cc50": "77.1 \u00b1 9.4",
+   "ic50": "2.4 \u00b1 1.2",
+   "si": "32"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "4d",
+  "cc50_um": 175.8,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "175.8 \u00b1 6.9",
+   "ic50": "NA d",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "4e",
+  "cc50_um": 93.6,
+  "ic50_um": 3.7,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 26.0,
+  "raw": {
+   "cc50": "93.6 \u00b1 20.6",
+   "ic50": "3.7 \u00b1 1.4",
+   "si": "26"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "4f",
+  "cc50_um": 13.7,
+  "ic50_um": 4.5,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 3.0,
+  "raw": {
+   "cc50": "13.7 \u00b1 7.4",
+   "ic50": "4.5 \u00b1 1.1",
+   "si": "3"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "4g",
+  "cc50_um": 261.0,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "261.0 \u00b1 20.4",
+   "ic50": "NA",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "5",
+  "cc50_um": 305.2,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "305.2 \u00b1 74.3",
+   "ic50": "NA",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "6a",
+  "cc50_um": 287.8,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "287.8 \u00b1 51.0",
+   "ic50": "NA",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "6b",
+  "cc50_um": 163.9,
+  "ic50_um": 14.4,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 11.0,
+  "raw": {
+   "cc50": "163.9 \u00b1 30.0",
+   "ic50": "14.4 \u00b1 0.7",
+   "si": "11"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "6c",
+  "cc50_um": 37.5,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "37.5 \u00b1 8.5",
+   "ic50": "NA",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "6d",
+  "cc50_um": 25.2,
+  "ic50_um": 3.2,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 8.0,
+  "raw": {
+   "cc50": "25.2 \u00b1 3.4",
+   "ic50": "3.2 \u00b1 1.7",
+   "si": "8"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "7",
+  "cc50_um": 17.5,
+  "ic50_um": 3.3,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 5.0,
+  "raw": {
+   "cc50": "17.5 \u00b1 2.3",
+   "ic50": "3.3 \u00b1 0.3",
+   "si": "5"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "8a",
+  "cc50_um": 14.5,
+  "ic50_um": 5.2,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 3.0,
+  "raw": {
+   "cc50": "14.5 \u00b1 4.4",
+   "ic50": "5.2 \u00b1 1.0",
+   "si": "3"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "8b",
+  "cc50_um": 120.5,
+  "ic50_um": 9.5,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 13.0,
+  "raw": {
+   "cc50": "120.5 \u00b1 4.7",
+   "ic50": "9.5 \u00b1 2.5",
+   "si": "13"
+  }
+ },
+ {
+  "pmc": "PMC6194496",
+  "label": "Cidofovir",
+  "cc50_um": 475.3,
+  "ic50_um": 40.01,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 12.0,
+  "raw": {
+   "cc50": "475.3 \u00b1 74.9",
+   "ic50": "40.01 \u00b1 2.8",
+   "si": "12"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "40",
+  "cc50_um": 1908.6,
+  "ic50_um": 1.7,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 1123.0,
+  "raw": {
+   "cc50": "1908.6 \u00b1 101.4",
+   "ic50": "1.7 \u00b1 0.2",
+   "si": "1123"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "41",
+  "cc50_um": 750.2,
+  "ic50_um": 1.8,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 417.0,
+  "raw": {
+   "cc50": "750.2 \u00b1 84.6",
+   "ic50": "1.8 \u00b1 0.2",
+   "si": "417"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "42",
+  "cc50_um": 319.0,
+  "ic50_um": 12.3,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 26.0,
+  "raw": {
+   "cc50": "319.0 \u00b1 39.6",
+   "ic50": "12.3 \u00b1 0.8",
+   "si": "26"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "43",
+  "cc50_um": 17.3,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "17.3",
+   "ic50": "na",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "44",
+  "cc50_um": 18.9,
+  "ic50_um": 5.9,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 3.0,
+  "raw": {
+   "cc50": "18.9 \u00b1 2.3",
+   "ic50": "5.9 \u00b1 0.6",
+   "si": "3"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "45",
+  "cc50_um": 12.9,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "12.9",
+   "ic50": "na",
+   "si": "\u2014"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "46",
+  "cc50_um": 18.1,
+  "ic50_um": 3.6,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 5.0,
+  "raw": {
+   "cc50": "18.1 \u00b1 2.2",
+   "ic50": "3.6 \u00b1 0.2",
+   "si": "5"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "47",
+  "cc50_um": 316.7,
+  "ic50_um": 10.6,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 30.0,
+  "raw": {
+   "cc50": "316.7 \u00b1 39.3",
+   "ic50": "10.6 \u00b1 0.7",
+   "si": "30"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "48",
+  "cc50_um": 316.9,
+  "ic50_um": 14.4,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 22.0,
+  "raw": {
+   "cc50": "316.9 \u00b1 39.3",
+   "ic50": "14.4 \u00b1 0.9",
+   "si": "22"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "49",
+  "cc50_um": 316.9,
+  "ic50_um": 2.5,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 126.0,
+  "raw": {
+   "cc50": "316.9 \u00b1 39.3",
+   "ic50": "2.5 \u00b1 0.2",
+   "si": "126"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "53",
+  "cc50_um": 1225.9,
+  "ic50_um": 4.6,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 267.0,
+  "raw": {
+   "cc50": "1225.9 \u00b1 143.9",
+   "ic50": "4.6 \u00b1 0.2",
+   "si": "267"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "54",
+  "cc50_um": 372.5,
+  "ic50_um": 4.4,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 85.0,
+  "raw": {
+   "cc50": "372.5 \u00b1 97.7",
+   "ic50": "4.4 \u00b1 0.1",
+   "si": "85"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "55",
+  "cc50_um": 13.7,
+  "ic50_um": 2.8,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 5.0,
+  "raw": {
+   "cc50": "13.7 \u00b1 1.7",
+   "ic50": "2.8 \u00b1 0.2",
+   "si": "5"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "56",
+  "cc50_um": 316.7,
+  "ic50_um": 2.6,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 122.0,
+  "raw": {
+   "cc50": "316.7 \u00b1 39.3",
+   "ic50": "2.6 \u00b1 0.2",
+   "si": "122"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "58a",
+  "cc50_um": 37.0,
+  "ic50_um": 3.1,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 12.0,
+  "raw": {
+   "cc50": "37.0 \u00b1 4.6",
+   "ic50": "3.1 \u00b1 0.2",
+   "si": "12"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "58b",
+  "cc50_um": 329.5,
+  "ic50_um": 14.8,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 22.0,
+  "raw": {
+   "cc50": "329.5 \u00b1 40.8",
+   "ic50": "14.8 \u00b1 0.9",
+   "si": "22"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "61a",
+  "cc50_um": 7.9,
+  "ic50_um": 0.7,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 11.0,
+  "raw": {
+   "cc50": "7.9 \u00b1 0.9",
+   "ic50": "0.7 \u00b1 0.1",
+   "si": "11"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "61b",
+  "cc50_um": 811.5,
+  "ic50_um": 2.5,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 325.0,
+  "raw": {
+   "cc50": "811.5 \u00b1 110.5",
+   "ic50": "2.5 \u00b1 0.1",
+   "si": "325"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "63a",
+  "cc50_um": 164.2,
+  "ic50_um": 2.3,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 71.0,
+  "raw": {
+   "cc50": "164.2 \u00b1 20.3",
+   "ic50": "2.3 \u00b1 0.1",
+   "si": "71"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "63b",
+  "cc50_um": 95.8,
+  "ic50_um": 0.6,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 160.0,
+  "raw": {
+   "cc50": "95.8 \u00b1 11.8",
+   "ic50": "0.6 \u00b1 0.04",
+   "si": "160"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "Cidofovir",
+  "cc50_um": 475.3,
+  "ic50_um": 40.0,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 12.0,
+  "raw": {
+   "cc50": "475.3 \u00b1 30.1",
+   "ic50": "40.0 \u00b1 1.2",
+   "si": "12"
+  }
+ },
+ {
+  "pmc": "PMC7651861",
+  "label": "ST-246",
+  "cc50_um": 1276.0,
+  "ic50_um": 0.01,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 127600.0,
+  "raw": {
+   "cc50": "1276 \u00b1 202",
+   "ic50": "0.01 \u00b1 0.003",
+   "si": "127 600"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "5",
+  "cc50_um": 309.3,
+  "ic50_um": 0.133,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 2325.0,
+  "raw": {
+   "cc50": "&gt;309.3",
+   "ic50": "0.133",
+   "si": "&gt;2325"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "6",
+  "cc50_um": 280.0,
+  "ic50_um": 4.1,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 68.0,
+  "raw": {
+   "cc50": "&gt;280",
+   "ic50": "4.1",
+   "si": "&gt;68"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "7",
+  "cc50_um": 296.4,
+  "ic50_um": 4.85,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 61.0,
+  "raw": {
+   "cc50": "&gt;296.4",
+   "ic50": "4.85",
+   "si": "&gt;61"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "8",
+  "cc50_um": 296.4,
+  "ic50_um": 0.27,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 1098.0,
+  "raw": {
+   "cc50": "&gt;296.4",
+   "ic50": "0.27",
+   "si": "&gt;1098"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "9",
+  "cc50_um": 238.0,
+  "ic50_um": 8.3,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 28.0,
+  "raw": {
+   "cc50": "238",
+   "ic50": "8.3",
+   "si": "28"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "11",
+  "cc50_um": 299.2,
+  "ic50_um": 3.06,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 98.0,
+  "raw": {
+   "cc50": "&gt;299.2",
+   "ic50": "3.06",
+   "si": "&gt;98"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "12",
+  "cc50_um": 309.0,
+  "ic50_um": 0.216,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 1428.0,
+  "raw": {
+   "cc50": "&gt;309",
+   "ic50": "0.216",
+   "si": "&gt;1428"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "16",
+  "cc50_um": 273.0,
+  "ic50_um": 1.07,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 255.0,
+  "raw": {
+   "cc50": "&gt;273",
+   "ic50": "1.07",
+   "si": "&gt;255"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "17",
+  "cc50_um": 253.7,
+  "ic50_um": 30.9,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 8.2,
+  "raw": {
+   "cc50": "&gt;253.7",
+   "ic50": "30.9",
+   "si": "&gt;8.2"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "18",
+  "cc50_um": 47.0,
+  "ic50_um": 12.53,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 3.75,
+  "raw": {
+   "cc50": "47",
+   "ic50": "12.53",
+   "si": "3.75"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "20",
+  "cc50_um": 94.3,
+  "ic50_um": 36.26,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 2.6,
+  "raw": {
+   "cc50": "94.3",
+   "ic50": "36.26",
+   "si": "2.6"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "25",
+  "cc50_um": 297.0,
+  "ic50_um": 198.0,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 1.5,
+  "raw": {
+   "cc50": "&gt;297",
+   "ic50": "198",
+   "si": "&gt;1.5"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "27",
+  "cc50_um": 296.0,
+  "ic50_um": 2.8,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 103.0,
+  "raw": {
+   "cc50": "&gt;296",
+   "ic50": "2.8",
+   "si": "&gt;103"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "28",
+  "cc50_um": 214.6,
+  "ic50_um": 3.52,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 61.0,
+  "raw": {
+   "cc50": "214.6",
+   "ic50": "3.52",
+   "si": "61"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "31",
+  "cc50_um": 274.4,
+  "ic50_um": 10.55,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 26.0,
+  "raw": {
+   "cc50": "&gt;274.4",
+   "ic50": "10.55",
+   "si": "&gt;26"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "32",
+  "cc50_um": 14.0,
+  "ic50_um": 0.515,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 27.0,
+  "raw": {
+   "cc50": "14",
+   "ic50": "0.515",
+   "si": "27"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "35",
+  "cc50_um": 2.8,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "2.8",
+   "ic50": "n",
+   "si": "a"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "36",
+  "cc50_um": 2.5,
+  "ic50_um": 1.66,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 1.5,
+  "raw": {
+   "cc50": "2.5",
+   "ic50": "1.66",
+   "si": "1.5"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "37",
+  "cc50_um": 296.4,
+  "ic50_um": 8.98,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 33.0,
+  "raw": {
+   "cc50": "&gt;296.4",
+   "ic50": "8.98",
+   "si": "&gt;33"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "38",
+  "cc50_um": 20.5,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "20.5",
+   "ic50": "n",
+   "si": "a"
+  }
+ },
+ {
+  "pmc": "PMC9533879",
+  "label": "Tecovirimat",
+  "cc50_um": 266.0,
+  "ic50_um": 0.00266,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 100000.0,
+  "raw": {
+   "cc50": "&gt;266",
+   "ic50": "0.00266",
+   "si": "&gt;100000"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "12a",
+  "cc50_um": 105.67,
+  "ic50_um": 4.7,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 23.0,
+  "raw": {
+   "cc50": "105.67 \u00b1 19.14",
+   "ic50": "4.70 \u00b1 0.37",
+   "si": "23"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "12b",
+  "cc50_um": 101.33,
+  "ic50_um": 6.73,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 15.0,
+  "raw": {
+   "cc50": "101.33 \u00b1 6.11",
+   "ic50": "6.73 \u00b1 0.17",
+   "si": "15"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "13a",
+  "cc50_um": 347.31,
+  "ic50_um": 0.41,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 847.0,
+  "raw": {
+   "cc50": "347.31 \u00b1 38.98",
+   "ic50": "0.41 \u00b1 0.10",
+   "si": "847"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "13b",
+  "cc50_um": 104.0,
+  "ic50_um": 2.14,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 49.0,
+  "raw": {
+   "cc50": "104.00 \u00b1 8.72",
+   "ic50": "2.14 \u00b1 0.13",
+   "si": "49"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "14a",
+  "cc50_um": 346.0,
+  "ic50_um": 0.13,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 2662.0,
+  "raw": {
+   "cc50": "346.00 \u00b1 66.00",
+   "ic50": "0.13 \u00b1 0.08",
+   "si": "2662"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "14b",
+  "cc50_um": 104.0,
+  "ic50_um": 0.18,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 578.0,
+  "raw": {
+   "cc50": "104.00 \u00b1 8.72",
+   "ic50": "0.18 \u00b1 0.04",
+   "si": "578"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "15a",
+  "cc50_um": 415.0,
+  "ic50_um": 0.13,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 3192.0,
+  "raw": {
+   "cc50": "415.00 \u00b1 95.00",
+   "ic50": "0.13 \u00b1 0.08",
+   "si": "3192"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "15b",
+  "cc50_um": 129.67,
+  "ic50_um": 0.22,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 589.0,
+  "raw": {
+   "cc50": "129.67 \u00b1 52.25",
+   "ic50": "0.22 \u00b1 0.07",
+   "si": "589"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "16a",
+  "cc50_um": 100.0,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "&gt;100",
+   "ic50": "NA d",
+   "si": "-"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "16b",
+  "cc50_um": 100.0,
+  "ic50_um": null,
+  "ic50_censored": true,
+  "cc50_censored": false,
+  "si_table": null,
+  "raw": {
+   "cc50": "&gt;100",
+   "ic50": "NA d",
+   "si": "-"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "17a",
+  "cc50_um": 7.75,
+  "ic50_um": 0.95,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 8.0,
+  "raw": {
+   "cc50": "7.75 \u00b1 0.75",
+   "ic50": "0.95 \u00b1 0.03",
+   "si": "8"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "17b",
+  "cc50_um": 9.5,
+  "ic50_um": 0.99,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 10.0,
+  "raw": {
+   "cc50": "9.50 \u00b1 0.87",
+   "ic50": "0.99 \u00b1 0.19",
+   "si": "10"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "18a",
+  "cc50_um": 546.43,
+  "ic50_um": 0.03,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 18214.0,
+  "raw": {
+   "cc50": "546.43 \u00b1 23.98",
+   "ic50": "0.03 \u00b1 0.01",
+   "si": "18,214"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "18b",
+  "cc50_um": 492.0,
+  "ic50_um": 0.04,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 12300.0,
+  "raw": {
+   "cc50": "492.00 \u00b1 31.00",
+   "ic50": "0.04 \u00b1 0.01",
+   "si": "12,300"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "bromantane",
+  "cc50_um": 86.6,
+  "ic50_um": 38.88,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 2.0,
+  "raw": {
+   "cc50": "86.60 \u00b1 10.01",
+   "ic50": "38.88 \u00b1 0.49",
+   "si": "2"
+  }
+ },
+ {
+  "pmc": "PMC9865139",
+  "label": "cidofovir",
+  "cc50_um": 201.33,
+  "ic50_um": 7.63,
+  "ic50_censored": false,
+  "cc50_censored": false,
+  "si_table": 26.0,
+  "raw": {
+   "cc50": "201.33 \u00b1 60.10",
+   "ic50": "7.63 \u00b1 3.15",
+   "si": "26"
+  }
+ }
+]
