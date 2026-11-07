@@ -112,8 +112,12 @@ def matches(mol, smarts: list[str], not_smarts: list[str] = ()) -> bool:
 
 def series_filter(source: dict, label: str) -> tuple[list[str], list[str]]:
     """SMARTS for the structural series the label belongs to."""
+    label = label.strip().lower()
     for entry in source.get("series", []):
-        if label.lstrip().lower().startswith(entry["prefix"]):
+        if "labels" in entry:
+            if label in [x.lower() for x in entry["labels"]]:
+                return entry.get("smarts", []), entry.get("not_smarts", [])
+        elif label.startswith(entry["prefix"]):
             return entry.get("smarts", []), entry.get("not_smarts", [])
     return source.get("smarts", []), source.get("not_smarts", [])
 
