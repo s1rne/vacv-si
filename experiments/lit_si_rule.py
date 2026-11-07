@@ -257,7 +257,8 @@ def build_table(path_csv: Path | None = None) -> pd.DataFrame:
 
     art = pd.concat([pd.read_csv("data/processed/article_si.csv"),
                      pd.read_csv("data/processed/paper_si.csv"),
-                     pd.read_csv("data/processed/bmcl_si.csv")], ignore_index=True)
+                     pd.read_csv("data/processed/bmcl_si.csv"),
+                     pd.read_csv("data/processed/rcb_si.csv")], ignore_index=True)
     covered = set(art["smiles"])
 
     rows = {}

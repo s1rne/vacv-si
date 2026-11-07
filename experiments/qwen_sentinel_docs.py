@@ -84,6 +84,11 @@ def main() -> None:
     train = pd.read_csv(ROOT / "data/raw/kaggle/train.csv")
     test = pd.read_csv(ROOT / "data/raw/kaggle/test.csv")
     preds = pd.read_csv(ROOT / "outputs/submission-av-paper-components.csv")
+    # как в проде: строки, уже покрытые таблицами статей (article_si/paper_si),
+    # в сентинел-правиле не участвуют
+    covered = set(pd.concat([pd.read_csv(ROOT / "data/processed/article_si.csv"),
+                             pd.read_csv(ROOT / "data/processed/paper_si.csv")],
+                            ignore_index=True)["smiles"])
 
     train["key"] = train["SMILES"].map(ikey)
     test["key"] = test["SMILES"].map(ikey)
@@ -164,6 +169,8 @@ def main() -> None:
     def apply(frame: pd.DataFrame, docs: set[str]) -> pd.DataFrame:
         rows = []
         for idx, row in frame.iterrows():
+            if row["SMILES"] in covered:
+                continue  # как в build_lit_overrides: покрытые таблицами статей выпадают
             bd = by_doc_of(records.get(row["key"], []))
             if not bd:
                 continue
