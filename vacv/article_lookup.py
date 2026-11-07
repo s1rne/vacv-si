@@ -53,13 +53,17 @@ SID3DG_SI = Path("data/processed/sid3dg_si.csv")
 #: тиазолидин-4-оны 3/3′/4, дигидротиазолы 5-8; 10/10 train бит-в-бит
 #: (см. experiments/molecules2022_si.py).
 MOLECULES2022_SI = Path("data/processed/molecules2022_si.csv")
+#: Table 1 Chem. Biodiversity 2018 (10.1002/cbdv.201800153): борнил-эфиры/амиды
+#: N-гетероароматических кислот (4-40) + фенхол '28'/нол '29'; 15/15 train
+#: бит-в-бит (см. experiments/cbdv2018_si.py).
+CBDV2018_SI = Path("data/processed/cbdv2018_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
     for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI, RSC2024_SI,
-                  KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI):
+                  KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI, CBDV2018_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
@@ -75,7 +79,10 @@ def override_lookup(art: pd.DataFrame):
     """lookup(smiles, Title) → (sentinel, si) | None.
 
     Приоритет — точное совпадение (smiles, Title); иначе первое совпадение по
-    smiles (старое поведение). Нужно для test-дублей SMILES из разных источников.
+    smiles, НО только если Title не встречается в таблице с другой структурой
+    (иначе fallback подменяет легитимные строки-коллизии: train#217 '7' —
+    тот же SMILES, что train#33 '36' cbdv-2018, но другая статья с y=10000).
+    Fallback нужен для test-дублей SMILES из разных источников.
     """
     art = art.copy()
     if "Title" in art.columns:
@@ -86,14 +93,18 @@ def override_lookup(art: pd.DataFrame):
     si = pd.to_numeric(art["si"], errors="coerce")
     pair = {(s, t): (bool(sn), v) for s, t, sn, v in
             zip(art["smiles"], art["Title"], art["sentinel"], si)}
+    known_titles = {t.strip() for t in art["Title"]}
     first: dict[str, tuple[bool, float]] = {}
     for s, sn, v in zip(art["smiles"], art["sentinel"], si):
         first.setdefault(s, (bool(sn), v))
 
     def lookup(smiles: str, title: str) -> tuple[bool, float] | None:
-        hit = pair.get((smiles, str(title)))
+        t = str(title)
+        hit = pair.get((smiles, t))
         if hit is not None:
             return hit
+        if t.strip() in known_titles:
+            return None  # Title принадлежит другой структуре — не подменяем
         return first.get(smiles)
 
     return lookup
