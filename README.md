@@ -36,6 +36,13 @@ worsen; the confirmation rule fails. Keep v4 as the accepted baseline. The run
 produces no test predictions or submissions. The protocol, inner/outer OOF and
 independent audit are saved under `experiments/results/v8-nested-validation/`.
 
+The subsequent [model-family comparison](docs/v9-backend-validation.md) tests
+ExtraTrees, CatBoost and kernel ridge on raw/log targets, plus a separate
+provisional external-data ablation from `exp/similar`. None improves the primary
+v4 result; the nested core ensemble group mean is 4.309M versus v4 3.844M.
+External augmentation changes ExtraTrees log by only -0.013% on average and
+worsens one repeat. No new candidate is promoted or submitted.
+
 Keep the accepted public best (1,710,149.26680, pair-delta v4). Further Kaggle submissions are
 paused until a frozen candidate achieves full raw-MSE at most 3,000,000 on
 each of two confirmation splits, using all 320 official v2 labels. Scaffold

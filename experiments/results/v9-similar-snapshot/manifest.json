@@ -1,0 +1,18 @@
+{
+  "commit": "066ad8bf2f48afc9d469a5925cde2ed9676541d0",
+  "source_rows": 588,
+  "provisional_rows": 104,
+  "provisional_identities": 45,
+  "competition_overlap_rows": 346,
+  "unflagged_overlap_rows": 125,
+  "competition_overlap_after_filter": 0,
+  "weight_per_external_identity": 0.25,
+  "interpretation": "Provisional numerical ablation ONLY; source endpoint/cell/exposure compatibility unverified",
+  "limitations": [
+    "Input mixes endpoint types; no independent source-record audit",
+    "Input lacks paired cell/exposure metadata; known different-cell pairs may remain",
+    "Not eligible for promotion/deployment without separate provenance review"
+  ],
+  "source_sha256": "cea547347a374a320a4593051b92b1688971dedd39c8a43d1c2b2df822b143a3",
+  "snapshot_sha256": "44f3cdde4d0fc59e091ccda567c0a06e5a7f5a995df31d312b0a5e9c5fd5fb4e"
+}
