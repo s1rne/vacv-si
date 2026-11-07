@@ -18,6 +18,8 @@ import numpy as np
 import pandas as pd
 
 LOOKUP = Path("data/processed/competition_open_data_lookup.csv")
+LOOKUP_COLUMNS = ["split", "smiles", "si", "si_quality", "si_recommended",
+                  "substitute_recommended", "si_blended"]
 MANUAL = Path("data/processed/literature_manual.csv")
 # Классы, где литературное значение надёжнее прогноза: границы и неопределённые
 # измерения, которые организаторы переносили в файл как есть.
@@ -50,9 +52,13 @@ def lookup(path: Path = LOOKUP) -> pd.DataFrame:
     и той же культуры клеток, то же с точностью до скелета, и запись «Not active»,
     которая и есть источник заглушки SI = 10000.
     """
-    columns = ["split", "smiles", "si", "si_quality", "si_recommended", "substitute_recommended", "si_blended"]
-    table = pd.read_csv(path, usecols=lambda name: name in columns)
-    return table.dropna(subset=["smiles"]).drop_duplicates("smiles")
+    return _usable(pd.read_csv(path, usecols=lambda name: name in LOOKUP_COLUMNS))
+
+
+def _usable(table: pd.DataFrame) -> pd.DataFrame:
+    """Одна строка на молекулу и только колонки, которые читает модель."""
+    columns = [c for c in LOOKUP_COLUMNS if c in table.columns]
+    return table[columns].dropna(subset=["smiles"]).drop_duplicates("smiles")
 
 
 def presence(path: Path = PRESENCE) -> pd.DataFrame:
@@ -144,7 +150,7 @@ def apply(prediction: np.ndarray, frame: pd.DataFrame, probability: np.ndarray |
     return result
 
 
-def fold_table(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.DataFrame:
+def fold_fit(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.DataFrame:
     """Таблица подстановки, у которой правила подобраны заново по части обучающей выборки.
 
     Колонки substitute_recommended, si_recommended и si_blended в сохранённом файле
@@ -163,3 +169,8 @@ def fold_table(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> p
     fitted = coverage_module.advice(full, labelled)
     table = full.drop(columns=[c for c in fitted.columns if c in full.columns])
     return pd.concat([table, fitted], axis=1)
+
+
+def fold_table(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.DataFrame:
+    """То же, что :func:`fold_fit`, но в том виде, в котором таблицу читает модель."""
+    return _usable(fold_fit(train_rows, path))
