@@ -115,6 +115,10 @@ GRISHAK_SI = Path("data/processed/grishak_si.csv")
 #: только те, чьи значения берутся из таблицы статьи; 14/14 train-якорей
 #: бит-в-бит (см. experiments/review2023_si.py).
 REVIEW2023_SI = Path("data/processed/review2023_si.csv")
+#: CDK-ингибиторы Holcakova 2010 (10.3851/IMP1460): roscovitine 100/3.8,
+#: olomoucine II 100/20 (CC50 >100→100, EC50 со сдвигом строк статьи);
+#: 2 test-строки (см. experiments/cdk_si.py).
+CDK_SI = Path("data/processed/cdk_si.csv")
 #: Общий майнер пар (EC50 Vaccinia + цитотокс той же клеточной линии) из
 #: ChEMBL-доков (13 проходных: CHEMBL3351523 BMC 2014 бензимидазолы,
 #: CHEMBL6092128, CHEMBL4837211, ...); 58/58 train-якорей бит-в-бит, ключи
@@ -139,7 +143,7 @@ def article_frame() -> pd.DataFrame:
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
                   JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, GRISHAK_SI,
-                  REVIEW2023_SI, LIT_SI, CHEMBL_SI_PAIRS):
+                  REVIEW2023_SI, CDK_SI, LIT_SI, CHEMBL_SI_PAIRS):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)

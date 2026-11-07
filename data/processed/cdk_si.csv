@@ -1,0 +1,3 @@
+Title,sentinel,si,smiles,pmc,label,rule
+Roscovitine,False,26.315789473684212,CC[C@H](CO)Nc1nc(NCc2ccccc2)c2ncn(C(C)C)c2n1,10.3851/IMP1460,Roscovitine,cdk2010_holcakova
+Olomoucine II,False,5.0,CC[C@H](CO)Nc1nc(NCc2ccccc2O)c2ncn(C(C)C)c2n1,10.3851/IMP1460,Olomoucine II,cdk2010_holcakova
