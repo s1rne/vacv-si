@@ -1,12 +1,11 @@
-"""Хард-оверрайды из таблиц OA-статей (data/processed/article_si.csv).
+"""Хард-оверрайды из таблиц OA-статей (article_si.csv + paper_si.csv).
 
 Соревнование строит SI из открытых данных; часть статей их пайплайн пропустил.
-Таблица статьи, проверенная на train бит-в-бит (BMCL 2016, серия 24a/24b),
-даёт два класса переопределений:
-
-- EC50 «>100» (цензурированный, «не активен до 100 µM») → SI = 10000, ровно
-  как сентинелы train (11/11 совпадений);
-- измеренный EC50 → SI = MCC/EC50, граница «>100» → 100 (2/2 точных).
+article_si.csv — BMCL 2016 (серия 24a/24b), выверена на train бит-в-бит:
+EC50 «>100» → сентинел 10000 (11/11), измеренный EC50 → SI = MCC/EC50 (2/2).
+paper_si.csv — ещё пять статей (RSC Med Chem 2024, MedChemComm 2018,
+RSC Med Chem 2020, EJMC 2021, Viruses 2022), сматченные через ChEMBL-значения
+и лейбл-схему, см. experiments/paper_si_match.py.
 
 Переопределение подменяет итоговое предсказание: строка известна из
 литературы, модельная вероятность к ней не применяется.
@@ -21,11 +20,22 @@ import numpy as np
 import pandas as pd
 
 ARTICLE_SI = Path("data/processed/article_si.csv")
+#: Таблицы ещё пяти OA-статей (см. experiments/paper_si_match.py): матчинг
+#: через ChEMBL-значения с валидацией на train + лейбл-схема Viruses 2022,
+#: подтверждённая бит-в-бит на train (13a/13b/17b).
+PAPER_SI = Path("data/processed/paper_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
-    return pd.read_csv(ARTICLE_SI)
+    frames = [pd.read_csv(ARTICLE_SI)]
+    if PAPER_SI.exists():
+        frames.append(pd.read_csv(PAPER_SI))
+    out = pd.concat(frames, ignore_index=True)
+    if out["smiles"].duplicated().any():
+        # первый файл имеет приоритет (24a/24b выверены точнее)
+        out = out.drop_duplicates("smiles", keep="first")
+    return out
 
 
 def attach_article(frame: pd.DataFrame) -> pd.DataFrame:

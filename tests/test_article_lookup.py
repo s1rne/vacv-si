@@ -11,8 +11,8 @@ from vacv.article_lookup import apply_article_overrides, article_frame, attach_a
 
 def test_article_table_covers_series():
     art = article_frame()
-    assert len(art) == 26
-    assert art["sentinel"].sum() == 21
+    assert len(art) >= 26
+    assert art["smiles"].is_unique
     # 24a11: EC50 2.4, MCC>100 → SI = 100/2.4
     row = art[art["Title"] == "24a11"].iloc[0]
     assert not row["sentinel"]
@@ -20,6 +20,21 @@ def test_article_table_covers_series():
     # 24b08: EC50 >100 → сентинел, несмотря на измеренный CC50=20
     row = art[art["Title"] == "24b08"].iloc[0]
     assert row["sentinel"] and row["cc50_um"] == 20.0
+
+
+def test_paper_overrides_present():
+    """Пять статей, сматченных через ChEMBL/лейблы: сентинелы и ratio-ряды."""
+    art = article_frame()
+    # Title '9a' встречается трижды (train камфора-амид SI=13.31 и два test
+    # имидазопиридина-сентинела) — проверяем по лейблам статей
+    for title, pmc in [("18a", "PMC9865139"), ("16a", "PMC9865139"),
+                       ("9a", "PMC11331333"), ("4g", "PMC6194496"), ("38", "PMC9533879")]:
+        assert (art["Title"] == title).any(), title
+        assert (art.loc[art["Title"] == title, "pmc"] == pmc).any(), title
+    row = art[art["Title"] == "18a"].iloc[0]
+    assert not row["sentinel"]
+    assert row["si"] == pytest.approx(546.43 / 0.03, rel=1e-3)
+    assert art.loc[art["Title"] == "16a", "sentinel"].all()
 
 
 def test_overrides_replace_prediction():
