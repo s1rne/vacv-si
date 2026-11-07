@@ -142,3 +142,24 @@ def apply(prediction: np.ndarray, frame: pd.DataFrame, probability: np.ndarray |
     result[found] = weighted[found]
     result[hard] = literature[hard]
     return result
+
+
+def fold_table(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.DataFrame:
+    """Таблица подстановки, у которой правила подобраны заново по части обучающей выборки.
+
+    Колонки substitute_recommended, si_recommended и si_blended в сохранённом файле
+    подобраны по всей обучающей выборке. На кросс-проверке это даёт заглядывание:
+    строки контрольного фолда голосуют за решение, подставлять ли их собственный
+    бакет. Здесь решение пересчитывается только по строкам train_rows, поэтому оценка
+    фолда честная. train_rows это позиции строк в train.csv; None означает всю выборку
+    и повторяет сохранённый файл.
+    """
+    from . import coverage as coverage_module
+
+    full = pd.read_csv(path, low_memory=False)
+    labelled = coverage_module.join_labels(full, "train")
+    if train_rows is not None:
+        labelled = labelled.iloc[np.asarray(train_rows)]
+    fitted = coverage_module.advice(full, labelled)
+    table = full.drop(columns=[c for c in fitted.columns if c in full.columns])
+    return pd.concat([table, fitted], axis=1)

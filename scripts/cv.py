@@ -13,18 +13,21 @@ from sklearn.model_selection import KFold
 
 from vacv.dataset import load
 from vacv.inference import PROFILES, predict_ensemble
-from vacv.literature import attach
+from vacv.literature import attach, fold_table
 from vacv.pipeline import INACTIVE, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
-def evaluate(frame, y, folds, seeds=7, profile="baseline"):
+def evaluate(raw_frame, y, folds, seeds=7, profile="baseline"):
     probability, raw, prediction = (np.full(len(y), np.nan) for _ in range(3))
     fold_ids = np.full(len(y), -1)
     for fold in range(len(folds)):
         train, valid = fold_indices(folds, fold)
         if not len(train) or not len(valid):
             raise ValueError("Empty training or validation fold")
+        # Правила подстановки пересобираются по обучающей части фолда: иначе строки
+        # контрольной части участвуют в решении, подставлять ли их собственный бакет.
+        frame = attach(raw_frame, fold_table(train))
         probability[valid], raw[valid], prediction[valid] = predict_ensemble(
             frame.iloc[train], y[train], frame.iloc[valid], seeds, profile)
         fold_ids[valid] = fold
@@ -37,7 +40,7 @@ def evaluate(frame, y, folds, seeds=7, profile="baseline"):
         "auc": float(roc_auc_score(labels, probability)) if len(np.unique(labels)) == 2 else None,
         "brier": float(np.mean((probability - labels) ** 2)),
     }
-    row_ids = frame["index"].to_numpy() if "index" in frame else np.arange(len(frame))
+    row_ids = raw_frame["index"].to_numpy() if "index" in raw_frame else np.arange(len(raw_frame))
     oof = pd.DataFrame({"index": row_ids, "fold": fold_ids,
                         "target": y, "probability": probability,
                         "model_prediction": raw, "prediction": prediction})
@@ -57,7 +60,7 @@ def main():
     if args.repeats < 1 or args.seeds < 1:
         parser.error("seeds and repeats must be positive")
     data = load()
-    frame, y = attach(data.train), data.y
+    frame, y = data.train, data.y
     splits = {}
     if args.split in {"random", "both"}:
         for repeat in range(args.start_seed, args.start_seed + args.repeats):

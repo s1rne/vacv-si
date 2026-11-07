@@ -102,7 +102,9 @@ def test_kernel_probabilities_for_unseen_context_and_invalid_molecule():
 def test_cv_auc_uses_exact_sentinel_and_classifier_probability(monkeypatch):
     from scripts import cv
 
-    x = frame(3)
+    # cv.evaluate подбирает правила подстановки внутри фолда и само вызывает attach,
+    # поэтому на вход идёт исходный кадр, без литературных колонок.
+    x = frame(3).drop(columns=["literature_si"])
     y = np.array([10000.0, 36066.0, 1.0])
     def predict(train, target, valid, seeds, profile):
         probability = np.array([0.9, 0.1, 0.2])[valid.index]

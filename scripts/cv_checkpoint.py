@@ -10,7 +10,7 @@ from sklearn.model_selection import KFold
 
 from vacv.checkpoint import BestCheckpointModel, load_embeddings
 from vacv.dataset import load
-from vacv.literature import attach
+from vacv.literature import attach, fold_table
 from vacv.pipeline import scaffolds_of
 from vacv.splits import scaffold_folds, fold_indices
 
@@ -28,18 +28,22 @@ def main():
     if args.out.exists() and any(args.out.iterdir()):
         parser.error("Use an empty output directory")
     data = load()
-    frame, test, y = attach(data.train), attach(data.test), data.y
+    y = data.y
     embeddings, _ = load_embeddings(args.features)
     args.out.mkdir(parents=True, exist_ok=True)
     results = []
     for split in args.splits:
-        folds = (scaffold_folds(scaffolds_of(frame), 5) if split == "scaffold" else
+        folds = (scaffold_folds(scaffolds_of(data.train), 5) if split == "scaffold" else
                  [v for _, v in KFold(5, shuffle=True, random_state=int(split)).split(y)])
         prediction = np.full(len(y), np.nan)
         probability = np.full(len(y), np.nan)
         fold_id = np.full(len(y), -1)
         for fold in range(5):
             train, valid = fold_indices(folds, fold)
+            # Правила подстановки пересобираются по обучающей части фолда, иначе
+            # контрольные строки голосуют за решение о собственном бакете.
+            table = fold_table(train)
+            frame, test = attach(data.train, table), attach(data.test, table)
             model = BestCheckpointModel(embeddings, args.checkpoint,
                                         active_value=args.active_value).fit(frame.iloc[train], y[train])
             components = model.predict_components(frame.iloc[valid], unlabeled=test)
