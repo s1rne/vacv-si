@@ -1,0 +1,72 @@
+[
+  {
+    "split": 36,
+    "model": "mmp-log",
+    "mse": 3783263.8422190147,
+    "mse_without_max_diagnostic_only": 226139.81655354437,
+    "tail_mse": 170596216.8288322,
+    "non_tail_mse": 52622.7211126491,
+    "max_label_prediction": 2324.915,
+    "prediction_max": 2505.974025974026,
+    "prediction_mean": 68.97262829969802,
+    "control_mse": 3783267.4067458333,
+    "fired": 16,
+    "max_target_fired": false
+  },
+  {
+    "split": 36,
+    "model": "mmp-raw",
+    "mse": 3783263.8391828416,
+    "mse_without_max_diagnostic_only": 226139.81350785407,
+    "tail_mse": 170596216.8288322,
+    "non_tail_mse": 52622.71800857492,
+    "max_label_prediction": 2324.915,
+    "prediction_max": 2505.974025974026,
+    "prediction_mean": 68.99563861916984,
+    "control_mse": 3783267.4067458333,
+    "fired": 16,
+    "max_target_fired": false
+  },
+  {
+    "split": 37,
+    "model": "mmp-raw",
+    "mse": 4298254.27323316,
+    "mse_without_max_diagnostic_only": 239953.67018516586,
+    "tail_mse": 193500633.22451738,
+    "non_tail_mse": 66891.16569645252,
+    "max_label_prediction": 26.465188057506108,
+    "prediction_max": 3526.6224561257145,
+    "prediction_mean": 70.66949043910228,
+    "control_mse": 4298257.897930221,
+    "fired": 13,
+    "max_target_fired": false
+  },
+  {
+    "split": 38,
+    "model": "mmp-raw",
+    "mse": 4008055.1932395487,
+    "mse_without_max_diagnostic_only": 225846.48114503117,
+    "tail_mse": 180658057.05196807,
+    "non_tail_mse": 57416.17403475781,
+    "max_label_prediction": 1273.9575,
+    "prediction_max": 3526.6224561257145,
+    "prediction_mean": 74.88221722199384,
+    "control_mse": 4008057.8361221305,
+    "fired": 16,
+    "max_target_fired": false
+  },
+  {
+    "split": "scaffold",
+    "model": "mmp-raw",
+    "mse": 4290081.635680327,
+    "mse_without_max_diagnostic_only": 230392.42041030186,
+    "tail_mse": 194778178.94623855,
+    "non_tail_mse": 29964.443431420663,
+    "max_label_prediction": 20.43361415483751,
+    "prediction_max": 1742.7355028221693,
+    "prediction_mean": 31.605527316938133,
+    "control_mse": 4290081.635680327,
+    "fired": 0,
+    "max_target_fired": false
+  }
+]

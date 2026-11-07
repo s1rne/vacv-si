@@ -61,6 +61,15 @@ The final raw/sqrt interval ablation (`experiments/v3_interval_scales.py`)
 improved its paired sqrt baseline by only 0.196% on confirmation seeds 28/29:
 4.230480M and 4.236306M. It also failed the gate and produced no candidate CSV.
 
+The activity-cliff research checkpoint adds train-only pair-delta regression,
+product context kernels and actual single-cut MMP transfer. Frozen pair-delta
+Ridge-log reaches mean 3.622M on seeds 34/35 versus paired context-raw70 3.920M,
+but worsens seed35. Additional fixed seeds 13/14/39/40 average 3.455M versus
+4.045M, improving all four; these reuse the same data and remain tail-sensitive.
+The <=3M-each upload gate still fails. No submissions were created or uploaded.
+See `docs/v4-model-research.md`, `experiments/results/v4-pair-delta-validation/`,
+and `docs/glm-near-analogs-v4.md` for evidence and the next external-data task.
+
 ## Recovery checkpoint (2026-11-07)
 
 Model CV and submission commands now default to `--lookup-policy clean`: allowed

@@ -1,0 +1,24 @@
+{
+  "winner_frozen_after_seed36": "mmp-raw",
+  "confirmation_seeds": [
+    37,
+    38
+  ],
+  "research_gate_passed": false,
+  "kaggle_gate_passed": false,
+  "training_rows": 320,
+  "max_target": 36066.667,
+  "rdkit_version": "2026.09.1",
+  "fragmented_rows": 306,
+  "profiles": [
+    "mmp-log",
+    "mmp-raw"
+  ],
+  "source_sha256": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v4_mmp_transfer.py": "da9fbe9596d2a3d8a745448fd4233b9fab31c349ed9c8b91cb86a5b2f28b6a2b",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+  },
+  "no_external_data": true,
+  "no_submission_created": true
+}

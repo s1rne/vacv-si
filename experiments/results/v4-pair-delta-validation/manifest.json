@@ -1,0 +1,33 @@
+{
+  "profile": "ridge-log",
+  "seeds": [
+    13,
+    14,
+    39,
+    40
+  ],
+  "mean_mse": {
+    "ridge-log": 3455090.3602497973,
+    "context-raw70": 4045480.887193861
+  },
+  "paired_improvement_positive_is_better": {
+    "13": 73716.12049901113,
+    "14": 1707887.6744267242,
+    "39": 94029.64112730417,
+    "40": 485928.67172321584
+  },
+  "all_labels_retained": true,
+  "label_count": 320,
+  "max_target": 36066.667,
+  "external_data": false,
+  "repeated_cv_not_independent_data": true,
+  "submissions_generated": false,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v4_pair_delta_validation.py": "8e070bef1cc3841482eb478f76163a6426e706387b1fa6bbf23ab1e05014503d",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "experiments/results/v4-pair-delta/frozen-winner.json": "8ba4913dfd3e1be9a85b48ce0cc83029a81d527e1c64570afcc43ae1ddd84381"
+  }
+}
