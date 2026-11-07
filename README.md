@@ -29,7 +29,7 @@ See `experiments/results/target-v2/` for the target audit and current comparison
 
 ### Submission budget and next-model gate
 
-Keep the accepted public best (2,038,068.29444). Further Kaggle submissions are
+Keep the accepted public best (1,710,149.26680, pair-delta v4). Further Kaggle submissions are
 paused until a frozen candidate achieves full raw-MSE at most 3,000,000 on
 each of two confirmation splits, using all 320 official v2 labels. Scaffold
 results must also be reported. Do not remove, cap or replace the maximum
@@ -69,6 +69,13 @@ but worsens seed35. Additional fixed seeds 13/14/39/40 average 3.455M versus
 The <=3M-each upload gate still fails. No submissions were created or uploaded.
 See `docs/v4-model-research.md`, `experiments/results/v4-pair-delta-validation/`,
 and `docs/glm-near-analogs-v4.md` for evidence and the next external-data task.
+
+After that checkpoint, the user explicitly authorized one pair-delta submission
+despite the unmet local gate. `scripts/submit_pair_delta_v4.py` fits the frozen
+Ridge-log profile on all 320 rows and builds the 597-row CSV. Kaggle returned
+1,710,149.26680 versus previous best 2,038,068.29444 (16.09% improvement), rank16
+at observation. This exception does not authorize further uploads. Exact file,
+hashes and outcome: `experiments/results/v4-pair-delta-submission/`.
 
 ## Recovery checkpoint (2026-11-07)
 
