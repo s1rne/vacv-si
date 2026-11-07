@@ -9,6 +9,7 @@ import pandas as pd
 from sklearn.model_selection import KFold
 
 from vacv.checkpoint import BestCheckpointModel, load_embeddings
+from vacv.clean_features import attach_clean
 from vacv.dataset import load
 from vacv.literature import attach, fold_table
 from vacv.pipeline import scaffolds_of
@@ -24,7 +25,11 @@ def main():
     parser.add_argument("--out", type=Path, default=Path("outputs/checkpoint-cv"))
     parser.add_argument("--active-value", action="store_true",
                         help="Replace the global active mean with the per-row estimate")
+    parser.add_argument("--lookup-policy", choices=["clean", "recovered"], default="clean",
+                        help="Clean uses no label-fitted lookup; recovered requires the source corpus")
     args = parser.parse_args()
+    if args.active_value:
+        parser.error("Legacy --active-value requires excluded concentration features and is disabled")
     if args.out.exists() and any(args.out.iterdir()):
         parser.error("Use an empty output directory")
     data = load()
@@ -42,8 +47,11 @@ def main():
             train, valid = fold_indices(folds, fold)
             # Правила подстановки пересобираются по обучающей части фолда, иначе
             # контрольные строки голосуют за решение о собственном бакете.
-            table = fold_table(train)
-            frame, test = attach(data.train, table), attach(data.test, table)
+            if args.lookup_policy == "clean":
+                frame, test = attach_clean(data.train), attach_clean(data.test)
+            else:
+                table = fold_table(train)
+                frame, test = attach(data.train, table), attach(data.test, table)
             model = BestCheckpointModel(embeddings, args.checkpoint,
                                         active_value=args.active_value).fit(frame.iloc[train], y[train])
             components = model.predict_components(frame.iloc[valid], unlabeled=test)
@@ -53,6 +61,7 @@ def main():
         if not np.isfinite(prediction).all():
             raise ValueError("Incomplete OOF predictions")
         row = {"split": split, "mse": float(np.mean((prediction - y) ** 2)),
+               "lookup_policy": args.lookup_policy,
                "model": "checkpoint-av" if args.active_value else "checkpoint"}
         results.append(row)
         pd.DataFrame({"index": np.arange(len(y)), "fold": fold_id, "probability": probability,

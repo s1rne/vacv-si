@@ -1,0 +1,13 @@
+{
+  "competition": "molecular-activity-prediction-hack",
+  "date": "2026-11-07",
+  "status": "Complete",
+  "public_mse": 18146452.74419,
+  "previous_submission_public_mse": 18459829.01365,
+  "historical_best_visible_public_mse": 14633838.88963,
+  "submission": "../recovery-candidates/submission.csv",
+  "sha256": "f6388a21766965ba6d2611c6b1fa767a439101b3d41de1b6a6efea6f57033b5b",
+  "description": "Recovery clean hybrid7 temperature1.2; no SI lookup or forbidden columns; confirmation CV 8.821M; sha256 f6388a21766965ba",
+  "evidence": "Authenticated Kaggle submissions page observed Complete and public score",
+  "url": "https://www.kaggle.com/competitions/molecular-activity-prediction-hack/submissions"
+}

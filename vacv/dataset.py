@@ -30,8 +30,9 @@ class Data:
 
 
 def load(folder: Path = RAW) -> Data:
-    train = pd.read_csv(folder / "train.csv").drop(columns=list(FORBIDDEN))
-    test = pd.read_csv(folder / "test.csv").drop(columns=list(FORBIDDEN))
+    fields = {"index", "SMILES", "Title", "strain", "Culture"}
+    train = pd.read_csv(folder / "train.csv", usecols=lambda name: name in fields | {TARGET})
+    test = pd.read_csv(folder / "test.csv", usecols=lambda name: name in fields)
     for frame in (train, test):
         if frame[["SMILES", "strain", "Culture"]].isna().any().any():
             raise ValueError("пропуски в разрешённых полях")

@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 
+from vacv import coverage
 from vacv.literature import LOOKUP, fold_fit, fold_table, lookup
 
 
@@ -15,14 +16,15 @@ def test_full_fit_reproduces_the_shipped_table():
 
 def test_withholding_a_bucket_withdraws_its_recommendation():
     """Бакет, у которого не осталось обучающих строк, не рекомендуется к подстановке."""
-    full = fold_fit()
-    train = full[full["split"].eq("train")].reset_index(drop=True)
+    full = pd.read_csv(LOOKUP, low_memory=False)
+    labelled = coverage.join_labels(full, "train")
+    train = labelled.reset_index(drop=True)
     recommended = full["substitute_recommended"].fillna(False).to_numpy(dtype=bool)
     bucket = train.loc[train.index[recommended[: len(train)]][0], ["match_tier", "rule"]]
     keep = np.flatnonzero(
         ~(train["match_tier"].eq(bucket["match_tier"]) & train["rule"].eq(bucket["rule"])).to_numpy()
     )
-    withheld = fold_fit(keep)
+    withheld = coverage.advice(full, labelled.iloc[keep])
     same_bucket = (full["match_tier"].eq(bucket["match_tier"]) & full["rule"].eq(bucket["rule"])).to_numpy()
     assert recommended[same_bucket].any()
     assert not withheld["substitute_recommended"].fillna(False).to_numpy(dtype=bool)[same_bucket].any()

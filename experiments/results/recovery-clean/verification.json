@@ -1,0 +1,9 @@
+{
+  "rows": 597,
+  "template_order": true,
+  "columns": true,
+  "finite_nonnegative": true,
+  "sha256": "ea0edab20d184b9694862e002f9f36eb2a0672639402d88470dd6ae7e6a4e7cf",
+  "old_checkpoint_mean_absolute_change": 296.4678708307623,
+  "submitted_to_kaggle": false
+}

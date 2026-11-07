@@ -43,12 +43,6 @@ SI_RTOL = 1e-3
 #: substitution has to beat.
 BASELINE_SI = 2744.65
 
-#: What the model this dataset feeds already achieves on the competition
-#: metric, measured on the full test split. A substitution has to beat *this*,
-#: not the constant: a bucket whose recovered values carry a squared error of
-#: 16M would make the submission worse even though it beats a constant's 22M.
-MODEL_REFERENCE_MSE = 6_000_000.0
-
 #: A bucket needs this many training rows before its measurement is worth
 #: acting on, this share of them within a factor of two before its values are
 #: worth substituting, and - where its value is the sentinel rather than a
@@ -62,7 +56,7 @@ MIN_SENTINEL_PRECISION = 0.8
 CLOSE_LOG10 = 0.3
 
 
-def document_prior(records, split: str = "train") -> dict:
+def document_prior(records, split: str = "train", frame: pd.DataFrame | None = None) -> dict:
     """Which publication each (strain, Culture) group's rows were taken from.
 
     Fitted on the training split using only the target column ``SI VACV``: a
@@ -77,7 +71,7 @@ def document_prior(records, split: str = "train") -> dict:
     """
     from .recover import _key
 
-    frame = load_split(split)
+    frame = load_split(split) if frame is None else frame
     prior: dict[tuple, dict[str, set]] = {}
     for record in frame.to_dict("records"):
         key = _key(record.get("inchikey14"))
@@ -105,14 +99,14 @@ def document_prior(records, split: str = "train") -> dict:
     return prior
 
 
-def join_labels(lookup: pd.DataFrame, split: str = "train") -> pd.DataFrame:
+def join_labels(lookup: pd.DataFrame, split: str = "train", frame: pd.DataFrame | None = None) -> pd.DataFrame:
     """The recovered rows of one split next to the organisers' own columns.
 
     Joined positionally, not by key: nine training compounds share a skeleton
     with another row, and a key join would hand one of them the other's
     label.
     """
-    truth = load_split(split)
+    truth = load_split(split) if frame is None else frame
     subset = lookup[lookup["split"].eq(split)].reset_index(drop=True)
     if len(subset) != len(truth) or not (subset["Title"].to_numpy() == truth["Title"].to_numpy()).all():
         raise ValueError(f"recovered table does not line up with {split}.csv")
@@ -141,7 +135,7 @@ def _squared_error(group: pd.DataFrame, prediction: "np.ndarray") -> float:
     return float(np.mean((prediction[usable] - truth[usable]) ** 2))
 
 
-def _stats(group: pd.DataFrame) -> dict:
+def _stats(group: pd.DataFrame, constant: float = BASELINE_SI) -> dict:
     matched = group[group["si"].notna()]
     comparable = matched[~matched["is_sentinel"] & np.isfinite(matched["log10_error"])]
     errors = comparable["log10_error"].abs()
@@ -165,7 +159,7 @@ def _stats(group: pd.DataFrame) -> dict:
         "mse_substituted": _squared_error(
             matched, np.clip(pd.to_numeric(matched["si"], errors="coerce").to_numpy(dtype=float), 0, SI_SENTINEL)
         ),
-        "mse_constant": _squared_error(matched, np.full(len(matched), BASELINE_SI)),
+        "mse_constant": _squared_error(matched, np.full(len(matched), constant)),
         # The metric is squared error, so the optimal prediction is the
         # conditional mean, not the recovered value: a tier that lands on a
         # sentinel row one time in four should predict a quarter of the way
@@ -393,7 +387,7 @@ def confidence(lookup: pd.DataFrame, labelled: pd.DataFrame) -> pd.Series:
     return pd.Series(values, index=lookup.index, name="confidence")
 
 
-def advice(lookup: pd.DataFrame, labelled: pd.DataFrame) -> pd.DataFrame:
+def advice(lookup: pd.DataFrame, labelled: pd.DataFrame, reference_mse: float | None = None) -> pd.DataFrame:
     """Per-row: is this value worth substituting, and for what number?
 
     Decided by the competition's own metric, measured on train. A bucket -
@@ -409,9 +403,16 @@ def advice(lookup: pd.DataFrame, labelled: pd.DataFrame) -> pd.DataFrame:
     recommended, whatever its bucket scored.
     """
     matched = labelled[labelled["si"].notna()]
+    # All thresholds use this caller's training labels, never a full-train or
+    # test-derived constant. The fold CV path passes its variance explicitly.
+    target = pd.to_numeric(labelled["si_competition"], errors="coerce").to_numpy(dtype=float)
+    target = target[np.isfinite(target)]
+    center = float(target.mean()) if len(target) else BASELINE_SI
+    if reference_mse is None:
+        reference_mse = float(np.mean((target - center) ** 2)) if len(target) else float("inf")
     rates: dict[tuple, dict] = {}
     for bucket, group in matched.groupby(["match_tier", "rule"]):
-        stats = _stats(group)
+        stats = _stats(group, constant=center)
         beats_constant = bool(
             np.isfinite(stats["mse_blended"])
             and np.isfinite(stats["mse_constant"])
@@ -429,7 +430,7 @@ def advice(lookup: pd.DataFrame, labelled: pd.DataFrame) -> pd.DataFrame:
             worth_it = (
                 beats_constant
                 and bool(stats["within_0.3_log"] >= MIN_BUCKET_ACCURACY)
-                and bool(stats["mse_blended"] < MODEL_REFERENCE_MSE)
+                and bool(stats["mse_blended"] < reference_mse)
             )
         rates[bucket] = {
             "sentinel_share": float(group["is_sentinel"].mean()),

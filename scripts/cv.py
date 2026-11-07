@@ -12,13 +12,16 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
+from vacv.clean_features import attach_clean
 from vacv.inference import PROFILES, predict_ensemble
 from vacv.literature import attach, fold_table
 from vacv.pipeline import INACTIVE, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
-def evaluate(raw_frame, y, folds, seeds=7, profile="baseline"):
+def evaluate(raw_frame, y, folds, seeds=7, profile="baseline", lookup_policy="clean"):
+    if lookup_policy not in {"clean", "recovered"}:
+        raise ValueError("Unknown lookup policy")
     probability, raw, prediction = (np.full(len(y), np.nan) for _ in range(3))
     fold_ids = np.full(len(y), -1)
     for fold in range(len(folds)):
@@ -27,7 +30,8 @@ def evaluate(raw_frame, y, folds, seeds=7, profile="baseline"):
             raise ValueError("Empty training or validation fold")
         # Правила подстановки пересобираются по обучающей части фолда: иначе строки
         # контрольной части участвуют в решении, подставлять ли их собственный бакет.
-        frame = attach(raw_frame, fold_table(train))
+        frame = (attach_clean(raw_frame) if lookup_policy == "clean" else
+                 attach(raw_frame, fold_table(train)))
         probability[valid], raw[valid], prediction[valid] = predict_ensemble(
             frame.iloc[train], y[train], frame.iloc[valid], seeds, profile)
         fold_ids[valid] = fold
@@ -56,6 +60,7 @@ def main():
                         help="First random split seed; use fresh seeds for confirmation")
     parser.add_argument("--split", choices=["random", "scaffold", "both"], default="both")
     parser.add_argument("--out", type=Path, default=Path("outputs/cv"))
+    parser.add_argument("--lookup-policy", choices=["clean", "recovered"], default="clean")
     args = parser.parse_args()
     if args.repeats < 1 or args.seeds < 1:
         parser.error("seeds and repeats must be positive")
@@ -71,8 +76,9 @@ def main():
     results = []
     for name, folds in splits.items():
         for profile in args.profiles:
-            metrics, oof = evaluate(frame, y, folds, args.seeds, profile)
-            results.append({"split": name, "profile": profile, "seeds": args.seeds, **metrics})
+            metrics, oof = evaluate(frame, y, folds, args.seeds, profile, args.lookup_policy)
+            results.append({"split": name, "profile": profile, "seeds": args.seeds,
+                            "lookup_policy": args.lookup_policy, **metrics})
             oof.to_csv(args.out / f"{name}-{profile}.csv", index=False)
             (args.out / "metrics.json").write_text(json.dumps(results, indent=2, allow_nan=False) + "\n")
             print(f"{name:12} {profile:12} MSE={metrics['mse']:,.0f} "

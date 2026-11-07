@@ -102,8 +102,8 @@ def test_kernel_probabilities_for_unseen_context_and_invalid_molecule():
 def test_cv_auc_uses_exact_sentinel_and_classifier_probability(monkeypatch):
     from scripts import cv
 
-    # cv.evaluate подбирает правила подстановки внутри фолда и само вызывает attach,
-    # поэтому на вход идёт исходный кадр, без литературных колонок.
+    # Clean lookup policy uses the label-free feature path; keep the fixture focused
+    # on AUC's exact sentinel handling and the classifier probability output.
     x = frame(3).drop(columns=["literature_si"])
     y = np.array([10000.0, 36066.0, 1.0])
     def predict(train, target, valid, seeds, profile):
@@ -112,6 +112,7 @@ def test_cv_auc_uses_exact_sentinel_and_classifier_probability(monkeypatch):
         prediction = np.array([4.0, 36066.0, 1.0])[valid.index]
         return probability, probability * 10000, prediction
     monkeypatch.setattr(cv, "predict_ensemble", predict)
+    monkeypatch.setattr(cv, "attach_clean", lambda frame: frame)
     metrics, oof = cv.evaluate(x, y, [np.array([0]), np.array([1, 2])], seeds=1)
     assert metrics["auc"] == 1.0
     assert metrics["mse"] == pytest.approx((10000 - 4) ** 2 / 3)

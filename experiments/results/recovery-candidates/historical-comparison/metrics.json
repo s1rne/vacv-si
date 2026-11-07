@@ -1,0 +1,42 @@
+[
+  {
+    "split": 4,
+    "model": "hybrid",
+    "mse": 8600548.027678754
+  },
+  {
+    "split": 4,
+    "model": "active_knn",
+    "mse": 8663859.075598052
+  },
+  {
+    "split": 4,
+    "model": "temperature_0.8",
+    "mse": 8852587.136512265
+  },
+  {
+    "split": 4,
+    "model": "temperature_1.2",
+    "mse": 8494296.206757924
+  },
+  {
+    "split": 5,
+    "model": "hybrid",
+    "mse": 8997158.33354025
+  },
+  {
+    "split": 5,
+    "model": "active_knn",
+    "mse": 9105391.487391768
+  },
+  {
+    "split": 5,
+    "model": "temperature_0.8",
+    "mse": 9303107.705723517
+  },
+  {
+    "split": 5,
+    "model": "temperature_1.2",
+    "mse": 8867758.71014981
+  }
+]

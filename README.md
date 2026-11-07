@@ -4,6 +4,30 @@ Builds a training dataset for predicting the selectivity index
 (SI = CC50 / IC50) of small molecules against vaccinia virus, assembled from
 open databases, with a DOI on every record that has one.
 
+## Recovery checkpoint (2026-11-07)
+
+Model CV and submission commands now default to `--lookup-policy clean`: allowed
+structure/context plus external presence counts and similarities, with **no SI
+lookup substitution**. This avoids the saved lookup's full-training-label source
+selection. Competition concentration columns are excluded at CSV read time.
+`--lookup-policy recovered` is an explicit legacy inference option; for CV it
+requires the original external corpus and reconstructs matches within each fold.
+Missing corpus files raise an error, rather than returning a contaminated score.
+
+```sh
+PYTHONPATH=. uv run python scripts/cv_checkpoint.py --splits 6 7 8 --out outputs/clean-cv
+PYTHONPATH=. uv run python scripts/submit_checkpoint.py --out outputs/clean/submission.csv
+# Lightweight calibrated hybrid, no pretrained weights needed:
+PYTHONPATH=. uv run python scripts/submit_recovery.py --out outputs/fallback/submission.csv
+```
+
+Checkpoint dependencies/cache setup remains in
+`experiments/results/checkpoint-2026-11-07/report.md`. New measured comparisons
+and submission hashes are in `experiments/results/recovery-clean/`. Earlier
+lookup-based CV and reconstructed test-label scores must not be treated as
+independent leaderboard evidence. Public score changes for already uploaded
+files require checking the competition data/evaluation history.
+
 ```sh
 uv sync
 uv run python -m vacv.cli all                   # fetch -> curate -> build -> validate

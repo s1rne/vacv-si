@@ -29,6 +29,7 @@ CENSORED_QUALITY = ("lower_bound", "upper_bound", "undetermined")
 # редкое ложное срабатывание стоит 10⁸. Эти строки остаются за моделью.
 MODEL_ONLY_QUALITY = ("sentinel",)
 PRESENCE = Path("data/processed/competition_presence.csv")
+CURATED = Path("data/interim/curated.csv.gz")
 
 # Признаки присутствия в открытых базах, отобранные по разделению неактивных на обучении.
 # Близость к ближайшему измеренному соединению определена для всех молекул, поэтому
@@ -150,25 +151,55 @@ def apply(prediction: np.ndarray, frame: pd.DataFrame, probability: np.ndarray |
     return result
 
 
-def fold_fit(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.DataFrame:
-    """Таблица подстановки, у которой правила подобраны заново по части обучающей выборки.
-
-    Колонки substitute_recommended, si_recommended и si_blended в сохранённом файле
-    подобраны по всей обучающей выборке. На кросс-проверке это даёт заглядывание:
-    строки контрольного фолда голосуют за решение, подставлять ли их собственный
-    бакет. Здесь решение пересчитывается только по строкам train_rows, поэтому оценка
-    фолда честная. train_rows это позиции строк в train.csv; None означает всю выборку
-    и повторяет сохранённый файл.
-    """
+def _rebuild_fold_lookup(train_rows: np.ndarray, curated_path: Path | None = None) -> pd.DataFrame:
+    """Reconstruct external matches and all label-fitted rules inside one fold."""
+    curated_path = CURATED if curated_path is None else curated_path
+    if not curated_path.exists():
+        raise FileNotFoundError(
+            f"Fold-local literature CV requires the curated open-data corpus at {curated_path}. "
+            "Run the repository curation pipeline first; the saved full-data lookup is not safe for CV."
+        )
     from . import coverage as coverage_module
+    from . import recover
+    from .competition import load_split
+    from .match_competition import open_source_rows
 
-    full = pd.read_csv(path, low_memory=False)
-    labelled = coverage_module.join_labels(full, "train")
-    if train_rows is not None:
-        labelled = labelled.iloc[np.asarray(train_rows)]
-    fitted = coverage_module.advice(full, labelled)
-    table = full.drop(columns=[c for c in fitted.columns if c in full.columns])
-    return pd.concat([table, fitted], axis=1)
+    rows = np.asarray(train_rows, dtype=int)
+    train = load_split("train")
+    test = load_split("test")
+    if rows.ndim != 1 or len(rows) == 0 or (rows < 0).any() or (rows >= len(train)).any():
+        raise ValueError("train_rows must be nonempty valid positions in train.csv")
+
+    curated = pd.read_csv(curated_path, low_memory=False)
+    records = recover.Records(open_source_rows(curated), recover.inactive_records())
+    links = recover.molecule_links()
+    prior = coverage_module.document_prior(records, frame=train.iloc[rows])
+    recovered_train = recover.recover(train, records, links, prior)
+    recovered_test = recover.recover(test, records, links, prior)
+    full = pd.concat([recovered_train, recovered_test], ignore_index=True)
+
+    labelled = coverage_module.join_labels(recovered_train, frame=train).iloc[rows]
+    full["confidence"] = coverage_module.confidence(full, labelled).to_numpy()
+    for column, values in coverage_module.document_trust(full, labelled).items():
+        full[column] = values.to_numpy()
+    y = pd.to_numeric(train.iloc[rows]["SI VACV"], errors="coerce").to_numpy(dtype=float)
+    reference_mse = float(np.mean((y - y.mean()) ** 2))
+    fitted = coverage_module.advice(full, labelled, reference_mse=reference_mse)
+    full = full.drop(columns=[c for c in fitted.columns if c in full.columns])
+    return pd.concat([full, fitted], axis=1)
+
+
+def fold_fit(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.DataFrame:
+    """Fold-specific reconstruction; None preserves the saved inference lookup.
+
+    The saved lookup and model inference behavior are unchanged when no fold is
+    requested. CV must pass outer-training row positions, which rebuilds source
+    selection, publication trust, confidence, and substitution advice using only
+    those rows. A precomputed lookup is never accepted for fold evaluation.
+    """
+    if train_rows is None:
+        return pd.read_csv(path, low_memory=False)
+    return _rebuild_fold_lookup(np.asarray(train_rows))
 
 
 def fold_table(train_rows: "np.ndarray | None" = None, path: Path = LOOKUP) -> pd.DataFrame:
