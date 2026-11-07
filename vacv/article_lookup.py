@@ -81,13 +81,19 @@ JMC2005_SI = Path("data/processed/jmc2005_si.csv")
 #: депозита PMC9533879 (266/0.00266), а организаторы взяли пару письма
 #: (100/0.04 → 2500), подтверждённую хранимыми парами.
 JM2007_SI = Path("data/processed/jm2007_si.csv")
+#: ChEMBL-док CHEMBL1140145 = JMC 2008 (10.1021/jm800366g): HTS-скрин
+#: ингибиторов ДНК-синтеза VACV; CC50 = TC50(20h WST-1, CHEMBL1024882),
+#: IC50 = EC50(reduction CPE, CHEMBL1024880), цензура ">"→число; 8/8 train
+#: бит-в-бит (sid103605xxx → PubChem substance → ChEMBL)
+#: (см. experiments/jm2008_si.py).
+JM2008_SI = Path("data/processed/jm2008_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
-    for extra in (PAPER_SI, JM2007_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI,
-                  RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
+    for extra in (PAPER_SI, JM2007_SI, JM2008_SI, LIT_SI, BMCL_SI, RCB_SI,
+                  CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
                   JMC2005_SI):
         if extra.exists():
