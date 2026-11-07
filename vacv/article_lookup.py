@@ -74,14 +74,22 @@ REFRAME2023_SI = Path("data/processed/reframe2023_si.csv")
 #: фуро/пирроло-пиримидинонов, VV/CC50 колонки с цензурой ">"; 11/11 train
 #: бит-в-бит (см. experiments/jmc2005_si.py).
 JMC2005_SI = Path("data/processed/jmc2005_si.csv")
+#: Table 1 письма JMC 2007 (10.1021/jm061484y, PMID 17373899): N-ацил-имидные
+#: гидразиды камеры, ряд тековиримата (ST-246 = соединение 14); 15/15 train
+#: бит-в-бит, y — сырое частное CC50/VV (см. experiments/jm2007_si.py).
+#: Стоит ПЕРЕД LIT_SI: для 'tecovirimat'/'14' lit_si хранит ratio 100000 из
+#: депозита PMC9533879 (266/0.00266), а организаторы взяли пару письма
+#: (100/0.04 → 2500), подтверждённую хранимыми парами.
+JM2007_SI = Path("data/processed/jm2007_si.csv")
 
 
 @lru_cache(maxsize=1)
 def article_frame() -> pd.DataFrame:
     frames = [pd.read_csv(ARTICLE_SI)]
-    for extra in (PAPER_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI, RSC2024_SI,
-                  KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI, CBDV2018_SI,
-                  AV2021_SI, RETRO2020_SI, REFRAME2023_SI, JMC2005_SI):
+    for extra in (PAPER_SI, JM2007_SI, LIT_SI, BMCL_SI, RCB_SI, CMDC_SI,
+                  RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
+                  CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
+                  JMC2005_SI):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)
