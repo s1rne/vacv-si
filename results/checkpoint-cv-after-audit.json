@@ -1,0 +1,17 @@
+[
+  {
+    "split": "3",
+    "mse": 8144788.905353911,
+    "model": "checkpoint"
+  },
+  {
+    "split": "4",
+    "mse": 8318636.951503895,
+    "model": "checkpoint"
+  },
+  {
+    "split": "5",
+    "mse": 8644943.187107762,
+    "model": "checkpoint"
+  }
+]
