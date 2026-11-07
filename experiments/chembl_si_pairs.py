@@ -169,6 +169,12 @@ DOC_EC_PREF = {"CHEMBL1147827": "plaque"}
 #: sid136944206: 100/8 = 12.5 — хранимые пары)
 DOC_EC_MIN = {"CHEMBL1926544"}
 
+#: Доки с полным депозитом для сентинел-ветки без пары: таблица статьи
+#: включает строки с EC50=NA, поэтому отсутствие Vaccinia-записи у молекулы
+#: с CC50 в депозите = настоящий сентинел (6092128: 9a/9b — CC50 Vero есть,
+#: Vaccinia-записей нет вовсе; PMC11331333, OA)
+SENTINEL_DOC_NOPAIR = {"CHEMBL6092128"}
+
 
 def _norm_units(u: str) -> str:
     # экспонент "-1" в "ug.mL-1"/"ug ml-1" отрезается до чистки символов
@@ -498,6 +504,22 @@ def main() -> None:
                 pair = _pairs_for(records, key).get(d)
                 if pair and pair[0]:
                     has_cc = True
+                    break
+            if not has_cc:
+                # CC в доке есть, но Vaccinia-EC50 нет вовсе — пара не
+                # строится. Только доки с ПОЛНЫМ депозитом (таблица статьи
+                # включает строки с EC50=NA): у прочих EC50 мог просто не
+                # попасть в ChEMBL, а организаторы берут его из бумаги
+                # (6092128: 9a/9b, CC50 Vero без вирусных записей)
+                for d in trusted:
+                    if d not in SENTINEL_DOC_NOPAIR or key in doc_bad[d] \
+                            or (str(r["Title"]), d) in TEST_ROW_EXCLUDE:
+                        continue
+                    if any(rr["doc"] == d and _is_cytotox(
+                            {"type": rr["type"], "desc": str(rr.get("assay") or "")})
+                           for rr in records.get(key, [])):
+                        has_cc = True
+                        break
             if not (has_cc and not _unc_vacv_ic_any(records, key)):
                 continue
             sent = True

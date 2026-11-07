@@ -4,8 +4,8 @@
   "stage": "intermediate checkpoint; not submitted to Kaggle",
   "transductive": true,
   "embedding_sha256": "da056b854c3551f884683f245db7230d5d37ea51eab714cea7f8fd43b1dac611",
-  "sha256": "45ab5d0e1c6481893bfb56739dbb1d13d29a91e5d4fd9bd22fc87fd416039e74",
-  "components_sha256": "39c96ef77ebdb5e5bd5a4db0a0a0201d07f1fb5e430cd4b570a31e0f5a1cd495",
+  "sha256": "ba6081da55eab5889dca894a70b1a0389eaeb240afaa5f16f9bb83c99c60bc08",
+  "components_sha256": "14fbdfe4edebbb7872275f8e3786bc2f46e3a0e86008c893101979dfca1ae7f0",
   "code_sha256": {
     "vacv/checkpoint.py": "776d34ec79dc11cc54394862726b4e5278b91f0e070a84bf6571c6d2da561f76",
     "vacv/graph_correction.py": "117d1656342665869c88279366e1b6d4a2a771e836ccffe6ff5511d12b5034e7",

@@ -102,6 +102,12 @@ NUCLEOSIDE_SI = Path("data/processed/nucleoside_si.csv")
 #: '12' 21.686, '7' 1.62); 5/5 подтверждены хранимыми парами test
 #: (см. experiments/twin_transfer.py).
 TWIN_SI = Path("data/processed/twin_transfer.csv")
+#: Мочевины 3a-3p (Pharm Chem J 2017, 10.1007/s11094-017-1629-9) и ароил-
+#: гидразиды '3'-'8' камфоримида — SI из хранимых пар, EC50 подтверждены
+#: обзором JMC 2023 (док CHEMBL5346934); плюс сентинелы sid160xxxxx
+#: (EJMC 2012 семикарбазиды, «None of the compounds were inhibitory»);
+#: якоря train 3e/3i/3k/'4' бит-в-бит (см. experiments/grishak_si.py).
+GRISHAK_SI = Path("data/processed/grishak_si.csv")
 #: Общий майнер пар (EC50 Vaccinia + цитотокс той же клеточной линии) из
 #: ChEMBL-доков (13 проходных: CHEMBL3351523 BMC 2014 бензимидазолы,
 #: CHEMBL6092128, CHEMBL4837211, ...); 58/58 train-якорей бит-в-бит, ключи
@@ -118,7 +124,8 @@ def article_frame() -> pd.DataFrame:
     for extra in (PAPER_SI, JM2007_SI, JM2008_SI, BMCL_SI, RCB_SI,
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
-                  JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, LIT_SI, CHEMBL_SI_PAIRS):
+                  JMC2005_SI, NUCLEOSIDE_SI, TWIN_SI, GRISHAK_SI, LIT_SI,
+                  CHEMBL_SI_PAIRS):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)

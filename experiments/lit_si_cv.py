@@ -144,6 +144,7 @@ def main() -> None:
                          pd.read_csv("data/processed/jm2008_si.csv"),
                          pd.read_csv("data/processed/nucleoside_si.csv"),
                          pd.read_csv("data/processed/twin_transfer.csv"),
+                         pd.read_csv("data/processed/grishak_si.csv"),
                          pd.read_csv("data/processed/chembl_si_pairs.csv")],
                         ignore_index=True)  # (b)
     art_all["Title"] = art_all["Title"].astype(str)
