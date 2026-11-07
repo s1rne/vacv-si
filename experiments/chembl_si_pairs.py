@@ -3,8 +3,12 @@
 CHEMBL3351523 (BMC 2014 бензимидазолы, sid3123xxx: CC50 = цитотокс Vero 76,
 IC50 = EC50 Vaccinia Vero 76, цензура ">"/">=" → число), CHEMBL6092128 и др.
 Правило ключует пару по документу: EC = Vaccinia-запись (IC_TYPES, "vaccin"
-в описании), CC = cytotox-запись (CC_TYPES) той же клеточной линии (пересечение
-cell-токенов с EC). si = CC/EC (сырое частное; train-якоря допускают round3).
+в описании), CC = cytotox-запись (CC_TYPES либо IC_TYPES с цитотокс-описанием
+"cell growth"/"cell morphology"/"cytotox"): сначала цитотокс той же клеточной
+линии, что EC (пересечение cell-токенов); если совпадений нет — любой цитотокс
+дока (панель De Clercq: VACV в кроличьих клетках, цитотокс L1210 —
+sid103181863: 1000/400 = 2.5 бит-в-бит). si = CC/EC (сырое частное; якоря
+допускают round3).
 
 Точность значений: организаторы берут значения из таблиц статей; ChEMBL
 хранит nM-конверсии с лишней точностью (651 nM = 0.651 µM, а в таблице
@@ -47,19 +51,31 @@ CC_TYPES = {"CC50", "TD50", "MCC", "TC50", "MTC", "CT50", "LC50", "MNTD", "CD50"
 IC_TYPES = {"IC50", "EC50", "ED50", "ID50", "AC50", "Potency"}
 
 
-def _conv(value, units):
-    """→ µM, сырое значение (без округления — см. докстринг про 0.65/0.651)."""
+def _norm_units(u: str) -> str:
+    return re.sub(r"[\s.\-]+", "", str(u or "").lower()).replace("µ", "u").replace("μ", "u")
+
+
+def _conv(value, units, mw=None):
+    """→ µM, сырое значение. Массовые единицы — через MolWt структуры."""
     try:
         v = float(value)
     except (TypeError, ValueError):
         return None
-    u = str(units or "")
-    if u == "nM":
+    u = _norm_units(units)
+    if u in ("nm",):
         return v / 1000.0
-    if u in ("µM", "μM", "uM", ""):
+    if u in ("um", "m", ""):
         return v
-    if u == "mM":
+    if u == "mm":
         return v * 1e3
+    if mw is None:
+        return None
+    if u in ("ugml", "ug/l"):
+        return v * 1000.0 / mw
+    if u in ("mgml", "mg/l", "gl"):
+        return v * 1e6 / mw
+    if u == "ngml":
+        return v / mw
     return None
 
 
@@ -76,12 +92,25 @@ def _cell_tokens(desc: str) -> set[str]:
     return toks
 
 
-def _pairs_for(records_by_key: dict, key: str):
+CYTOTOX_DESC = ("cell growth", "cell morphology", "cytotox", "cytotoxic")
+
+
+def _is_cytotox(rec) -> bool:
+    """Цитотокс-запись: CC_TYPES либо potентность с цитотокс-описанием."""
+    if rec["type"] in CC_TYPES:
+        return True
+    if rec["type"] in IC_TYPES:
+        d = rec["desc"].lower()
+        return any(p in d for p in CYTOTOX_DESC)
+    return False
+
+
+def _pairs_for(records_by_key: dict, key: str, mw: float | None = None):
     """(doc → (cc_recs, ec_recs)): EC = Vaccinia-запись, CC = cytotox той же
-    клеточной линии (пересечение cell-токенов)."""
+    клеточной линии, при отсутствии совпадений — любой цитотокс дока."""
     by_doc = defaultdict(list)
     for r in records_by_key.get(key, []):
-        v = _conv(r["value"], r["units"])
+        v = _conv(r["value"], r["units"], mw)
         if v is None:
             continue
         by_doc[r["doc"]].append({**r, "v": v,
@@ -92,10 +121,13 @@ def _pairs_for(records_by_key: dict, key: str):
         ecs = [r for r in rs if r["type"] in IC_TYPES and "vaccin" in r["desc"].lower()]
         if not ecs:
             continue
+        cc_all = [r for r in rs if _is_cytotox(r) and "vaccin" not in r["desc"].lower()]
         ec_toks: set[str] = set()
         for r in ecs:
             ec_toks |= _cell_tokens(r["desc"])
-        ccs = [r for r in rs if r["type"] in CC_TYPES and (_cell_tokens(r["desc"]) & ec_toks)]
+        ccs = [r for r in cc_all if _cell_tokens(r["desc"]) & ec_toks]
+        if not ccs:
+            ccs = cc_all
         if not ccs:
             continue
         out[doc] = (ccs, ecs)
@@ -132,6 +164,7 @@ def _unc_vacv_ic_any(recs_by_key, key):
 
 def main() -> None:
     from rdkit import Chem, RDLogger
+    from rdkit.Chem.Descriptors import MolWt
     from rdkit.Chem.inchi import MolToInchiKey
 
     RDLogger.DisableLog("rdApp.*")
@@ -143,6 +176,10 @@ def main() -> None:
         m = Chem.MolFromSmiles(smiles)
         return MolToInchiKey(m) if m else ""
 
+    def mw_of(smiles: str) -> float | None:
+        m = Chem.MolFromSmiles(smiles)
+        return MolWt(m) if m else None
+
     # train-якоря: (idx, doc) → (si, sentinel); расходящиеся ключи — по доку
     val: dict[tuple[int, str], tuple] = {}
     doc_bad: dict[str, set] = defaultdict(set)
@@ -153,7 +190,8 @@ def main() -> None:
         if not key:
             continue
         y = float(r["SI VACV"])
-        for doc, (ccs, ecs) in _pairs_for(records, key).items():
+        mw = mw_of(r["SMILES"])
+        for doc, (ccs, ecs) in _pairs_for(records, key, mw).items():
             ec = _pick_ec(ecs)
             if ec is None or ec <= 0:
                 continue  # неоднозначный/нулевой EC — не якорь
@@ -199,7 +237,7 @@ def main() -> None:
         for d in sorted(passing):
             if key in doc_bad[d]:
                 continue
-            pair = _pairs_for(records, key).get(d)
+            pair = _pairs_for(records, key, mw_of(r["SMILES"])).get(d)
             if not pair or not pair[0]:
                 continue
             ec = _pick_ec(pair[1])
