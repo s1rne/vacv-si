@@ -87,6 +87,14 @@ JM2007_SI = Path("data/processed/jm2007_si.csv")
 #: бит-в-бит (sid103605xxx → PubChem substance → ChEMBL)
 #: (см. experiments/jm2008_si.py).
 JM2008_SI = Path("data/processed/jm2008_si.csv")
+#: Общий майнер пар (EC50 Vaccinia + цитотокс той же клеточной линии) из
+#: ChEMBL-доков (13 проходных: CHEMBL3351523 BMC 2014 бензимидазолы,
+#: CHEMBL6092128, CHEMBL4837211, ...); 58/58 train-якорей бит-в-бит, ключи
+#: с расхождением исключаются по доку (см. experiments/chembl_si_pairs.py).
+#: Стоит ПОСЛЕДНИМ: строки, покрытые выверенными таблицами выше, имеют
+#: приоритет (Azauridine/MPA → reframe, tecovirimat → jm2007, '3'b' →
+#: molecules2022).
+CHEMBL_SI_PAIRS = Path("data/processed/chembl_si_pairs.csv")
 
 
 @lru_cache(maxsize=1)
@@ -95,7 +103,7 @@ def article_frame() -> pd.DataFrame:
     for extra in (PAPER_SI, JM2007_SI, JM2008_SI, LIT_SI, BMCL_SI, RCB_SI,
                   CMDC_SI, RSC2024_SI, KOVALEVA_SI, SID3DG_SI, MOLECULES2022_SI,
                   CBDV2018_SI, AV2021_SI, RETRO2020_SI, REFRAME2023_SI,
-                  JMC2005_SI):
+                  JMC2005_SI, CHEMBL_SI_PAIRS):
         if extra.exists():
             frames.append(pd.read_csv(extra))
     out = pd.concat(frames, ignore_index=True)

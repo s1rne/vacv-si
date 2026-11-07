@@ -6,7 +6,7 @@
   "pmc": "PMC7651861",
   "label": "63a",
   "si": 71.3913043478261,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -24,7 +24,7 @@
   "pmc": "PMC9533879",
   "label": "17",
   "si": 8.210355987055015,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -42,7 +42,7 @@
   "pmc": "PMC6194496",
   "label": "4f",
   "si": 3.0444444444444443,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -51,7 +51,7 @@
   "pmc": "PMC11331333",
   "label": "9c",
   "si": 146.02105263157895,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -60,7 +60,7 @@
   "pmc": "PMC7651861",
   "label": "54",
   "si": 84.6590909090909,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -69,7 +69,7 @@
   "pmc": "PMC6194496",
   "label": "8b",
   "si": 12.68421052631579,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -78,7 +78,7 @@
   "pmc": "PMC9533879",
   "label": "35",
   "si": 10000.0,
-  "rule": "sentinel"
+  "rule": "label_sentinel"
  },
  {
   "split": "train",
@@ -87,7 +87,7 @@
   "pmc": "PMC6194496",
   "label": "4a",
   "si": 4.34375,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -105,7 +105,7 @@
   "pmc": "PMC7651861",
   "label": "61a",
   "si": 11.285714285714286,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -123,7 +123,7 @@
   "pmc": "PMC11331333",
   "label": "13",
   "si": 12.990603541741958,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -132,7 +132,7 @@
   "pmc": "PMC7651861",
   "label": "49",
   "si": 126.75999999999999,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -141,7 +141,7 @@
   "pmc": "PMC9533879",
   "label": "9",
   "si": 28.67469879518072,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -149,8 +149,8 @@
   "Title": "13",
   "pmc": "PMC6194496",
   "label": "6b",
-  "si": 10000.0,
-  "rule": "sentinel_yfix"
+  "si": 11.381944444444445,
+  "rule": "ratio"
  },
  {
   "split": "train",
@@ -177,7 +177,7 @@
   "pmc": "PMC9533879",
   "label": "31",
   "si": 26.00947867298578,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -195,7 +195,7 @@
   "pmc": "PMC7651861",
   "label": "48",
   "si": 22.006944444444443,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -213,16 +213,16 @@
   "pmc": "PMC11331333",
   "label": "9a",
   "si": 13.310049621026229,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
   "index": 230,
   "Title": "45",
   "pmc": "PMC7651861",
-  "label": "44",
+  "label": "45",
   "si": 10000.0,
-  "rule": "sentinel_yfix"
+  "rule": "label_sentinel"
  },
  {
   "split": "train",
@@ -231,7 +231,7 @@
   "pmc": "PMC9533879",
   "label": "6",
   "si": 68.29268292682927,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -240,7 +240,7 @@
   "pmc": "PMC11331333",
   "label": "11e",
   "si": 78.27611940298507,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -267,7 +267,7 @@
   "pmc": "PMC7651861",
   "label": "46",
   "si": 5.027777777777778,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "train",
@@ -321,7 +321,7 @@
   "pmc": "PMC6194496",
   "label": "4g",
   "si": 10000.0,
-  "rule": "sentinel"
+  "rule": "label_sentinel"
  },
  {
   "split": "test",
@@ -348,7 +348,16 @@
   "pmc": "PMC7651861",
   "label": "63b",
   "si": 159.66666666666666,
-  "rule": "ratio"
+  "rule": "label_ratio"
+ },
+ {
+  "split": "test",
+  "index": 93,
+  "Title": "4c",
+  "pmc": "PMC6194496",
+  "label": "4c",
+  "si": 32.125,
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -357,7 +366,7 @@
   "pmc": "PMC7651861",
   "label": "53",
   "si": 266.50000000000006,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -366,7 +375,7 @@
   "pmc": "PMC6194496",
   "label": "8a",
   "si": 2.7884615384615383,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -375,7 +384,7 @@
   "pmc": "PMC7651861",
   "label": "47",
   "si": 29.87735849056604,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -384,7 +393,7 @@
   "pmc": "PMC7651861",
   "label": "40",
   "si": 1122.7058823529412,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -420,7 +429,7 @@
   "pmc": "PMC7651861",
   "label": "44",
   "si": 3.203389830508474,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -438,7 +447,7 @@
   "pmc": "PMC6194496",
   "label": "7",
   "si": 5.303030303030304,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -447,7 +456,7 @@
   "pmc": "PMC7651861",
   "label": "41",
   "si": 416.77777777777777,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -465,7 +474,7 @@
   "pmc": "PMC9533879",
   "label": "20",
   "si": 2.600661886376172,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -483,7 +492,7 @@
   "pmc": "PMC11331333",
   "label": "11c",
   "si": 178.06557377049182,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -501,7 +510,7 @@
   "pmc": "PMC6194496",
   "label": "4b",
   "si": 23.740740740740737,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -510,7 +519,7 @@
   "pmc": "PMC9533879",
   "label": "16",
   "si": 255.14018691588782,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -519,7 +528,7 @@
   "pmc": "PMC9533879",
   "label": "7",
   "si": 61.11340206185567,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -528,7 +537,7 @@
   "pmc": "PMC7651861",
   "label": "42",
   "si": 25.934959349593495,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -537,7 +546,7 @@
   "pmc": "PMC9533879",
   "label": "38",
   "si": 10000.0,
-  "rule": "sentinel"
+  "rule": "label_sentinel"
  },
  {
   "split": "test",
@@ -582,7 +591,7 @@
   "pmc": "PMC9533879",
   "label": "12",
   "si": 1430.5555555555557,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -645,7 +654,7 @@
   "pmc": "PMC9533879",
   "label": "27",
   "si": 105.71428571428572,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -654,7 +663,7 @@
   "pmc": "PMC7651861",
   "label": "58b",
   "si": 22.263513513513512,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -663,7 +672,7 @@
   "pmc": "PMC9533879",
   "label": "25",
   "si": 1.5,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -690,7 +699,7 @@
   "pmc": "PMC7651861",
   "label": "43",
   "si": 10000.0,
-  "rule": "sentinel"
+  "rule": "label_sentinel"
  },
  {
   "split": "test",
@@ -699,7 +708,7 @@
   "pmc": "PMC6194496",
   "label": "1",
   "si": 12.700564971751414,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -708,7 +717,7 @@
   "pmc": "PMC9533879",
   "label": "32",
   "si": 27.184466019417474,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -717,7 +726,7 @@
   "pmc": "PMC9533879",
   "label": "8",
   "si": 1097.7777777777776,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -726,7 +735,7 @@
   "pmc": "PMC7651861",
   "label": "58a",
   "si": 11.935483870967742,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -735,7 +744,7 @@
   "pmc": "PMC9533879",
   "label": "18",
   "si": 3.750997605746209,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -753,7 +762,7 @@
   "pmc": "PMC7651861",
   "label": "56",
   "si": 121.80769230769229,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -762,7 +771,7 @@
   "pmc": "PMC11331333",
   "label": "11b",
   "si": 34.41580756013746,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -780,7 +789,7 @@
   "pmc": "PMC9533879",
   "label": "5",
   "si": 2325.563909774436,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -789,7 +798,7 @@
   "pmc": "PMC6194496",
   "label": "4e",
   "si": 25.297297297297295,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -798,7 +807,7 @@
   "pmc": "PMC6194496",
   "label": "6b",
   "si": 11.381944444444445,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -825,7 +834,7 @@
   "pmc": "PMC6194496",
   "label": "6a",
   "si": 10000.0,
-  "rule": "sentinel"
+  "rule": "label_sentinel"
  },
  {
   "split": "test",
@@ -843,7 +852,7 @@
   "pmc": "PMC6194496",
   "label": "5",
   "si": 10000.0,
-  "rule": "sentinel"
+  "rule": "label_sentinel"
  },
  {
   "split": "test",
@@ -861,7 +870,7 @@
   "pmc": "PMC6194496",
   "label": "6c",
   "si": 10000.0,
-  "rule": "sentinel"
+  "rule": "label_sentinel"
  },
  {
   "split": "test",
@@ -870,7 +879,7 @@
   "pmc": "PMC9533879",
   "label": "37",
   "si": 33.00668151447661,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -888,7 +897,7 @@
   "pmc": "PMC9533879",
   "label": "36",
   "si": 1.5060240963855422,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
@@ -906,7 +915,7 @@
   "pmc": "PMC7651861",
   "label": "61b",
   "si": 324.6,
-  "rule": "ratio"
+  "rule": "label_ratio"
  },
  {
   "split": "test",
