@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "log-baseline": null,
+    "variance25": 0.25,
+    "variance75": 0.75
+  },
+  "discovery": 24,
+  "confirmation": [
+    25,
+    26
+  ],
+  "inner_folds": 3,
+  "inner_seed": 42,
+  "trees": 400,
+  "assumption": "Approximate lognormal 1+SI, including zeros; not proven calibrated uncertainty",
+  "target_rows": 320,
+  "target_max": 36066.667,
+  "source_sha256": "b8c913a53383eb0aa797a91d3e4280be55a77d948530a6ee020d4983769d1e15",
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "frozen_winner": "log-baseline",
+  "gate_pass": false,
+  "status": "completed",
+  "elapsed_seconds": 128.4348820419982
+}

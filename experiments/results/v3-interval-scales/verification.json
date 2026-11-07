@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "split": 27,
+      "rows": 320,
+      "folds": 5,
+      "profiles": [
+        "raw/competition-only",
+        "raw/external-exact",
+        "raw/external-intervals",
+        "sqrt/competition-only",
+        "sqrt/external-exact",
+        "sqrt/external-intervals"
+      ]
+    },
+    {
+      "split": 28,
+      "rows": 320,
+      "folds": 5,
+      "profiles": [
+        "sqrt/external-intervals",
+        "sqrt/competition-only"
+      ]
+    },
+    {
+      "split": 29,
+      "rows": 320,
+      "folds": 5,
+      "profiles": [
+        "sqrt/external-intervals",
+        "sqrt/competition-only"
+      ]
+    },
+    {
+      "split": "scaffold",
+      "rows": 320,
+      "folds": 5,
+      "profiles": [
+        "sqrt/external-intervals",
+        "sqrt/competition-only"
+      ]
+    }
+  ],
+  "candidate_created": false,
+  "gate_pass": false,
+  "all_targets_retained": true,
+  "tests_passed": 10
+}

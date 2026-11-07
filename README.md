@@ -44,6 +44,23 @@ Other completed alternatives are recorded under `v2-analog`, `v2-tabicl`,
 `v2-hurdle`, and `v2-tweedie`. Tweedie scored 2,062,945.32569 publicly and did
 not improve the best.
 
+The subsequent source-record audit found that the external data producer had
+pooled MCC with CC50 and censored limits with exact measurements. Do not treat
+its aggregate-derived corrections as verified unit fixes. The separate offline
+builder `experiments/v3_source_pairs.py` preserves individual activity/assay
+records and produces 47 exact SI pairs plus 123 interval observations, with
+competition molecules excluded. Missing exposure metadata remains a stated
+limitation. See `docs/external-v3-audit.md` and
+`experiments/results/v3-source-pairs/` for evidence and provenance.
+
+`experiments/v3_intervals.py` compares exact-only and interval-aware training;
+`experiments/v3_distributional.py` tests a lognormal mean correction using
+inner-OOF residuals. Both failed the local submission gate; their saved reports
+include negative results. Neither experiment submitted predictions to Kaggle.
+The final raw/sqrt interval ablation (`experiments/v3_interval_scales.py`)
+improved its paired sqrt baseline by only 0.196% on confirmation seeds 28/29:
+4.230480M and 4.236306M. It also failed the gate and produced no candidate CSV.
+
 ## Recovery checkpoint (2026-11-07)
 
 Model CV and submission commands now default to `--lookup-policy clean`: allowed

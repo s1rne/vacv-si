@@ -1,0 +1,10 @@
+{
+  "oof_rows_each": 320,
+  "splits": 4,
+  "all_targets_preserved": true,
+  "all_folds_complete": true,
+  "all_predictions_finite_nonnegative": true,
+  "mse_recomputed": true,
+  "candidate_created": false,
+  "tests_passed": 2
+}

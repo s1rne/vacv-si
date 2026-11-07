@@ -1,0 +1,86 @@
+[
+  {
+    "split": 21,
+    "profile": "competition-only",
+    "mse": 4275406.712734675,
+    "maximum_target_prediction": 57.89829293832117,
+    "prediction_max": 271.2194819709555
+  },
+  {
+    "split": 21,
+    "profile": "external-exact",
+    "mse": 4273986.748114133,
+    "maximum_target_prediction": 60.390404561601976,
+    "prediction_max": 309.23524599065746
+  },
+  {
+    "split": 21,
+    "profile": "external-intervals",
+    "mse": 4273734.512622082,
+    "maximum_target_prediction": 60.71279965166423,
+    "prediction_max": 325.70714784274855
+  },
+  {
+    "split": 22,
+    "profile": "competition-only",
+    "mse": 4275218.498370391,
+    "maximum_target_prediction": 59.89665361061581,
+    "prediction_max": 292.9005260969987
+  },
+  {
+    "split": 22,
+    "profile": "external-exact",
+    "mse": 4273892.124388581,
+    "maximum_target_prediction": 62.69683016222892,
+    "prediction_max": 325.6764950463266
+  },
+  {
+    "split": 22,
+    "profile": "external-intervals",
+    "mse": 4273672.595441686,
+    "maximum_target_prediction": 63.48966394794618,
+    "prediction_max": 343.29329326925057
+  },
+  {
+    "split": 23,
+    "profile": "competition-only",
+    "mse": 4275143.253507425,
+    "maximum_target_prediction": 67.30481354415276,
+    "prediction_max": 317.2629223621189
+  },
+  {
+    "split": 23,
+    "profile": "external-exact",
+    "mse": 4273813.3576762285,
+    "maximum_target_prediction": 71.33482108178588,
+    "prediction_max": 355.6161709239355
+  },
+  {
+    "split": 23,
+    "profile": "external-intervals",
+    "mse": 4273870.916592206,
+    "maximum_target_prediction": 71.2148038418639,
+    "prediction_max": 381.9136144377086
+  },
+  {
+    "split": "scaffold",
+    "profile": "competition-only",
+    "mse": 4288752.684314215,
+    "maximum_target_prediction": 22.146439503483354,
+    "prediction_max": 116.28678967877305
+  },
+  {
+    "split": "scaffold",
+    "profile": "external-exact",
+    "mse": 4287460.458589151,
+    "maximum_target_prediction": 24.13132902894735,
+    "prediction_max": 115.75265153231018
+  },
+  {
+    "split": "scaffold",
+    "profile": "external-intervals",
+    "mse": 4287384.238267894,
+    "maximum_target_prediction": 23.98779885096788,
+    "prediction_max": 104.07542177104017
+  }
+]

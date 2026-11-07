@@ -1,0 +1,44 @@
+[
+  {
+    "split": 24,
+    "model": "log-baseline",
+    "mse": 4256966.623841501,
+    "maximum_target_prediction": 36.03824859173103,
+    "prediction_max": 2763.071245443035
+  },
+  {
+    "split": 24,
+    "model": "variance25",
+    "mse": 5214357.807333475,
+    "maximum_target_prediction": 160.4618694159734,
+    "prediction_max": 15701.964516722337
+  },
+  {
+    "split": 24,
+    "model": "variance75",
+    "mse": 2741044303.073476,
+    "maximum_target_prediction": 168.98536959337665,
+    "prediction_max": 927166.4152625313
+  },
+  {
+    "split": 25,
+    "model": "log-baseline",
+    "mse": 4294282.619698248,
+    "maximum_target_prediction": 39.633275077921866,
+    "prediction_max": 2049.9579974461562
+  },
+  {
+    "split": 26,
+    "model": "log-baseline",
+    "mse": 4240943.059674575,
+    "maximum_target_prediction": 59.08961223827087,
+    "prediction_max": 3499.7496332822275
+  },
+  {
+    "split": "scaffold",
+    "model": "log-baseline",
+    "mse": 4271297.4397940645,
+    "maximum_target_prediction": 44.038715934297144,
+    "prediction_max": 368.6392722737393
+  }
+]
