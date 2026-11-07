@@ -208,7 +208,7 @@ def link(comp: pd.DataFrame, source: dict) -> tuple[list[dict], dict]:
                     "SMILES": row["SMILES"],
                     "paper_doi_or_url": source["doi"],
                     "paper_citation": source["citation"],
-                    "paper_label": entry["label"],
+                    "paper_label": entry.get("published_label", entry["label"]),
                     "ic50": f"{ic_rel}{ic50:g}" if ic50 is not None else "",
                     "cc50": f"{cc_rel}{cc50:g}" if cc50 is not None else "",
                     "si": f"{si:g}" if si is not None else "",
