@@ -29,6 +29,13 @@ See `experiments/results/target-v2/` for the target audit and current comparison
 
 ### Submission budget and next-model gate
 
+The fixed nested comparison in [docs/v8-nested-validation.md](docs/v8-nested-validation.md)
+selects existing models and convex ensemble weights using inner folds only.
+Its primary grouped MSE improves from 3.280M to 2.920M, but both grouped repeats
+worsen; the confirmation rule fails. Keep v4 as the accepted baseline. The run
+produces no test predictions or submissions. The protocol, inner/outer OOF and
+independent audit are saved under `experiments/results/v8-nested-validation/`.
+
 Keep the accepted public best (1,710,149.26680, pair-delta v4). Further Kaggle submissions are
 paused until a frozen candidate achieves full raw-MSE at most 3,000,000 on
 each of two confirmation splits, using all 320 official v2 labels. Scaffold
