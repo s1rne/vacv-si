@@ -11,7 +11,9 @@ outputs/
 
 # Данные: сырые ответы API и промежуточные таблицы не коммитятся,
 # data/processed держит готовый набор и отслеживается намеренно.
-data/raw/
+data/raw/*
+!data/raw/models/
+!data/raw/models/*.pt
 data/interim/
 analysis/cache/
 *.log

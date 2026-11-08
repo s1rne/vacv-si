@@ -1,0 +1,26 @@
+{
+  "source": "https://zenodo.org/records/15460715",
+  "license": "MIT",
+  "checkpoint_sha256": "c376624d3407204e780a0ed13a9ac097cc9bb1c13ef89cdbc633c1715c183651",
+  "checkpoint_md5": "6a80b54fdb7de37ef0374d302f01e8ce",
+  "embedding_sha256": "da056b854c3551f884683f245db7230d5d37ea51eab714cea7f8fd43b1dac611",
+  "shape": [
+    899,
+    2048
+  ],
+  "invalid_indices": [],
+  "frozen": true,
+  "batch_size": 32,
+  "torch_threads": 4,
+  "aggregation": "mean",
+  "inputs_sha256": {
+    "train.csv": "239efa4b3aa667b3681f6e1062d86ca5b0ba441364b8f2b894b4c428e272ba81",
+    "test.csv": "1b0c6a014bbe556c42ef2277e867d2e1a647ad31c157a9cd81bbc7e262481abd"
+  },
+  "versions": {
+    "torch": "2.15.0",
+    "chemprop": "2.3.1",
+    "rdkit": "2026.3.6",
+    "numpy": "2.5.4"
+  }
+}
