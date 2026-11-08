@@ -13,3 +13,5 @@ runs/
 data/raw/
 data/interim/
 # data/processed holds the deliverable dataset and is tracked on purpose.
+
+*.log
