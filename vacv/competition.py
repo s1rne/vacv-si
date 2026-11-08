@@ -40,6 +40,10 @@ def load_split(name: str) -> pd.DataFrame:
     spellings of the same molecule on two different keys.
     """
     frame = pd.read_csv(KAGGLE / f"{name}.csv")
+    if name == "train" and "SI VACV" in frame and not frame["SI VACV"].eq(10_000.0).any():
+        # train_v2: неактивное соединение помечено нулём. Правила восстановления написаны
+        # под внутреннюю метку 10000, как и загрузчик в vacv/dataset.py.
+        frame["SI VACV"] = frame["SI VACV"].mask(frame["SI VACV"].eq(0.0), 10_000.0)
     standardized = [standardize(s) for s in frame["SMILES"]]
     plain = [standardize(s, canonical_tautomer=False) for s in frame["SMILES"]]
     frame["inchikey"] = [s.inchikey for s in standardized]
