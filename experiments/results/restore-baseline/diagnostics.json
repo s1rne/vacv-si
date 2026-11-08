@@ -1,0 +1,11 @@
+{
+  "rows": 320,
+  "zero_targets": 83,
+  "max_target": 36066.667,
+  "mean_target": 213.40025012836605,
+  "max_target_fraction_sum_squared_targets": 0.9452983537847868,
+  "discovery_mse": 4232994.332403653,
+  "max_target_error_contribution_to_discovery_mse": 4054810.18128205,
+  "discovery_mse_excluding_max_diagnostic_only": 178742.72212825462,
+  "confirmation_mean_mse": 4241095.310017053
+}

@@ -1,0 +1,9 @@
+{
+  "status": "Complete",
+  "public_score": 2062945.32569,
+  "previous_best": 2038068.29444,
+  "filename": "submission-tweedie-1.8.csv",
+  "sha256": "645e347cf22c558555069b24884dacb427f598ff01f004601d2903118f7936d3",
+  "decision": "Keep previous best; candidate did not improve public score",
+  "evidence": "Logged-in Kaggle submissions UI, 2026-11-07"
+}

@@ -1,0 +1,54 @@
+{
+  "profile": "ridge-log",
+  "training_rows": 320,
+  "test_rows": 597,
+  "directed_training_pairs": 1004,
+  "pair_expert_rows": 277,
+  "external_data": false,
+  "test_labels_used": false,
+  "forbidden_features_used": false,
+  "uploaded": false,
+  "comparison": {
+    "reference": "experiments/results/v4-pair-delta-submission/submission-pair-delta-v4.csv",
+    "numeric_equal_within_tolerance": true,
+    "rtol": 1e-12,
+    "atol": 1e-12,
+    "max_absolute_difference": 0.0,
+    "byte_equal": true,
+    "output_sha256": "cbd1b6c1e7ebb858c9ca9bda38dbc24392c7ef81271228ef4edce96edd87ab60",
+    "reference_sha256": "cbd1b6c1e7ebb858c9ca9bda38dbc24392c7ef81271228ef4edce96edd87ab60"
+  },
+  "source_sha256": {
+    "scripts/reproduce_final.py": "ed46451052777984e8a710d27667dd9cd7d8599c5ea83e390846f4eacbc5a376",
+    "scripts/submit_pair_delta_v4.py": "8f4775bf3a6b462cd095292b52f42dbb94cfc6c235599440cfc2a3ec3fa1e050",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "vacv/dataset.py": "970415ffeef3cac019fab1344e8f5ddc1dacd0a590d0b84a312e6de0a4796af7",
+    "vacv/pipeline.py": "a930950947ccc8b5a90eefda57117f2c9dcb0062f6529001d933d76d5896dae4",
+    "vacv/curate.py": "19a3bdde9d784e411815e38f7a74ccdb7e5c2ef91433b18289bf5dc2b1c0305c",
+    "vacv/splits.py": "78e373bc1791d5046f12094f1aeba416be4cd280163016bdd6cb3736d8ebf105",
+    "experiments/results/v4-pair-delta/frozen-winner.json": "8ba4913dfd3e1be9a85b48ce0cc83029a81d527e1c64570afcc43ae1ddd84381"
+  },
+  "input_sha256": {
+    "train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "test.csv": "e11597ae2d00bf83cabc13539428060a77e9d645a4b2e3cbc38f29a60c50e79a",
+    "sample_submit.csv": "11e98abe154676a0bc2ed6816df4098803ba28b2237a5b2af42ebae2ba2d3250"
+  },
+  "dependencies": {
+    "python": "3.13.14",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "rdkit": "2026.9.1",
+    "threadpoolctl": "3.8.0"
+  },
+  "historical_public_score": {
+    "value": 1710149.2668,
+    "observed_date": "2026-11-07",
+    "provenance": "experiments/results/v4-pair-delta-submission/result.md",
+    "provenance_sha256": "9172ae7a2d3282ba368be9563d9ec15c8cd1d7cef8c2e6cf75f718eec33ca3cb",
+    "newly_measured": false
+  }
+}

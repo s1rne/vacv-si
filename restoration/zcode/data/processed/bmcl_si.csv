@@ -1,0 +1,19 @@
+Title,sentinel,si,smiles,pmc,label,rule
+PANI-17,False,117.551,CCOC(=O)c(n1O)c(C)nc1-c2ccccc2O,PMC9674569,1a,bmcl_table1
+1b,True,,c1ccccc1-c(n2O)nc(C)c2C(=O)OCC,PMC9674569,1b,bmcl_table1
+1c,True,,CCOC(=O)c1c(C)nc(n1O)-c2ccccc2[N+](=O)[O-],PMC9674569,1c,bmcl_table1
+1d,True,,O=[N+]([O-])c(c1)cccc1-c(n2O)nc(C)c2C(=O)OCC,PMC9674569,1d,bmcl_table1
+1e,False,101.556,CCOC(=O)C1=C(C)N=C(C2=CC=C([N+](=O)[O-])C=C2)N1O,PMC9674569,1e,bmcl_table1
+1f (PANI-115),False,919.914,CCOC(=O)C1=C(C)N=C(C2=CC=C(C(F)(F)F)C=C2)N1O,PMC9674569,1f,bmcl_table1
+2a,False,13.1085,CCCCNC(=O)C1=C(C)N=C(C2=CC=CC=C2O)N1O,PMC9674569,2a,bmcl_table1
+2b,True,,Oc1ccccc1-c(n2O)nc(C)c2C(=O)NC3CC3,PMC9674569,2b,bmcl_table1
+2c,False,5.94603,CCCCNC(=O)C1=C(C)N=C(C2=CC=CC=C2)N1O,PMC9674569,2c,bmcl_table1
+2d,True,,c1ccccc1-c(n2O)nc(C)c2C(=O)NC3CC3,PMC9674569,2d,bmcl_table1
+2e,True,,O=[N+]([O-])c1ccccc1-c(n2O)nc(C)c2C(=O)NCCCC,PMC9674569,2e,bmcl_table1
+2f,True,,O=[N+]([O-])c1ccccc1-c(n2O)nc(C)c2C(=O)NC3CC3,PMC9674569,2f,bmcl_table1
+2g,False,9.3237,CCCCNC(=O)C1=C(C)N=C(C2=CC([N+](=O)[O-])=CC=C2)N1O,PMC9674569,2g,bmcl_table1
+2h,True,,O=[N+]([O-])c(c1)cccc1-c(n2O)nc(C)c2C(=O)NC3CC3,PMC9674569,2h,bmcl_table1
+2i,False,66.4338,CCCCNC(=O)C1=C(C)N=C(C2=CC=C([N+](=O)[O-])C=C2)N1O,PMC9674569,2i,bmcl_table1
+2j,False,33.2665,CC1=C(C(=O)NC2CC2)N(O)C(C2=CC=C([N+](=O)[O-])C=C2)=N1,PMC9674569,2j,bmcl_table1
+2k,False,7.67647,CCCCNC(=O)C1=C(C)N=C(C2=CC=C(C(F)(F)F)C=C2)N1O,PMC9674569,2k,bmcl_table1
+2l,False,9.80807,CC1=C(C(=O)NC2CC2)N(O)C(C2=CC=C(C(F)(F)F)C=C2)=N1,PMC9674569,2l,bmcl_table1

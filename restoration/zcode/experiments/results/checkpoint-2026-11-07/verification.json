@@ -1,0 +1,9 @@
+{
+  "rows": 597,
+  "template_order": true,
+  "finite_nonnegative": true,
+  "graph_reproduction_max_abs_error": 0.0,
+  "chemical_probability_reproduction_max_abs_error": 0.0,
+  "combination_formula": true,
+  "submission_sha256": "acffbc276491daf001d369aed571e6c699ea6ef5e03aeafca043e8f805126655"
+}

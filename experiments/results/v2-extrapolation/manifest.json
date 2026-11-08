@@ -1,0 +1,21 @@
+{
+  "profiles": [
+    "ridge-raw",
+    "ridge-sqrt",
+    "poly2-raw",
+    "poly2-sqrt"
+  ],
+  "discovery": 15,
+  "confirmation": [
+    16,
+    17
+  ],
+  "winner": "ridge-sqrt",
+  "passes_3m_both_confirmation": false,
+  "target_version": "train_v2",
+  "no_upper_target_clipping": true,
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "script_sha256": "84b77c59c47a4d6e3ae010beb0b873f244571fc1374c18a9cd79cd6c01cc288e",
+  "embedding_sha256": "da056b854c3551f884683f245db7230d5d37ea51eab714cea7f8fd43b1dac611",
+  "elapsed_seconds": 3.5679182088933885
+}

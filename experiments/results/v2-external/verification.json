@@ -1,0 +1,20 @@
+{
+  "submission-structure-log-external.csv": {
+    "sha256": "a6f87aafb07495c369cfb2f4775d0ff68f55e713cf01330237d8137b34b5658e",
+    "rows": 597,
+    "template_order": true,
+    "finite_nonnegative": true
+  },
+  "submission-structure-log.csv": {
+    "sha256": "62867651b5ccd41ca8d910977079c8c0f51a030f4ec845ff5ecaabfe8761be44",
+    "rows": 597,
+    "template_order": true,
+    "finite_nonnegative": true
+  },
+  "input_hashes": {
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "data/raw_v2/test.csv": "e11597ae2d00bf83cabc13539428060a77e9d645a4b2e3cbc38f29a60c50e79a",
+    "data/raw_v2/sample_submit.csv": "11e98abe154676a0bc2ed6816df4098803ba28b2237a5b2af42ebae2ba2d3250",
+    "experiments/v2_external.py": "56b24cea0c3d8ecdfbaa9e84449a4a3d6c85fd421e2f3ca233f9c8ca0b3af933"
+  }
+}

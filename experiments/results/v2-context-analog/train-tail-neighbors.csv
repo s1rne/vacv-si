@@ -1,0 +1,19 @@
+query_row,query_target,neighbor_rank,neighbor_row,neighbor_target,tanimoto,eligible70,query_strain,query_culture
+14,36066.667,1,175,2324.915,0.717391304347826,True,"Vaccinia virus (strain Copenhagen). culture Vero, cowpox virus (strain_Grishak), ectromelia virus (ECTV, strain K-1)",Vero
+14,36066.667,2,303,223.0,0.717391304347826,True,"Vaccinia virus (strain Copenhagen). culture Vero, cowpox virus (strain_Grishak), ectromelia virus (ECTV, strain K-1)",Vero
+14,36066.667,3,17,7.25,0.6875,False,"Vaccinia virus (strain Copenhagen). culture Vero, cowpox virus (strain_Grishak), ectromelia virus (ECTV, strain K-1)",Vero
+135,2000.0,1,168,2500.0,0.7608695652173914,True,vaccinia virus strain IHD-J,BSC-40 
+135,2000.0,2,264,5000.0,0.7272727272727273,True,vaccinia virus strain IHD-J,BSC-40 
+135,2000.0,3,129,135.135135135135,0.6530612244897959,False,vaccinia virus strain IHD-J,BSC-40 
+168,2500.0,1,135,2000.0,0.7608695652173914,True,vaccinia virus strain IHD-J,BSC-40 
+168,2500.0,2,129,135.135135135135,0.64,False,vaccinia virus strain IHD-J,BSC-40 
+168,2500.0,3,79,11.9480519480519,0.6382978723404256,False,vaccinia virus strain IHD-J,BSC-40 
+175,2324.915,1,303,223.0,0.7674418604651163,True,"Vaccinia virus (strain Copenhagen). culture Vero, cowpox virus (strain_Grishak), ectromelia virus (ECTV, strain K-1)",Vero
+175,2324.915,2,17,7.25,0.7333333333333333,True,"Vaccinia virus (strain Copenhagen). culture Vero, cowpox virus (strain_Grishak), ectromelia virus (ECTV, strain K-1)",Vero
+175,2324.915,3,319,62.5,0.7333333333333333,True,"Vaccinia virus (strain Copenhagen). culture Vero, cowpox virus (strain_Grishak), ectromelia virus (ECTV, strain K-1)",Vero
+199,5000.0,1,79,11.9480519480519,0.5416666666666666,False,vaccinia virus strain IHD-J,BSC-40 
+199,5000.0,2,264,5000.0,0.5416666666666666,False,vaccinia virus strain IHD-J,BSC-40 
+199,5000.0,3,46,200.0,0.5306122448979592,False,vaccinia virus strain IHD-J,BSC-40 
+264,5000.0,1,79,11.9480519480519,0.8,True,vaccinia virus strain IHD-J,BSC-40 
+264,5000.0,2,46,200.0,0.7380952380952381,True,vaccinia virus strain IHD-J,BSC-40 
+264,5000.0,3,112,45.4545454545455,0.7272727272727273,True,vaccinia virus strain IHD-J,BSC-40 

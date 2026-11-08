@@ -1,0 +1,30 @@
+{
+  "discovery_seed": 30,
+  "winner": "product-sqrt-1",
+  "profiles": {
+    "product-raw-0.01": [
+      "raw",
+      0.01
+    ],
+    "product-raw-0.1": [
+      "raw",
+      0.1
+    ],
+    "product-raw-1": [
+      "raw",
+      1.0
+    ],
+    "product-sqrt-0.01": [
+      "sqrt",
+      0.01
+    ],
+    "product-sqrt-0.1": [
+      "sqrt",
+      0.1
+    ],
+    "product-sqrt-1": [
+      "sqrt",
+      1.0
+    ]
+  }
+}

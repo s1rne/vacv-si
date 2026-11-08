@@ -1,0 +1,86 @@
+[
+  {
+    "split": 27,
+    "profile": "raw/competition-only",
+    "mse": 4755349.9549497925,
+    "maximum_target_prediction": 364.14985584485584,
+    "prediction_max": 5689.6181373587315
+  },
+  {
+    "split": 27,
+    "profile": "raw/external-exact",
+    "mse": 5315873.019271305,
+    "maximum_target_prediction": 583.6112202824268,
+    "prediction_max": 7565.272079000849
+  },
+  {
+    "split": 27,
+    "profile": "raw/external-intervals",
+    "mse": 5757577.721925301,
+    "maximum_target_prediction": 621.0234115839179,
+    "prediction_max": 7635.605004935957
+  },
+  {
+    "split": 27,
+    "profile": "sqrt/competition-only",
+    "mse": 4255274.700633006,
+    "maximum_target_prediction": 158.97565698514717,
+    "prediction_max": 1650.7807887820006
+  },
+  {
+    "split": 27,
+    "profile": "sqrt/external-exact",
+    "mse": 4255138.391713059,
+    "maximum_target_prediction": 171.43636555855326,
+    "prediction_max": 1981.5907845874533
+  },
+  {
+    "split": 27,
+    "profile": "sqrt/external-intervals",
+    "mse": 4254391.315043641,
+    "maximum_target_prediction": 177.61145873665404,
+    "prediction_max": 1979.6356436122928
+  },
+  {
+    "split": 28,
+    "profile": "sqrt/external-intervals",
+    "mse": 4230479.870090688,
+    "maximum_target_prediction": 176.54930099299915,
+    "prediction_max": 1717.0970190337168
+  },
+  {
+    "split": 28,
+    "profile": "sqrt/competition-only",
+    "mse": 4237192.785051551,
+    "maximum_target_prediction": 156.35750850978033,
+    "prediction_max": 1259.2631554164127
+  },
+  {
+    "split": 29,
+    "profile": "sqrt/external-intervals",
+    "mse": 4236306.241860534,
+    "maximum_target_prediction": 144.03045244963198,
+    "prediction_max": 1817.3593252247135
+  },
+  {
+    "split": 29,
+    "profile": "sqrt/competition-only",
+    "mse": 4246223.56876725,
+    "maximum_target_prediction": 120.62304865469233,
+    "prediction_max": 1372.4186740362752
+  },
+  {
+    "split": "scaffold",
+    "profile": "sqrt/external-intervals",
+    "mse": 4251931.847517223,
+    "maximum_target_prediction": 99.32207420629862,
+    "prediction_max": 1048.0178107418358
+  },
+  {
+    "split": "scaffold",
+    "profile": "sqrt/competition-only",
+    "mse": 4270486.9948998345,
+    "maximum_target_prediction": 54.3721211501352,
+    "prediction_max": 721.587390251567
+  }
+]

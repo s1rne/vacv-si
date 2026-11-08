@@ -1,0 +1,28 @@
+{
+  "target_version": "train_v2",
+  "embedding_sha256": "da056b854c3551f884683f245db7230d5d37ea51eab714cea7f8fd43b1dac611",
+  "data_sha256": {
+    "train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "test.csv": "e11597ae2d00bf83cabc13539428060a77e9d645a4b2e3cbc38f29a60c50e79a"
+  },
+  "submissions": {
+    "chemeleon-et-raw": {
+      "sha256": "30cc235c6343152afe63dc3554378ff873faeb468c6f852e76686cec05f5d415",
+      "rows": 597
+    },
+    "chemeleon-et-log": {
+      "sha256": "7ef46db1cfc542d414afc79b4173e24927a2c664880fe42255e6b7581fc0bb2e",
+      "rows": 597
+    },
+    "chemeleon-et-log-presence": {
+      "sha256": "71f774e4ce78f8bf96f6174f4e211454fcb593dbb965c2d64122bbf96b7163ae",
+      "rows": 597
+    },
+    "chemeleon-ridge-log": {
+      "sha256": "4afa7d8f58fcf06fa6436ae782c7b8ce0ee8cef81cd5521f49dbe27a2fb82cdc",
+      "rows": 597
+    }
+  },
+  "experiment_sha256": "1288e8a6f5b4975ac5317c9755aa131c8686e124aa256ad60fe226c1123395cf",
+  "presence_sha256": "058796f714864469ee192904116729cf17cc853b781a9500b90bd805a8b75816"
+}

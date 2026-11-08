@@ -16,7 +16,6 @@ import pandas as pd
 
 FORBIDDEN = ("CC50_uM", "IC50_uM_VACV")
 TARGET = "SI VACV"
-INACTIVE_INTERNAL = 10_000.0
 RAW = Path("data/raw/kaggle")
 
 
@@ -30,13 +29,16 @@ class Data:
         return self.train[TARGET].to_numpy(dtype=np.float64)
 
 
-def load(folder: Path = RAW) -> Data:
-    train = pd.read_csv(folder / "train.csv").drop(columns=list(FORBIDDEN))
-    test = pd.read_csv(folder / "test.csv").drop(columns=list(FORBIDDEN))
-    if not (train[TARGET] == INACTIVE_INTERNAL).any():
-        # train_v2: организаторы пометили неактивные нулём. Внутри пайплайна неактивным
-        # остаётся 10000, на выходе literature.to_zero_inactive возвращает нулевую метку.
-        train[TARGET] = train[TARGET].mask(train[TARGET] == 0, INACTIVE_INTERNAL)
+def load(folder: Path = RAW, *, require_v2: bool = False) -> Data:
+    folder = Path(folder)
+    train_path = folder / "train_v2.csv"
+    if not train_path.exists():
+        if require_v2:
+            raise FileNotFoundError("Official train_v2.csv required: run scripts/import_competition_v2.py")
+        train_path = folder / "train.csv"
+    fields = {"index", "SMILES", "Title", "strain", "Culture"}
+    train = pd.read_csv(train_path, usecols=lambda name: name in fields | {TARGET})
+    test = pd.read_csv(folder / "test.csv", usecols=lambda name: name in fields)
     for frame in (train, test):
         if frame[["SMILES", "strain", "Culture"]].isna().any().any():
             raise ValueError("пропуски в разрешённых полях")

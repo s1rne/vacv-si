@@ -1,0 +1,59 @@
+{
+  "main_head": "03ca819",
+  "tests": "18 passed",
+  "new_verified_structures": 0,
+  "intersections": {
+    "measured_clean": {
+      "rows": 43,
+      "key14": 0,
+      "exact_smiles": 0,
+      "key_mismatch": 0,
+      "manifest_hash_matches": true
+    },
+    "censored": {
+      "rows": 126,
+      "key14": 0,
+      "exact_smiles": 0,
+      "key_mismatch": 0,
+      "manifest_hash_matches": true
+    },
+    "quarantine": {
+      "rows": 986,
+      "key14": 0,
+      "exact_smiles": 0,
+      "key_mismatch": 0,
+      "manifest_hash_matches": true
+    }
+  },
+  "hashes": {
+    "data/processed/external_v2/measured_clean.csv": "2acca55a4caf36a1040e57997c46dac3fb380640f5bd50feb890f320679efe17",
+    "data/processed/external_v2/censored.csv": "523216c50294cf240134da631e26ba66560e2265497f75e16e09c3618a7075f6",
+    "data/processed/external_v2/quarantine.csv": "987e32a1b7aba367d34fa44f99be76b3e3d672d00d42beb06236c48cccb46f9a",
+    "data/processed/external_v2/manifest.json": "5f1a0c5e51e248b38e690c5a1f5708c315b7cb06ffd4389a46190ebc182655c7"
+  },
+  "exact_comparison": {
+    "exported": 43,
+    "old47_overlap": 43,
+    "equal_si": 42,
+    "new_keys": 0,
+    "known_endpoint_exposure": 17
+  },
+  "bounds_comparison": {
+    "numeric_rows": 123,
+    "same_identity_as_old_snapshot": 123,
+    "new_keys": 0,
+    "other_qualitative_rows": 3
+  },
+  "raw_cache_checks": {
+    "rows": 170,
+    "errors": 0,
+    "source_documents": 29
+  },
+  "accepted": {
+    "rows": 43,
+    "sha256": "dddba1a7dc121b7d5baf6e4b5a4dc3eea8369dd85557e1e5478308fdc0e48a01",
+    "new_structures": 0,
+    "full_protocol_equivalence_proven": false,
+    "endpoint_exposure_known": 17
+  }
+}

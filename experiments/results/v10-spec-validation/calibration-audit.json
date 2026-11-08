@@ -1,0 +1,362 @@
+[
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "fold": 0,
+    "alpha": 1.0151234690581523,
+    "train_rows": 256,
+    "numerator": 4961230.930073553,
+    "denominator": 4887317.731582604
+  },
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "fold": 1,
+    "alpha": 0.2721529260250517,
+    "train_rows": 256,
+    "numerator": 3872008.129477023,
+    "denominator": 14227325.004474156
+  },
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "fold": 2,
+    "alpha": 0.8061689542545132,
+    "train_rows": 256,
+    "numerator": 144088195.8759547,
+    "denominator": 178732007.86948815
+  },
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "fold": 3,
+    "alpha": 2.1968633362657006,
+    "train_rows": 256,
+    "numerator": 44227109.19928759,
+    "denominator": 20131934.6857808
+  },
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "fold": 4,
+    "alpha": 1.7410826401508754,
+    "train_rows": 256,
+    "numerator": 149375770.12142688,
+    "denominator": 85794761.64812174
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "fold": 0,
+    "alpha": 4.863378113800477,
+    "train_rows": 257,
+    "numerator": 119994517.71547924,
+    "denominator": 24673080.091177564
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "fold": 1,
+    "alpha": 2.0952858266955787,
+    "train_rows": 255,
+    "numerator": 216922372.92868328,
+    "denominator": 103528774.05312571
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "fold": 2,
+    "alpha": 0.8755091183695811,
+    "train_rows": 254,
+    "numerator": 86941998.87015665,
+    "denominator": 99304504.1404761
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "fold": 3,
+    "alpha": 0.6106336371852431,
+    "train_rows": 257,
+    "numerator": 6847793.970670539,
+    "denominator": 11214242.966103058
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "fold": 4,
+    "alpha": 0.14470587606404425,
+    "train_rows": 257,
+    "numerator": 100689062.75566949,
+    "denominator": 695818756.6005012
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "fold": 0,
+    "alpha": 1.2962546127902865,
+    "train_rows": 254,
+    "numerator": 41574477.1214683,
+    "denominator": 32072770.820831317
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "fold": 1,
+    "alpha": 0.37920360192152724,
+    "train_rows": 255,
+    "numerator": 4206577.189027651,
+    "denominator": 11093188.903564699
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "fold": 2,
+    "alpha": 3.030010659533492,
+    "train_rows": 257,
+    "numerator": 130223251.99803045,
+    "denominator": 42977819.76056808
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "fold": 3,
+    "alpha": 1.05359419332691,
+    "train_rows": 258,
+    "numerator": 4963247.302929273,
+    "denominator": 4710777.009179352
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "fold": 4,
+    "alpha": 0.3466446909192426,
+    "train_rows": 256,
+    "numerator": 11455299.647604588,
+    "denominator": 33046228.45146449
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "fold": 0,
+    "alpha": 2.438858816057756,
+    "train_rows": 256,
+    "numerator": 12637321.570702692,
+    "denominator": 5181653.60270015
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "fold": 1,
+    "alpha": 2.0384606128673934,
+    "train_rows": 256,
+    "numerator": 4342092.872121214,
+    "denominator": 2130084.262954399
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "fold": 2,
+    "alpha": 0.9737101252267341,
+    "train_rows": 256,
+    "numerator": 3669298.1910593784,
+    "denominator": 3768368.116953658
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "fold": 3,
+    "alpha": 1.0009865392848976,
+    "train_rows": 256,
+    "numerator": 7094215.205321907,
+    "denominator": 7087223.381035672
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "fold": 4,
+    "alpha": 2.392383367354999,
+    "train_rows": 256,
+    "numerator": 3065007.7786460677,
+    "denominator": 1281152.435880173
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "fold": 0,
+    "alpha": 1.5223050717714097,
+    "train_rows": 256,
+    "numerator": 5228736.0387455765,
+    "denominator": 3434749.141748065
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "fold": 1,
+    "alpha": 0.9195541048394131,
+    "train_rows": 256,
+    "numerator": 3839701.060891969,
+    "denominator": 4175611.897858384
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "fold": 2,
+    "alpha": 1.1311645267787394,
+    "train_rows": 256,
+    "numerator": 18288110.9818067,
+    "denominator": 16167507.5100582
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "fold": 3,
+    "alpha": 1.3078978959192618,
+    "train_rows": 256,
+    "numerator": 20803867.303893656,
+    "denominator": 15906338.995424077
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "fold": 4,
+    "alpha": 0.36085428579486994,
+    "train_rows": 256,
+    "numerator": 19839002.328011286,
+    "denominator": 54977876.41432892
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "fold": 0,
+    "alpha": 1.7324321504152544,
+    "train_rows": 257,
+    "numerator": 16662413.523296444,
+    "denominator": 9617931.368511347
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "fold": 1,
+    "alpha": 0.36818420032736143,
+    "train_rows": 255,
+    "numerator": 16071719.149446838,
+    "denominator": 43651300.45003855
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "fold": 2,
+    "alpha": 0.09428504315809626,
+    "train_rows": 254,
+    "numerator": 6789939.370870834,
+    "denominator": 72015021.08330724
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "fold": 3,
+    "alpha": 0.4979158667456624,
+    "train_rows": 257,
+    "numerator": 6702088.820101534,
+    "denominator": 13460283.689904965
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "fold": 4,
+    "alpha": 0.45963243389330927,
+    "train_rows": 257,
+    "numerator": 8355054.613006398,
+    "denominator": 18177687.20591591
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "fold": 0,
+    "alpha": 0.91596980654622,
+    "train_rows": 254,
+    "numerator": 13515386.33754462,
+    "denominator": 14755274.945695093
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "fold": 1,
+    "alpha": 0.28184978852541837,
+    "train_rows": 255,
+    "numerator": 4094462.1979494235,
+    "denominator": 14527107.57517623
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "fold": 2,
+    "alpha": 1.608036276171001,
+    "train_rows": 257,
+    "numerator": 17672561.70391242,
+    "denominator": 10990151.133899601
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "fold": 3,
+    "alpha": 4.664877338778079,
+    "train_rows": 258,
+    "numerator": 7100121.307803444,
+    "denominator": 1522038.1570983073
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "fold": 4,
+    "alpha": 0.6766011530086321,
+    "train_rows": 256,
+    "numerator": 15661643.14471288,
+    "denominator": 23147526.53771057
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "fold": 0,
+    "alpha": 6.688583625241815,
+    "train_rows": 256,
+    "numerator": 20251936.372628383,
+    "denominator": 3027836.3114427244
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "fold": 1,
+    "alpha": 2.035356139192903,
+    "train_rows": 256,
+    "numerator": 4266969.723751903,
+    "denominator": 2096424.1301986198
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "fold": 2,
+    "alpha": 1.3051418485861501,
+    "train_rows": 256,
+    "numerator": 6878392.743316025,
+    "denominator": 5270226.183282172
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "fold": 3,
+    "alpha": 1.4848358229886227,
+    "train_rows": 256,
+    "numerator": 8255232.647981723,
+    "denominator": 5559693.886806889
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "fold": 4,
+    "alpha": 3.294264205942877,
+    "train_rows": 256,
+    "numerator": 3801564.5258922866,
+    "denominator": 1153995.0314350124
+  }
+]

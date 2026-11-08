@@ -1,0 +1,58 @@
+{
+  "main_head": "f20d443",
+  "measured_sha256": "876735e0cc0736d5a9497bd10e40633189f0589741d31e2b39dac43a8ad0e5d6",
+  "producer_sha256": "ef6f8a691683c8adaa29a85784c06747b9dceba622edd5d10bf506c22277fe63",
+  "verified_new_ingest_rows": 0,
+  "tests": "9 passed (focused producer helper tests; no end-to-end export test)",
+  "independent_intersections": {
+    "measured_clean": {
+      "rows": 142,
+      "key14_intersection": 0,
+      "exact_smiles_intersection": 0,
+      "unstandardizable": 0,
+      "stored_key_mismatch": 0,
+      "manifest_hash_matches": true
+    },
+    "censored": {
+      "rows": 851,
+      "key14_intersection": 0,
+      "exact_smiles_intersection": 0,
+      "unstandardizable": 0,
+      "stored_key_mismatch": 0,
+      "manifest_hash_matches": true
+    },
+    "quarantine": {
+      "rows": 162,
+      "key14_intersection": 0,
+      "exact_smiles_intersection": 0,
+      "unstandardizable": 0,
+      "stored_key_mismatch": 0,
+      "manifest_hash_matches": true
+    }
+  },
+  "measured_count": 142,
+  "all_tier_A": true,
+  "aggregate_match_rows": 28,
+  "pairing_levels": {
+    "document": 71,
+    "strict": 69,
+    "compound": 2
+  },
+  "mixed_cell_rows": 7,
+  "unmatched_audit_rows": 2,
+  "matched_cc_endpoint_types": {
+    "CC50": 60,
+    "ED50": 30,
+    "TC50": 25,
+    "MNTD|TD50": 14,
+    "CC50|IC50": 6,
+    "MTC": 4,
+    "IC50": 1
+  },
+  "nominal_new_keys_vs47": 102,
+  "old47_overlap": {
+    "rows": 40,
+    "same_si": 40,
+    "different_si": 0
+  }
+}

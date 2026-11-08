@@ -1,0 +1,36 @@
+{
+  "submission-chemeleon-et-raw.csv": {
+    "rows": 597,
+    "exact_template_order": true,
+    "finite_nonnegative": true,
+    "mean": 136.38109144403228,
+    "max": 12380.577010791803
+  },
+  "submission-chemeleon-et-log-presence.csv": {
+    "rows": 597,
+    "exact_template_order": true,
+    "finite_nonnegative": true,
+    "mean": 25.718477773378407,
+    "max": 1539.1930861579453
+  },
+  "submission-chemeleon-et-log.csv": {
+    "rows": 597,
+    "exact_template_order": true,
+    "finite_nonnegative": true,
+    "mean": 19.703738617615766,
+    "max": 393.3674654115055
+  },
+  "submission-chemeleon-ridge-log.csv": {
+    "rows": 597,
+    "exact_template_order": true,
+    "finite_nonnegative": true,
+    "mean": 37.701643779433205,
+    "max": 2062.2808729564445
+  },
+  "feature_invariance": {
+    "heads": 4,
+    "ignored_train_target_and_forbidden_columns": true,
+    "ignored_query_target_and_forbidden_columns": true,
+    "max_abs_change": 0.0
+  }
+}

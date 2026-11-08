@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "protocol_sha256": "f424d1b593a2d182877d8ba181fcb537186e26e470c6c723207b8ae0cf32dc96",
+  "inner_selections_recomputed": 20,
+  "group_partitions_checked": 80,
+  "outer_metrics_recomputed": 24,
+  "baseline_matches_prior_identity_stress": true,
+  "comparisons": [
+    {
+      "scheme": "identity",
+      "v4": 3280125.2689210596,
+      "nested-single": 2301227.9579120995,
+      "nested-blend": 2919565.54594449
+    },
+    {
+      "scheme": "identity71",
+      "v4": 4312185.17692739,
+      "nested-single": 4316415.2466657655,
+      "nested-blend": 4320604.285139118
+    },
+    {
+      "scheme": "identity72",
+      "v4": 3940314.2113907663,
+      "nested-single": 4118649.688047982,
+      "nested-blend": 3975611.959135485
+    },
+    {
+      "scheme": "scaffold",
+      "v4": 4288863.451769004,
+      "nested-single": 4288833.546077908,
+      "nested-blend": 4288690.922802811
+    }
+  ]
+}

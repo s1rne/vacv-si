@@ -1,0 +1,22 @@
+{
+  "winner": "pair-kernel-p1-a10",
+  "discovery": 51,
+  "profiles": {
+    "pair-kernel-p1-a1": [
+      1,
+      1
+    ],
+    "pair-kernel-p1-a10": [
+      1,
+      10
+    ],
+    "pair-kernel-p2-a1": [
+      2,
+      1
+    ],
+    "pair-kernel-p2-a10": [
+      2,
+      10
+    ]
+  }
+}

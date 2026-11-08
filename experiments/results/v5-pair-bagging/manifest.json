@@ -1,0 +1,44 @@
+{
+  "winner": "bag-raw",
+  "profiles": [
+    "bag-raw",
+    "bag-log",
+    "bag-raw-half-v4"
+  ],
+  "discovery": 41,
+  "confirmation": [
+    42,
+    43,
+    44,
+    45
+  ],
+  "draws": 16,
+  "rng_seed": 5100,
+  "alpha": 10.0,
+  "weighting": "sqrt(w_i*w_j), normalized mean one per draw; exponential molecule weights",
+  "all_train_molecules_eligible_as_anchors": true,
+  "external_data": false,
+  "all_labels_retained": true,
+  "rows": 320,
+  "target_max": 36066.667,
+  "confirmation_mean_mse": 3696435.712147125,
+  "control_mean_mse": 3681220.665029743,
+  "improves_each_confirmation": false,
+  "upload_3m_each_gate": false,
+  "submitted": false,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v5_pair_bagging.py": "fd61202b5e3842ea510321951da9f70135cc8d8a208a801caedc572797a3f726",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77"
+  },
+  "oof_hashes": {
+    "oof-41.csv": "572f534338af65ffa2a6eaf57ebf4b0b9d16e8ef5d31f42d8ba6185d61f3f757",
+    "oof-42.csv": "6591a23984a8ec65afeafe2b97c0dd5dd6ba7e8952b7fe643ff10e2b6cda65a5",
+    "oof-43.csv": "8e1384caa19d3c63c8fd66a1063032910a478509678af60c01ba7a4c240e12d8",
+    "oof-44.csv": "fa6ebd6a5043b3b00d48ea74df76c5dfb6999e2a3e62270eb357a26bd1f45119",
+    "oof-45.csv": "e189922e0e7d4cdc9a9d561240a42749b1c9a73647c896ad46294c2e8b4bba4e",
+    "oof-scaffold.csv": "f5a3d2cf3c6a6d249963cb7d7f50047293b6718223abbed01bb763fe7735a795"
+  }
+}

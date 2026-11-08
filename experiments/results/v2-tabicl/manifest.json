@@ -1,0 +1,21 @@
+{
+  "checkpoint": "tabicl-regressor-v2-20260212.ckpt",
+  "device": "cpu",
+  "n_estimators": 4,
+  "discovery": 9,
+  "confirmation": [
+    10,
+    11
+  ],
+  "embedding_sha256": "da056b854c3551f884683f245db7230d5d37ea51eab714cea7f8fd43b1dac611",
+  "features": "fold-local ContextEncoder and PCA32 of frozen CheMeleon",
+  "target_version": "train_v2",
+  "status": "completed",
+  "winner": "tabicl-log",
+  "elapsed_seconds": 74.08668962493539,
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "script_sha256": "61089c7cce8a395d3722bff5b3c51cdd2dfa02a8582c9f8fbee4eb1b2167fd9f",
+  "checkpoint_path": "/Users/mike/.cache/huggingface/hub/models--jingang--TabICL/snapshots/4dcd344ece2c00be9e831fdd35bed57b5ad83e19/tabicl-regressor-v2-20260212.ckpt",
+  "checkpoint_sha256": "0db9cb538f114e79026bf08f45f41ad8dd7ad2de2aaca9a5ca8cd3bd9748ae7a",
+  "provenance_note": "Hashes added after run; source change only records metadata, model implementation unchanged."
+}

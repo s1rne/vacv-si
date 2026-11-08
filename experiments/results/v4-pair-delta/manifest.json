@@ -1,0 +1,29 @@
+{
+  "winner": "ridge-log",
+  "discovery": 33,
+  "confirmation": [
+    34,
+    35
+  ],
+  "profiles": [
+    "ridge-raw",
+    "ridge-log",
+    "et-raw",
+    "et-log"
+  ],
+  "confirmation_mean_mse": 3621938.4162202263,
+  "improves_both_paired": false,
+  "local_4m_gate": false,
+  "upload_3m_gate": false,
+  "external_data": false,
+  "forbidden_features": false,
+  "all_labels_retained": true,
+  "label_count": 320,
+  "max_target": 36066.667,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77"
+  }
+}

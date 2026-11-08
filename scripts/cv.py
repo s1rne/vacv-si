@@ -12,14 +12,18 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
 
 from vacv.dataset import load
+from vacv.target_version import add_legacy_target_flag, check_legacy_target
+from vacv.clean_features import attach_clean
 from vacv.inference import PROFILES, predict_ensemble
-from vacv.literature import attach, fold_table, to_zero_inactive
+from vacv.literature import attach, fold_table
 from vacv.pipeline import INACTIVE, scaffolds_of
 from vacv.splits import fold_indices, scaffold_folds
 
 
-def evaluate(raw_frame, y, folds, seeds=7, profile="baseline"):
-    probability, raw, prediction, zero = (np.full(len(y), np.nan) for _ in range(4))
+def evaluate(raw_frame, y, folds, seeds=7, profile="baseline", lookup_policy="clean"):
+    if lookup_policy not in {"clean", "recovered"}:
+        raise ValueError("Unknown lookup policy")
+    probability, raw, prediction = (np.full(len(y), np.nan) for _ in range(3))
     fold_ids = np.full(len(y), -1)
     for fold in range(len(folds)):
         train, valid = fold_indices(folds, fold)
@@ -27,18 +31,16 @@ def evaluate(raw_frame, y, folds, seeds=7, profile="baseline"):
             raise ValueError("Empty training or validation fold")
         # Правила подстановки пересобираются по обучающей части фолда: иначе строки
         # контрольной части участвуют в решении, подставлять ли их собственный бакет.
-        frame = attach(raw_frame, fold_table(train))
+        frame = (attach_clean(raw_frame) if lookup_policy == "clean" else
+                 attach(raw_frame, fold_table(train)))
         probability[valid], raw[valid], prediction[valid] = predict_ensemble(
             frame.iloc[train], y[train], frame.iloc[valid], seeds, profile)
-        zero[valid] = to_zero_inactive(prediction[valid], probability[valid], frame.iloc[valid])
         fold_ids[valid] = fold
     if not np.isfinite(prediction).all() or (fold_ids < 0).any():
         raise ValueError("Incomplete OOF predictions")
     labels = y == INACTIVE
     metrics = {
         "mse": float(np.mean((prediction - y) ** 2)),
-        # метки train_v2: неактивное соединение имеет SI = 0, это и считает Kaggle
-        "mse_zero_inactive": float(np.mean((zero - np.where(y == INACTIVE, 0.0, y)) ** 2)),
         "model_mse": float(np.mean((raw - y) ** 2)),
         "auc": float(roc_auc_score(labels, probability)) if len(np.unique(labels)) == 2 else None,
         "brier": float(np.mean((probability - labels) ** 2)),
@@ -59,7 +61,10 @@ def main():
                         help="First random split seed; use fresh seeds for confirmation")
     parser.add_argument("--split", choices=["random", "scaffold", "both"], default="both")
     parser.add_argument("--out", type=Path, default=Path("outputs/cv"))
+    parser.add_argument("--lookup-policy", choices=["clean", "recovered"], default="clean")
+    add_legacy_target_flag(parser)
     args = parser.parse_args()
+    check_legacy_target(parser, args)
     if args.repeats < 1 or args.seeds < 1:
         parser.error("seeds and repeats must be positive")
     data = load()
@@ -74,8 +79,9 @@ def main():
     results = []
     for name, folds in splits.items():
         for profile in args.profiles:
-            metrics, oof = evaluate(frame, y, folds, args.seeds, profile)
-            results.append({"split": name, "profile": profile, "seeds": args.seeds, **metrics})
+            metrics, oof = evaluate(frame, y, folds, args.seeds, profile, args.lookup_policy)
+            results.append({"split": name, "profile": profile, "seeds": args.seeds,
+                            "lookup_policy": args.lookup_policy, **metrics})
             oof.to_csv(args.out / f"{name}-{profile}.csv", index=False)
             (args.out / "metrics.json").write_text(json.dumps(results, indent=2, allow_nan=False) + "\n")
             print(f"{name:12} {profile:12} MSE={metrics['mse']:,.0f} "

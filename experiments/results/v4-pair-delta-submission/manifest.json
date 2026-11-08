@@ -1,0 +1,30 @@
+{
+  "profile": "ridge-log",
+  "training_rows": 320,
+  "test_rows": 597,
+  "directed_training_pairs": 1004,
+  "pair_expert_rows": 277,
+  "prediction_quantiles": [
+    0.0,
+    4.168203648807631,
+    125.5199006184629,
+    1862.609994099152,
+    33338.92198620229
+  ],
+  "external_data": false,
+  "test_labels_used": false,
+  "upload_gate_passed": false,
+  "authorization": "User explicitly approved this candidate after CV checkpoint",
+  "sha256": {
+    "/Users/mike/Projects/vacv-si-recovery/scripts/submit_pair_delta_v4.py": "8f4775bf3a6b462cd095292b52f42dbb94cfc6c235599440cfc2a3ec3fa1e050",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "vacv/dataset.py": "970415ffeef3cac019fab1344e8f5ddc1dacd0a590d0b84a312e6de0a4796af7",
+    "vacv/pipeline.py": "a930950947ccc8b5a90eefda57117f2c9dcb0062f6529001d933d76d5896dae4",
+    "experiments/results/v4-pair-delta/frozen-winner.json": "8ba4913dfd3e1be9a85b48ce0cc83029a81d527e1c64570afcc43ae1ddd84381",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "data/raw_v2/test.csv": "e11597ae2d00bf83cabc13539428060a77e9d645a4b2e3cbc38f29a60c50e79a",
+    "experiments/results/v4-pair-delta-submission/submission-pair-delta-v4.csv": "cbd1b6c1e7ebb858c9ca9bda38dbc24392c7ef81271228ef4edce96edd87ab60"
+  }
+}

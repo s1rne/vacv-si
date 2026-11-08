@@ -1,0 +1,27 @@
+{
+  "profile": "0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft",
+  "rows": 597,
+  "stage": "intermediate checkpoint; not submitted to Kaggle",
+  "lookup_policy": "clean",
+  "input_sha256": {
+    "data/raw/kaggle/train.csv": "239efa4b3aa667b3681f6e1062d86ca5b0ba441364b8f2b894b4c428e272ba81",
+    "data/raw/kaggle/test.csv": "1b0c6a014bbe556c42ef2277e867d2e1a647ad31c157a9cd81bbc7e262481abd",
+    "data/processed/competition_presence.csv": "058796f714864469ee192904116729cf17cc853b781a9500b90bd805a8b75816"
+  },
+  "transductive": true,
+  "embedding_sha256": "da056b854c3551f884683f245db7230d5d37ea51eab714cea7f8fd43b1dac611",
+  "sha256": "ea0edab20d184b9694862e002f9f36eb2a0672639402d88470dd6ae7e6a4e7cf",
+  "components_sha256": "70e435e09e7a32a33e5840f81b872d19e052e80209999f95d10beb18a5f2fd70",
+  "code_sha256": {
+    "vacv/checkpoint.py": "329ac994d389f1f3683fbce1ed2c9993b2175d803c6207bac0fee73bacd83bf8",
+    "vacv/graph_correction.py": "117d1656342665869c88279366e1b6d4a2a771e836ccffe6ff5511d12b5034e7",
+    "vacv/postprocess.py": "8da5b0a60d2185c6a02e420d873797b688c42cb857bdc7b377eef1bfd190a37d",
+    "vacv/inference.py": "87c9da0e5805c432c4d4558aef3812fa56c4a0cabc4b640e51756b544a2a021e",
+    "vacv/pipeline.py": "a930950947ccc8b5a90eefda57117f2c9dcb0062f6529001d933d76d5896dae4",
+    "experiments/pretrained_embeddings.py": "bb1117288d5ee1907bf824e1e145307ee9d622dbf020a51c882d30bd8686149c",
+    "vacv/clean_features.py": "a239de7ceb9857069bb733326b41f9c26be104d852b5f3fccedf044bf74d172b",
+    "vacv/dataset.py": "f799b900c45a8687345af55ab640fd60705e1472954a4f2da75b2fcf1d0cb42b",
+    "vacv/literature.py": "4546cc7824c27ec2c9d3dffc4afc9a0729c192c025eaa90bc49597fe9699968b",
+    "scripts/submit_checkpoint.py": "5f9728ecbb3233d8bbb560faba48913ff4142230bf2e7fd018a3a45a31929211"
+  }
+}

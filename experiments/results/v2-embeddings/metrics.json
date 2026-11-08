@@ -1,0 +1,82 @@
+[
+  {
+    "split": "6",
+    "model": "chemeleon-et-raw",
+    "mse": 4541849.047373713
+  },
+  {
+    "split": "6",
+    "model": "chemeleon-et-log",
+    "mse": 4245596.207149754
+  },
+  {
+    "split": "6",
+    "model": "chemeleon-et-log-presence",
+    "mse": 4213148.557022775
+  },
+  {
+    "split": "6",
+    "model": "chemeleon-ridge-log",
+    "mse": 4253475.46851598
+  },
+  {
+    "split": "7",
+    "model": "chemeleon-et-raw",
+    "mse": 4372642.984191382
+  },
+  {
+    "split": "7",
+    "model": "chemeleon-et-log",
+    "mse": 4281692.182553458
+  },
+  {
+    "split": "7",
+    "model": "chemeleon-et-log-presence",
+    "mse": 4263924.137223663
+  },
+  {
+    "split": "7",
+    "model": "chemeleon-ridge-log",
+    "mse": 4291687.920761877
+  },
+  {
+    "split": "8",
+    "model": "chemeleon-et-raw",
+    "mse": 4426555.407939235
+  },
+  {
+    "split": "8",
+    "model": "chemeleon-et-log",
+    "mse": 4285140.614163659
+  },
+  {
+    "split": "8",
+    "model": "chemeleon-et-log-presence",
+    "mse": 4273025.789631111
+  },
+  {
+    "split": "8",
+    "model": "chemeleon-ridge-log",
+    "mse": 4260535.398084438
+  },
+  {
+    "split": "scaffold",
+    "model": "chemeleon-et-raw",
+    "mse": 4549986.030233835
+  },
+  {
+    "split": "scaffold",
+    "model": "chemeleon-et-log",
+    "mse": 4261772.30507672
+  },
+  {
+    "split": "scaffold",
+    "model": "chemeleon-et-log-presence",
+    "mse": 4260690.672442718
+  },
+  {
+    "split": "scaffold",
+    "model": "chemeleon-ridge-log",
+    "mse": 4241209.50218448
+  }
+]

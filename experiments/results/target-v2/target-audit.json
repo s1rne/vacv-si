@@ -1,0 +1,12 @@
+{
+  "train_rows": 320,
+  "changed_targets": 81,
+  "changes_only_10000_to_zero": true,
+  "allowed_features_identical": true,
+  "new_zeros": 83,
+  "old_prediction_scores": {
+    "original_weights": 22874737.05238211,
+    "checkpoint": 25071978.596975874,
+    "hybrid": 24529786.272824276
+  }
+}

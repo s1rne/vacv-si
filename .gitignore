@@ -14,6 +14,7 @@ outputs/
 data/raw/*
 !data/raw/models/
 !data/raw/models/*.pt
+data/raw_v2
 data/interim/
 analysis/cache/
 *.log

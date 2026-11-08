@@ -1,0 +1,66 @@
+{
+  "objective": "paired measured external-SI augmentation, exploratory only",
+  "external_source": "/Users/mike/Projects/vacv-si/data/processed/external_v2/measured.csv",
+  "source_sha256": "cca80a8f0e29c803be67cbde371294a0f603a3749005b659d8af83314f5293a0",
+  "source_rows": 304,
+  "eligible_unique_rows": 177,
+  "competition_train_rows": 320,
+  "competition_test_rows": 597,
+  "competition_unique_smiles": 899,
+  "competition_inchikey14_count": 811,
+  "invalid_competition_structures_exact_fallback_count": 1,
+  "excluded_overlap_rows": 0,
+  "post_filter_overlap_keys": 0,
+  "post_filter_exact_smiles_overlap": 0,
+  "eligibility": {
+    "measurement_type": "exact",
+    "provenance_tier": [
+      "A",
+      "E"
+    ],
+    "pairing_level": [
+      "strict",
+      "document"
+    ],
+    "notes": "empty",
+    "unit_verification": "not independently proven; experimental only"
+  },
+  "external_target": "SI only",
+  "competition_forbidden_columns_read": false,
+  "estimator": "ExtraTreesRegressor on Morgan+MACCS, log1p(SI), max_features=sqrt",
+  "trees": 400,
+  "min_samples_leaf": 2,
+  "seeds": [
+    0,
+    1
+  ],
+  "external_sample_weights": [
+    0.1,
+    0.25
+  ],
+  "selection": "discovery split 18 only",
+  "confirmations": [
+    19,
+    20
+  ],
+  "scaffold": "5-fold scaffold split seed 0",
+  "all_official_targets_retained": true,
+  "official_train_target_rows": 320,
+  "official_max_target": 36066.667,
+  "kaggle_upload": "prohibited/not attempted",
+  "frozen_discovery_winner": "external_weight_0.10",
+  "frozen_finalists": [
+    "baseline",
+    "external_weight_0.10"
+  ],
+  "completed_splits": [
+    "18",
+    "19",
+    "20",
+    "scaffold"
+  ],
+  "confirmation_gate_each_mse_le_3000000": {
+    "19": false,
+    "20": false
+  }
+}

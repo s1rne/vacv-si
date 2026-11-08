@@ -1,0 +1,24 @@
+{
+  "profile": "cross50",
+  "no_retuning": true,
+  "external_rows": 43,
+  "confirmation": [
+    52,
+    53,
+    54,
+    55
+  ],
+  "no_upload": true,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/glm_rebuild4_ablation.py": "83f34b50359d7962fcb0e5b428a03ee1210c05c668c4efb21bb5e772b5a46042",
+    "experiments/results/glm-rebuild4-audit/accepted.csv": "dddba1a7dc121b7d5baf6e4b5a4dc3eea8369dd85557e1e5478308fdc0e48a01",
+    "experiments/v6_pair_external.py": "57dda46f9392f9704779d65a2e6ea528934f188b19b85e2bbef4a004d3492560",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "experiments/results/v6-pair-external/oof-54.csv": "345162dfdb4942655d889cd8d79e2b355a21752d36a586b42d385c69a12dab43",
+    "experiments/results/v6-pair-external/oof-55.csv": "17a6bb9a4bfd944700c137bf55d15ca7027e1c9c4fd47ee3743249d457233229",
+    "experiments/results/v6-pair-external/oof-51.csv": "d3e4a2d21f0c8e8a5bc2f3ac4f5a817d87d2d1419e020dcd0e5379d2ac181236",
+    "experiments/results/v6-pair-external/oof-52.csv": "14fb9968a9990c29e4fafb674c763fbcf9a61514b7a7a65f984c801503b8278d",
+    "experiments/results/v6-pair-external/oof-53.csv": "8994b40002ac9a0e4a8747424a2e3de805941d8125013f1674b841db43c2ba8b",
+    "experiments/results/v6-pair-external/oof-scaffold.csv": "109a5f4075afb4f4708b2c5962f933fbef61c232123b00dd4620e186bdc81259"
+  }
+}

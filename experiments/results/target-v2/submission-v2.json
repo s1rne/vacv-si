@@ -1,0 +1,16 @@
+{
+  "target_version": "official-train_v2",
+  "profile": "et-blend-log",
+  "rows": 597,
+  "submitted_to_kaggle": false,
+  "sha256": "d32a9d7ab5bbf11b865b773728f894f3039e37247a8a8b83e7d49111369b9c1b",
+  "input_code_sha256": {
+    "/Users/mike/Projects/vacv-si-recovery/data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "/Users/mike/Projects/vacv-si-recovery/data/raw_v2/test.csv": "e11597ae2d00bf83cabc13539428060a77e9d645a4b2e3cbc38f29a60c50e79a",
+    "/Users/mike/Projects/vacv-si-recovery/data/raw_v2/sample_submit.csv": "11e98abe154676a0bc2ed6816df4098803ba28b2237a5b2af42ebae2ba2d3250",
+    "vacv/regression_v2.py": "8db04eb016c89bc13dff041c57d64146e2c44c5092ddb5f600d43461cd0f06e0",
+    "vacv/dataset.py": "970415ffeef3cac019fab1344e8f5ddc1dacd0a590d0b84a312e6de0a4796af7",
+    "vacv/pipeline.py": "a930950947ccc8b5a90eefda57117f2c9dcb0062f6529001d933d76d5896dae4",
+    "vacv/kernel.py": "c4f373389f4064a821f1a2bfe851fe73b44713ce5b45a4ea99a596d28c552eb7"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "winner": "offset-10",
+  "discovery": 56,
+  "profiles": {
+    "offset-0.01": 0.01,
+    "offset-0.1": 0.1,
+    "offset-10": 10.0
+  }
+}

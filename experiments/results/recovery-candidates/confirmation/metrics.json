@@ -1,0 +1,62 @@
+[
+  {
+    "split": 6,
+    "model": "hybrid",
+    "mse": 8926666.708223766
+  },
+  {
+    "split": 6,
+    "model": "active_knn",
+    "mse": 8981347.800363025
+  },
+  {
+    "split": 6,
+    "model": "temperature_0.8",
+    "mse": 9236402.516855348
+  },
+  {
+    "split": 6,
+    "model": "temperature_1.2",
+    "mse": 8782784.031577509
+  },
+  {
+    "split": 7,
+    "model": "hybrid",
+    "mse": 9061452.22136056
+  },
+  {
+    "split": 7,
+    "model": "active_knn",
+    "mse": 9102753.86262482
+  },
+  {
+    "split": 7,
+    "model": "temperature_0.8",
+    "mse": 9291435.0197361
+  },
+  {
+    "split": 7,
+    "model": "temperature_1.2",
+    "mse": 8982746.839078497
+  },
+  {
+    "split": 8,
+    "model": "hybrid",
+    "mse": 8872934.88977312
+  },
+  {
+    "split": 8,
+    "model": "active_knn",
+    "mse": 8917696.205113243
+  },
+  {
+    "split": 8,
+    "model": "temperature_0.8",
+    "mse": 9215374.562522216
+  },
+  {
+    "split": 8,
+    "model": "temperature_1.2",
+    "mse": 8698698.893214563
+  }
+]

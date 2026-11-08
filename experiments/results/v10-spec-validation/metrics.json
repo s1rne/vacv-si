@@ -1,0 +1,226 @@
+[
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "variant": "raw",
+    "mse": 3280125.2689210596,
+    "mse_without_max_diagnostic_only": 205961.97684868393
+  },
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "variant": "alpha",
+    "mse": 4039549.4021123894,
+    "mse_without_max_diagnostic_only": 258498.56330379413
+  },
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "variant": "cap5000",
+    "mse": 3280125.2689210596,
+    "mse_without_max_diagnostic_only": 205961.97684868393
+  },
+  {
+    "representation": "original",
+    "scheme": "identity",
+    "variant": "alpha_then_cap5000",
+    "mse": 4039549.4021123894,
+    "mse_without_max_diagnostic_only": 258498.56330379413
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "variant": "raw",
+    "mse": 4312185.17692739,
+    "mse_without_max_diagnostic_only": 253508.223121062
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "variant": "alpha",
+    "mse": 4376269.678537709,
+    "mse_without_max_diagnostic_only": 315628.34252231335
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "variant": "cap5000",
+    "mse": 4312185.17692739,
+    "mse_without_max_diagnostic_only": 253508.223121062
+  },
+  {
+    "representation": "original",
+    "scheme": "identity71",
+    "variant": "alpha_then_cap5000",
+    "mse": 4376269.678537709,
+    "mse_without_max_diagnostic_only": 315628.34252231335
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "variant": "raw",
+    "mse": 3940314.2113907663,
+    "mse_without_max_diagnostic_only": 230486.3648826199
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "variant": "alpha",
+    "mse": 4210704.275027006,
+    "mse_without_max_diagnostic_only": 282892.05589488905
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "variant": "cap5000",
+    "mse": 3940314.2113907663,
+    "mse_without_max_diagnostic_only": 230486.3648826199
+  },
+  {
+    "representation": "original",
+    "scheme": "identity72",
+    "variant": "alpha_then_cap5000",
+    "mse": 4210704.275027006,
+    "mse_without_max_diagnostic_only": 282892.05589488905
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "variant": "raw",
+    "mse": 4288863.451769004,
+    "mse_without_max_diagnostic_only": 228541.82428806578
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "variant": "alpha",
+    "mse": 4287378.730967341,
+    "mse_without_max_diagnostic_only": 231194.47689074534
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "variant": "cap5000",
+    "mse": 4288863.451769004,
+    "mse_without_max_diagnostic_only": 228541.82428806578
+  },
+  {
+    "representation": "original",
+    "scheme": "scaffold",
+    "variant": "alpha_then_cap5000",
+    "mse": 4287378.730967341,
+    "mse_without_max_diagnostic_only": 231194.47689074534
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "variant": "raw",
+    "mse": 4241962.35084152,
+    "mse_without_max_diagnostic_only": 194834.9344527249
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "variant": "alpha",
+    "mse": 4260644.751675876,
+    "mse_without_max_diagnostic_only": 212182.98983469096
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "variant": "cap5000",
+    "mse": 4241962.35084152,
+    "mse_without_max_diagnostic_only": 194834.9344527249
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity",
+    "variant": "alpha_then_cap5000",
+    "mse": 4260644.751675876,
+    "mse_without_max_diagnostic_only": 212182.98983469096
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "variant": "raw",
+    "mse": 4290447.537632019,
+    "mse_without_max_diagnostic_only": 234514.7078424978
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "variant": "alpha",
+    "mse": 4279362.799258388,
+    "mse_without_max_diagnostic_only": 219191.62064497935
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "variant": "cap5000",
+    "mse": 4290447.537632019,
+    "mse_without_max_diagnostic_only": 234514.7078424978
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity71",
+    "variant": "alpha_then_cap5000",
+    "mse": 4279362.799258388,
+    "mse_without_max_diagnostic_only": 219191.62064497935
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "variant": "raw",
+    "mse": 4256028.912350805,
+    "mse_without_max_diagnostic_only": 211017.79954170572
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "variant": "alpha",
+    "mse": 4269176.6546244435,
+    "mse_without_max_diagnostic_only": 210276.41226863986
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "variant": "cap5000",
+    "mse": 4256028.912350805,
+    "mse_without_max_diagnostic_only": 211017.79954170572
+  },
+  {
+    "representation": "chiral",
+    "scheme": "identity72",
+    "variant": "alpha_then_cap5000",
+    "mse": 4269176.6546244435,
+    "mse_without_max_diagnostic_only": 210276.41226863986
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "variant": "raw",
+    "mse": 4283844.665157167,
+    "mse_without_max_diagnostic_only": 228789.1774325026
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "variant": "alpha",
+    "mse": 4311588.588232738,
+    "mse_without_max_diagnostic_only": 266209.2772408291
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "variant": "cap5000",
+    "mse": 4283844.665157167,
+    "mse_without_max_diagnostic_only": 228789.1774325026
+  },
+  {
+    "representation": "chiral",
+    "scheme": "scaffold",
+    "variant": "alpha_then_cap5000",
+    "mse": 4311588.588232738,
+    "mse_without_max_diagnostic_only": 266209.2772408291
+  }
+]

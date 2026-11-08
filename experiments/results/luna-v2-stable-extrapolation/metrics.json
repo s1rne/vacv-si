@@ -1,0 +1,65 @@
+[
+  {
+    "split": 18,
+    "model": "ridge-raw",
+    "mse": 5428243.73731813,
+    "non_tail_mse": 1325546.6665265732,
+    "tail_mse": 188877412.75985485,
+    "max_label_prediction": 145.33357446565236,
+    "prediction_max": 8637.768327801718
+  },
+  {
+    "split": 18,
+    "model": "ridge-sqrt",
+    "mse": 4280468.8270818945,
+    "non_tail_mse": 73377.34553165373,
+    "tail_mse": 192397559.35925695,
+    "max_label_prediction": 69.50303936536312,
+    "prediction_max": 3448.948873902189
+  },
+  {
+    "split": 18,
+    "model": "kernel-raw",
+    "mse": 4615107.994217883,
+    "non_tail_mse": 464370.91999034054,
+    "tail_mse": 190212351.4561065,
+    "max_label_prediction": 105.41429324283169,
+    "prediction_max": 7054.32684200055
+  },
+  {
+    "split": 18,
+    "model": "kernel-sqrt",
+    "mse": 4259505.239735717,
+    "non_tail_mse": 37864.81558197546,
+    "tail_mse": 193027141.34832448,
+    "max_label_prediction": 42.735366701478576,
+    "prediction_max": 1819.8704430163245
+  },
+  {
+    "split": 19,
+    "model": "kernel-sqrt",
+    "mse": 4251891.002842858,
+    "non_tail_mse": 42468.00617930093,
+    "tail_mse": 192473233.56794187,
+    "max_label_prediction": 132.78069811294725,
+    "prediction_max": 1841.931709531925
+  },
+  {
+    "split": 20,
+    "model": "kernel-sqrt",
+    "mse": 4246799.765357745,
+    "non_tail_mse": 44656.42365280165,
+    "tail_mse": 192142637.75873592,
+    "max_label_prediction": 103.56026829928969,
+    "prediction_max": 1824.4362405518218
+  },
+  {
+    "split": "scaffold",
+    "model": "kernel-sqrt",
+    "mse": 4249248.874411924,
+    "non_tail_mse": 47346.35959277496,
+    "tail_mse": 192134318.465611,
+    "max_label_prediction": 63.23818920323137,
+    "prediction_max": 1758.9025339549926
+  }
+]

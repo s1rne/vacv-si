@@ -1,0 +1,45 @@
+{
+  "profiles": {
+    "context-raw70": [
+      0.7,
+      false
+    ],
+    "context-raw85": [
+      0.85,
+      false
+    ],
+    "context-log70": [
+      0.7,
+      true
+    ]
+  },
+  "discovery": 12,
+  "confirmation": [
+    13,
+    14
+  ],
+  "winner": "context-raw70",
+  "external_data": false,
+  "target_version": "train_v2",
+  "test_gate_fired": 277,
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "script_sha256": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+  "helper_script_sha256": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+  "provenance_note": "Paired fallback-only control added after fixed winner selection; expert predictions unchanged.",
+  "feature_coverage_train_loo": {
+    "rows": 320,
+    "any_known_matching_context": 309,
+    "same_context_sim70": 134,
+    "same_context_sim85": 20,
+    "any_structure_sim70": 148,
+    "any_structure_sim85": 37
+  },
+  "feature_coverage_test": {
+    "rows": 597,
+    "any_known_matching_context": 588,
+    "same_context_sim70": 277,
+    "same_context_sim85": 64,
+    "any_structure_sim70": 315,
+    "any_structure_sim85": 97
+  }
+}

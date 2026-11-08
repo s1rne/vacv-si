@@ -1,0 +1,22 @@
+[
+  {
+    "split": 3,
+    "model": "hybrid",
+    "mse": 8545618.939906802
+  },
+  {
+    "split": 3,
+    "model": "active_knn",
+    "mse": 8624617.45360466
+  },
+  {
+    "split": 3,
+    "model": "temperature_0.8",
+    "mse": 8960467.149955144
+  },
+  {
+    "split": 3,
+    "model": "temperature_1.2",
+    "mse": 8318420.641949788
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "scheme": "identity",
+    "passed": true,
+    "max_abs_prediction_difference": 0.0
+  },
+  {
+    "scheme": "identity71",
+    "passed": true,
+    "max_abs_prediction_difference": 0.0
+  },
+  {
+    "scheme": "identity72",
+    "passed": true,
+    "max_abs_prediction_difference": 0.0
+  },
+  {
+    "scheme": "scaffold",
+    "passed": true,
+    "max_abs_prediction_difference": 0.0
+  }
+]

@@ -39,11 +39,19 @@ def load_split(name: str) -> pd.DataFrame:
     canonicaliser is the one part of standardization that can land two
     spellings of the same molecule on two different keys.
     """
-    frame = pd.read_csv(KAGGLE / f"{name}.csv")
-    if name == "train" and "SI VACV" in frame and not frame["SI VACV"].eq(10_000.0).any():
-        # train_v2: неактивное соединение помечено нулём. Правила восстановления написаны
-        # под внутреннюю метку 10000, как и загрузчик в vacv/dataset.py.
-        frame["SI VACV"] = frame["SI VACV"].mask(frame["SI VACV"].eq(0.0), 10_000.0)
+    # Read only structures, paper context, and the permitted target on train.
+    # In particular, never parse the organizers' component measurements (or
+    # their missingness), including in diagnostic/prediction callers.
+    allowed = {"index", "SMILES", "Title", "strain", "Culture"}
+    if name == "train":
+        allowed.add("SI VACV")
+    frame = pd.read_csv(KAGGLE / f"{name}.csv", usecols=lambda column: column in allowed)
+    required = {"SMILES", "Title", "strain", "Culture"}
+    if name == "train":
+        required.add("SI VACV")
+    missing = required.difference(frame.columns)
+    if missing:
+        raise ValueError(f"{name}.csv missing required allowed columns: {sorted(missing)}")
     standardized = [standardize(s) for s in frame["SMILES"]]
     plain = [standardize(s, canonical_tautomer=False) for s in frame["SMILES"]]
     frame["inchikey"] = [s.inchikey for s in standardized]

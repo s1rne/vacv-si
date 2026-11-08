@@ -1,0 +1,20 @@
+{
+  "mse": 3280125.2689210596,
+  "mse_without_max_diagnostic_only": 205961.97684868393,
+  "tail_mse": 148419095.22260416,
+  "non_tail_mse": 34205.813087891285,
+  "max_label_prediction": 4698.877542660028,
+  "prediction_max": 4698.877542660028,
+  "prediction_mean": 64.69214396127727,
+  "unique_identities": 311,
+  "repeated_identity_groups": 9,
+  "rows_in_repeated_identities": 18,
+  "standardization_rejections": [],
+  "no_tuning": true,
+  "all_320_labels_retained": true,
+  "sha256": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v5_identity_stress.py": "04862cbff317e5da77d02f7eb5338c2d34d9b46df2fc61a4f86c815b3ed27251",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "configs": [
+    "knn8-raw",
+    "knn8-log",
+    "knn8-log-external",
+    "local-krr24-raw"
+  ],
+  "discovery": 9,
+  "confirmation": [
+    10,
+    11
+  ],
+  "target_version": "train_v2",
+  "external_rows": 316,
+  "external_overlap": 0,
+  "source_sha256": "f128f0edadbc9e2bb298f57091f5feae2b12fa2c7ee92a32b33afe4e1469fa03",
+  "selection_metric": "full raw MSE, all targets retained",
+  "features": "Morgan binary radius2 2048; structure only"
+}

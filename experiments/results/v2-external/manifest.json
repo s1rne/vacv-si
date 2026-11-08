@@ -1,0 +1,9 @@
+{
+  "external_rows": 316,
+  "excluded_competition_keys": 812,
+  "overlap_after_filter": 0,
+  "source": "data/processed/vacv_si_measured.csv",
+  "external_weight": 0.25,
+  "target_version": "train_v2",
+  "source_sha256": "f128f0edadbc9e2bb298f57091f5feae2b12fa2c7ee92a32b33afe4e1469fa03"
+}

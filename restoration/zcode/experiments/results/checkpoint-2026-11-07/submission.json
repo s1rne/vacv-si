@@ -1,0 +1,17 @@
+{
+  "profile": "0.75*gated_graph_hybrid7+0.25*CheMeleonPCA32TabICL2-soft",
+  "rows": 597,
+  "stage": "intermediate checkpoint; not submitted to Kaggle",
+  "transductive": true,
+  "embedding_sha256": "da056b854c3551f884683f245db7230d5d37ea51eab714cea7f8fd43b1dac611",
+  "sha256": "acffbc276491daf001d369aed571e6c699ea6ef5e03aeafca043e8f805126655",
+  "components_sha256": "cb471ba8df92677c3e12c404573852e786a0c973a6a2b68b158d318a6a5c9bbe",
+  "code_sha256": {
+    "vacv/checkpoint.py": "26f9f0d218be1c4873d0162ab979230b68dde8737005bae95b5a1bd18cd304a9",
+    "vacv/graph_correction.py": "117d1656342665869c88279366e1b6d4a2a771e836ccffe6ff5511d12b5034e7",
+    "vacv/postprocess.py": "49a8cacf3bb491e9af64a4aa1a904d8e64f404e9a14b9b92e0a20d828380492d",
+    "vacv/inference.py": "3434530ab7f5a02c9d953fe7f535d367212323a8e116b716a0751ea30f6ac013",
+    "vacv/pipeline.py": "6295aa869f10d7e7819c0307ba952cbe2864fbceb73f71cc1aeb64c07d5f7693",
+    "experiments/pretrained_embeddings.py": "bb1117288d5ee1907bf824e1e145307ee9d622dbf020a51c882d30bd8686149c"
+  }
+}

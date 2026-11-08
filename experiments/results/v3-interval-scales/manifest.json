@@ -1,0 +1,35 @@
+{
+  "profiles": [
+    "raw/competition-only",
+    "raw/external-exact",
+    "raw/external-intervals",
+    "sqrt/competition-only",
+    "sqrt/external-exact",
+    "sqrt/external-intervals"
+  ],
+  "alpha": 1.0,
+  "external_weight": 0.25,
+  "discovery": 27,
+  "confirmation": [
+    28,
+    29
+  ],
+  "target_version": "train_v2",
+  "train_rows": 320,
+  "train_maximum": 36066.667,
+  "external_rows": 170,
+  "external_exact": 47,
+  "external_bounds": 123,
+  "excluded_external_rows": 0,
+  "post_filter_competition_overlap": 0,
+  "source_sha256": "9ead9fc63139b88352584a39673f3458beaf1abb8c3ddd776c0de7d1729a2e23",
+  "source": "experiments/results/v3-source-pairs/eligible.csv",
+  "script_sha256": "91b5c569bb7b9d418e1ad930bb83ea447273ed70a7dc20129fa71d6f93ef3176",
+  "model_sha256": "98b3b879df6f7356f336adf6ddadcb202088218f848d4bee3d9b60449d9dae1f",
+  "helper_sha256": "56985282067f2d7f49e7a080306018060e165f23510fa9cb82b4a3c093a619cc",
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "frozen_winner": "sqrt/external-intervals",
+  "matching_baseline": "sqrt/competition-only",
+  "gate_pass": false,
+  "status": "completed"
+}

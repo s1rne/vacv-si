@@ -1,0 +1,32 @@
+[
+  {
+    "split": 6,
+    "model": "structure-log",
+    "mse": 4234663.138719542
+  },
+  {
+    "split": 6,
+    "model": "structure-log-external",
+    "mse": 4206976.456588779
+  },
+  {
+    "split": 7,
+    "model": "structure-log",
+    "mse": 4288868.103700049
+  },
+  {
+    "split": 7,
+    "model": "structure-log-external",
+    "mse": 4246773.328116853
+  },
+  {
+    "split": 8,
+    "model": "structure-log",
+    "mse": 4256230.229700558
+  },
+  {
+    "split": 8,
+    "model": "structure-log-external",
+    "mse": 4259984.093032269
+  }
+]

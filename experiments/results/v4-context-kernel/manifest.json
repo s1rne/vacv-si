@@ -1,0 +1,70 @@
+{
+  "profiles": {
+    "product-raw-0.01": [
+      "raw",
+      0.01
+    ],
+    "product-raw-0.1": [
+      "raw",
+      0.1
+    ],
+    "product-raw-1": [
+      "raw",
+      1.0
+    ],
+    "product-sqrt-0.01": [
+      "sqrt",
+      0.01
+    ],
+    "product-sqrt-0.1": [
+      "sqrt",
+      0.1
+    ],
+    "product-sqrt-1": [
+      "sqrt",
+      1.0
+    ]
+  },
+  "discovery": 30,
+  "confirmation": [
+    31,
+    32
+  ],
+  "winner": "product-sqrt-1",
+  "selection": "minimum full raw MSE on discovery only",
+  "external_data": false,
+  "target_version": "train_v2",
+  "rows": 320,
+  "target_max": 36066.667,
+  "target_cap": null,
+  "prediction_cap": null,
+  "kernel": "Tanimoto^2 * (0.1 + 0.9 * same known strain,culture)",
+  "intercept": "unpenalized train mean with consistently centered kernel",
+  "confirmation_mse": [
+    4220145.890608882,
+    4229253.35269654
+  ],
+  "paired_control_mse": [
+    4207602.964356679,
+    3811529.2128357952
+  ],
+  "confirmation_mean": 4224699.621652711,
+  "local_4m_gate": false,
+  "hard_upload_3m_each_gate": false,
+  "submitted": false,
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "source_hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v4_context_kernel.py": "c043441eebe9b775265995995307d1e3544a7986b91ec7c04365b26991b1892f",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "vacv/dataset.py": "970415ffeef3cac019fab1344e8f5ddc1dacd0a590d0b84a312e6de0a4796af7",
+    "vacv/pipeline.py": "a930950947ccc8b5a90eefda57117f2c9dcb0062f6529001d933d76d5896dae4",
+    "vacv/splits.py": "78e373bc1791d5046f12094f1aeba416be4cd280163016bdd6cb3736d8ebf105"
+  },
+  "oof_hashes": {
+    "oof-30.csv": "9b24a5b4ca03d80130f7ca33780539d244be4c7da9475bbadf97e0b3c49bf601",
+    "oof-31.csv": "aa1ecfc8f23e565ab683b88d2d440b88c76ef81635ab729fc55460b51c0936d2",
+    "oof-32.csv": "c372078154fc3e29f2aa42e30de0c0e03b8331ab9864ff834c6a9fcbfe3bf83a",
+    "oof-scaffold.csv": "f99c6b92330f4735ffbb21f97e7b10868753152b84db3a5d121d8e421929aa84"
+  }
+}

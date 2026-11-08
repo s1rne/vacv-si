@@ -1,0 +1,11 @@
+{
+  "competition": "molecular-activity-prediction-hack",
+  "status": "Complete",
+  "public_mse": 2038068.29444,
+  "previous_best_public_mse": 14633838.88963,
+  "relative_reduction": 0.8607290739079928,
+  "filename": "submission-v2.csv",
+  "sha256": "d32a9d7ab5bbf11b865b773728f894f3039e37247a8a8b83e7d49111369b9c1b",
+  "url": "https://www.kaggle.com/competitions/molecular-activity-prediction-hack/submissions",
+  "target_version": "train_v2"
+}

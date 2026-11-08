@@ -1,0 +1,42 @@
+[
+  {
+    "split": 3,
+    "model": "original_weights",
+    "mse": 9503958.455950264
+  },
+  {
+    "split": 3,
+    "model": "checkpoint",
+    "mse": 8144236.193518055
+  },
+  {
+    "split": 6,
+    "model": "original_weights",
+    "mse": 9944824.897707274
+  },
+  {
+    "split": 6,
+    "model": "checkpoint",
+    "mse": 8635034.042251075
+  },
+  {
+    "split": 7,
+    "model": "original_weights",
+    "mse": 10120452.159460794
+  },
+  {
+    "split": 7,
+    "model": "checkpoint",
+    "mse": 9072247.280462284
+  },
+  {
+    "split": 8,
+    "model": "original_weights",
+    "mse": 9788871.96998832
+  },
+  {
+    "split": 8,
+    "model": "checkpoint",
+    "mse": 8801450.46989149
+  }
+]

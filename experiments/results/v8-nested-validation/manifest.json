@@ -1,0 +1,43 @@
+{
+  "protocol_sha256": "f424d1b593a2d182877d8ba181fcb537186e26e470c6c723207b8ae0cf32dc96",
+  "finished_at_utc": "2026-11-07T12:29:25.157780+00:00",
+  "primary_blend_improved": true,
+  "blend_improved": {
+    "identity": true,
+    "identity71": false,
+    "identity72": false,
+    "scaffold": true
+  },
+  "confirmation_passed": false,
+  "submission_created": false,
+  "uploaded": false,
+  "artifacts_sha256": {
+    "inner-identity-0.csv": "779de11001b941b5b1247582e44361117faafce099043c09a323b55d3d29a5fb",
+    "inner-identity-1.csv": "15afffba1dd2b74535cfb211522dc721d2d9cf51517e1e14b198f8fcdc8b1cd3",
+    "inner-identity-2.csv": "2ea8cce63f32d3419d70bcaab8ff06a60aecb192cdb9bb41c0db05bce16d4e30",
+    "inner-identity-3.csv": "8891e3aa00ab468f2ba366a5543e82fdfcc0a8884bbc470321ba1b3ace7a7446",
+    "inner-identity-4.csv": "a9caec6ec7f72b6d9719cf29fe860886d72dc045723f714677b1cf00ef1895f7",
+    "inner-identity71-0.csv": "7f8f055f7929e41fdab390e1da7a3fdcf21410a31a62242c89c5477ff0df123e",
+    "inner-identity71-1.csv": "cab29fcc3d77fbec9801e3aa15de6372d99ce13e103dd0ba47d11682b53fca5f",
+    "inner-identity71-2.csv": "44dec6968f0c88608b9a82d6400dc6c40d05752baff64132c563e8fdd15adef9",
+    "inner-identity71-3.csv": "76d4392f530afc889c9346f3fac355d252abb9bb8a8ec8477b3399f6a936a616",
+    "inner-identity71-4.csv": "66ca9ac84a2bd425849e6648180fb698659e8731ae36f9eef3183a9396d58ed1",
+    "inner-identity72-0.csv": "d1ac387b9eb8ee1ef896df32d4ca348a9d78514ad57874dec2c0ab4253e03552",
+    "inner-identity72-1.csv": "77841d0cb311b1ea0f765b90c349b0dba706f4790f8536aa95fe906cfe4a3933",
+    "inner-identity72-2.csv": "6db4fbb57736ce4ebb0549025e0f0980618502bc2a1a4def81665fe8b04e6f09",
+    "inner-identity72-3.csv": "d5bf047bebb7ec6a2f2793d8476c0ad412a37f03a49c81403192412f7ba5c261",
+    "inner-identity72-4.csv": "b0cd54096c535327078c9fdac12aeb826d786b0cc5bfa7f89656df4c2d936e05",
+    "inner-scaffold-0.csv": "3096f072640f722c3404e9fc916356f74b35707af41d6a7f2921685d8832e60e",
+    "inner-scaffold-1.csv": "48e42311ff958c580ec9507b44faae2a082a03d5fd61bde56efa9cf213fd256a",
+    "inner-scaffold-2.csv": "71db02f99981ee4ec33a7d0924c257e1be3254c390257562b15b50fb3b60cdca",
+    "inner-scaffold-3.csv": "4d842a08e57c4f066ce16c4a532cc5bd185a0a92322c3ca3e449bf98b3f07513",
+    "inner-scaffold-4.csv": "97a819ec59e7d1d35bab07750286a7ecadde7cdfb7ff33b378fa6b858b9a9e2f",
+    "metrics.json": "4e2161ca463cd677d7384151b9ba49f656f6d50660f7b118450e5eaa4df55c2f",
+    "oof-identity.csv": "216e8db59bcea4a008e6614344b51097a0635c7f4f4babb66ddfebedc591a314",
+    "oof-identity71.csv": "7d85ca5bb36e3cbc66dea68af7d3eb426a08871c08dd7e477faf074895f14b52",
+    "oof-identity72.csv": "94db415538b6038aab95f3e5a7f42f0c9be19bda5f7e7bd8bf716363e9ab990c",
+    "oof-scaffold.csv": "fbf352d4fc61269074d3e91a7852f459e39a05e14311d73fda4a8868277b0f9e",
+    "protocol.json": "f424d1b593a2d182877d8ba181fcb537186e26e470c6c723207b8ae0cf32dc96",
+    "selection-audit.json": "90b6887f37e194bc6190d24024773faa835e180aa6990be2044f1f51e93aca0f"
+  }
+}

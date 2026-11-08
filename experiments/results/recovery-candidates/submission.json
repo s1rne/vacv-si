@@ -1,0 +1,21 @@
+{
+  "profile": "clean-hybrid7-temperature1.2",
+  "rows": 597,
+  "submitted_to_kaggle": true,
+  "exponent": 1.2,
+  "active_mean": 285.7241842722893,
+  "lookup_substitution": false,
+  "sha256": "f6388a21766965ba6d2611c6b1fa767a439101b3d41de1b6a6efea6f57033b5b",
+  "components_sha256": "96262f249565b6905f203db275108dc4e26dfe003e96004e90985bf9c34cbc84",
+  "input_code_sha256": {
+    "vacv/recovery_model.py": "f075bf658e23cfd849179179069aa3a994ab7bd3476defa7116dd76430aedaa4",
+    "vacv/clean_features.py": "a239de7ceb9857069bb733326b41f9c26be104d852b5f3fccedf044bf74d172b",
+    "vacv/inference.py": "87c9da0e5805c432c4d4558aef3812fa56c4a0cabc4b640e51756b544a2a021e",
+    "vacv/kernel.py": "c4f373389f4064a821f1a2bfe851fe73b44713ce5b45a4ea99a596d28c552eb7",
+    "vacv/pipeline.py": "a930950947ccc8b5a90eefda57117f2c9dcb0062f6529001d933d76d5896dae4",
+    "data/processed/competition_presence.csv": "058796f714864469ee192904116729cf17cc853b781a9500b90bd805a8b75816",
+    "data/raw/kaggle/train.csv": "239efa4b3aa667b3681f6e1062d86ca5b0ba441364b8f2b894b4c428e272ba81",
+    "data/raw/kaggle/test.csv": "1b0c6a014bbe556c42ef2277e867d2e1a647ad31c157a9cd81bbc7e262481abd"
+  },
+  "public_mse": 18146452.74419
+}

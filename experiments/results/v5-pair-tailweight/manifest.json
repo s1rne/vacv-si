@@ -1,0 +1,33 @@
+{
+  "profiles": {
+    "power0125": 0.125,
+    "power025": 0.25,
+    "power05": 0.5
+  },
+  "discovery": 46,
+  "confirmation": [
+    47,
+    48,
+    49,
+    50
+  ],
+  "winner": "power0125",
+  "confirmation_mean_mse": {
+    "power0125": 3905354.903073011,
+    "v4-ridge-log": 3252381.2381056855
+  },
+  "paired_wins": 0,
+  "all_labels_retained": true,
+  "label_count": 320,
+  "max_target": 36066.667,
+  "external_data": false,
+  "test_data_used": false,
+  "repeated_cv_not_independent_data": true,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v5_pair_tailweight.py": "9aecc85d63466a6fcd5173553c9a005eb6a9d9c85c8cb460d8416d15f07f907a",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+  }
+}

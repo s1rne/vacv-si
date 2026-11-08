@@ -1,0 +1,54 @@
+{
+  "winner": "pair-kernel-p1-a10",
+  "profiles": {
+    "pair-kernel-p1-a1": [
+      1,
+      1
+    ],
+    "pair-kernel-p1-a10": [
+      1,
+      10
+    ],
+    "pair-kernel-p2-a1": [
+      2,
+      1
+    ],
+    "pair-kernel-p2-a10": [
+      2,
+      10
+    ]
+  },
+  "discovery": 51,
+  "confirmation": [
+    52,
+    53,
+    54,
+    55
+  ],
+  "regularization": "unique undirected pairs use alpha/2; equivalent to both orientations at alpha",
+  "selection": "minimum full raw MSE on discovery only",
+  "external_data": false,
+  "all_labels_retained": true,
+  "rows": 320,
+  "target_max": 36066.667,
+  "confirmation_mean_mse": 4117072.5553157507,
+  "control_mean_mse": 3595103.0599298924,
+  "improves_each_confirmation": false,
+  "upload_3m_each_gate": false,
+  "submitted": false,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v6_pair_kernel.py": "892e303ebaf47ead99fc51c0078f365a7b7b0ea99a8e60e46c1acdee20842712",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77"
+  },
+  "oof_hashes": {
+    "oof-51.csv": "1711cb703ff4723e8b7e8ee0cf99528e7fa72ec85f5ac50faea1e68f99313158",
+    "oof-52.csv": "ed64b3fb21f76edf3ea1f9ac877b979bb3549e5a1fc5bce7976bdbbc82230e69",
+    "oof-53.csv": "d47212f066ea7d2bc0e010f6c152212f2380d799290d554eaec84193144683b1",
+    "oof-54.csv": "aca2366226a0965cb9dd3f9bb3b25289952ef83b7c211d82d0ae616e81142487",
+    "oof-55.csv": "44fdd996c5430f4e947bf86bf03c27f70ecba39c8b8e894c9616cf0d053165a0",
+    "oof-scaffold.csv": "e444ff036078a61a134540397cb79d37244fefd28feb5a9fdd3fa2c61e4b792e"
+  }
+}

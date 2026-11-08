@@ -1,0 +1,1659 @@
+{
+  "scope": "all saved immediate experiment/result directories in final integration checkout",
+  "runs": [
+    {
+      "directory": "experiments/results/2026-11-07",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/2026-11-07/data-manifest.json",
+          "sha256": "793d5c80788a0796c464c4e3b7ff2e428cbba02f3f80203151399b7a655e2468"
+        },
+        {
+          "path": "experiments/results/2026-11-07/environment.json",
+          "sha256": "f5aa1e760e2596db1b107f02f5ac91f22a085830d56b7f8b292b99c6e7354ad6"
+        },
+        {
+          "path": "experiments/results/2026-11-07/metrics.json",
+          "sha256": "3c79c785e1b757f6a71c86e65c85425fbba61840e51c30eac9250fc800658a41"
+        },
+        {
+          "path": "experiments/results/2026-11-07/report.md",
+          "sha256": "3c09ab1765f8e90817ed9ac7841e20b7c77a165631c2a53435c7d78787c27ca5"
+        },
+        {
+          "path": "experiments/results/2026-11-07/submission-baseline.json",
+          "sha256": "120ff0082e34369b45f41275529d2e6c9cc2805ca940ac2c56967db8382ba479"
+        },
+        {
+          "path": "experiments/results/2026-11-07/submission-hybrid.json",
+          "sha256": "daadf065c42bf59dc7aeb4070bfe12341357dd841fa5d3af9d3ff44966c08421"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [
+        "experiments/results/2026-11-07/submission-baseline.csv",
+        "experiments/results/2026-11-07/submission-hybrid.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/2026-11-07-chemeleon",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/2026-11-07-chemeleon/confirmation-metrics.json",
+          "sha256": "f0c64b94ade5c392376a9f6e0e479564d241e81f063cfdbe42415eaf15bec2ef"
+        },
+        {
+          "path": "experiments/results/2026-11-07-chemeleon/embedding-manifest.json",
+          "sha256": "b394f3c1e70a09d811b85f5ac14c8706b37022e6d4092190539dff7d768e4dbb"
+        },
+        {
+          "path": "experiments/results/2026-11-07-chemeleon/frozen-candidate.json",
+          "sha256": "8cadd8921ea10ebd6d5c456e86cd984338e140bec863ee49501810c1a3d2c446"
+        },
+        {
+          "path": "experiments/results/2026-11-07-chemeleon/input-manifest.json",
+          "sha256": "5e0ef94aaaf17334e002d2519f1f7e220d73bbfdf9a3cdecdfb01e63aaf05adf"
+        },
+        {
+          "path": "experiments/results/2026-11-07-chemeleon/report.md",
+          "sha256": "b62bf44b3cb958e2cc0bb8672a99304336132d7ffe2ada7fa75e2adddc2d0f19"
+        },
+        {
+          "path": "experiments/results/2026-11-07-chemeleon/screen-metrics.json",
+          "sha256": "f86f8ce71097e996c91fb9808581a0163c24cadcb1e7f3687165e4af22c2c099"
+        },
+        {
+          "path": "experiments/results/2026-11-07-chemeleon/submission-chemeleon-soft.json",
+          "sha256": "c8b45cefc396ddfc736621092c2ad2487e0c43580923631f99cc0b3a4263d7f5"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [
+        "experiments/results/2026-11-07-chemeleon/submission-chemeleon-soft-components.csv",
+        "experiments/results/2026-11-07-chemeleon/submission-chemeleon-soft.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/2026-11-07-novel",
+      "file_count": 6,
+      "evidence": [
+        {
+          "path": "experiments/results/2026-11-07-novel/environment.json",
+          "sha256": "38e22a81f5287797cd9440db3d86ead986bf4fc765793e2002bc8e682253503e"
+        },
+        {
+          "path": "experiments/results/2026-11-07-novel/metrics.json",
+          "sha256": "c3eb6c3edb14904cfc0413c86223895a26c74ac51a8b7b825f2401bfb44d99e4"
+        },
+        {
+          "path": "experiments/results/2026-11-07-novel/report.md",
+          "sha256": "5bee00141bf33b8936ae074c7bbf1d0eb5bbbde617efc6edeed7b40619f92dd4"
+        },
+        {
+          "path": "experiments/results/2026-11-07-novel/submission-soft.json",
+          "sha256": "549878a68e9cffbb31bce6273642c75a1e78fa64b93b30e59d7bacacdaa60fc4"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [
+        "experiments/results/2026-11-07-novel/submission-soft.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/checkpoint-2026-11-07",
+      "file_count": 10,
+      "evidence": [
+        {
+          "path": "experiments/results/checkpoint-2026-11-07/metrics.json",
+          "sha256": "62b23f2e3d44a9568f81a949b5812907323defa6b997bd06fcba88cfc97f23d5"
+        },
+        {
+          "path": "experiments/results/checkpoint-2026-11-07/report.md",
+          "sha256": "62c41ccce53fd7eb90a6ec82a6a207380254a1da86783d8e22baf88bf319467a"
+        },
+        {
+          "path": "experiments/results/checkpoint-2026-11-07/submission.json",
+          "sha256": "084382b9b23acf0490dda1cf688497615639316b55e33de4af8034364f16a05a"
+        },
+        {
+          "path": "experiments/results/checkpoint-2026-11-07/verification.json",
+          "sha256": "cdc785b32a5835ab63a5f68b3d52d683ab800b87dd1a43705a743b947a5748dc"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/checkpoint-2026-11-07/oof-random-3.csv",
+        "experiments/results/checkpoint-2026-11-07/oof-random-4.csv",
+        "experiments/results/checkpoint-2026-11-07/oof-random-5.csv",
+        "experiments/results/checkpoint-2026-11-07/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/checkpoint-2026-11-07/submission-components.csv",
+        "experiments/results/checkpoint-2026-11-07/submission.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/glm-rebuild4-ablation",
+      "file_count": 9,
+      "evidence": [
+        {
+          "path": "experiments/results/glm-rebuild4-ablation/fold-audit.json",
+          "sha256": "305e452297c7b5223a112bd9a14f2738ea6e707f84225f56d853e56c6450f12a"
+        },
+        {
+          "path": "experiments/results/glm-rebuild4-ablation/manifest.json",
+          "sha256": "27667099a8a9225ea53f0fdbaa1004186be9b734998b2d95079f1b56879c899b"
+        },
+        {
+          "path": "experiments/results/glm-rebuild4-ablation/metrics.json",
+          "sha256": "80c7cfc98cb93d7bf2d21d461d5cab7c7f8a0e9e16ad16865bdb0a7bb08d5822"
+        },
+        {
+          "path": "experiments/results/glm-rebuild4-ablation/report.md",
+          "sha256": "ae1a4b84d4c2178be0e31af909a45f7a61b5ca38754de8a50986dbd8af33c807"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/glm-rebuild4-ablation/oof-52.csv",
+        "experiments/results/glm-rebuild4-ablation/oof-53.csv",
+        "experiments/results/glm-rebuild4-ablation/oof-54.csv",
+        "experiments/results/glm-rebuild4-ablation/oof-55.csv",
+        "experiments/results/glm-rebuild4-ablation/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/glm-rebuild4-audit",
+      "file_count": 6,
+      "evidence": [
+        {
+          "path": "experiments/results/glm-rebuild4-audit/audit.json",
+          "sha256": "83d4387667b4a5e01adc0a75432a0f203074e765ad7723f5bf747ed9d65c8b16"
+        },
+        {
+          "path": "experiments/results/glm-rebuild4-audit/raw-checks.json",
+          "sha256": "dbf8ea09416e16e735f20335f1e0b1aa6b8de9785211395b68cd12088a6463f9"
+        },
+        {
+          "path": "experiments/results/glm-rebuild4-audit/raw-records.json",
+          "sha256": "6687ce3c0350aa6f030083b29a5a52cd89f48ee5248f76b93eb4f7e881493c10"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/glm-v4-audit",
+      "file_count": 5,
+      "evidence": [
+        {
+          "path": "experiments/results/glm-v4-audit/audit.json",
+          "sha256": "d9f9a5fd46915c157b3f3a05027d15b659d156d895926e21ad2091a4ada309f5"
+        },
+        {
+          "path": "experiments/results/glm-v4-audit/raw-record-evidence.json",
+          "sha256": "0509fec24346252b43a96dc32d8b12d5d4da42088754d3fbf82c76b2ecd9c83f"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/luna-v2-ensembles",
+      "file_count": 7,
+      "evidence": [
+        {
+          "path": "experiments/results/luna-v2-ensembles/README.md",
+          "sha256": "d67c1aa22b2989868b53bf20a0a38a32f77aee6e1f19b8ca661a4f09681d27da"
+        },
+        {
+          "path": "experiments/results/luna-v2-ensembles/metrics.json",
+          "sha256": "a605404cdc8e236347c46275e8ffa76c1ae48070ed713990e9f3daf9cb556668"
+        },
+        {
+          "path": "experiments/results/luna-v2-ensembles/report.json",
+          "sha256": "12e60c8b8bf427179fd9ab5a0067cd5f83bd04c0bc39b9006e084631231f9c9b"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/luna-v2-ensembles/oof-10.csv",
+        "experiments/results/luna-v2-ensembles/oof-11.csv",
+        "experiments/results/luna-v2-ensembles/oof-9.csv",
+        "experiments/results/luna-v2-ensembles/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/luna-v2-external-models",
+      "file_count": 10,
+      "evidence": [
+        {
+          "path": "experiments/results/luna-v2-external-models/manifest.json",
+          "sha256": "9b1ecdabfa2fa177949b929a5e9797dadb03c70ad06c3b8a14f7d27c39b22fec"
+        },
+        {
+          "path": "experiments/results/luna-v2-external-models/metrics.json",
+          "sha256": "ec41374d5c467c3bfd35c16f53d681716ac4f47b43d5b10e2a3fa85dbf3c1259"
+        },
+        {
+          "path": "experiments/results/luna-v2-external-models/report.md",
+          "sha256": "4a27977d1db8c757cdc03361a137984291278b36a7ddb4b127b534a8279ad288"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/luna-v2-external-models/oof-18.csv",
+        "experiments/results/luna-v2-external-models/oof-19.csv",
+        "experiments/results/luna-v2-external-models/oof-20.csv",
+        "experiments/results/luna-v2-external-models/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/luna-v2-stable-extrapolation",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/luna-v2-stable-extrapolation/README.md",
+          "sha256": "51947d1997a10de0ba97a0526073ef08c0a4b35f147509f718565b18fe5b83eb"
+        },
+        {
+          "path": "experiments/results/luna-v2-stable-extrapolation/manifest.json",
+          "sha256": "66bfc906f0d722fcaac526c21f04f9bfccc5a6a15cf87cc56ef276ede7cefc33"
+        },
+        {
+          "path": "experiments/results/luna-v2-stable-extrapolation/metrics.json",
+          "sha256": "82a7d814a625b3cb82363eb8c9fe10bc9e285a59f47ff41fc8012bb5a99fb959"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/luna-v2-stable-extrapolation/oof-18.csv",
+        "experiments/results/luna-v2-stable-extrapolation/oof-19.csv",
+        "experiments/results/luna-v2-stable-extrapolation/oof-20.csv",
+        "experiments/results/luna-v2-stable-extrapolation/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/recovery-candidates",
+      "file_count": 15,
+      "evidence": [
+        {
+          "path": "experiments/results/recovery-candidates/confirmation/metrics.json",
+          "sha256": "0012a3e5cd045f48451ccdfa6b935ddb2cffecdaebdafc0c39e4197417c084d2"
+        },
+        {
+          "path": "experiments/results/recovery-candidates/discovery/metrics.json",
+          "sha256": "9b2bcedd27ae021bf8348499047f0e05b442350c15fca9264d944bed8d9c8171"
+        },
+        {
+          "path": "experiments/results/recovery-candidates/historical-comparison/metrics.json",
+          "sha256": "9fd8704e4e0b1da5ecd72bd453ae7937d34877e6e8b42627780beab1188e5b20"
+        },
+        {
+          "path": "experiments/results/recovery-candidates/report.md",
+          "sha256": "dc577cea702217199b27f787c2ee5f00ee1cb631af0c2d5225765adacc9a5326"
+        },
+        {
+          "path": "experiments/results/recovery-candidates/scaffold.json",
+          "sha256": "1f2c9dd82465d67b584991214b5ab20dc065ca31bc716370dfe16b7f9700b43b"
+        },
+        {
+          "path": "experiments/results/recovery-candidates/submission.json",
+          "sha256": "0c3bbb5ed35e4395e30836535fd5532680ace419d3fd3101fd794204660058df"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/recovery-candidates/confirmation/oof-6.csv",
+        "experiments/results/recovery-candidates/confirmation/oof-7.csv",
+        "experiments/results/recovery-candidates/confirmation/oof-8.csv",
+        "experiments/results/recovery-candidates/discovery/oof-3.csv",
+        "experiments/results/recovery-candidates/historical-comparison/oof-4.csv",
+        "experiments/results/recovery-candidates/historical-comparison/oof-5.csv",
+        "experiments/results/recovery-candidates/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/recovery-candidates/submission-components.csv",
+        "experiments/results/recovery-candidates/submission.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/recovery-clean",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/recovery-clean/cv-metrics.json",
+          "sha256": "0e34460f86a3f0b06ec2f4c8c1c3cb13a5223b6d5ffd80ff758318073a770810"
+        },
+        {
+          "path": "experiments/results/recovery-clean/kaggle-result.json",
+          "sha256": "32624f89874e7ff3b2a26fbf78a3dda9553c023f913ef418ce98a19cd6609931"
+        },
+        {
+          "path": "experiments/results/recovery-clean/report.md",
+          "sha256": "380a9d40fd747ed34924d1456ababc1c2b19c7a2f60201216c51805dc011bb5f"
+        },
+        {
+          "path": "experiments/results/recovery-clean/submission.json",
+          "sha256": "96fab18868657cd27c190ececdc45d03c2b086f5274b6a8f8cfdfc02565b2950"
+        },
+        {
+          "path": "experiments/results/recovery-clean/verification.json",
+          "sha256": "29ea935111d851b87f9c66cd116eb7a83c62b746983d0bb6fc7d83f4f13db745"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/recovery-clean/oof-3.csv",
+        "experiments/results/recovery-clean/oof-6.csv",
+        "experiments/results/recovery-clean/oof-7.csv",
+        "experiments/results/recovery-clean/oof-8.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/recovery-clean/submission-components.csv",
+        "experiments/results/recovery-clean/submission.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/restore-baseline",
+      "file_count": 16,
+      "evidence": [
+        {
+          "path": "experiments/results/restore-baseline/diagnostics.json",
+          "sha256": "fa68248e2d25320b382a98f82895a16f9e64e5a04e055d368af4d103d21c547c"
+        },
+        {
+          "path": "experiments/results/restore-baseline/report.md",
+          "sha256": "ef76ed8bfe7718b3c3215c4be8e72fd1a3b8c851cdc13fe1728ba8a3653e0784"
+        },
+        {
+          "path": "experiments/results/restore-baseline/submission-v2-final.json",
+          "sha256": "3295f97ced7ca21ac4ac97b20f828867096d91d5f19f73d2280cd570f2d99f37"
+        },
+        {
+          "path": "experiments/results/restore-baseline/submission-v2.json",
+          "sha256": "f857d11e092215f1de6b02e861799e9161e3bce7cb2b00f724b3ce24ce2fc863"
+        },
+        {
+          "path": "experiments/results/restore-baseline/v2/metrics.json",
+          "sha256": "f206ced0ee19e7c5fcb910092e3d93879834ee1fc52b899e890c13b16351bc19"
+        },
+        {
+          "path": "experiments/results/restore-baseline/v2-confirm/metrics.json",
+          "sha256": "d1b6cb4337945b91b6a4b7085dc28fd07c601e8f561243ea97c96baf0d5e0fe9"
+        },
+        {
+          "path": "experiments/results/restore-baseline/v2-confirm/submissions.json",
+          "sha256": "2fd0725f8573969187394955809ec5635d5a23a5f6a4e86519574181ba2c5163"
+        },
+        {
+          "path": "experiments/results/restore-baseline/verification.json",
+          "sha256": "2b2c7dddbcd86991bb5e3c8263e565bf39150c6ad74a2c75b26edc3d758bcd65"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/restore-baseline/v2/oof-6.csv",
+        "experiments/results/restore-baseline/v2-confirm/oof-7.csv",
+        "experiments/results/restore-baseline/v2-confirm/oof-8.csv",
+        "experiments/results/restore-baseline/v2-confirm/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/restore-baseline/submission-v2-final.csv",
+        "experiments/results/restore-baseline/submission-v2.csv",
+        "experiments/results/restore-baseline/v2-confirm/submission-constant.csv",
+        "experiments/results/restore-baseline/v2-confirm/submission-et-blend-log.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/target-v2",
+      "file_count": 6,
+      "evidence": [
+        {
+          "path": "experiments/results/target-v2/data-manifest.json",
+          "sha256": "07fc387e8cba3474b1344c60bc26e8c67724eaf7ef27944e364a96ad22f3a830"
+        },
+        {
+          "path": "experiments/results/target-v2/kaggle-result.json",
+          "sha256": "082db2a6b7220cb6d7dbdbb874c5a516ab7219a48f92d2f8d519a3ebf860c791"
+        },
+        {
+          "path": "experiments/results/target-v2/report.md",
+          "sha256": "89653fcf07c95f631af7c6ed447e302c67f68d2ee1e65edfce3fcbdc9c1207f0"
+        },
+        {
+          "path": "experiments/results/target-v2/submission-v2.json",
+          "sha256": "3295f97ced7ca21ac4ac97b20f828867096d91d5f19f73d2280cd570f2d99f37"
+        },
+        {
+          "path": "experiments/results/target-v2/target-audit.json",
+          "sha256": "00838d82f87c28099ef07a5d0223a309a893974f5affdeefbdf56b44700b2686"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [
+        "experiments/results/target-v2/submission-v2.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v10-spec-validation",
+      "file_count": 53,
+      "evidence": [
+        {
+          "path": "experiments/results/v10-spec-validation/baseline-parity.json",
+          "sha256": "0079fea7dd9d5d21d11c5299dea0326d8e2a7ca6330835f7be7965c1e97f0529"
+        },
+        {
+          "path": "experiments/results/v10-spec-validation/calibration-audit.json",
+          "sha256": "dca5e990d64eab35a8076280ffbb2017581fd2f43c39e9970b61709c52fe943f"
+        },
+        {
+          "path": "experiments/results/v10-spec-validation/manifest.json",
+          "sha256": "0069b93059d97a63ff47ac426da73e52352eeac116f06d12ac1a4ee921137141"
+        },
+        {
+          "path": "experiments/results/v10-spec-validation/metrics.json",
+          "sha256": "2263d6272de3333df3c767c62ee07bf2a03e32f477b4477aa2beac2d8fb61a5d"
+        },
+        {
+          "path": "experiments/results/v10-spec-validation/protocol.json",
+          "sha256": "bce1c90cf77f18c405a1d46e25f76b8a886a31051473512d76137558f3feda04"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v10-spec-validation/oof-chiral-identity.csv",
+        "experiments/results/v10-spec-validation/oof-chiral-identity71.csv",
+        "experiments/results/v10-spec-validation/oof-chiral-identity72.csv",
+        "experiments/results/v10-spec-validation/oof-chiral-scaffold.csv",
+        "experiments/results/v10-spec-validation/oof-original-identity.csv",
+        "experiments/results/v10-spec-validation/oof-original-identity71.csv",
+        "experiments/results/v10-spec-validation/oof-original-identity72.csv",
+        "experiments/results/v10-spec-validation/oof-original-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-analog",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-analog/README.md",
+          "sha256": "b1692ba11738a76a3bc2d43355a9907976bc7f931d9e1963be500be798c55743"
+        },
+        {
+          "path": "experiments/results/v2-analog/manifest.json",
+          "sha256": "99b795c09671412b85aa4c74644330e1a02848023ccb4891aa0febfe2b296575"
+        },
+        {
+          "path": "experiments/results/v2-analog/metrics.json",
+          "sha256": "8b3f107a7f8630c124e678baafcf50cc197df81c8a4b305f39a09b76ca66158e"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-analog/oof-10.csv",
+        "experiments/results/v2-analog/oof-11.csv",
+        "experiments/results/v2-analog/oof-9.csv",
+        "experiments/results/v2-analog/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-analog/submission-knn8-log-external.csv",
+        "experiments/results/v2-analog/submission-knn8-log.csv",
+        "experiments/results/v2-analog/submission-knn8-raw.csv",
+        "experiments/results/v2-analog/submission-local-krr24-raw.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-context-analog",
+      "file_count": 39,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-context-analog/README.md",
+          "sha256": "8b5cd2ea1f08e9bf2275be8b87d18bef2e5b7a17f34fd05e992edd4bc0040a3e"
+        },
+        {
+          "path": "experiments/results/v2-context-analog/coverage-loo.json",
+          "sha256": "a5183d4ea88a172fc837dc261507ec5ec69e3809f49afb54fc6cd12714d91ed9"
+        },
+        {
+          "path": "experiments/results/v2-context-analog/manifest.json",
+          "sha256": "c588cbd1a5ed18b7e3a4cdd31791a8b0a49c01571c5245e9c9013babaa0e206d"
+        },
+        {
+          "path": "experiments/results/v2-context-analog/metrics.json",
+          "sha256": "4945e393ef6fbd4f50465d6435602019a83cfdbf535a80cb1b713a4df9edf3a3"
+        },
+        {
+          "path": "experiments/results/v2-context-analog/nonextrapolating-lower-bound.json",
+          "sha256": "7c3e7dc159ffd74475a8ec9bb34e285cf6ed4ecfba81c42a351a4e11b3fb34af"
+        },
+        {
+          "path": "experiments/results/v2-context-analog/production-baseline/manifest.json",
+          "sha256": "86608547c2bcd7e28c73f5067bf6a00069156c2b75b28e1f90bb57a00bf747da"
+        },
+        {
+          "path": "experiments/results/v2-context-analog/production-baseline/metrics.json",
+          "sha256": "64735e87c1251d4f0d2a0c28acecf24778020cf084f9aa7f93e9bd7241e30d43"
+        },
+        {
+          "path": "experiments/results/v2-context-analog/train-tail-coverage.json",
+          "sha256": "eceda472b213c895fcdc85af28599b0da43788b1ef1f612b11ee3f85ceb4e34a"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-context-analog/oof-12.csv",
+        "experiments/results/v2-context-analog/oof-13.csv",
+        "experiments/results/v2-context-analog/oof-14.csv",
+        "experiments/results/v2-context-analog/oof-scaffold.csv",
+        "experiments/results/v2-context-analog/production-baseline/oof-12.csv",
+        "experiments/results/v2-context-analog/production-baseline/oof-13.csv",
+        "experiments/results/v2-context-analog/production-baseline/oof-14.csv",
+        "experiments/results/v2-context-analog/production-baseline/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-context-analog/submission-context-raw70.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-embeddings",
+      "file_count": 12,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-embeddings/metrics.json",
+          "sha256": "19e51142507638bf66e11a80d04ca110e443bb5ceef3da40aab8122df1c5f738"
+        },
+        {
+          "path": "experiments/results/v2-embeddings/report.md",
+          "sha256": "fd755ffbe3c085573b5c4a1cfd9a36d57822a70f40943493cb3f4a0c88e6ca27"
+        },
+        {
+          "path": "experiments/results/v2-embeddings/submissions.json",
+          "sha256": "74980cffc6b9d76b3a27b733352086355cb5e9e6e1aebc3ead8d9a30fb81ee7d"
+        },
+        {
+          "path": "experiments/results/v2-embeddings/verification.json",
+          "sha256": "9ecf8b8eebfe3e5def8db57359879cd78abff80137c9191bef4b1d2237cae561"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-embeddings/oof-6.csv",
+        "experiments/results/v2-embeddings/oof-7.csv",
+        "experiments/results/v2-embeddings/oof-8.csv",
+        "experiments/results/v2-embeddings/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-embeddings/submission-chemeleon-et-log-presence.csv",
+        "experiments/results/v2-embeddings/submission-chemeleon-et-log.csv",
+        "experiments/results/v2-embeddings/submission-chemeleon-et-raw.csv",
+        "experiments/results/v2-embeddings/submission-chemeleon-ridge-log.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-external",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-external/manifest.json",
+          "sha256": "26f606c4d1a84bed478b3632121a25fa674c381048d4659d5286a6fbaf99ce7d"
+        },
+        {
+          "path": "experiments/results/v2-external/metrics.json",
+          "sha256": "cc4f5fbfc7c547e4190ab57eaa72fe947af3bd1ffd7c2400dfcc4d6e961d51bd"
+        },
+        {
+          "path": "experiments/results/v2-external/verification.json",
+          "sha256": "c847f90032b9da385a726ea9e1adecef9a3567ea2cbfe84bc06b05149a52a65d"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-external/oof-6.csv",
+        "experiments/results/v2-external/oof-7.csv",
+        "experiments/results/v2-external/oof-8.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-external/submission-structure-log-external.csv",
+        "experiments/results/v2-external/submission-structure-log.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-extrapolation",
+      "file_count": 9,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-extrapolation/README.md",
+          "sha256": "43c86e978644838781bcfca9a3e577573c5019e62e5f54dc68857d5766b9be8a"
+        },
+        {
+          "path": "experiments/results/v2-extrapolation/instability-diagnostics.json",
+          "sha256": "2a786e9b781717ab0fffb1a19c2dc279155276174292eb0353aaafc9fa6f761a"
+        },
+        {
+          "path": "experiments/results/v2-extrapolation/manifest.json",
+          "sha256": "21d4a7acc28ff7cef85c7475c21463530d4006b524b9b01bfe0e60cd4c924823"
+        },
+        {
+          "path": "experiments/results/v2-extrapolation/metrics.json",
+          "sha256": "ad0e64ed450b12bc14b9a77d35f9e1c60208c59db97c21bf4eeb29fb00a20303"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-extrapolation/oof-15.csv",
+        "experiments/results/v2-extrapolation/oof-16.csv",
+        "experiments/results/v2-extrapolation/oof-17.csv",
+        "experiments/results/v2-extrapolation/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-extrapolation/submission-ridge-sqrt.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-hurdle",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-hurdle/README.md",
+          "sha256": "4c55d7699c77e944e7cddd5be53cd8816714c16b77abd50cbff4b62f8d32684e"
+        },
+        {
+          "path": "experiments/results/v2-hurdle/manifest.json",
+          "sha256": "e0b5333ae019c67fe398b9e9a4b7a20bb7f699521698d3eeb5cddc4dbada3302"
+        },
+        {
+          "path": "experiments/results/v2-hurdle/metrics.json",
+          "sha256": "3f1d1d66f685e4ea0dfc26583f65770eec725cbd47a24ca8ea369f8622542e8f"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-hurdle/oof-10.csv",
+        "experiments/results/v2-hurdle/oof-11.csv",
+        "experiments/results/v2-hurdle/oof-9.csv",
+        "experiments/results/v2-hurdle/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-hurdle/submission-hurdle-0.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-power",
+      "file_count": 9,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-power/README.md",
+          "sha256": "72426fef12c2a41ac200390971cb3eb68903098fa1c0780cb280dfa8e2ae5b4e"
+        },
+        {
+          "path": "experiments/results/v2-power/manifest.json",
+          "sha256": "c956a4908b66abdc2f506f21b80727da70bede277eada83a41ddd4618bf4e4b9"
+        },
+        {
+          "path": "experiments/results/v2-power/metrics.json",
+          "sha256": "aabae02b5e8b0f0ddd6b885d204c1901dca1c63f71896f04e549239025ca6d26"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-power/oof-10.csv",
+        "experiments/results/v2-power/oof-11.csv",
+        "experiments/results/v2-power/oof-9.csv",
+        "experiments/results/v2-power/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-power/submission-log.csv",
+        "experiments/results/v2-power/submission-sqrt50-log50.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-tabicl",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-tabicl/README.md",
+          "sha256": "54bb51685979820ddaa5c0fc7ce7d4664086d3fcb640eeebf123745a694a24f7"
+        },
+        {
+          "path": "experiments/results/v2-tabicl/manifest.json",
+          "sha256": "6f25af939742eef16aa04598a23b4d17c3a72cfe4db25ee91c1540bc3ab9d1fa"
+        },
+        {
+          "path": "experiments/results/v2-tabicl/metrics.json",
+          "sha256": "0eb7603a11bc428fc7d1d234a0a257b65011427d6782dacd2cc7db49ca9e5547"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-tabicl/oof-10.csv",
+        "experiments/results/v2-tabicl/oof-11.csv",
+        "experiments/results/v2-tabicl/oof-9.csv",
+        "experiments/results/v2-tabicl/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-tabicl/submission-tabicl-log.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v2-tweedie",
+      "file_count": 10,
+      "evidence": [
+        {
+          "path": "experiments/results/v2-tweedie/README.md",
+          "sha256": "14b5bbf751c21fc10827f7faecc1ecf9620dcd838b19b4909d680aa1c11609d0"
+        },
+        {
+          "path": "experiments/results/v2-tweedie/kaggle-result.json",
+          "sha256": "dcac0dbf0395b6c31225a17c27736254e2e04603d2f5fb9e7abd69e8e98266ce"
+        },
+        {
+          "path": "experiments/results/v2-tweedie/manifest.json",
+          "sha256": "bc1b7a346c77c039ee3c7ac841d3b35b60107b4b3c7436d936475806a6b470f4"
+        },
+        {
+          "path": "experiments/results/v2-tweedie/metrics.json",
+          "sha256": "19693e6dae2ddf1f892b7d14cdaad71fdca7af63c0b120584c7bfc542d44f892"
+        },
+        {
+          "path": "experiments/results/v2-tweedie/verification.json",
+          "sha256": "04b41988aca5744d39312a16e5be1e1dec8512735a7f7b06fcffd1ab2a822066"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v2-tweedie/oof-10.csv",
+        "experiments/results/v2-tweedie/oof-11.csv",
+        "experiments/results/v2-tweedie/oof-9.csv",
+        "experiments/results/v2-tweedie/oof-scaffold.csv"
+      ],
+      "submission_csvs": [
+        "experiments/results/v2-tweedie/submission-tweedie-1.8.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v3-distributional",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/v3-distributional/README.md",
+          "sha256": "dcd719478d93ff5253f66e39901d9f6f94e625c06ed7ae439cc6837f731b5500"
+        },
+        {
+          "path": "experiments/results/v3-distributional/manifest.json",
+          "sha256": "d3518f5e8633dad28b0c5bc5fcaa947e3584858ea5a90e5cb97577494e65d660"
+        },
+        {
+          "path": "experiments/results/v3-distributional/metrics.json",
+          "sha256": "b09ad23ca93cf21d6c6f9a6a23994c8b202d1f83f2128f105b70f28b783ac089"
+        },
+        {
+          "path": "experiments/results/v3-distributional/verification.json",
+          "sha256": "9bd6cd12138f1daa2676842733bd473933eafdf6db8efc8595c7769021578a47"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v3-distributional/oof-24.csv",
+        "experiments/results/v3-distributional/oof-25.csv",
+        "experiments/results/v3-distributional/oof-26.csv",
+        "experiments/results/v3-distributional/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v3-interval-scales",
+      "file_count": 10,
+      "evidence": [
+        {
+          "path": "experiments/results/v3-interval-scales/README.md",
+          "sha256": "23d81138ed29df294996683c956227660981a881384b4fc2d2f5d1fb1194c56d"
+        },
+        {
+          "path": "experiments/results/v3-interval-scales/manifest.json",
+          "sha256": "51c8faad86fbd18ebab678771342bce540728ba60514786ca9c7fd21a3e283e5"
+        },
+        {
+          "path": "experiments/results/v3-interval-scales/metrics.json",
+          "sha256": "98332ff500f1ef432286e01faa0901260ccb4249cf718484132c44b410416f0d"
+        },
+        {
+          "path": "experiments/results/v3-interval-scales/verification.json",
+          "sha256": "f019bf9afd0ecc725fbfc56cd3dc1cffb894e6379b088118cd165c2239954340"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v3-interval-scales/oof-27.csv",
+        "experiments/results/v3-interval-scales/oof-28.csv",
+        "experiments/results/v3-interval-scales/oof-29.csv",
+        "experiments/results/v3-interval-scales/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v3-intervals",
+      "file_count": 9,
+      "evidence": [
+        {
+          "path": "experiments/results/v3-intervals/README.md",
+          "sha256": "12e946925e30334938b1cb8cbd0d74c2feb5bd1089b8e2aa0666b1f04196f7f1"
+        },
+        {
+          "path": "experiments/results/v3-intervals/manifest.json",
+          "sha256": "3a18dde8db2c6cf9ad10b275ccc2f27f8ce3acf3419eddf3e78d30f75715a404"
+        },
+        {
+          "path": "experiments/results/v3-intervals/metrics.json",
+          "sha256": "0a8b8a8cb6b86c36012770f033326e50ff0334e83c78450c832d38e14d0b0c29"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v3-intervals/oof-21.csv",
+        "experiments/results/v3-intervals/oof-22.csv",
+        "experiments/results/v3-intervals/oof-23.csv",
+        "experiments/results/v3-intervals/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v3-source-pairs",
+      "file_count": 5,
+      "evidence": [
+        {
+          "path": "experiments/results/v3-source-pairs/README.md",
+          "sha256": "26b16f15aaccf9ac06eb0797abe2e06878b41dbfbc2e460e04aa8feda8979fb3"
+        },
+        {
+          "path": "experiments/results/v3-source-pairs/manifest.json",
+          "sha256": "f65817dcd167da12d01cf9eebcc6cac8715bddfcc8fdbe62fc812579b4298922"
+        },
+        {
+          "path": "experiments/results/v3-source-pairs/source-records.json",
+          "sha256": "1add35d28d2363057ce583de1c8d32aa2ce07453f4fa91e5e444f308f563cd9a"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v4-context-kernel",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/v4-context-kernel/README.md",
+          "sha256": "3d8844906907e1e89977c37e89090b51abf218f2ec1f3bff961629bd027f62fb"
+        },
+        {
+          "path": "experiments/results/v4-context-kernel/frozen-selection.json",
+          "sha256": "04f2ce4988ee6960fda3fc279320cd506304f3ae95a9b83a3b7ee3bd80730e97"
+        },
+        {
+          "path": "experiments/results/v4-context-kernel/manifest.json",
+          "sha256": "3b5b8c3d0087d5f4af4cb8275901ccab5a3ea3386226bca2307edb6d5779535b"
+        },
+        {
+          "path": "experiments/results/v4-context-kernel/metrics.json",
+          "sha256": "4dd34ba392ea8b4af59e7d3293c0e07018245173fbb255a1410a433678d263fa"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v4-context-kernel/oof-30.csv",
+        "experiments/results/v4-context-kernel/oof-31.csv",
+        "experiments/results/v4-context-kernel/oof-32.csv",
+        "experiments/results/v4-context-kernel/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v4-mmp-transfer",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/v4-mmp-transfer/fold-audit.json",
+          "sha256": "7215876d2949eadc16c78f96cc8f99b56782bf4422ecad10de58acf5faa4e93b"
+        },
+        {
+          "path": "experiments/results/v4-mmp-transfer/manifest.json",
+          "sha256": "1fd86d95959037b482e6ccd1135d719ec977e8ae86278a49780faf82cf044791"
+        },
+        {
+          "path": "experiments/results/v4-mmp-transfer/metrics.json",
+          "sha256": "f0e500411211c447ca602226ba814bcef4f0ab61ab81dc8d54db1e36df8feccd"
+        },
+        {
+          "path": "experiments/results/v4-mmp-transfer/report.md",
+          "sha256": "0784d841fd91d593d0ce1af18f5d593d65ea623f1115fb745f136c52f08fda5e"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v4-mmp-transfer/oof-36.csv",
+        "experiments/results/v4-mmp-transfer/oof-37.csv",
+        "experiments/results/v4-mmp-transfer/oof-38.csv",
+        "experiments/results/v4-mmp-transfer/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v4-pair-delta",
+      "file_count": 9,
+      "evidence": [
+        {
+          "path": "experiments/results/v4-pair-delta/fold-audit.json",
+          "sha256": "e4cb6aed83e2fe5b4c8b0400202b9efe92a642d3dca6f3628b7865901bb7a761"
+        },
+        {
+          "path": "experiments/results/v4-pair-delta/frozen-winner.json",
+          "sha256": "8ba4913dfd3e1be9a85b48ce0cc83029a81d527e1c64570afcc43ae1ddd84381"
+        },
+        {
+          "path": "experiments/results/v4-pair-delta/manifest.json",
+          "sha256": "ed122dd78e98e29bfa379139a81f258e29026e5129d773fa692964bdca1dce7b"
+        },
+        {
+          "path": "experiments/results/v4-pair-delta/metrics.json",
+          "sha256": "2fd435abfbeb36634358ae198187bda4bd1043e604a1de27bd8bea57055295bf"
+        },
+        {
+          "path": "experiments/results/v4-pair-delta/report.md",
+          "sha256": "d9c0652c2f4f6fe53bea4ff4e434a2a8b8a068597ad7f491ff508c90c2fb3913"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v4-pair-delta/oof-33.csv",
+        "experiments/results/v4-pair-delta/oof-34.csv",
+        "experiments/results/v4-pair-delta/oof-35.csv",
+        "experiments/results/v4-pair-delta/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v4-pair-delta-submission",
+      "file_count": 3,
+      "evidence": [
+        {
+          "path": "experiments/results/v4-pair-delta-submission/manifest.json",
+          "sha256": "d42d26fbb988a99d7d362883acac5a32f513ed1953f66940451881bacb80cd00"
+        },
+        {
+          "path": "experiments/results/v4-pair-delta-submission/result.md",
+          "sha256": "9172ae7a2d3282ba368be9563d9ec15c8cd1d7cef8c2e6cf75f718eec33ca3cb"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [
+        "experiments/results/v4-pair-delta-submission/submission-pair-delta-v4.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v4-pair-delta-validation",
+      "file_count": 8,
+      "evidence": [
+        {
+          "path": "experiments/results/v4-pair-delta-validation/fold-audit.json",
+          "sha256": "d24e33100e3c5e2790c5e3371d8b7c1227db9b704f81ce60c851c957d699c407"
+        },
+        {
+          "path": "experiments/results/v4-pair-delta-validation/manifest.json",
+          "sha256": "897f2292b0b1ccbf96d2840442d289a03000eac9a843f4c409cfb3e5e4d979c0"
+        },
+        {
+          "path": "experiments/results/v4-pair-delta-validation/metrics.json",
+          "sha256": "dba9d8bf785cc1482d7a96f7a99ed6f842ca3a85a4340ecb1bf3de56997443b1"
+        },
+        {
+          "path": "experiments/results/v4-pair-delta-validation/report.md",
+          "sha256": "964a519aad8c3c5317aab3a3630a4976b46557cc580a9f70e7b57a8ddaa8a840"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v4-pair-delta-validation/oof-13.csv",
+        "experiments/results/v4-pair-delta-validation/oof-14.csv",
+        "experiments/results/v4-pair-delta-validation/oof-39.csv",
+        "experiments/results/v4-pair-delta-validation/oof-40.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v5-equal-ensemble",
+      "file_count": 7,
+      "evidence": [
+        {
+          "path": "experiments/results/v5-equal-ensemble/manifest.json",
+          "sha256": "19d663e5d1cd06be6b3286c468a8bb154114a0c761cbb88c5e55b6b762e7d7cf"
+        },
+        {
+          "path": "experiments/results/v5-equal-ensemble/metrics.json",
+          "sha256": "18feb784e64ace89aad22b73415ac7acbd1f6330bb6eb43cd6a27c8e734e3f14"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v5-equal-ensemble/oof-42.csv",
+        "experiments/results/v5-equal-ensemble/oof-43.csv",
+        "experiments/results/v5-equal-ensemble/oof-44.csv",
+        "experiments/results/v5-equal-ensemble/oof-45.csv",
+        "experiments/results/v5-equal-ensemble/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v5-identity-stress",
+      "file_count": 3,
+      "evidence": [
+        {
+          "path": "experiments/results/v5-identity-stress/fold-audit.json",
+          "sha256": "823efc314d623de3c7f3f0a47ea021e891875881cc8db654d0a18999caf1b9b4"
+        },
+        {
+          "path": "experiments/results/v5-identity-stress/metrics.json",
+          "sha256": "621231df4685ae93afe72f67a59c2cc776a49283c7428068705bfe84408c788a"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v5-identity-stress/oof.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v5-pair-anchor-gate",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v5-pair-anchor-gate/fold-audit.json",
+          "sha256": "c07ac0c62b78ee8ab8500eee5de6bb8c1a7c8fae2ed180b13b981733fabf44c9"
+        },
+        {
+          "path": "experiments/results/v5-pair-anchor-gate/frozen-winner.json",
+          "sha256": "5676f93dbcada79e6abeb099e9f451cf57d50ac19e7c82c502b1144249ee8a07"
+        },
+        {
+          "path": "experiments/results/v5-pair-anchor-gate/manifest.json",
+          "sha256": "34a7ec771346680dfcd200da187da2d275c0c46e9aa3f997bfb590aba3d7fe54"
+        },
+        {
+          "path": "experiments/results/v5-pair-anchor-gate/metrics.json",
+          "sha256": "d98ce366a6aa268b3f8c413ff4913849393dfcb39523c6204acf2b89ea0516bf"
+        },
+        {
+          "path": "experiments/results/v5-pair-anchor-gate/report.md",
+          "sha256": "c077dbbd43303ba3f06a793cfa110f3acedc5aa0a6e6f3e70331bf2e8d77c552"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v5-pair-anchor-gate/oof-46.csv",
+        "experiments/results/v5-pair-anchor-gate/oof-47.csv",
+        "experiments/results/v5-pair-anchor-gate/oof-48.csv",
+        "experiments/results/v5-pair-anchor-gate/oof-49.csv",
+        "experiments/results/v5-pair-anchor-gate/oof-50.csv",
+        "experiments/results/v5-pair-anchor-gate/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v5-pair-bagging",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v5-pair-bagging/frozen-winner.json",
+          "sha256": "3040fd28730802b6e2c5476962b6adbb31aa254ee9adc22a74f6cbd12011fb55"
+        },
+        {
+          "path": "experiments/results/v5-pair-bagging/manifest.json",
+          "sha256": "b0a59c80598599e78316978b66b9fbce35edbc0d5ecbbac6be9acb01c61f5fe3"
+        },
+        {
+          "path": "experiments/results/v5-pair-bagging/metrics.json",
+          "sha256": "0f7dc891df6092b4789345b2ad6ab0aea125ef6c5fc0514ed5884a4f7f8abcfd"
+        },
+        {
+          "path": "experiments/results/v5-pair-bagging/report.md",
+          "sha256": "ec23ae1fe700c8422a9dfb9897efe3f3e2379eb5c996e161c0242d76c95583be"
+        },
+        {
+          "path": "experiments/results/v5-pair-bagging/support-audit.json",
+          "sha256": "6bb1ef61d87d8b9096b092afd5ecfd649cc350a6741fb0c2ea2f3ae5048520f0"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v5-pair-bagging/oof-41.csv",
+        "experiments/results/v5-pair-bagging/oof-42.csv",
+        "experiments/results/v5-pair-bagging/oof-43.csv",
+        "experiments/results/v5-pair-bagging/oof-44.csv",
+        "experiments/results/v5-pair-bagging/oof-45.csv",
+        "experiments/results/v5-pair-bagging/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v5-pair-features",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v5-pair-features/fold-audit.json",
+          "sha256": "4c12a4f036f9a5dbff373f9778158f232c91f872084819d7b661539146c3ebfe"
+        },
+        {
+          "path": "experiments/results/v5-pair-features/frozen-winner.json",
+          "sha256": "9b5207e11e9190fe8ff62261009317ed8517b79346f2c2dfef3576f02ae75a96"
+        },
+        {
+          "path": "experiments/results/v5-pair-features/manifest.json",
+          "sha256": "70fa3caaf1072bab03295d3538a476d03ae846b4c0a5d84ffec8d8e229d547da"
+        },
+        {
+          "path": "experiments/results/v5-pair-features/metrics.json",
+          "sha256": "5f5ff8c4dc92e202f9eed2c322ed0242ebc269c1474d3284f0eef3f9f09f5027"
+        },
+        {
+          "path": "experiments/results/v5-pair-features/report.md",
+          "sha256": "d4e1512dac900c3d08ac0bac0895edf709fa7528d51156d7dcd8e73892c529da"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v5-pair-features/oof-41.csv",
+        "experiments/results/v5-pair-features/oof-42.csv",
+        "experiments/results/v5-pair-features/oof-43.csv",
+        "experiments/results/v5-pair-features/oof-44.csv",
+        "experiments/results/v5-pair-features/oof-45.csv",
+        "experiments/results/v5-pair-features/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v5-pair-regularization",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v5-pair-regularization/fold-audit.json",
+          "sha256": "ae331c1a79b454a3ca03767ba63a9a91536ae2661654c0884036f54a29c78f49"
+        },
+        {
+          "path": "experiments/results/v5-pair-regularization/frozen-winner.json",
+          "sha256": "093ee1769ddc4549fe1faee2411ad90dc95f52d492c02286938b0a473a504bb4"
+        },
+        {
+          "path": "experiments/results/v5-pair-regularization/manifest.json",
+          "sha256": "c1cb750efdff2d81878a5d3194df720979d975d66360c0eb12b413947d21c6cc"
+        },
+        {
+          "path": "experiments/results/v5-pair-regularization/metrics.json",
+          "sha256": "03af838d9c955f82f6223a421ad2fecf2db2746724023e0747b244d77e26283d"
+        },
+        {
+          "path": "experiments/results/v5-pair-regularization/report.md",
+          "sha256": "d9e337fc528848a3a73eae5004dc885fb1b45a20519b3841c913226730093ee5"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v5-pair-regularization/oof-41.csv",
+        "experiments/results/v5-pair-regularization/oof-42.csv",
+        "experiments/results/v5-pair-regularization/oof-43.csv",
+        "experiments/results/v5-pair-regularization/oof-44.csv",
+        "experiments/results/v5-pair-regularization/oof-45.csv",
+        "experiments/results/v5-pair-regularization/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v5-pair-tailweight",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v5-pair-tailweight/fold-audit.json",
+          "sha256": "38ef04d66c838903cf12636a5ffea975aa5758845cde88454118b4caac27c074"
+        },
+        {
+          "path": "experiments/results/v5-pair-tailweight/frozen-winner.json",
+          "sha256": "18976fa6b6587073507c429bcfa13040de44f3f1b7a14873f780e9ba6eed9f91"
+        },
+        {
+          "path": "experiments/results/v5-pair-tailweight/manifest.json",
+          "sha256": "7c6d9d3dc26a194116ec25fb6cfe4ff11e02f3943550759d245992f3b59cbbb1"
+        },
+        {
+          "path": "experiments/results/v5-pair-tailweight/metrics.json",
+          "sha256": "746e500494a6f9c19bb389a436b6bc7ab9e000dc6348a29aec76552e974020a9"
+        },
+        {
+          "path": "experiments/results/v5-pair-tailweight/report.md",
+          "sha256": "2a5f9e73385c5c38b3a831ffa4f2e149bee10b289e110e60e8f61327202bccef"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v5-pair-tailweight/oof-46.csv",
+        "experiments/results/v5-pair-tailweight/oof-47.csv",
+        "experiments/results/v5-pair-tailweight/oof-48.csv",
+        "experiments/results/v5-pair-tailweight/oof-49.csv",
+        "experiments/results/v5-pair-tailweight/oof-50.csv",
+        "experiments/results/v5-pair-tailweight/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v6-pair-background",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v6-pair-background/fold-audit.json",
+          "sha256": "a6e76713f0e1e6229a4799f23e63035f4519a68f3b831f01b1e60fe5415b2675"
+        },
+        {
+          "path": "experiments/results/v6-pair-background/frozen-winner.json",
+          "sha256": "20e346d2a78c5fcf217d4191eec8a5fcafb4618c7a96c6cc74d75b7bff56d0ed"
+        },
+        {
+          "path": "experiments/results/v6-pair-background/manifest.json",
+          "sha256": "85477fe78093aeffc302cde6e3bb04d49dc7278a97dce44a46b4163cb2754ca4"
+        },
+        {
+          "path": "experiments/results/v6-pair-background/metrics.json",
+          "sha256": "f17b3f97f8b170937fa5fcb61238bf345c8dc47d6bb37967a48a9204c7d182b2"
+        },
+        {
+          "path": "experiments/results/v6-pair-background/report.md",
+          "sha256": "a172111a798f14ce3586cfeb1a7c9fd04a9161b000c34a915655a4189352d828"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v6-pair-background/oof-56.csv",
+        "experiments/results/v6-pair-background/oof-57.csv",
+        "experiments/results/v6-pair-background/oof-58.csv",
+        "experiments/results/v6-pair-background/oof-59.csv",
+        "experiments/results/v6-pair-background/oof-60.csv",
+        "experiments/results/v6-pair-background/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v6-pair-external",
+      "file_count": 12,
+      "evidence": [
+        {
+          "path": "experiments/results/v6-pair-external/fold-audit.json",
+          "sha256": "7b56e58cbb8f907e027ba6fa935b2ef869922da40a7bae3213cf35cc36c399ab"
+        },
+        {
+          "path": "experiments/results/v6-pair-external/frozen-winner.json",
+          "sha256": "3243230084d3119b60a023ee2df0b7fedc331a836407d5ff204ca204ec92c387"
+        },
+        {
+          "path": "experiments/results/v6-pair-external/manifest.json",
+          "sha256": "1c78e7a411b390c2ee6be283724a4b3bd2ca0a15147d81b6aceeecb1c1909352"
+        },
+        {
+          "path": "experiments/results/v6-pair-external/metrics.json",
+          "sha256": "740deaf0be0b4dd6545b955d9ba064b64f897342bf3a0bd7bb8e8960b722b012"
+        },
+        {
+          "path": "experiments/results/v6-pair-external/report.md",
+          "sha256": "43bd2fff352aa98c25402819567a1c159b9ea4c856f0984f9811eadb1b284ea3"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v6-pair-external/oof-51.csv",
+        "experiments/results/v6-pair-external/oof-52.csv",
+        "experiments/results/v6-pair-external/oof-53.csv",
+        "experiments/results/v6-pair-external/oof-54.csv",
+        "experiments/results/v6-pair-external/oof-55.csv",
+        "experiments/results/v6-pair-external/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v6-pair-kernel",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v6-pair-kernel/frozen-winner.json",
+          "sha256": "e9f0698b909a146558de8eeac2863cb12003b0cb55693c3200efaaf6c5203969"
+        },
+        {
+          "path": "experiments/results/v6-pair-kernel/manifest.json",
+          "sha256": "54c8908ad93c7de58d82aaa38b92229c2c3ab07bae60a3ab7717d7b49409a17c"
+        },
+        {
+          "path": "experiments/results/v6-pair-kernel/metrics.json",
+          "sha256": "d798f08efaed4967035b859cfe7c1e19558184f7504bf2b6453466ae091cca0a"
+        },
+        {
+          "path": "experiments/results/v6-pair-kernel/report.md",
+          "sha256": "87dd84de8b7abf81fb5db85283e0a993c2e8f32fa3a83ad0eeffbac4963df711"
+        },
+        {
+          "path": "experiments/results/v6-pair-kernel/support-audit.json",
+          "sha256": "e83f75a249156fa93431d3307148cc1b12abc23248e79c07044c1e45d2a9ca58"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v6-pair-kernel/oof-51.csv",
+        "experiments/results/v6-pair-kernel/oof-52.csv",
+        "experiments/results/v6-pair-kernel/oof-53.csv",
+        "experiments/results/v6-pair-kernel/oof-54.csv",
+        "experiments/results/v6-pair-kernel/oof-55.csv",
+        "experiments/results/v6-pair-kernel/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v6-pair-local",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v6-pair-local/fold-audit.json",
+          "sha256": "b483df02ad185b31997dd4451b2fcc6948b537bd36c26a11b1465e800235ea91"
+        },
+        {
+          "path": "experiments/results/v6-pair-local/frozen-winner.json",
+          "sha256": "4b99907c63ed39ad3ba44381d89cc24cbf81bc6f06728ffc73843f083ccae50c"
+        },
+        {
+          "path": "experiments/results/v6-pair-local/manifest.json",
+          "sha256": "49a9d142d7097e308d6c61116cf4cf4f0b01ac68273b3c7a1c734cf30f55991e"
+        },
+        {
+          "path": "experiments/results/v6-pair-local/metrics.json",
+          "sha256": "27f08682fb6a5b39232c85a9a1fa6a65cce55cec7261a8ef9cbaec4fca528bae"
+        },
+        {
+          "path": "experiments/results/v6-pair-local/report.md",
+          "sha256": "254cf148ec714a9e94c39e7ab2d4440bfa292005151597ae1076b863718a9fc2"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v6-pair-local/oof-51.csv",
+        "experiments/results/v6-pair-local/oof-52.csv",
+        "experiments/results/v6-pair-local/oof-53.csv",
+        "experiments/results/v6-pair-local/oof-54.csv",
+        "experiments/results/v6-pair-local/oof-55.csv",
+        "experiments/results/v6-pair-local/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v6-pair-metadata",
+      "file_count": 10,
+      "evidence": [
+        {
+          "path": "experiments/results/v6-pair-metadata/fold-audit.json",
+          "sha256": "da28d290ca075c366ab629cf4f8e86eb807bfbae63b124ed982358f4e4e45eb4"
+        },
+        {
+          "path": "experiments/results/v6-pair-metadata/frozen-winner.json",
+          "sha256": "5142b70a22f306fad0058e8fcb8dd95ce83f868729df0091df25017288f7c682"
+        },
+        {
+          "path": "experiments/results/v6-pair-metadata/manifest.json",
+          "sha256": "02d533123946b190b8325e81f31d07f57a025593e3237bd6f5804003964979d2"
+        },
+        {
+          "path": "experiments/results/v6-pair-metadata/metrics.json",
+          "sha256": "d89cf43d077ac166ebf50a04ef5991577f85dfa744919e1f5ff4af852a185368"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v6-pair-metadata/oof-51.csv",
+        "experiments/results/v6-pair-metadata/oof-52.csv",
+        "experiments/results/v6-pair-metadata/oof-53.csv",
+        "experiments/results/v6-pair-metadata/oof-54.csv",
+        "experiments/results/v6-pair-metadata/oof-55.csv",
+        "experiments/results/v6-pair-metadata/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v6-pair-offset",
+      "file_count": 11,
+      "evidence": [
+        {
+          "path": "experiments/results/v6-pair-offset/frozen-winner.json",
+          "sha256": "9343f530c95a445af3b8ef8f27880744777954930aaaee8f2c66528b05736f71"
+        },
+        {
+          "path": "experiments/results/v6-pair-offset/manifest.json",
+          "sha256": "2522518ba58b6c343868067bd01ae096e9a288bd4f772f6058e11704024f0fbb"
+        },
+        {
+          "path": "experiments/results/v6-pair-offset/metrics.json",
+          "sha256": "854db92672d81258a3e0f2eeab887485c5fb88c3c4d9c3a4ce1cc1edbd17c120"
+        },
+        {
+          "path": "experiments/results/v6-pair-offset/report.md",
+          "sha256": "b0e05a2af5f0e4362324f7b3a2caa6d0b58414de486137e8f19bc36f2fa61a1f"
+        },
+        {
+          "path": "experiments/results/v6-pair-offset/support-audit.json",
+          "sha256": "3c702385e74d4f066edb8b110197afd093091dcf62164522bda26ccdb56e3be9"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v6-pair-offset/oof-56.csv",
+        "experiments/results/v6-pair-offset/oof-57.csv",
+        "experiments/results/v6-pair-offset/oof-58.csv",
+        "experiments/results/v6-pair-offset/oof-59.csv",
+        "experiments/results/v6-pair-offset/oof-60.csv",
+        "experiments/results/v6-pair-offset/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v8-nested-validation",
+      "file_count": 29,
+      "evidence": [
+        {
+          "path": "experiments/results/v8-nested-validation/independent-audit.json",
+          "sha256": "7d71f7cb1cec915abef594d05d28358772692ec021f43ee505373a481996af11"
+        },
+        {
+          "path": "experiments/results/v8-nested-validation/manifest.json",
+          "sha256": "0a351843b61246266010b7576c8406adb75bcc47a46be56393062f555a071982"
+        },
+        {
+          "path": "experiments/results/v8-nested-validation/metrics.json",
+          "sha256": "4e2161ca463cd677d7384151b9ba49f656f6d50660f7b118450e5eaa4df55c2f"
+        },
+        {
+          "path": "experiments/results/v8-nested-validation/protocol.json",
+          "sha256": "f424d1b593a2d182877d8ba181fcb537186e26e470c6c723207b8ae0cf32dc96"
+        },
+        {
+          "path": "experiments/results/v8-nested-validation/selection-audit.json",
+          "sha256": "90b6887f37e194bc6190d24024773faa835e180aa6990be2044f1f51e93aca0f"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v8-nested-validation/oof-identity.csv",
+        "experiments/results/v8-nested-validation/oof-identity71.csv",
+        "experiments/results/v8-nested-validation/oof-identity72.csv",
+        "experiments/results/v8-nested-validation/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v9-backend-validation",
+      "file_count": 30,
+      "evidence": [
+        {
+          "path": "experiments/results/v9-backend-validation/external-fit-audit.json",
+          "sha256": "5f50293b910648b6cafe69dd58ed5e6f8c55db64f8ccf1d8cbf8ac094843f57d"
+        },
+        {
+          "path": "experiments/results/v9-backend-validation/independent-audit.json",
+          "sha256": "a85f362b7958c9e7df05627761b0ead5346ab924e224a9aabdf738d261c61dfe"
+        },
+        {
+          "path": "experiments/results/v9-backend-validation/manifest.json",
+          "sha256": "09f94c84e3b64ac79727dd25e39e1f2d7c9b2d89cac3cfce833bbfefcd02d002"
+        },
+        {
+          "path": "experiments/results/v9-backend-validation/metrics.json",
+          "sha256": "9b4a093d539a334a1700424a3405e9d75585fd9e88ae414213b93d1d172cb4ff"
+        },
+        {
+          "path": "experiments/results/v9-backend-validation/protocol.json",
+          "sha256": "6117a8480f64983017b5428b85e361e71a4ca62cb5a7caf12940a440e902a2d9"
+        },
+        {
+          "path": "experiments/results/v9-backend-validation/selection-audit.json",
+          "sha256": "37cec76bc4ee3df92e3314fac64d9a2a8f9cab2e5f811deb35648d98a10bc3e3"
+        }
+      ],
+      "oof_csvs": [
+        "experiments/results/v9-backend-validation/oof-identity.csv",
+        "experiments/results/v9-backend-validation/oof-identity71.csv",
+        "experiments/results/v9-backend-validation/oof-identity72.csv",
+        "experiments/results/v9-backend-validation/oof-scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "experiments/results/v9-similar-snapshot",
+      "file_count": 4,
+      "evidence": [
+        {
+          "path": "experiments/results/v9-similar-snapshot/manifest.json",
+          "sha256": "2e45992d6c6aafffa89069bef8ae726243891b25b7298627f21395928cdc2ac3"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "results/graph_confirmation",
+      "file_count": 5,
+      "evidence": [
+        {
+          "path": "results/graph_confirmation/config.json",
+          "sha256": "7c513a644d2476391e1c9a700cbc1e55be9504d1a8e80d82f0d15a179e56c0bf"
+        },
+        {
+          "path": "results/graph_confirmation/metrics.json",
+          "sha256": "66f9f12f92f83fda94218e897bb1e21a6d86befc56c386324e5b8f6105b999b0"
+        }
+      ],
+      "oof_csvs": [
+        "results/graph_confirmation/oof_3.csv",
+        "results/graph_confirmation/oof_4.csv",
+        "results/graph_confirmation/oof_5.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "results/graph_final7",
+      "file_count": 6,
+      "evidence": [
+        {
+          "path": "results/graph_final7/config.json",
+          "sha256": "c33da81d145c6e93e545041c83c673028ca2993b072c945d4036b19aabc2c70f"
+        },
+        {
+          "path": "results/graph_final7/metrics.json",
+          "sha256": "8ba10da014eadb0fc3a2698fbe605185af50d88bcf9f5a232d9169a72e1c6e3a"
+        }
+      ],
+      "oof_csvs": [
+        "results/graph_final7/oof_3.csv",
+        "results/graph_final7/oof_4.csv",
+        "results/graph_final7/oof_5.csv",
+        "results/graph_final7/oof_scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "results/graph_gated",
+      "file_count": 5,
+      "evidence": [
+        {
+          "path": "results/graph_gated/metrics.json",
+          "sha256": "67a9c02755e812ce90b7a34f15ed5c0a1154317387f7a1d763d92161851a20e1"
+        }
+      ],
+      "oof_csvs": [
+        "results/graph_gated/oof_0.csv",
+        "results/graph_gated/oof_1.csv",
+        "results/graph_gated/oof_2.csv",
+        "results/graph_gated/oof_scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "results/graph_screen",
+      "file_count": 6,
+      "evidence": [
+        {
+          "path": "results/graph_screen/config.json",
+          "sha256": "32c0d38ffc3d8a8541284e120df3233f095554b367b96fcde84ae5011c34fa39"
+        },
+        {
+          "path": "results/graph_screen/metrics.json",
+          "sha256": "b8fe58d9d774a18ef8b08cd0d0f2791ab8e2866f7ad856cedc19d4e16b88b097"
+        }
+      ],
+      "oof_csvs": [
+        "results/graph_screen/oof_0.csv",
+        "results/graph_screen/oof_1.csv",
+        "results/graph_screen/oof_2.csv",
+        "results/graph_screen/oof_scaffold.csv"
+      ],
+      "submission_csvs": [],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    },
+    {
+      "directory": "results/graph_submission",
+      "file_count": 3,
+      "evidence": [
+        {
+          "path": "results/graph_submission/config.json",
+          "sha256": "4bb60bbc064893e5670cd1890f656fe669e0c8cf06e0be4696c1e49150f71b6b"
+        },
+        {
+          "path": "results/graph_submission/submission_metadata.json",
+          "sha256": "9180eb78d01b0c9e70e374f5697a751a9c7846f0c752951372153e2c1002c0b7"
+        }
+      ],
+      "oof_csvs": [],
+      "submission_csvs": [
+        "results/graph_submission/submission.csv"
+      ],
+      "status": "historical artifacts; presence does not imply successful validation or Kaggle upload"
+    }
+  ]
+}

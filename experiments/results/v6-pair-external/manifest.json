@@ -1,0 +1,47 @@
+{
+  "winner": "cross50",
+  "profiles": {
+    "external10": [
+      false,
+      0.1
+    ],
+    "cross10": [
+      true,
+      0.1
+    ],
+    "cross50": [
+      true,
+      0.5
+    ]
+  },
+  "discovery": 51,
+  "confirmation": [
+    52,
+    53,
+    54,
+    55
+  ],
+  "confirmation_mean_mse": 3690391.234641375,
+  "paired_v4_mean_mse": 3595103.0599298924,
+  "improves_all": false,
+  "all_confirmations_below3m": false,
+  "external_exact_rows": 47,
+  "external_known_context_rows": 21,
+  "external_max_si": 157026.3157894737,
+  "external_si_over1000": 7,
+  "excluded_snapshot_rows": 0,
+  "bounds_used": false,
+  "query_external_anchors": false,
+  "competition_rows": 320,
+  "max_competition_si": 36066.667,
+  "no_candidate_or_upload": true,
+  "snapshot_sha256": "9ead9fc63139b88352584a39673f3458beaf1abb8c3ddd776c0de7d1729a2e23",
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v6_pair_external.py": "57dda46f9392f9704779d65a2e6ea528934f188b19b85e2bbef4a004d3492560",
+    "experiments/v3_intervals.py": "56985282067f2d7f49e7a080306018060e165f23510fa9cb82b4a3c093a619cc",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+  }
+}

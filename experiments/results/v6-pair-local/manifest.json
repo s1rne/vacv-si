@@ -1,0 +1,33 @@
+{
+  "profiles": {
+    "local4": 4,
+    "local8": 8,
+    "half-local4": 4
+  },
+  "discovery": 51,
+  "confirmation": [
+    52,
+    53,
+    54,
+    55
+  ],
+  "winner": "half-local4",
+  "confirmation_mean_mse": {
+    "half-local4": 3755133.314621242,
+    "v4-ridge-log": 3595103.0599298924
+  },
+  "paired_wins": 0,
+  "all_labels_retained": true,
+  "label_count": 320,
+  "max_target": 36066.667,
+  "external_data": false,
+  "test_data_used": false,
+  "repeated_cv_not_independent_data": true,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v6_pair_local.py": "27c3f41c0f8846055e38290b6a12cd65178a7786989c61aef61504e4cf500c6a",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+  }
+}

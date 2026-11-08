@@ -1,0 +1,27 @@
+{
+  "cutoffs": [
+    0,
+    100
+  ],
+  "discovery": 9,
+  "confirmation": [
+    10,
+    11
+  ],
+  "features": "fold-local ContextEncoder plus Morgan and MACCS",
+  "target_version": "train_v2",
+  "ensemble_seeds": [
+    0,
+    1
+  ],
+  "n_estimators": 400,
+  "min_samples_leaf": 2,
+  "classifier_class_weight": null,
+  "small_group_fallback": "group mean if n<4; train mean if empty",
+  "status": "completed",
+  "winner": 0,
+  "elapsed_seconds": 93.4449584169779,
+  "train_sha256": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+  "script_sha256": "3eb0e2e7a4fc3ca6ee1526508d9a8c2c0fcc0cac9282ffe619e9aed4f5464e02",
+  "provenance_note": "Hashes added after run; source change only records metadata, model implementation unchanged."
+}

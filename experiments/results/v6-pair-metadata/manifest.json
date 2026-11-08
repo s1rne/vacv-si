@@ -1,0 +1,16 @@
+{
+  "winner": "title1",
+  "confirmation": [
+    52,
+    53,
+    54,
+    55
+  ],
+  "no_external_labels": true,
+  "no_upload": true,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v6_pair_metadata.py": "bc76451c2911fc905d8ae05033d7af42c43af3f0d34969ae0b6f9b588924cbec",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+  }
+}

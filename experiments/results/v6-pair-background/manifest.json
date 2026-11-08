@@ -1,0 +1,34 @@
+{
+  "profiles": {
+    "leaf2": 2,
+    "leaf5": 5
+  },
+  "discovery": 56,
+  "confirmation": [
+    57,
+    58,
+    59,
+    60
+  ],
+  "winner": "leaf5",
+  "confirmation_mean_mse": {
+    "leaf5": 3920988.60701443,
+    "v4-ridge-log": 3410538.722002673
+  },
+  "paired_wins": 0,
+  "all_labels_retained": true,
+  "label_count": 320,
+  "max_target": 36066.667,
+  "source_paper": "https://wenhao-gao.github.io/assets/publications/2021_PADRE_JCIM/paper.pdf",
+  "exact_paper_reproduction": false,
+  "external_data": false,
+  "test_data_used": false,
+  "repeated_cv_not_independent_data": true,
+  "hashes": {
+    "/Users/mike/Projects/vacv-si-recovery/experiments/v6_pair_background.py": "aee764e9e5c7d07cc02a4b280885cb5a199c7d8004ae01f8264f9e0d8fcd2cfb",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42"
+  }
+}

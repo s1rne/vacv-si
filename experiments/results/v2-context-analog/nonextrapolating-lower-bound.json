@@ -1,0 +1,7 @@
+{
+  "maximum_label": 36066.667,
+  "largest_remaining_label": 5000.0,
+  "minimum_full_mse_for_convex_train_target_predictor": 3016055.6202777782,
+  "maximum_label_prediction_needed_for_3m_even_if_others_exact": 5082.800230340665,
+  "interpretation": "No train-only predictor bounded by fold-training target range can pass full MSE <=3M; requires genuine extrapolation or independent permitted external training evidence."
+}
