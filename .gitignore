@@ -15,3 +15,5 @@ data/raw/
 data/interim/
 analysis/cache/
 *.log
+
+.idea/
