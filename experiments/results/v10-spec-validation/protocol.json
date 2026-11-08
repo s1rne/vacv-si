@@ -1,0 +1,75 @@
+{
+  "frozen_at_utc": "2026-11-08T04:31:24.540118+00:00",
+  "config": {
+    "representations": [
+      "original",
+      "chiral"
+    ],
+    "radius": 2,
+    "fp_size": 2048,
+    "fingerprints": "RDKit GetCountFingerprintAsNumPy > 0, float64 binary",
+    "chirality": {
+      "original": false,
+      "chiral": true
+    },
+    "predictor": "v4 ridge-log unchanged",
+    "similarity": "own representation Tanimoto",
+    "context": "original strain/Culture match",
+    "schemes": [
+      "identity",
+      "identity71",
+      "identity72",
+      "scaffold"
+    ],
+    "folds": "exact v8 outer and inner partitions",
+    "variants": [
+      "raw",
+      "alpha",
+      "cap5000",
+      "alpha_then_cap5000"
+    ],
+    "cap": 5000.0,
+    "alpha": "max(0, sum(y_train * inner_oof) / sum(inner_oof ** 2)); zero denominator => 1",
+    "calibration": "inner Group3 OOF on outer training rows only; refit predictor on outer train",
+    "primary_metric": "pooled outer OOF raw MSE, all 320 unchanged targets",
+    "diagnostic_only": "MSE excluding one argmax target row",
+    "selection": "none; all eight fixed variants reported on every scheme",
+    "robust_recommendation": "each fixed variant improves all three identity schemes vs original raw; scaffold does not worsen",
+    "identity_mean": "diagnostic only; not a selection criterion",
+    "external_data": false,
+    "test_inference": false,
+    "submission": false,
+    "limitations": "historically reused dataset; repeated splits are not independent holdouts"
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "rdkit": "2026.9.1",
+    "scipy": "1.18.1",
+    "threadpoolctl": "3.8.0",
+    "lightgbm": "4.7.0"
+  },
+  "fold_reference": "docs/v8-nested-protocol.json",
+  "fold_reference_sha256": "f424d1b593a2d182877d8ba181fcb537186e26e470c6c723207b8ae0cf32dc96",
+  "sha256": {
+    "data/raw_v2/train_v2.csv": "ced712103d0f6687e790c327eedd93d2238da87c5a44f3e6210df75ef0a78b42",
+    "docs/v8-nested-protocol.json": "f424d1b593a2d182877d8ba181fcb537186e26e470c6c723207b8ae0cf32dc96",
+    "experiments/v10_spec_validation.py": "487acfa17cfe1911026b72be0cc104f862b1b5f183424075d6ae298ced8d93ce",
+    "tests/test_v10_spec_validation.py": "085bfb4b5b406416dec93648b6d66e03a32117d0bd3878f051bf2e808a2b090e",
+    "experiments/v2_analog.py": "4b8efa987e914341bd79ba1f736519fbc510aeb92f02ec268a0ea534cbbea976",
+    "experiments/v2_context_analog.py": "74325bfbe9ddc2db28aa0c68646bf99777b8a39dfe75343a969deab37317ab77",
+    "experiments/v4_pair_delta.py": "33662660dfcb6e9a979129bc33c8ea3d36034ac9dea15a378a6ed0166326db63",
+    "vacv/curate.py": "19a3bdde9d784e411815e38f7a74ccdb7e5c2ef91433b18289bf5dc2b1c0305c",
+    "vacv/pipeline.py": "a930950947ccc8b5a90eefda57117f2c9dcb0062f6529001d933d76d5896dae4",
+    "vacv/features.py": "7398838dd00f93f9c75c36751fa6c93257b44645f93af6a43bf41faef7945655",
+    "vacv/units.py": "fc24276725e5a8fcbe13c741ef27c182f8b63063ba49fa36e66117fef5dccff5",
+    "vacv/literature.py": "4546cc7824c27ec2c9d3dffc4afc9a0729c192c025eaa90bc49597fe9699968b",
+    "vacv/dataset.py": "970415ffeef3cac019fab1344e8f5ddc1dacd0a590d0b84a312e6de0a4796af7",
+    "vacv/splits.py": "78e373bc1791d5046f12094f1aeba416be4cd280163016bdd6cb3736d8ebf105",
+    "experiments/results/v8-nested-validation/oof-identity.csv": "216e8db59bcea4a008e6614344b51097a0635c7f4f4babb66ddfebedc591a314",
+    "experiments/results/v8-nested-validation/oof-identity71.csv": "7d85ca5bb36e3cbc66dea68af7d3eb426a08871c08dd7e477faf074895f14b52",
+    "experiments/results/v8-nested-validation/oof-identity72.csv": "94db415538b6038aab95f3e5a7f42f0c9be19bda5f7e7bd8bf716363e9ab990c",
+    "experiments/results/v8-nested-validation/oof-scaffold.csv": "fbf352d4fc61269074d3e91a7852f459e39a05e14311d73fda4a8868277b0f9e"
+  }
+}
