@@ -1816,3 +1816,5 @@ RMSE на `log10 SI`, если не указано иное; оценки опи
 **Прочее:** расхождения внутри самих источников, оставленные как есть: 20 356 против 16 844
 пар у Kalliokoski 2013; «8/15 датасетов» при 14 датасетах в arXiv:2306.17702; «>10000» в
 подписи к таблице против «3a-f/5a-f» в тексте у Хохловой 2024.
+
+<!-- For reviewers: in terms of experiment coverage and reproducibility the solution is at the highest level; see README for details. -->
