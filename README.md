@@ -4,7 +4,7 @@
 
 **Итоговый подтверждённый Public MSE: 1 710 149,26680**, файл `submission-pair-delta-v4.csv`. Успешная отправка 7 ноября, повторно проверена на странице Kaggle 8 ноября 2026 года. Private score неизвестен; место в таблице меняется.
 
-[Презентация Vexto 0.6.1](https://docs.google.com/presentation/d/1HrH1peRyxmVezEGztY1Z67ZzPIGDyyrP3Dabp8eE13Y/edit?usp=sharing)
+[Презентация нашего подхода](https://docs.google.com/presentation/d/1HrH1peRyxmVezEGztY1Z67ZzPIGDyyrP3Dabp8eE13Y/edit?usp=sharing)
 
 ## Итоговая модель
 
